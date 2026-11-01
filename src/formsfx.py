@@ -54,7 +54,7 @@ def apply(h, c):
     rage = ''.join(re.findall(r'<button type="(?:action|roll)" class="sheet-quick sheet-rage[^"]*"[^>]*name="(?:act_rr|roll)_(?:wasuim|basuim)"[^>]*>.*?</button>', blk, re.S)); assert rage.count('<button') == 2
     h = h.replace(m.group(0), m.group(0).replace('sheet-game-line sheet-werewolf2 sheet-breeds2"', 'sheet-game-line sheet-breeds2"', 1), 1)
     a = '<div class="sheet-form-picker">'; assert h.count(a) == 1
-    h = h.replace(a, '<div class="sheet-form-qrow">' + hw + rage + '</div>' + a, 1)
+    h = h.replace(a, '<div class="sheet-form-qrow">' + hw + '</div>' + a, 1)
     # simpler pass: rebuild every fc-traits block in place
     def blk(m):
         k = m.group(1); seg = m.group(0)
