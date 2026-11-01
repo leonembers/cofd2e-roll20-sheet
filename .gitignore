@@ -1,0 +1,16 @@
+shots/
+*.pdf
+__pycache__/
+*.bak*
+*.tmp
+dl.log
+err.txt
+dom.html
+sels.html
+preview.html
+cards-*.html
+dist/bisect/
+dist/r20sim.html
+dist/*.txt
+michael_*
+vince_values.json
