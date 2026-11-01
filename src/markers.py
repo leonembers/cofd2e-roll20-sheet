@@ -16,11 +16,15 @@ MARKS = {
  'breeds2':  ('Proficiency', 'Skill Proficiency (Changing Breeds): mark the Skills your Breed is proficient in', False, 'Hurt Locker/Changing Breeds not checked', None),
  'mortal':   ('Marked', 'Marked Skill (custom)', False, 'custom', None),
 }
+# splat-skill check box next to each Skill name: only the lines whose rules mark Skills (type, tooltip, accent key in splat_colors.json)
+CB = [('werewolf2', 'Auspice Skill'), ('breeds2', 'Favored Skill (Breed)'), ('hunter2', 'Asset Skill'), ('mage2', 'Order Rote Skill')]
+CB_COLOR = {'werewolf2': 'werewolf', 'breeds2': 'breeds', 'hunter2': 'hunter', 'mage2': 'mage'}
 AGAIN = [('', '–'), ('9', '9'), ('8', '8'), ('no10', '⊘')]
 
 def html(sk):
     """collapsed skill line: read-only indicator badges only (hidden mirrors of the panel controls)"""
-    return (f'<span class="skm"><input type="hidden" class="skm-markv" name="attr_{sk}_mark" value="0"/>'
+    cbs = ''.join(f'<input type="checkbox" class="skm-cb skm-{t} game-line {'werewolf ' if t == 'breeds2' else ''}{t}" name="attr_{sk}_mark" value="1" title="{tip}" />' for t, tip in CB)
+    return (f'<span class="skm">{cbs}<input type="hidden" class="skm-markv" name="attr_{sk}_mark" value="0"/>'
             f'<input type="hidden" class="skm-mkv" name="attr_{sk}_mk" value="0"/>'
             f'<input type="hidden" class="skm-q" name="attr_{sk}_again" value=""/><span class="skm-badge"></span></span>')
 
@@ -30,7 +34,6 @@ def panel(sk):
     opts = ''.join(f'<option value="{v}">{l}</option>' for v, l in ROLLTYPES)
     mk = MARKS['werewolf'][4][2]
     return (f'<div class="skm-panel"><label class="skm-p" title="Roll quality for this Skill">Roll type <select class="skm-psel" name="attr_{sk}_again">{opts}</select></label>'
-            f'<label class="skm-p skm-pill" title="Mark as splat Skill (Asset / Auspice / Favored ...)"><input type="checkbox" name="attr_{sk}_mark" value="1"/><span>Splat skill</span></label>'
             f'<label class="skm-p skm-pill game-line werewolf" title="{mk}"><input type="checkbox" name="attr_{sk}_mk" value="1"/><span>Moon-Kissed</span></label></div>')
 
 def apply(h, skills):
@@ -64,8 +67,7 @@ CSS = '''
 /* collapsed row: one small badge, only when something non-default is set (never wraps) */
 .sheet-skm { display: inline-flex; align-items: center; margin-left: 2px; vertical-align: middle; flex: 0 0 auto; white-space: nowrap; }
 .sheet-skm-badge { display: none; height: 11px; min-width: 11px; padding: 0 2px; box-sizing: border-box; border-radius: 6px; font: bold 8px/11px Arial, sans-serif; text-align: center; color: #fff !important; background: var(--temp-dot, #555) !important; }
-.sheet-skm-markv[value="1"] ~ .sheet-skm-badge, .sheet-skm-mkv[value="1"] ~ .sheet-skm-badge, .sheet-skm-q[value="9"] + .sheet-skm-badge, .sheet-skm-q[value="8"] + .sheet-skm-badge, .sheet-skm-q[value="no10"] + .sheet-skm-badge { display: inline-block; }
-.sheet-skm-markv[value="1"] ~ .sheet-skm-badge::before { content: ""; display: inline-block; width: 4px; height: 4px; transform: rotate(45deg); background: currentColor; margin: 0 1px 1px; vertical-align: middle; }
+.sheet-skm-mkv[value="1"] ~ .sheet-skm-badge, .sheet-skm-q[value="9"] + .sheet-skm-badge, .sheet-skm-q[value="8"] + .sheet-skm-badge, .sheet-skm-q[value="no10"] + .sheet-skm-badge { display: inline-block; }
 .sheet-skm-mkv[value="1"] ~ .sheet-skm-badge::after { content: "MK"; }
 .sheet-skm-q[value="9"] + .sheet-skm-badge::after { content: "9"; }
 .sheet-skm-q[value="8"] + .sheet-skm-badge::after { content: "8"; }
@@ -86,3 +88,10 @@ CSS = '''
 .charsheet .sheet-skm-pill input:checked + span { font-weight: bold; }
 .charsheet .sheet-spec-inner label.sheet-skm-pill:has(input:checked) { background: color-mix(in srgb, var(--temp-dot, #8b1010) 30%, rgba(0,0,0,0)); border-color: var(--temp-dot, #8b1010); }
 '''
+
+_COL = json.load(open(__import__('os').path.join(__import__('os').path.dirname(__file__), 'splat_colors.json')))
+CSS += ('.charsheet input.sheet-type:not([value="breeds2"]) ~ * .sheet-skm input.sheet-skm-cb.sheet-skm-breeds2.sheet-skm-breeds2 { display: none !important; }\n'
+        '.charsheet.charsheet .sheet-skm input.sheet-skm-cb { -webkit-appearance: none; -moz-appearance: none; appearance: none; flex: 0 0 11px; width: 11px !important; height: 11px !important; min-width: 0 !important; '
+        'margin: 0 3px 0 1px !important; padding: 0 !important; border: 1.5px solid currentColor; border-radius: 2px; background: rgba(0,0,0,0); box-sizing: border-box !important; cursor: pointer; vertical-align: middle; opacity: .8; position: static !important; }\n'
+        '.charsheet.charsheet .sheet-skm input.sheet-skm-cb:checked { opacity: 1; }\n'
+        + ''.join(f'.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-{t}:checked {{ background: {_COL[k]} !important; border-color: {_COL[k]} !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }}\n' for t, k in CB_COLOR.items()))

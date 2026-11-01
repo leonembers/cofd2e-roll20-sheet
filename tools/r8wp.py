@@ -1,0 +1,22 @@
+exec('\n'.join(open('/workspace/cofd/roll20/tools/r7shot.py').read().split('\n')[:10])+r'''
+    A=lambda k: pg.evaluate(f"()=>__A['{k}']")
+    for t in ('vampire2','werewolf2','mortal2','hunter2'):
+        pg.set_viewport_size({'width':1000,'height':1800})
+        pg.goto(f"file://{R}/dist/r20sim.html?type={t}&page=1&worker=1&r20dark=1&dm=1"); pg.wait_for_timeout(300)
+        pg.evaluate("()=>{setAttrs({resolve:3,composure:3,wp_mig:'',willpower_box1:'1',willpower_box2:'1'});__fire('sheet:opened',{})}"); pg.wait_for_timeout(800)
+        r=[A('willpower'),A('willpower_cur')]
+        for _ in range(6): pg.click('button[name=act_wp_inc]')
+        pg.wait_for_timeout(300); r.append(A('willpower_cur'))
+        for _ in range(8): pg.click('button[name=act_wp_dec]')
+        pg.wait_for_timeout(300); r.append(A('willpower_cur'))
+        pg.evaluate("()=>setAttrs({willpower_cur:2,wp_spend:'1'})"); pg.wait_for_timeout(200)
+        n0=pg.evaluate("()=>(window.__rolls||[]).length")
+        btn=pg.query_selector('.sheet-rollcontainer > button.sheet-rollstyle'); btn.click(); pg.wait_for_timeout(500); r.append(('spend',A('willpower_cur')))
+        pg.evaluate("()=>__fire('clicked:wp_reroll',{})"); pg.wait_for_timeout(500); r.append(('reroll',A('willpower_cur')))
+        pg.evaluate("()=>setAttrs({willpower_cur:0})"); btn.click(); pg.wait_for_timeout(500)
+        last=pg.evaluate("()=>{const R=window.__rolls||[];return R.length?String(R[R.length-1].mac||R[R.length-1]).slice(0,140):''}")
+        r.append(('at0',A('willpower_cur'),'No Willpower left' in last))
+        vis=pg.evaluate("()=>{const e=document.querySelector('.sheet-wp-ctr');return e&&e.getClientRects().length>0}")
+        print(t,r,'visible',vis,'werr',pg.evaluate("()=>(window.__werr||[]).length"))
+    el=pg.query_selector('.sheet-wp-ctr'); b=el.bounding_box(); pg.screenshot(path=S+'r8-wp.png',clip={'x':b['x']-60,'y':b['y']-30,'width':b['width']+120,'height':60})
+''')

@@ -24,6 +24,23 @@ def legacy_template_css(c):
     for m in re.finditer(r'\\([0-9a-fA-F]{1,6})', c):
         if int(m.group(1), 16) > 0xff: hits.append(f'high-unicode escape \\{m.group(1)}'); break
     return hits
+def template_scope(sh, c):
+    """Roll20 applies to chat only selectors that START with .sheet-rolltemplate-NAME (never under .charsheet);
+    every &{template:X} used in buttons or worker startRoll must have <rolltemplate class="sheet-rolltemplate-X"> and CSS."""
+    bad = []
+    defined = set(re.findall(r'<rolltemplate class="sheet-rolltemplate-([a-z0-9-]+)"', sh))
+    used = set(re.findall(r'&\{template:([a-z0-9-]+)\}', sh))
+    for t in used - defined: bad.append(f'template used but not defined: {t}')
+    for t in used:
+        if not re.search(r'(^|[},\s])\.sheet-rolltemplate-' + re.escape(t) + r'[\s.:\[,{]', c): bad.append(f'no CSS for template {t}')
+    for m in re.finditer(r'([^{}]*rolltemplate[^{}]*)\{', re.sub(r'/\*.*?\*/', '', c, flags=re.S)):
+        for sel in m.group(1).split(','):
+            sel = sel.strip()
+            if 'rolltemplate-' in sel and not sel.startswith('.sheet-rolltemplate-'): bad.append(f'mis-scoped template selector: {sel[:90]}')
+    return sorted(set(bad)), sorted(used), sorted(defined)
+_tb, _used, _def = template_scope(sh, css)
+print('templates used', _used, 'defined', _def)
+if _tb: print('TEMPLATE SCOPE FAIL:', *_tb, sep='\n  ')
 _hits = legacy_template_css(css)
 if _hits:
     print('LIVE ROLL20 WOULD DROP ALL ROLL-TEMPLATE CSS:', *_hits, sep='\n  ')

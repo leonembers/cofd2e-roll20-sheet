@@ -117,6 +117,8 @@ def notes_page(entry, h, T):
         });
         on("sheet:opened change:character_avatar", syncPortrait);
         // Page 2 tab removed: anyone left on it (or remembering it) lands on Main
+        on("sheet:opened", () => getAttrs(["det_sex", "det_sex_mig"], v => { if (v.det_sex_mig === "1") return;
+            const t = (v.det_sex || "").trim().toLowerCase(); setAttrs({det_sex_mig: "1", det_sex_sel: t.startsWith("m") ? "Male" : t.startsWith("f") ? "Female" : "-"}, {silent: true}); }));
         on("sheet:opened", () => getAttrs(["pagenumber", "last_page"], v => {
             const u = {};
             if (v.pagenumber === "3" || v.pagenumber === "2") u.pagenumber = "1";
@@ -221,8 +223,17 @@ def forms_details(h, T):
         if kind == 'textarea':
             return f'<label class="wide">{T("d-" + attr, label)}<textarea name="attr_{attr}"></textarea></label>'
         return f'<label>{T("d-" + attr, label)}<input type="text" name="attr_{attr}" /></label>'
-    basic = ''.join(inp(a, l) for a, l in [('det_age', 'Age'), ('det_apparent_age', 'Apparent age'), ('det_dob', 'D.O.B.'), ('det_height', 'Height'), ('det_weight', 'Weight'),
-                                            ('det_hair', 'Hair'), ('det_eyes', 'Eyes'), ('det_sex', 'Sex / Gender'), ('det_race', 'Race / Ethnicity'), ('det_nationality', 'Nationality')])
+    def sz(cls, html):
+        html = html.replace('<label>', f'<label class="det-{cls}">', 1)
+        if cls in ('m', 'l'):  # wraps instead of clipping in narrow columns; same attribute, data kept
+            html = re.sub(r'<input type="text" name="(attr_[a-z_]+)" />', r'<textarea class="det-ta" rows="1" name="\1"></textarea>', html)
+        return html
+    sexsel = (f'<label class="det-s det-sex">{T("d-det_sex_sel", "Sex")}<select name="attr_det_sex_sel" title="Sex">'
+              '<option value="-" selected>&ndash;</option><option value="Male">Male</option><option value="Female">Female</option></select></label>')
+    basic = (''.join(sz('s', inp(a, l)) for a, l in [('det_age', 'Age'), ('det_apparent_age', 'Apparent age')]) + sexsel
+             + ''.join(sz('s', inp(a, l)) for a, l in [('det_height', 'Height'), ('det_weight', 'Weight')])
+             + ''.join(sz('m', inp(a, l)) for a, l in [('det_eyes', 'Eyes'), ('det_hair', 'Hair')])
+             + ''.join(sz('l', inp(a, l)) for a, l in [('det_dob', 'D.O.B.'), ('det_race', 'Race / Ethnicity'), ('det_nationality', 'Nationality')]))
     longs = ''.join(inp(a, l, 'textarea') for a, l in [('det_appearance', 'Appearance / Distinguishing characteristics'), ('det_history', 'History / Background'),
                                                         ('det_goals', 'Goals'), ('det_aspirations', 'Aspirations'), ('det_possessions', 'Possessions')])
     splat = (f'<div class="game-line vampire2 det-splat"><div class="subheader">{T("det-vampire", "Vampire")}</div>{inp("det_embrace", "Date of Embrace")}{inp("det_sire", "Sire")}{inp("det_apparent_embrace", "Apparent age at Embrace")}</div>'

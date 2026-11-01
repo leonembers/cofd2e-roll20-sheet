@@ -14,6 +14,12 @@ FILL=r"""(mi)=>{const pick=n=>{n=n.replace(/^attr_/,'');if(mi[n]!==undefined&&St
  return 'Kevlar weave + graphene plates'};
  const out=[];document.querySelectorAll('.sheet-background input[type=text], .sheet-background input:not([type])').forEach(e=>{if(!e.offsetParent||e.readOnly||e.disabled)return;const r=e.getBoundingClientRect();if(r.width<1)return;
   if(/portrait_url|experience|^attr_conditions[0-9]/.test(e.getAttribute('name')||''))return;e.value=pick(e.getAttribute('name')||'');if(e.scrollWidth>e.clientWidth+1)out.push((e.getAttribute('name')||'?')+' w'+Math.round(r.width)+' need'+e.scrollWidth)});return out}"""
+FOCUS=r"""()=>{const out=[];document.querySelectorAll('.sheet-background input[type=text], .sheet-background input[type=number], .sheet-background textarea, .sheet-background select').forEach(e=>{
+ if(!e.offsetParent||e.disabled||e.readOnly)return;const r=e.getBoundingClientRect();if(r.width<4||r.height<4)return;e.focus();const cs=getComputedStyle(e);
+ const ringOut=(cs.outlineStyle!=='none'&&parseFloat(cs.outlineWidth)>0&&parseFloat(cs.outlineOffset)>-1)||(cs.boxShadow!=='none'&&!/inset/.test(cs.boxShadow));
+ let a=e.parentElement,clip=false;while(a&&a!==document.body){const s=getComputedStyle(a);if(/hidden|clip/.test(s.overflowX+s.overflowY)&&!/auto|scroll/.test(s.overflowX+s.overflowY)){const q=a.getBoundingClientRect();
+  if(r.left<q.left-0.5||r.right>q.right+0.5||r.top<q.top-0.5||r.bottom>q.bottom+0.5)clip=true;break}a=a.parentElement}
+ if(ringOut||clip||cs.boxSizing!=='border-box')out.push('FOCUS:'+(e.getAttribute('name')||e.className)+(ringOut?' ring-outside':'')+(clip?' clipped':'')+(cs.boxSizing!=='border-box'?' content-box':''));e.blur()});return out}"""
 fails=collections.Counter(); ex={}
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/google-chrome'); pg=b.new_page()
@@ -25,7 +31,7 @@ with sync_playwright() as p:
                 pg.evaluate("""()=>{document.querySelectorAll('fieldset[class^="repeating_"]').forEach(f=>{try{__addRow(f.className.split(' ')[0].replace('repeating_',''),{show:'1'})}catch(e){}})}""")
                 if mid: pg.evaluate(f"()=>setAttrs({{mid_tab:'{mid}'}})")
                 pg.wait_for_timeout(200)
-                for s in pg.evaluate(FILL, MI):
+                for s in (pg.evaluate(FOCUS) if w==1000 else [])+pg.evaluate(FILL, MI):
                     k=s.split(' ')[0]; fails[k]+=1; ex.setdefault(k,f'{t}/{page}/{mid}/{w}: {s}')
 for k,n in fails.most_common(): print(n,ex[k])
 print('INPUT CLIP DISTINCT',len(fails))

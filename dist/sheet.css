@@ -218,7 +218,8 @@ input.sheet-scars-variations-sheet:checked ~ .sheet-background-image::after{
     height: 200px;
 }
 
-.sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll),
+.sheet-rollcontainer > button[type="roll"],
+.sheet-rollcontainer > button.sheet-was-roll,
 button.sheet-toggle {
     
     font-family: inherit;
@@ -391,7 +392,8 @@ input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote {
     display: none;
 }
 
-.sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll) {
+.sheet-rollcontainer > button[type="roll"],
+.sheet-rollcontainer > button.sheet-was-roll {
     background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/die.png') no-repeat center;
     background-size: contain;
     position: absolute;
@@ -1360,9 +1362,12 @@ div.sheet-wp-bar select, .charsheet div.sheet-wp-bar select { width: 170px !impo
 .sheet-p1-combat .sheet-p1-weapons { width: 100%; }
 .sheet-entry-section.sheet-weapons .sheet-entry-head { min-height: 20px; }
 .sheet-entry-section.sheet-weapons .sheet-entry-pool { max-width: 260px; }
-.charsheet :is(button[type="roll"], button.sheet-was-roll).sheet-hl-poolbtn { margin-left: auto; padding: 0 4px; border: 0; background: none; box-shadow: none; text-shadow: none; color: inherit; cursor: pointer; font: inherit; line-height: 16px; height: 18px; }
-.charsheet :is(button[type="roll"], button.sheet-was-roll).sheet-hl-poolbtn::before { content: "94"; margin-right: 3px; }
-.charsheet :is(button[type="roll"], button.sheet-was-roll).sheet-hl-poolbtn:hover .sheet-entry-pool { text-decoration: underline; }
+.charsheet button[type="roll"].sheet-hl-poolbtn,
+.charsheet button.sheet-was-roll.sheet-hl-poolbtn { margin-left: auto; padding: 0 4px; border: 0; background: none; box-shadow: none; text-shadow: none; color: inherit; cursor: pointer; font: inherit; line-height: 16px; height: 18px; }
+.charsheet button[type="roll"].sheet-hl-poolbtn::before,
+.charsheet button.sheet-was-roll.sheet-hl-poolbtn::before { content: none; }
+.charsheet button[type="roll"].sheet-hl-poolbtn:hover .sheet-entry-pool,
+.charsheet button.sheet-was-roll.sheet-hl-poolbtn:hover .sheet-entry-pool { text-decoration: underline; }
 .sheet-entry-section.sheet-weapons .sheet-entry-body { gap: 3px 8px; }
 .sheet-entry-section.sheet-weapons .sheet-entry-body label { flex: 1 1 96px; min-width: 88px; max-width: 200px; font-size: 10px; }
 .sheet-entry-section.sheet-weapons .sheet-entry-body label.sheet-wide { max-width: none; }
@@ -1473,7 +1478,8 @@ input.sheet-rolltype-select[value="chance-rote"] ~ * button.sheet-rolltype-chanc
 input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote { background: var(--pa, var(--temp-dot,#333)) !important; color: #fff !important; }
 
 
-.charsheet .sheet-rollbar .sheet-rollcontainer :is(button[type="roll"], button.sheet-was-roll) { filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); transform: scale(1.15); }
+.charsheet .sheet-rollbar .sheet-rollcontainer button[type="roll"],
+.charsheet .sheet-rollbar .sheet-rollcontainer button.sheet-was-roll { filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); transform: scale(1.15); }
 
 .charsheet .sheet-rollbar .sheet-rolldisplay textarea, .charsheet .sheet-rollbar .sheet-rolldisplay > div { width: 100%; height: 24px; min-height: 24px; resize: none; border: 1px solid rgba(0,0,0,.3); border-radius: 4px; background: rgba(255,255,255,.6); font-size: 11px; padding: 2px 6px; box-sizing: border-box; line-height: 18px; }
 
@@ -1508,8 +1514,7 @@ input.sheet-dm[value="1"] ~ .sheet-background .sheet-wp-bar select { background:
 
 .sheet-skm { display: inline-flex; align-items: center; margin-left: 2px; vertical-align: middle; flex: 0 0 auto; white-space: nowrap; }
 .sheet-skm-badge { display: none; height: 11px; min-width: 11px; padding: 0 2px; box-sizing: border-box; border-radius: 6px; font: bold 8px/11px Arial, sans-serif; text-align: center; color: #fff !important; background: var(--temp-dot, #555) !important; }
-.sheet-skm-markv[value="1"] ~ .sheet-skm-badge, .sheet-skm-mkv[value="1"] ~ .sheet-skm-badge, .sheet-skm-q[value="9"] + .sheet-skm-badge, .sheet-skm-q[value="8"] + .sheet-skm-badge, .sheet-skm-q[value="no10"] + .sheet-skm-badge { display: inline-block; }
-.sheet-skm-markv[value="1"] ~ .sheet-skm-badge::before { content: ""; display: inline-block; width: 4px; height: 4px; transform: rotate(45deg); background: currentColor; margin: 0 1px 1px; vertical-align: middle; }
+.sheet-skm-mkv[value="1"] ~ .sheet-skm-badge, .sheet-skm-q[value="9"] + .sheet-skm-badge, .sheet-skm-q[value="8"] + .sheet-skm-badge, .sheet-skm-q[value="no10"] + .sheet-skm-badge { display: inline-block; }
 .sheet-skm-mkv[value="1"] ~ .sheet-skm-badge::after { content: "MK"; }
 .sheet-skm-q[value="9"] + .sheet-skm-badge::after { content: "9"; }
 .sheet-skm-q[value="8"] + .sheet-skm-badge::after { content: "8"; }
@@ -1530,6 +1535,13 @@ input.sheet-dm[value="1"] ~ .sheet-background .sheet-skm-badge { filter: brightn
 .charsheet .sheet-skm-pill input { position: absolute; inset: 0; opacity: 0; margin: 0; width: 100%; height: 100%; cursor: pointer; z-index: 1; }
 .charsheet .sheet-skm-pill input:checked + span { font-weight: bold; }
 .charsheet .sheet-spec-inner label.sheet-skm-pill:has(input:checked) { background: color-mix(in srgb, var(--temp-dot, #8b1010) 30%, rgba(0,0,0,0)); border-color: var(--temp-dot, #8b1010); }
+.charsheet input.sheet-type:not([value="breeds2"]) ~ * .sheet-skm input.sheet-skm-cb.sheet-skm-breeds2.sheet-skm-breeds2 { display: none !important; }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb { -webkit-appearance: none; -moz-appearance: none; appearance: none; flex: 0 0 11px; width: 11px !important; height: 11px !important; min-width: 0 !important; margin: 0 3px 0 1px !important; padding: 0 !important; border: 1.5px solid currentColor; border-radius: 2px; background: rgba(0,0,0,0); box-sizing: border-box !important; cursor: pointer; vertical-align: middle; opacity: .8; position: static !important; }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb:checked { opacity: 1; }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-werewolf2:checked { background: #aa5a1e !important; border-color: #aa5a1e !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-breeds2:checked { background: #5a321e !important; border-color: #5a321e !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-hunter2:checked { background: #1e4646 !important; border-color: #1e4646 !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-mage2:checked { background: #beaa5a !important; border-color: #beaa5a !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
 .sheet-wolf-block { border: 1px solid var(--temp-dot,#aa5a1e); border-radius: 8px; padding: 6px 10px; margin: 6px 0 10px; background: rgba(170,90,30,.08); }
 .sheet-wolf-ab, .sheet-wolf-mg, .sheet-wolf-tr { display: none; }
 .sheet-wolf-ab { gap: 12px; align-items: flex-start; }
@@ -1712,13 +1724,17 @@ input.sheet-dm[value="1"] ~ .sheet-background h1,
 input.sheet-dm[value="1"] ~ .sheet-background h2,
 input.sheet-dm[value="1"] ~ .sheet-background h3,
 input.sheet-dm[value="1"] ~ .sheet-background h4 { color: #f0f0f0; }.sheet-darkmode button.sheet-toggle,
-.sheet-darkmode :is(button[type="roll"], button.sheet-was-roll):not(.sheet-rollcontainer > button),
+.sheet-darkmode button[type="roll"]:not(.sheet-rollcontainer > button),
+.sheet-darkmode button.sheet-was-roll:not(.sheet-rollcontainer > button),
 .sheet-darkmode button[type=action]:not(.sheet-dot):not(.sheet-form-btn),
 input.sheet-dm[value="1"] ~ .sheet-background button.sheet-toggle,
-input.sheet-dm[value="1"] ~ .sheet-background :is(button[type="roll"], button.sheet-was-roll):not(.sheet-rollcontainer > button),
+input.sheet-dm[value="1"] ~ .sheet-background button[type="roll"]:not(.sheet-rollcontainer > button),
+input.sheet-dm[value="1"] ~ .sheet-background button.sheet-was-roll:not(.sheet-rollcontainer > button),
 input.sheet-dm[value="1"] ~ .sheet-background button[type=action]:not(.sheet-dot):not(.sheet-form-btn) { background: rgba(0,0,0,0) !important; color: #e8e8e8 !important; text-shadow: 0 0 3px #000; border-color: rgba(255,255,255,.3); }.sheet-darkmode button.sheet-toggle:hover,
-input.sheet-dm[value="1"] ~ .sheet-background button.sheet-toggle:hover { background: rgba(255,255,255,.08) !important; }.sheet-darkmode .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll),
-input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll) { background-color: rgba(0,0,0,0) !important; }.sheet-darkmode,
+input.sheet-dm[value="1"] ~ .sheet-background button.sheet-toggle:hover { background: rgba(255,255,255,.08) !important; }.sheet-darkmode .sheet-rollcontainer > button[type="roll"],
+.sheet-darkmode .sheet-rollcontainer > button.sheet-was-roll,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > button[type="roll"],
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > button.sheet-was-roll { background-color: rgba(0,0,0,0) !important; }.sheet-darkmode,
 .sheet-darkmode div,
 .sheet-darkmode td,
 .sheet-darkmode th,
@@ -1801,8 +1817,10 @@ button.sheet-dot { filter: none !important; background-image: none !important; b
 input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-dot { color: #ffffff; border-color: #cfcfcf; background-color: rgba(0,0,0,0); }.sheet-darkmode .sheet-background div button.sheet-dot.sheet-zero,
 input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-dot.sheet-zero { color: #ececec; }
 
-.charsheet .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll) { background: none !important; background-image: none !important; border: none !important; box-shadow: none !important; }
-.charsheet .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll)::after {
+.charsheet .sheet-rollcontainer > button[type="roll"],
+.charsheet .sheet-rollcontainer > button.sheet-was-roll { background: none !important; background-image: none !important; border: none !important; box-shadow: none !important; }
+.charsheet .sheet-rollcontainer > button[type="roll"]::after,
+.charsheet .sheet-rollcontainer > button.sheet-was-roll::after {
   content: ""; position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 6px; box-sizing: border-box;
   border: 2px solid rgba(0,0,0,.55);
   background:
@@ -1812,8 +1830,10 @@ input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-dot.sheet-zero { 
     radial-gradient(circle at 25% 75%, #fff 0 2.6px, rgba(0,0,0,0) 3.2px),
     radial-gradient(circle at 75% 75%, #fff 0 2.6px, rgba(0,0,0,0) 3.2px),
     var(--temp-dot, #333);
-}.sheet-darkmode .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll)::after,
-input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll)::after { border-color: rgba(255,255,255,.55); }
+}.sheet-darkmode .sheet-rollcontainer > button[type="roll"]::after,
+.sheet-darkmode .sheet-rollcontainer > button.sheet-was-roll::after,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > button[type="roll"]::after,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > button.sheet-was-roll::after { border-color: rgba(255,255,255,.55); }
 
 .charsheet { max-width: 100%; box-sizing: border-box; }
 .charsheet .sheet-background { box-sizing: border-box; max-width: 100%; }
@@ -1965,9 +1985,15 @@ input.sheet-rolltype-select[value="rote"] ~ * .sheet-rollcontainer::before { con
 .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-specialrollflag { color: #fff !important; }
 
 
-.charsheet :is(button[type="roll"], button.sheet-was-roll)::before, .charsheet :is(button[type="roll"], button.sheet-was-roll)[class]::before, .charsheet .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll)::before { content: none !important; display: none !important; }
+.charsheet button[type="roll"]::before,
+.charsheet button.sheet-was-roll::before,
+.charsheet button[type="roll"][class]::before,
+.charsheet button.sheet-was-roll[class]::before,
+.charsheet .sheet-rollcontainer > button[type="roll"]::before,
+.charsheet .sheet-rollcontainer > button.sheet-was-roll::before { content: none !important; display: none !important; }
 
-.charsheet :is(button[type="roll"], button.sheet-was-roll).sheet-entry-post::before { content: "w " !important; display: inline !important; font-family: "Pictos" !important; font-weight: normal; font-size: 11px; }
+.charsheet button[type="roll"].sheet-entry-post::before,
+.charsheet button.sheet-was-roll.sheet-entry-post::before { content: "w " !important; display: inline !important; font-family: "Pictos" !important; font-weight: normal; font-size: 11px; }
 
 .charsheet table.sheet-hw-table { width: auto !important; max-width: 100%; margin: 4px auto 8px !important; table-layout: fixed; }
 .charsheet table.sheet-hw-table th, .charsheet table.sheet-hw-table td { text-align: center !important; vertical-align: middle !important; width: 88px; }
@@ -1980,7 +2006,9 @@ input.sheet-rolltype-select[value="rote"] ~ * .sheet-rollcontainer::before { con
 .charsheet .sheet-entry > input[type=checkbox].sheet-entry-toggle + .sheet-entry-head::before { font-size: 12px !important; line-height: 18px !important; top: 0 !important; left: 2px !important; }
 .charsheet .sheet-entry-head { min-height: 18px !important; height: auto; gap: 4px !important; align-items: center !important; overflow: hidden; }
 .charsheet .sheet-entry-head button.sheet-entry-post { flex: 1 1 auto; min-width: 0; height: auto !important; min-height: 18px; margin: 0 !important; padding: 1px 2px !important; font-size: 12px !important; line-height: 15px !important; border: none !important; background: none !important; box-shadow: none !important; white-space: normal !important; overflow-wrap: break-word; overflow: visible; text-overflow: clip; text-align: left !important; }
-.charsheet .sheet-entry-head button.sheet-entry-post::before, .charsheet :is(button[type="roll"], button.sheet-was-roll).sheet-entry-post::before { font-size: 10px !important; }
+.charsheet .sheet-entry-head button.sheet-entry-post::before,
+.charsheet button[type="roll"].sheet-entry-post::before,
+.charsheet button.sheet-was-roll.sheet-entry-post::before { font-size: 10px !important; }
 .charsheet .sheet-entry-head > .sheet-dots { display: flex !important; align-items: center; height: 18px; margin: 0 !important; flex: 0 0 auto; }
 .charsheet .sheet-entry-head > .sheet-dots button.sheet-dot { width: 10px !important; height: 10px !important; min-width: 0 !important; margin: 0 1px !important; padding: 0 !important; font-size: 8px !important; line-height: 8px !important; }
 .charsheet .sheet-entry-head button:not(.sheet-entry-post):not(.sheet-dot) { height: 16px !important; min-width: 0 !important; margin: 0 !important; padding: 0 4px !important; font-size: 11px !important; line-height: 14px !important; flex: 0 0 auto; }
@@ -2002,16 +2030,21 @@ input.sheet-rolltype-select[value="rote"] ~ * .sheet-rollcontainer::before { con
 .charsheet .sheet-attributes > .sheet-attributes-category { min-width: max-content; padding-left: 4px; padding-right: 4px; overflow: visible !important; white-space: nowrap; }
 .charsheet .sheet-background { padding-left: max(40px, 2.5em) !important; }.charsheet .sheet-rollbar .sheet-rollcontainer,
 body.sheet-darkmode .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer,
-input.sheet-dm[value="1"] ~ .sheet-background .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer { border: none !important; background: rgba(0,0,0,0) !important; box-shadow: none !important; outline: none !important; border-radius: 0 !important; }.charsheet .sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll),
-body.sheet-darkmode .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll),
-input.sheet-dm[value="1"] ~ .sheet-background .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll) { border: none !important; background: rgba(0,0,0,0) !important; background-image: none !important; box-shadow: none !important; outline: none !important; text-shadow: none !important; padding: 0 !important; margin: 0 !important; min-width: 32px; height: 28px; }
-.charsheet .sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll)::after { border: none !important; box-shadow: none !important; }
+input.sheet-dm[value="1"] ~ .sheet-background .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer { border: none !important; background: rgba(0,0,0,0) !important; box-shadow: none !important; outline: none !important; border-radius: 0 !important; }.charsheet .sheet-rollbar .sheet-rollcontainer > button[type="roll"],
+.charsheet .sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll,
+body.sheet-darkmode .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > button[type="roll"],
+body.sheet-darkmode .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll,
+input.sheet-dm[value="1"] ~ .sheet-background .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > button[type="roll"],
+input.sheet-dm[value="1"] ~ .sheet-background .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll { border: none !important; background: rgba(0,0,0,0) !important; background-image: none !important; box-shadow: none !important; outline: none !important; text-shadow: none !important; padding: 0 !important; margin: 0 !important; min-width: 32px; height: 28px; }
+.charsheet .sheet-rollbar .sheet-rollcontainer > button[type="roll"]::after,
+.charsheet .sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll::after { border: none !important; box-shadow: none !important; }
 .charsheet .sheet-rollbar .sheet-rollcontainer::before { z-index: 3; }
 
 .charsheet .sheet-rollbar button.sheet-toggle, .charsheet .sheet-rollbar .sheet-diceroller-options button, .charsheet .sheet-rollbar button[name^="act_rolltype"], .charsheet .sheet-rollbar button[name^="act_rollstyle"], .charsheet .sheet-rollbar button[class*="sheet-rollstyle-"], .charsheet .sheet-rollbar button[class*="sheet-rolltype-"] {
   width: auto !important; min-width: max-content !important; max-width: none !important; height: auto !important; padding: 2px 8px !important; margin: 0 !important; white-space: nowrap !important; overflow: visible !important; font-size: 11px !important; line-height: 16px !important; box-sizing: border-box; flex: 0 0 auto !important; }
 .charsheet .sheet-rollbar .sheet-rollcontainer { height: 44px !important; padding-bottom: 0 !important; justify-content: flex-start !important; }
-.charsheet .sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll) { height: 30px !important; flex: 0 0 30px; }
+.charsheet .sheet-rollbar .sheet-rollcontainer > button[type="roll"],
+.charsheet .sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll { height: 30px !important; flex: 0 0 30px; }
 .charsheet .sheet-rollbar .sheet-rollcontainer::before { bottom: 1px !important; }
 
 .charsheet .sheet-skills > div.sheet-spec-row { grid-column: 1 / -1 !important; width: 100%; box-sizing: border-box; }
@@ -2100,10 +2133,6 @@ input.sheet-dm[value="1"] ~ .sheet-background .repcontainer.editmode ~ .repcontr
 .charsheet .sheet-armor .sheet-entry-head label, .charsheet .sheet-armor .sheet-entry-head .sheet-ar-pill { white-space: nowrap; flex-shrink: 0; }
 
 
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll).sheet-rollstyle.sheet-rollstyle { width: 32px !important; min-width: 32px !important; height: 32px !important; flex: 0 0 32px; font-size: 0 !important; color: rgba(0,0,0,0) !important; background: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver.png") center / 30px 30px no-repeat !important; }
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll).sheet-rollstyle.sheet-rollstyle:hover { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver-hover.png") !important; }
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll).sheet-rollstyle.sheet-rollstyle:active { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver-pressed.png") !important; transform: translateY(1px); }
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > :is(button[type="roll"], button.sheet-was-roll).sheet-rollstyle.sheet-rollstyle::before { content: "" !important; display: none !important; }
 
 
 .charsheet .sheet-two-col > .sheet-wolf-lcol, .charsheet .sheet-two-col > .sheet-wolf-rcol { display: flex; flex-direction: column; gap: 4px; }
@@ -2320,6 +2349,83 @@ body .charsheet .sheet-subheader > button.sheet-toggle { color: inherit !importa
 .charsheet.charsheet .sheet-midpane .sheet-breeds-head.sheet-breeds-head { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)) !important; }
 .charsheet.charsheet .sheet-midpane .sheet-subheader { white-space: normal !important; max-width: 100%; }
 .charsheet.charsheet .sheet-midpane .sheet-entry-section-head { flex-wrap: wrap; min-width: 0; }
+
+
+.charsheet.charsheet .sheet-det-top > .sheet-det-grid.sheet-det-grid, .charsheet.charsheet .sheet-det-grid.sheet-det-grid { display: flex !important; flex-wrap: wrap; gap: 4px 8px; align-content: flex-start; }
+.charsheet.charsheet .sheet-det-grid > label { min-width: 0; box-sizing: border-box; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-s { flex: 1 1 64px; max-width: 120px; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-m { flex: 1 1 120px; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-l { flex: 1 1 215px; min-width: min(100%, 215px); }
+.charsheet.charsheet .sheet-det-grid > label input, .charsheet.charsheet .sheet-det-grid > label select { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; font-size: 11px !important; padding: 1px 4px !important; }
+.charsheet.charsheet .sheet-det-grid > label select { height: 22px; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-sex { flex: 0 1 84px; min-width: 76px; }
+.charsheet.charsheet .sheet-det-grid > label textarea.sheet-det-ta { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; font-size: 11px !important; padding: 2px 4px !important; resize: none !important; overflow: hidden; min-height: 22px !important; height: auto; field-sizing: content; line-height: 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-m { flex: 1 1 150px; }
+.charsheet.charsheet .sheet-det-grid > label { display: flex !important; flex-direction: column; justify-content: flex-start !important; gap: 1px; margin: 0 !important; padding: 0 !important; height: auto !important; min-height: 0 !important; line-height: 14px; }
+.charsheet.charsheet .sheet-det-grid > label > span { line-height: 14px; }
+.charsheet.charsheet .sheet-det-grid > label input, .charsheet.charsheet .sheet-det-grid > label select, .charsheet.charsheet .sheet-det-grid > label textarea { margin: 0 !important; }
+.charsheet.charsheet .sheet-det-grid > label:has(input[name="attr_det_eyes"]), .charsheet.charsheet .sheet-det-grid > label:has(textarea[name="attr_det_eyes"]) { flex: 1 1 80px; }
+
+
+.charsheet.charsheet .sheet-diceroller-grid.sheet-diceroller-grid { display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 6px 8px !important; padding: 2px 2px !important; box-sizing: border-box; overflow: visible !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-rollcontainer.sheet-rollcontainer { flex: 0 0 48px !important; min-height: 40px !important; height: 40px !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options { display: inline-flex !important; align-items: center !important; flex-wrap: wrap; height: auto !important; min-height: 28px; margin: 0 !important; padding: 0 1px !important; overflow: visible !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options button.sheet-toggle { font-size: 12px !important; line-height: 20px !important; height: 24px !important; padding: 1px 10px !important; margin: 0 !important; box-sizing: border-box !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-rolldisplay { flex: 1 1 160px !important; height: 28px !important; min-height: 0 !important; margin: 0 !important; box-sizing: border-box !important; align-self: center !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options:last-child, .charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options ~ .sheet-rolldisplay ~ .sheet-diceroller-options { flex: 1 1 100% !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-rolldisplay.sheet-rolldisplay { width: auto !important; max-width: none !important; height: 30px !important; }
+
+
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb { flex: 0 0 10px; width: 10px !important; height: 10px !important; margin: 0 0 0 1px !important; }
+.charsheet.charsheet .sheet-skm { margin-left: 0 !important; }
+.charsheet.charsheet button.sheet-spec-caret { width: 9px !important; min-width: 0 !important; padding: 0 !important; flex: 0 0 9px !important; }
+.charsheet.charsheet.charsheet .sheet-skills button.sheet-toggle.sheet-toggle { font-size: 12.5px !important; letter-spacing: -0.25px; padding-left: 1px !important; padding-right: 1px !important; }
+
+
+.charsheet.charsheet .sheet-skills-renown .sheet-renown-row { align-items: center !important; min-height: 20px; }
+.charsheet.charsheet .sheet-skills-renown .sheet-renown-row > span:first-child { display: flex !important; align-items: center !important; gap: 6px; height: 20px; }
+.charsheet.charsheet .sheet-renown-row span.sheet-ren-ic, .charsheet.charsheet span.sheet-ren-ic.sheet-ren-badge { flex: 0 0 18px !important; width: 18px !important; height: 18px !important; margin: 0 !important; vertical-align: middle !important; background-size: 18px 18px !important; background-position: center !important; align-self: center; }
+.charsheet.charsheet .sheet-skills-renown .sheet-renown-row > span:first-child > span[data-i18n] { line-height: 18px; position: relative; top: 1px; }
+.charsheet.charsheet .sheet-mgx .sheet-mgf-dots { display: inline-flex !important; align-items: center !important; gap: 4px; line-height: 16px; }
+.charsheet.charsheet .sheet-mgx .sheet-mgf-dots span.sheet-ren-ic { margin: 0 !important; vertical-align: middle !important; position: relative; top: -1px; }
+
+
+.charsheet input[type="text"], .charsheet input[type="number"], .charsheet textarea, .charsheet select { box-sizing: border-box; }
+.charsheet input[type="text"]:focus, .charsheet input[type="number"]:focus, .charsheet textarea:focus, .charsheet select:focus { outline: none !important; box-shadow: inset 0 0 0 2px var(--temp-dot, #8a6d3b) !important; }
+.charsheet .sheet-det-grid, .charsheet .sheet-fc-notes, .charsheet .sheet-midpane, .charsheet .sheet-repcontainer, .charsheet .sheet-hw-table td { padding-left: 2px; padding-right: 2px; }
+
+
+.charsheet .sheet-page1 > .sheet-flex > .sheet-corporeal.sheet-horizontal-spacer { flex: 0 0 9px !important; width: 9px !important; min-width: 0 !important; padding: 0 !important; margin: 0 !important; }
+.charsheet .sheet-page1 .sheet-grow > .sheet-flex { column-gap: 9px !important; }
+.charsheet .sheet-page1 .sheet-grow > .sheet-flex > .sheet-horizontal-spacer { display: none !important; }
+.charsheet .sheet-page1 .sheet-grow > .sheet-flex > div:last-child { margin-left: 0 !important; }
+
+
+.charsheet .sheet-mp-notes .sheet-det-top { display: flex !important; flex-wrap: wrap; align-items: flex-start; gap: 8px 12px; padding: 2px; box-sizing: border-box; }
+.charsheet .sheet-mp-notes .sheet-det-top > .sheet-det-portrait { flex: 0 0 210px !important; width: 210px !important; max-width: 100%; box-sizing: border-box; }
+.charsheet .sheet-mp-notes .sheet-det-top > .sheet-det-grid { flex: 1 1 240px !important; min-width: 0 !important; width: auto !important; }
+
+
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) { grid-column: 3 / 4 !important; grid-row: 2 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Chronicle"]) { grid-column: 2 / 3 !important; grid-row: 2 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) .sheet-wolf-hdr-wrap { flex: 1 1 auto; min-width: 0; display: flex; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) select.sheet-wolf-sel { flex: 1 1 auto; width: 100% !important; min-width: 0; max-width: none !important; box-sizing: border-box; padding-left: 3px; padding-right: 14px; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_GroupName"]) { grid-column: 2 / 3 !important; grid-row: 1 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Concept"]) { grid-column: 1 / 3 !important; grid-row: 3 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) { display: grid !important; grid-template-columns: minmax(0, 1fr); align-items: center; row-gap: 0; grid-row: 2 / 4 !important; align-self: start; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) > .sheet-input-label { width: auto !important; min-width: 0 !important; margin: 0 !important; text-align: left !important; line-height: 14px; }
+
+
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Virtue"]), input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Vice"]) { display: none !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Concept"]) input { max-width: 246px; }
+
+
+.charsheet .sheet-skills div:has(> span.sheet-skm) { display: flex !important; align-items: center !important; }
+.charsheet.charsheet .sheet-skills span.sheet-skm { order: -1; flex: 0 0 11px !important; width: 11px !important; height: 11px; margin: 0 2px 0 0 !important; padding: 0 !important; display: inline-flex !important; align-items: center; justify-content: center; align-self: center; }
+.charsheet.charsheet .sheet-skills span.sheet-skm input.sheet-skm-cb { margin: 0 !important; position: static !important; vertical-align: middle; }
+.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle, .charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-spec-caret { align-self: center; margin-top: 0 !important; margin-bottom: 0 !important; }
+input.sheet-type:not([value="werewolf2"]):not([value="breeds2"]):not([value="hunter2"]):not([value="mage2"]) ~ * .sheet-skills span.sheet-skm { display: none !important; }
+.charsheet.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle.sheet-toggle { font-size: 12px !important; letter-spacing: -.3px !important; }
 .charsheet .sheet-entry-head .sheet-mcat-badge { display: inline-block; flex: 0 0 auto; margin: 0 4px; padding: 0 4px; border-radius: 7px; font: bold 9px/13px Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; border: 1px solid currentColor; opacity: .9; color: #6a5a3a; vertical-align: middle; }
 .charsheet .sheet-entry-head .sheet-mcat-badge:empty { display: none; }
 .charsheet .sheet-entry > input.sheet-mcat-flag[value="Mental"] ~ .sheet-entry-head .sheet-mcat-badge { color: #3a6fb0; }input.sheet-dm[value="1"] ~ .sheet-background .sheet-entry > input.sheet-mcat-flag[value="Mental"] ~ .sheet-entry-head .sheet-mcat-badge,
@@ -2386,7 +2492,10 @@ input.sheet-dm[value="1"] ~ .sheet-background .sheet-entry > input.sheet-mcat-fl
 .charsheet input.sheet-midtab[value="kuruth"] ~ .sheet-midpane.sheet-mp-kuruth { display: block !important; }
 .charsheet input.sheet-midtab[value="gear"] ~ .sheet-midpane.sheet-mp-gear { display: block !important; }
 .charsheet input.sheet-midtab[value="notes"] ~ .sheet-midpane.sheet-mp-notes { display: block !important; }
-.charsheet input.sheet-midtab:is([value="weapons"],[value="kuruth"],[value="gear"],[value="notes"]) ~ div:not(.sheet-midtabs):not(.sheet-midpane) { display: none !important; }
+.charsheet input.sheet-midtab[value="weapons"] ~ div:not(.sheet-midtabs):not(.sheet-midpane),
+.charsheet input.sheet-midtab[value="kuruth"] ~ div:not(.sheet-midtabs):not(.sheet-midpane),
+.charsheet input.sheet-midtab[value="gear"] ~ div:not(.sheet-midtabs):not(.sheet-midpane),
+.charsheet input.sheet-midtab[value="notes"] ~ div:not(.sheet-midtabs):not(.sheet-midpane) { display: none !important; }
 .charsheet .sheet-midpane .sheet-leon-pane { padding: 0 !important; margin: 0 !important; width: 100%; box-sizing: border-box; overflow-x: auto; }
 .charsheet .sheet-midpane .sheet-two-col { display: grid !important; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 6px; }
 .charsheet .sheet-midpane table.sheet-forms-table { font-size: 10px; width: 100%; }
@@ -2703,7 +2812,9 @@ input[type="checkbox"].sheet-entry-toggle + .sheet-entry-head::before { content:
 input[type="checkbox"].sheet-entry-toggle:checked + .sheet-entry-head::before { border-color: #8b1010 !important; transform: rotate(45deg) !important; top: 5px !important; }
 .sheet-darkmode input[type="checkbox"].sheet-entry-toggle + .sheet-entry-head::before, input.sheet-dm[value="1"] ~ .sheet-background input[type="checkbox"].sheet-entry-toggle + .sheet-entry-head::before { border-color: #aaa; }
 .sheet-darkmode input[type="checkbox"].sheet-entry-toggle:checked + .sheet-entry-head::before, input.sheet-dm[value="1"] ~ .sheet-background input[type="checkbox"].sheet-entry-toggle:checked + .sheet-entry-head::before { border-color: #e06060 !important; }
-.charsheet :is(button[type="roll"], button.sheet-was-roll).sheet-entry-post::before, button.sheet-entry-post::before { content: "" !important; display: none !important; }
+.charsheet button[type="roll"].sheet-entry-post::before,
+.charsheet button.sheet-was-roll.sheet-entry-post::before,
+button.sheet-entry-post::before { content: "" !important; display: none !important; }
 button.sheet-spec-caret > span::before { content: "" !important; font-family: Arial, sans-serif !important; width: 4px; height: 4px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); margin: 0 2px 1px 0; vertical-align: middle; }
 input.sheet-spec-openflag[value="1"] ~ span::before { transform: rotate(45deg) !important; }
 input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-family: Arial, sans-serif !important; font-size: 10px; }
@@ -2718,6 +2829,85 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet .sheet-mp-kuruth .sheet-kuruth-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 88px), 1fr)); gap: 8px; }
 .charsheet .sheet-mp-kuruth .sheet-kuruth-tier { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-weight: bold; font-size: 12px; }
 .charsheet .sheet-mp-kuruth .sheet-kuruth-tier textarea { width: 100% !important; min-width: 0 !important; box-sizing: border-box; min-height: 140px; resize: vertical; font-weight: normal; }
+.charsheet .sheet-main-forms .sheet-form-qrow { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 10px; margin: 2px 0 4px; padding: 0 2px; }
+.charsheet .sheet-main-forms .sheet-form-qrow .sheet-form-hw-mini { font-size: 12px; white-space: nowrap; opacity: .9; }
+.charsheet .sheet-main-forms .sheet-form-qrow button.sheet-quick { margin: 0; padding: 1px 8px; font-size: 12px; line-height: 18px; height: auto; width: auto; }
+
+/* r8 forms: active-card glow, feature notes, Ur'Khar */
+.charsheet .sheet-fcard { position: relative; }
+.charsheet .sheet-fc-glow { display: none; position: absolute; top: -1px; left: -1px; right: -1px; bottom: -1px; border: 2px solid var(--temp-dot, #aa5a1e); border-radius: 6px; box-shadow: 0 0 8px var(--temp-dot, #aa5a1e), inset 0 0 6px rgba(170,90,30,.35); pointer-events: none; }
+.charsheet .sheet-fcard.sheet-fc-hishu input.sheet-fc-cur[value="hishu"] + .sheet-fc-glow { display: block; }
+.charsheet .sheet-fcard.sheet-fc-dalu input.sheet-fc-cur[value="dalu"] + .sheet-fc-glow { display: block; }
+.charsheet .sheet-fcard.sheet-fc-gauru input.sheet-fc-cur[value="gauru"] + .sheet-fc-glow { display: block; }
+.charsheet .sheet-fcard.sheet-fc-urkhar input.sheet-fc-cur[value="urkhar"] + .sheet-fc-glow { display: block; }
+.charsheet .sheet-fcard.sheet-fc-urshul input.sheet-fc-cur[value="urshul"] + .sheet-fc-glow { display: block; }
+.charsheet .sheet-fcard.sheet-fc-urhan input.sheet-fc-cur[value="urhan"] + .sheet-fc-glow { display: block; }
+.charsheet .sheet-fcards > input.sheet-urkhar-flag:not([value="1"]) ~ .sheet-fcard.sheet-fc-urkhar { display: none !important; }
+.charsheet .sheet-fc-urnote { display: none; font-size: 11px; margin: 2px 0; opacity: .9; }
+.charsheet .sheet-fcards > input.sheet-urkhar-flag[value="1"] ~ .sheet-fc-gauru .sheet-fc-urnote { display: block; }
+.charsheet .sheet-fc-tw { position: relative; display: inline-flex; flex-direction: column; max-width: 100%; }
+.charsheet .sheet-fc-tw input.sheet-fc-tg { position: absolute; top: 0; left: 0; width: 100%; height: 19px; margin: 0; opacity: 0; cursor: pointer; z-index: 2; }
+.charsheet .sheet-fc-tw .sheet-fc-trait { cursor: pointer; align-self: flex-start; }
+.charsheet .sheet-fc-tw .sheet-fc-trait::after { content: ""; display: inline-block; margin-left: 4px; vertical-align: middle; border: 3px solid rgba(0,0,0,0); border-top: 4px solid currentColor; border-bottom: 0; opacity: .7; }
+.charsheet .sheet-fc-tw input.sheet-fc-tg:checked ~ .sheet-fc-trait { background: color-mix(in srgb, var(--temp-dot, #aa5a1e) 35%, rgba(0,0,0,0)); border-color: var(--temp-dot, #aa5a1e); }
+.charsheet .sheet-fc-tw .sheet-fc-desc { display: none; font-size: 11px; line-height: 1.35; margin: 3px 0 4px; padding: 4px 8px; border-left: 2px solid var(--temp-dot, #aa5a1e); background: rgba(0,0,0,.18); white-space: normal; user-select: text; }
+.charsheet .sheet-fc-tw:has(input.sheet-fc-tg:checked) { flex: 1 1 100%; }
+.charsheet .sheet-fc-tw input.sheet-fc-tg:checked ~ .sheet-fc-desc { display: block; }
+.charsheet .sheet-fcard .sheet-fc-traits { opacity: 1 !important; }
+.charsheet .sheet-fc-urtrack { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 4px 0; font-size: 12px; }
+.charsheet .sheet-fc-urtrack label, .charsheet .sheet-fc-urtrack .sheet-ur-tl { display: inline-flex; align-items: center; gap: 4px; margin: 0; }
+.charsheet .sheet-fc-urtrack input.sheet-ur-turns { width: 34px !important; text-align: center; -webkit-appearance: textfield; -moz-appearance: textfield; appearance: textfield; pointer-events: none; }
+.charsheet .sheet-fc-urtrack input.sheet-ur-turns::-webkit-inner-spin-button, .charsheet .sheet-fc-urtrack input.sheet-ur-turns::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.charsheet .sheet-fc-urinfo { flex: 1 1 100%; font-size: 11px; opacity: .85; }
+
+/* r8 Harmony & Primal Urge reference */
+.charsheet .sheet-huref { position: relative; margin: 8px 2px 4px; padding: 2px 4px; border: 1px solid rgba(170,90,30,.6); border-radius: 6px; }
+.charsheet .sheet-huref input.sheet-huref-tg { position: absolute; top: 0; left: 0; width: 100%; height: 22px; margin: 0; opacity: 0; cursor: pointer; z-index: 2; }
+.charsheet .sheet-huref-head { font-weight: bold; line-height: 20px; }
+.charsheet .sheet-huref-hint { font-weight: normal; font-size: 11px; opacity: .7; }
+.charsheet .sheet-huref-body { display: none; }
+.charsheet .sheet-huref input.sheet-huref-tg:checked ~ .sheet-huref-body { display: block; }
+.charsheet .sheet-huref-t { margin: 6px 0 2px; font-weight: bold; }
+.charsheet table.sheet-huref-tbl { width: 100%; border-collapse: collapse; table-layout: auto; font-size: 11.5px; line-height: 1.3; }
+.charsheet table.sheet-huref-tbl th, .charsheet table.sheet-huref-tbl td { border: 1px solid rgba(255,255,255,.15); padding: 2px 4px; text-align: left; vertical-align: top; white-space: normal; word-break: normal; overflow-wrap: anywhere; }
+.charsheet table.sheet-huref-tbl th { cursor: help; }
+.charsheet .sheet-huref-note { font-size: 11px; margin: 4px 0 2px; opacity: .9; }
+.charsheet .sheet-ref-q { cursor: help; font-size: 9px; opacity: .8; }
+.charsheet input.sheet-pu-cur[value="1"] ~ table.sheet-pu-tbl tr.sheet-pu-1 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="2"] ~ table.sheet-pu-tbl tr.sheet-pu-2 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="3"] ~ table.sheet-pu-tbl tr.sheet-pu-3 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="4"] ~ table.sheet-pu-tbl tr.sheet-pu-4 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="5"] ~ table.sheet-pu-tbl tr.sheet-pu-5 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="6"] ~ table.sheet-pu-tbl tr.sheet-pu-6 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="7"] ~ table.sheet-pu-tbl tr.sheet-pu-7 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="8"] ~ table.sheet-pu-tbl tr.sheet-pu-8 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="9"] ~ table.sheet-pu-tbl tr.sheet-pu-9 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-pu-cur[value="10"] ~ table.sheet-pu-tbl tr.sheet-pu-10 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="0"] ~ table.sheet-hm-tbl tr.sheet-hm-0 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="1"] ~ table.sheet-hm-tbl tr.sheet-hm-1 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="2"] ~ table.sheet-hm-tbl tr.sheet-hm-2 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="3"] ~ table.sheet-hm-tbl tr.sheet-hm-3 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="4"] ~ table.sheet-hm-tbl tr.sheet-hm-4 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="5"] ~ table.sheet-hm-tbl tr.sheet-hm-5 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="6"] ~ table.sheet-hm-tbl tr.sheet-hm-6 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="7"] ~ table.sheet-hm-tbl tr.sheet-hm-7 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="8"] ~ table.sheet-hm-tbl tr.sheet-hm-8 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="9"] ~ table.sheet-hm-tbl tr.sheet-hm-9 td { background: rgba(170,90,30,.35); font-weight: bold; }
+.charsheet input.sheet-hm-cur[value="10"] ~ table.sheet-hm-tbl tr.sheet-hm-10 td { background: rgba(170,90,30,.35); font-weight: bold; }
+
+/* r8 health damage / heal buttons: same marks as the track boxes */
+.charsheet .sheet-heal-row { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 3px 10px; margin: 3px 0 2px; padding: 1px 2px; }
+.charsheet .sheet-heal-row .sheet-hb-grp { display: inline-flex; align-items: center; gap: 3px; }
+.charsheet .sheet-heal-row .sheet-hb-lbl { font-weight: bold; font-size: 13px; line-height: 14px; width: 8px; text-align: center; }
+.charsheet .sheet-heal-row .sheet-hb-dmg { color: #d0453a; }
+.charsheet .sheet-heal-row .sheet-hb-heal { color: #4fb36a; }
+.charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-grp > button.sheet-hb.sheet-hb { width: 16px !important; height: 16px !important; min-width: 0 !important; padding: 0 !important; margin: 0 !important; border: 1px solid currentColor !important; border-radius: 2px !important; color: #4fb36a !important; border-color: #4fb36a !important; background-color: rgba(0,0,0,.25) !important; background-repeat: no-repeat !important; background-size: 100% 100% !important; cursor: pointer; box-sizing: border-box !important; }
+.charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-dmg > button.sheet-hb.sheet-hb.sheet-hb { background-color: #d0453a !important; color: #1a1a1a !important; border-color: #d0453a !important; }
+.charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-grp > button.sheet-hb.sheet-hb:hover { filter: brightness(1.25); }
+.charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-grp > button.sheet-hb.sheet-hb::before, .charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-grp > button.sheet-hb.sheet-hb::after { content: none !important; }
+.charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-grp > button.sheet-hb.sheet-hb.sheet-hb-b { background-image: linear-gradient(to top left, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)) !important; }
+.charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-grp > button.sheet-hb.sheet-hb.sheet-hb-l { background-image: linear-gradient(to top left, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to top right, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)) !important; }
+.charsheet.charsheet.charsheet.charsheet div.sheet-heal-row span.sheet-hb-grp > button.sheet-hb.sheet-hb.sheet-hb-a { background-image: linear-gradient(to top left, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to top right, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to right, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to bottom, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)) !important; }
 
 /* r7: Config card grid */
 .charsheet .sheet-settings .sheet-cfg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; padding: 4px 0 10px; align-items: start; grid-auto-flow: row dense; }
@@ -2767,6 +2957,54 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .sheet-rolltemplate-cofd-entry .sheet-ce-emote { font-style: italic; text-align: center; margin: 2px 0 4px; opacity: .9; }
 .sheet-rolltemplate-cofd-entry .sheet-ce-wpst { text-align: center; font-size: 11px; font-weight: bold; color: #e0a060; }
 
+/* r8 Willpower counter */
+.charsheet .sheet-wp-old { display: none !important; }
+.charsheet .sheet-wp-ctr { display: flex; justify-content: center; align-items: center; gap: 4px; margin: 2px 0; padding: 1px 2px; }
+.charsheet input.sheet-wp-cur { -webkit-appearance: textfield; -moz-appearance: textfield; appearance: textfield; pointer-events: none; }
+.charsheet input.sheet-wp-cur::-webkit-inner-spin-button, .charsheet input.sheet-wp-cur::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* isolation: each sheet type shows only its own game-line content */
+.charsheet input.sheet-game-line[value="mortal"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2):not(.sheet-mortal2-ghost):not(.sheet-mortal2-organization),
+.charsheet input.sheet-type[value="mortal2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2),
+.charsheet input.sheet-type[value="mortal2-ghost"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2-ghost),
+.charsheet input.sheet-type[value="mortal2-organization"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2-organization),
+.charsheet input.sheet-game-line[value="vampire"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-vampire):not(.sheet-vampire2),
+.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-vampire):not(.sheet-vampire2),
+.charsheet input.sheet-game-line[value="werewolf"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-werewolf):not(.sheet-werewolf2),
+.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-werewolf):not(.sheet-werewolf2),
+.charsheet input.sheet-game-line[value="mage"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mage):not(.sheet-mage2),
+.charsheet input.sheet-type[value="mage2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mage):not(.sheet-mage2),
+.charsheet input.sheet-game-line[value="promethean"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-promethean):not(.sheet-promethean2),
+.charsheet input.sheet-type[value="promethean2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-promethean):not(.sheet-promethean2),
+.charsheet input.sheet-game-line[value="changeling"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-changeling):not(.sheet-changeling2),
+.charsheet input.sheet-type[value="changeling2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-changeling):not(.sheet-changeling2),
+.charsheet input.sheet-type[value="hunter2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-hunter):not(.sheet-hunter2),
+.charsheet input.sheet-game-line[value="geist"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-geist):not(.sheet-geist2):not(.sheet-geist2-geist):not(.sheet-geist2-organization),
+.charsheet input.sheet-type[value="geist2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-geist):not(.sheet-geist2),
+.charsheet input.sheet-type[value="geist2-geist"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-geist):not(.sheet-geist2-geist),
+.charsheet input.sheet-type[value="geist2-organization"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-geist):not(.sheet-geist2-organization),
+.charsheet input.sheet-game-line[value="mummy"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mummy):not(.sheet-mummy2),
+.charsheet input.sheet-type[value="mummy2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mummy):not(.sheet-mummy2),
+.charsheet input.sheet-game-line[value="demon"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-demon):not(.sheet-demon1):not(.sheet-demon2),
+.charsheet input.sheet-type[value="demon1"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-demon):not(.sheet-demon1),
+.charsheet input.sheet-type[value="demon2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-demon):not(.sheet-demon2),
+.charsheet input.sheet-game-line[value="beast"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-beast):not(.sheet-beast1):not(.sheet-beast2),
+.charsheet input.sheet-type[value="beast1"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-beast):not(.sheet-beast1),
+.charsheet input.sheet-type[value="beast2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-beast):not(.sheet-beast2),
+.charsheet input.sheet-game-line[value="homebrew"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-homebrew):not(.sheet-homebrew2),
+.charsheet input.sheet-type[value="homebrew2"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-homebrew):not(.sheet-homebrew2),
+.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-deviant-the-renegades),
+.charsheet input.sheet-type[value="breeds2"] ~ * .sheet-game-line.sheet-game-line.sheet-werewolf2:not(.sheet-breeds2) { display: none !important; }
+.charsheet.charsheet .sheet-res-ctr input.sheet-res-cur { -webkit-appearance: textfield !important; -moz-appearance: textfield !important; appearance: textfield !important; pointer-events: none; user-select: none; cursor: default; caret-color: rgba(0,0,0,0); }
+.charsheet.charsheet .sheet-res-ctr input.sheet-res-cur::-webkit-outer-spin-button, .charsheet.charsheet .sheet-res-ctr input.sheet-res-cur::-webkit-inner-spin-button { -webkit-appearance: none !important; margin: 0 !important; display: none !important; }
+
+.charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="roll"].sheet-rollstyle.sheet-rollstyle, .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="action"].sheet-rollstyle.sheet-rollstyle, .charsheet.charsheet .sheet-rollcontainer > button.sheet-rollstyle.sheet-rollstyle.sheet-was-roll { position: absolute !important; top: 3px !important; left: 3px !important; right: 3px !important; bottom: 3px !important; width: auto !important; min-width: 0 !important; height: auto !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; cursor: pointer !important; flex: none !important; transform: none; border: 0 !important; box-shadow: none !important; font-size: 0 !important; color: rgba(0,0,0,0) !important; background-color: rgba(0,0,0,0) !important; background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver.png") !important; background-position: center !important; background-size: contain !important; background-repeat: no-repeat !important; text-shadow: none !important; }
+.charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="roll"].sheet-rollstyle.sheet-rollstyle:hover, .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="action"].sheet-rollstyle.sheet-rollstyle:hover, .charsheet.charsheet .sheet-rollcontainer > button.sheet-rollstyle.sheet-rollstyle.sheet-was-roll:hover { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver-hover.png") !important; }
+.charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="roll"].sheet-rollstyle.sheet-rollstyle:active, .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="action"].sheet-rollstyle.sheet-rollstyle:active, .charsheet.charsheet .sheet-rollcontainer > button.sheet-rollstyle.sheet-rollstyle.sheet-was-roll:active { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver-pressed.png") !important; }
+.charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="roll"].sheet-rollstyle.sheet-rollstyle::before, .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="action"].sheet-rollstyle.sheet-rollstyle::before, .charsheet.charsheet .sheet-rollcontainer > button.sheet-rollstyle.sheet-rollstyle.sheet-was-roll::before, .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="roll"].sheet-rollstyle.sheet-rollstyle::after, .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type="action"].sheet-rollstyle.sheet-rollstyle::after, .charsheet.charsheet .sheet-rollcontainer > button.sheet-rollstyle.sheet-rollstyle.sheet-was-roll::after { content: none !important; display: none !important; font-size: 0 !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-rollcontainer.sheet-rollcontainer { position: relative !important; display: block !important; align-self: center !important; height: 40px !important; min-height: 0 !important; width: 48px !important; min-width: 48px !important; flex: 0 0 48px !important; }
+.charsheet.charsheet .sheet-entry-section.sheet-skillpro { display: none !important; }
+
 
 .charsheet:has(input.sheet-type[value="mortal2"]) { --pa: #2d3a6e; --pad: #9fb0e8; --pb: #1c2140; --ptex: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@main/tex/mortal-tex.jpg"); }
 .charsheet:has(input.sheet-type[value="vampire2"]) { --pa: #7a1418; --pad: #e0565c; --pb: #2a0d0e; --ptex: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@main/tex/vampire-tex.jpg"); }
@@ -2789,12 +3027,23 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet .sheet-background { background-image: linear-gradient(rgba(246,242,234,.80), rgba(246,242,234,.84)), var(--ptex) !important; background-size: auto, 640px 640px !important; background-repeat: repeat !important; }
 input.sheet-dm[value="1"] ~ .sheet-background, body.sheet-darkmode .charsheet .sheet-background { background-image: linear-gradient(rgba(10,10,12,.50), rgba(10,10,12,.62)), var(--ptex) !important; background-size: auto, 640px 640px !important; background-repeat: repeat !important; }
 /* type */
-.charsheet .sheet-background, .charsheet .sheet-background :is(div, span, label, button.sheet-toggle, .sheet-input-label, .sheet-subheader, .sheet-subsubheader, .sheet-attributes-category):not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x) { font-family: "Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif !important; }
+.charsheet .sheet-background,
+.charsheet .sheet-background div:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x),
+.charsheet .sheet-background span:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x),
+.charsheet .sheet-background label:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x),
+.charsheet .sheet-background button.sheet-toggle:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x),
+.charsheet .sheet-background .sheet-input-label:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x),
+.charsheet .sheet-background .sheet-subheader:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x),
+.charsheet .sheet-background .sheet-subsubheader:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x),
+.charsheet .sheet-background .sheet-attributes-category:not(.sheet-ic):not(.sheet-pictos):not(.sheet-hl-pill-x) { font-family: "Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif !important; }
 .charsheet .sheet-background button.sheet-toggle { font-size: 14px; letter-spacing: 0; }
 .charsheet .sheet-skills button.sheet-toggle { font-size: 13px; }
 .charsheet .sheet-input-label { color: var(--pa) !important; font-size: 14px; } .charsheet .sheet-attributes-category { color: var(--pa) !important; font-size: 13px; padding-right: 3px; }
 .charsheet .sheet-attributes-category { font-style: italic; text-transform: lowercase; }
-input.sheet-dm[value="1"] ~ .sheet-background :is(.sheet-input-label, .sheet-attributes-category), .sheet-darkmode .sheet-background :is(.sheet-input-label, .sheet-attributes-category) { color: var(--pad) !important; }
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-input-label,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-attributes-category,
+.sheet-darkmode .sheet-background .sheet-input-label,
+.sheet-darkmode .sheet-background .sheet-attributes-category { color: var(--pad) !important; }
 /* section headers: brush banner (default) or ornamental rules (Forsaken) */
 .charsheet .sheet-section-header { --hdr-bg: var(--pb); --hdr-fg: #f3ecdf; font-family: "IM Fell English SC", "Caslon Antique", Georgia, serif !important; font-size: 22px !important; font-weight: normal !important;
   letter-spacing: 2px; text-transform: uppercase; text-decoration: none !important; line-height: 28px; color: var(--hdr-fg) !important; margin: 8px 0 6px !important; padding: 0 12px !important;
@@ -2813,11 +3062,17 @@ input.sheet-dm[value="1"] ~ .sheet-background .sheet-section-header, .sheet-dark
 .charsheet:has(input.sheet-type[value="breeds2"]) input.sheet-dm[value="1"] ~ .sheet-background .sheet-section-header { color: var(--pad) !important; }
 /* sub headers */
 .charsheet .sheet-subheader, .charsheet .sheet-subheader span { font-family: "IM Fell English SC", Georgia, serif !important; font-weight: normal !important; text-decoration: none !important; color: var(--pa) !important; letter-spacing: 1px; }
-input.sheet-dm[value="1"] ~ .sheet-background :is(.sheet-subheader, .sheet-subheader span), .sheet-darkmode .sheet-background :is(.sheet-subheader, .sheet-subheader span) { color: var(--pad) !important; }
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-subheader,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-subheader span,
+.sheet-darkmode .sheet-background .sheet-subheader,
+.sheet-darkmode .sheet-background .sheet-subheader span { color: var(--pad) !important; }
 .charsheet .sheet-subsubheader { font-style: italic; opacity: .85; }
 /* ruled info fields like the PDF (underline, no box) */
 .charsheet .sheet-info-grid input[type=text], .charsheet .sheet-info-grid select { border: 0 !important; border-bottom: 1px solid color-mix(in srgb, var(--pa) 60%, rgba(0,0,0,0)) !important; border-radius: 0 !important; background: rgba(255,255,255,.35) !important; box-shadow: none !important; }
-input.sheet-dm[value="1"] ~ .sheet-background .sheet-info-grid :is(input[type=text], select), .sheet-darkmode .sheet-info-grid :is(input[type=text], select) { background: rgba(0,0,0,.35) !important; border-bottom-color: color-mix(in srgb, var(--pad) 60%, rgba(0,0,0,0)) !important; }
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-info-grid input[type=text],
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-info-grid select,
+.sheet-darkmode .sheet-info-grid input[type=text],
+.sheet-darkmode .sheet-info-grid select { background: rgba(0,0,0,.35) !important; border-bottom-color: color-mix(in srgb, var(--pad) 60%, rgba(0,0,0,0)) !important; }
 /* dots: thin accent ring, filled = ink */
 .charsheet button.sheet-dot { border: 1px solid color-mix(in srgb, var(--pa) 70%, #000) !important; }
 input.sheet-dm[value="1"] ~ .sheet-background button.sheet-dot, .sheet-darkmode button.sheet-dot { border-color: color-mix(in srgb, var(--pad) 75%, #fff) !important; }
@@ -2845,7 +3100,8 @@ input.sheet-dm[value="1"] ~ .sheet-background .sheet-topinfo, .sheet-darkmode .s
 .charsheet .sheet-topinfo .sheet-info-grid.sheet-ig2 { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 4px 14px !important; margin: 0 !important; width: 100% !important; box-sizing: border-box; }
 .charsheet .sheet-ig2 > .sheet-ifield { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .charsheet .sheet-ig2 > .sheet-ifield > .sheet-input-label { flex: 0 0 74px; text-align: right; font-weight: bold; white-space: nowrap; font-size: 14px; overflow: hidden; text-overflow: ellipsis; }
-.charsheet .sheet-ig2 > .sheet-ifield :is(input[type=text], select) { flex: 1 1 auto; width: auto !important; min-width: 0 !important; max-width: none !important; box-sizing: border-box; height: 22px !important; margin: 0 !important;
+.charsheet .sheet-ig2 > .sheet-ifield input[type=text],
+.charsheet .sheet-ig2 > .sheet-ifield select { flex: 1 1 auto; width: auto !important; min-width: 0 !important; max-width: none !important; box-sizing: border-box; height: 22px !important; margin: 0 !important;
   border: 1px solid color-mix(in srgb, var(--pa) 45%, rgba(128,128,128,.6)) !important; border-radius: 3px !important; padding: 0 5px !important; font-size: 13px !important; }
 
 /* dice roller: no roll-type tag under the die (the active toggle shows it) */

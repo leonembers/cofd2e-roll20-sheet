@@ -411,7 +411,7 @@ CSS = """
 .sheet-entry-section.sheet-weapons .sheet-entry-head { min-height: 20px; }
 .sheet-entry-section.sheet-weapons .sheet-entry-pool { max-width: 260px; }
 .charsheet button[type=roll].sheet-hl-poolbtn { margin-left: auto; padding: 0 4px; border: 0; background: none; box-shadow: none; text-shadow: none; color: inherit; cursor: pointer; font: inherit; line-height: 16px; height: 18px; }
-.charsheet button[type=roll].sheet-hl-poolbtn::before { content: "\2694"; margin-right: 3px; }
+.charsheet button[type=roll].sheet-hl-poolbtn::before { content: none; }
 .charsheet button[type=roll].sheet-hl-poolbtn:hover .sheet-entry-pool { text-decoration: underline; }
 .sheet-entry-section.sheet-weapons .sheet-entry-body { gap: 3px 8px; }
 .sheet-entry-section.sheet-weapons .sheet-entry-body label { flex: 1 1 96px; min-width: 88px; max-width: 200px; font-size: 10px; }

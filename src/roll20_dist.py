@@ -45,7 +45,7 @@ for r in sorted(refs):
     if k in SKIP: continue
     tag = inp.get(k)
     textish = tag is not None and (tag.startswith('<textarea') or tag.startswith('<select') or 'type="text"' in tag)
-    if tag is None and re.search(r'(name|text|label|summary|breakdown|attack|sun)$', k): textish = True
+    if tag is None and re.search(r'(name|text|label|summary|breakdown|attack|sun|note)$', k): textish = True
     init[r] = '' if textish else '0'
     if tag is None: AUDIT.append(f'{r}: no input (worker-set); init "{init[r]}"')
     elif 'value=' not in tag and not textish:
@@ -329,6 +329,12 @@ c += """
 .charsheet .sheet-mp-kuruth .sheet-kuruth-tier textarea { width: 100% !important; min-width: 0 !important; box-sizing: border-box; min-height: 140px; resize: vertical; font-weight: normal; }
 """
 print('kuruth tab built')
+import formsfx as _ff
+h, c, _ffmiss = _ff.apply(h, c); print('forms: TBD features', _ffmiss)
+import huref as _hu
+h, c = _hu.apply(h, c)
+import heal as _heal
+h, c = _heal.apply(h, c)
 import nodtf as _nd
 h = h.replace('<input type="text" name="attr_aspiration" />', '<textarea name="attr_aspiration" rows="2" class="sheet-asp-ta" title="Aspiration"></textarea>', 1)  # long sentences: wrap instead of clipping
 h, c, _tt, _ndn, _ndgone, _ndsaved = _nd.apply(h, c, json.load(open(f'{R}/translation.json', encoding='utf-8')))
@@ -343,11 +349,16 @@ import reroll as _rr, calcs as _calcs, splatfonts as _sf
 _sfi, _sfc = _sf.css(); c = _sfi + c + '\n' + _sfc
 h = _calcs.apply(h)
 h, c, _nrr = _rr.apply(h, c); print('reroll buttons', _nrr)
+import wpcounter as _wpc
+h, c, _wpl = _wpc.apply(h, c); print('wp box refs left in JS', _wpl)
+import isolate as _iso
+h, c, _nis = _iso.apply(h, c); print('isolation selectors', _nis)
 open(f'{R}/dist/sheet.html', 'w', encoding='utf-8').write(h)
 import sys as _s; _s.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import pdfstyle, extras as _ex
 if _ab:
     _ps = pdfstyle.css(_ab, _ex.TYPE_OF)
     _imp = _ps.split('\n', 1)[0]; c = _imp + '\n' + c + '\n' + _ps.split('\n', 1)[1]
+c = _iso.expand_is(c)
 open(f'{R}/dist/sheet.css', 'w', encoding='utf-8').write(c)
 t = json.load(open(f'{R}/translation.json', encoding='utf-8'))
 for _k in _ndgone: t.pop(_k, None)

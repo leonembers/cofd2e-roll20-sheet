@@ -194,7 +194,7 @@ QUICK = f'''
                                 <label class="form-select">&#128058; {T("form","Form")}
                                     <select name="attr_form">{form_opts}</select></label>
                                 {rollbtn("wasuim","&#128165;","Wasu-Im!","@{resolve}+@{composure}","Soft Rage: Resolve + Composure, instant action (W:tF 2E p.102)", cls="rage", kind="Death Rage", emote="@{character_name} snarls and fights for control against the Soft Rage...", outs={"o_succ":"Lucidity: each success buys one turn in control.","o_exc":"The fury breaks: Wasu-Im ends.","o_fail":"No breathing room: attack the nearest foe, or any other action risks Basu-Im.","o_dram":"The leash snaps: Basu-Im, the Hard Rage, takes over."})}
-                                {rollbtn("basuim","&#128308;","Basu-Im!","@{resolve}+@{composure}","Hard Rage: Resolve + Composure (no resistance roll in the book; kept as before)", cls="rage", kind="Death Rage", emote="@{character_name} howls as the Hard Rage tears loose!", outs={"o_succ":"A flicker of self survives the slaughter (Storyteller's call).","o_exc":"A packmate or Touchstone is recognized through the red haze.","o_fail":"Gauru for the Primal Urge duration: ignore wound penalties, kill everything in reach.","o_dram":"Total Kuruth: friend and foe alike are prey."})}
+                                {rollbtn("basuim","&#128308;","Basu-Im!","@{resolve}+@{composure}","Hard Rage: Resolve + Composure (no resistance roll in the book; kept as before)", cls="rage", kind="Death Rage", emote="@{character_name} howls as the Hard Rage tears loose!", outs={"o_succ":"A flicker of self survives the slaughter (Storyteller's call).","o_exc":"A packmate or Touchstone is recognized through the red haze.","o_fail":"Gauru for the Primal Urge duration: ignore wound penalties, kill everything in reach.","o_dram":"Total Kuruth: friend and foe alike are prey.","f_notes":"@{urkhar_basu_note}"})}
                             </div>
                             <div class="quick-actions game-line vampire2">
                                 {rollbtn("frenzy","&#129656;","Rötschreck!","@{resolve}+@{potency}","Resist Frenzy / Rötschreck (Resolve + Blood Potency)", cls="rage", kind="Frenzy", emote="@{character_name} struggles against Rötschreck as the Beast claws at the bars!", outs={"o_succ":"The Beast is held back, for now.","o_exc":"Mastery: the Beast cowers.","o_fail":"The Beast takes over: frenzy, or flee in terror.","o_dram":"The Beast takes over completely."})}
@@ -252,10 +252,10 @@ def textblock(attr, key, label, rows=4):
     return f'<label class="block">{T(key,label)}<textarea name="attr_{attr}" rows="{rows}"></textarea></label>'
 form_rows = [('strength', 'Strength'), ('dexterity', 'Dexterity'), ('stamina', 'Stamina'), ('manipulation', 'Manipulation'), ('size', 'Size'),
              ('defense', 'Defense'), ('initiative', 'Initiative'), ('speed', 'Speed'), ('health', 'Health'), ('perception', 'Perception')]
-_TRAITS = {"Hishu": "Sheep&#8217;s Clothing", "Dalu": "Teeth/Claws +0L; Defense vs. Firearms; Mild Lunacy; Badass Motherf***er",
+_TRAITS = {"Hishu": "Sheep&#8217;s Clothing", "Dalu": "Teeth/Claws +0L; Defense vs. Firearms; Mild Lunacy; Badass Motherfucker",
            "Gauru": "Teeth/Claws +2L (Init +3); Defense vs. Firearms; Full Lunacy; Regeneration; Rage; Primal Fear",
            "Urshul": "Teeth +2L/Claws +1L; Defense vs Firearms; Moderate Lunacy; Weaken the Prey", "Urhan": "Teeth +1L; Chase Down",
-           "Ur&#39;Khar": "Teeth/Claws +2L; Defense vs. Firearms; Full Lunacy; Regeneration; Rage; Primal Fear; once per story"}
+           "Ur'Khar": "Teeth/Claws +2L; Defense vs. Firearms; Full Lunacy; Regeneration; Rage; Primal Fear; once per story"}
 _SHORT = {'strength': 'Str', 'dexterity': 'Dex', 'stamina': 'Sta', 'manipulation': 'Man', 'size': 'Size', 'defense': 'Def', 'initiative': 'Init', 'speed': 'Speed', 'health': 'Health', 'perception': 'Perc'}
 ftab = ['<div class="fcards"><input type="hidden" class="urkhar-flag" name="attr_urkhar_enabled" value="0" />']
 for f in FORMS:
