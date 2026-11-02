@@ -1,5 +1,178 @@
-@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Sorts+Mill+Goudy:ital@0%3B1&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Almendra&family=Black+Ops+One&family=Cinzel&family=Cinzel+Decorative&family=Creepster&family=Fondamento&family=IM+Fell+English+SC&family=Metal+Mania&family=Metamorphous&family=Pirata+One&family=Special+Elite&display=swap");
+@import url("https://fonts.googleapis.com/css?family=IM+Fell+English+SC%7CSorts+Mill+Goudy:400,400i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Almendra%7CBlack+Ops+One%7CCinzel%7CCinzel+Decorative%7CCreepster%7CFondamento%7CIM+Fell+English+SC%7CMetal+Mania%7CMetamorphous%7CPirata+One%7CSpecial+Elite&display=swap");
+.sheet-rolltemplate-wod table,
+.sheet-rolltemplate-wod-attack table,
+.sheet-rolltemplate-wod-simple table,
+.sheet-rolltemplate-wod-3part table,
+.sheet-rolltemplate-wod-initiative table
+{
+    width: 189px;
+    height: 100%;
+    background: url(https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/roll.jpg) no-repeat top left;
+    background-size: 189px 100%;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    border-spacing: 0;
+}
+.sheet-rolltemplate-wod th,
+.sheet-rolltemplate-wod-attack th,
+.sheet-rolltemplate-wod-simple th,
+.sheet-rolltemplate-wod-3part th,
+.sheet-rolltemplate-wod-initiative th
+{
+    color: rgb(112, 0, 0);
+    padding: 20px 20px 2px 20px;
+    line-height: 1.2em;
+    font-size: 1.2em;
+    text-align: left;
+}
+.sheet-rolltemplate-wod td,
+.sheet-rolltemplate-wod-attack td,
+.sheet-rolltemplate-wod-simple td,
+.sheet-rolltemplate-wod-3part td ,
+.sheet-rolltemplate-wod-initiative td
+{
+    padding: 2px 20px 2px 20px;
+    font-size: 1.0em;
+    vertical-align: top;
+}
+.sheet-rolltemplate-wod .sheet-result,
+.sheet-rolltemplate-wod-attack .sheet-result,
+.sheet-rolltemplate-wod-simple .sheet-result,
+.sheet-rolltemplate-wod-3part .sheet-result ,
+.sheet-rolltemplate-wod-initiative .sheet-result
+{
+    font-size: 1.2em;
+    text-align: center;
+    color: rgb(112, 0, 0);
+    padding: 2px 20px 2px 20px;
+}
+.sheet-rolltemplate-wod .inlinerollresult,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult,
+.sheet-rolltemplate-wod-simple .inlinerollresult,
+.sheet-rolltemplate-wod-3part .inlinerollresult,
+.sheet-rolltemplate-wod-initiative .inlinerollresult
+{
+    background-color: rgba(0,0,0,0);
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod-attack .inlinerollresult
+ {
+    background-color: rgba(0,0,0,0);
+    color: #000000;
+    border: none;
+    font-size: 1em;
+    padding: 0px;
+}
+.sheet-rolltemplate-wod .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-simple .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-3part .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.fullcrit
+{
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-simple .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-3part .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.fullfail
+{
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-attack .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-simple .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-3part .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.importantroll
+{
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .sheet-specialrollflag,
+.sheet-rolltemplate-wod-attack .sheet-specialrollflag,
+.sheet-rolltemplate-wod-simple .sheet-specialrollflag,
+.sheet-rolltemplate-wod-3part .sheet-specialrollflag ,
+.sheet-rolltemplate-wod-initiative .sheet-specialrollflag
+{
+    color: #000000;
+    height: 30px;
+    text-align: right;
+    vertical-align: top;
+}
+.sheet-rolltemplate-cofd-entry .sheet-ce { border: 2px solid #2b2b2b; background: #f1eee6; font-family: Georgia, serif; border-radius: 4px; overflow: hidden; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: #1d1d1d; color: #eee; padding: 4px 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #c9a227; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 15px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dots { float: right; letter-spacing: 1px; }
+.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; }
+.sheet-rolltemplate-cofd-entry th { text-align: left; width: 32%; padding: 1px 6px; color: #5a1010; }
+.sheet-rolltemplate-cofd-entry td { padding: 1px 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; font-size: 16px; padding: 4px; border-top: 1px solid #999; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc { color: #0b6b0b; font-size: 12px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail { color: #8a0000; font-size: 12px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag { font-size: 11px; opacity: .8; }
+.sheet-rolltemplate-cofd-entry .sheet-long { padding: 4px 6px; font-size: 12px; border-top: 1px dotted #aaa; white-space: pre-wrap; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-out { font-size: 12px; padding: 2px 4px; border-left: 3px solid #888; margin: 2px 0; white-space: pre-wrap; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ { color: #1a6b1a; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram { color: #900; font-weight: bold; text-transform: uppercase; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk { font-size: 11px; background: rgba(30,70,70,.12); border-left: 3px solid #1e4646; padding: 2px 4px; margin: 2px 0; }
+.sheet-rolltemplate-cofd-entry .sheet-ce { border: 1px solid #2b2b2b; background: #f6f3ec; color: #1b1b1b; font-family: Georgia, "Times New Roman", serif; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.3); margin-left: -7px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band { height: 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: linear-gradient(#262626,#141414); color: #f2f2f2; padding: 5px 8px 6px; position: relative; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-char { display: block; font-size: 10px; color: #bdbdbd; font-family: Arial, sans-serif; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #d4b25a; font-family: Arial, sans-serif; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 16px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-badge { position: absolute; right: 8px; top: 8px; width: 22px; height: 22px; border-radius: 50%; text-align: center; font: bold 13px/22px Arial, sans-serif; color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.6); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-b { background: #3d6fb5; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-l { background: #b8860b; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-a { background: #a01010; }
+.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; border-collapse: collapse; margin: 3px 0; }
+.sheet-rolltemplate-cofd-entry th { text-align: left; width: 30%; padding: 2px 8px; color: #6b1a1a; font: bold 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; }
+.sheet-rolltemplate-cofd-entry td { padding: 2px 8px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; padding: 6px 4px 4px; border-top: 1px solid rgba(0,0,0,.2); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-big, .sheet-rolltemplate-cofd-entry .sheet-ce-big .inlinerollresult { font-size: 34px; font-weight: bold; line-height: 38px; background: rgba(0,0,0,0) !important; border: none !important; padding: 0 !important; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-sl { font: 10px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: #777; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram, .sheet-rolltemplate-cofd-entry .sheet-ce-fail, .sheet-rolltemplate-cofd-entry .sheet-ce-succ, .sheet-rolltemplate-cofd-entry .sheet-ce-exc { display: block; margin: 5px -4px 0; padding: 4px; color: #fff !important; font: bold 12px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram { background: #5c0000; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail { background: #6d6d6d; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ { background: #2e7d32; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc { background: linear-gradient(90deg,#b8860b,#e3b23c); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-out { text-align: left; font-size: 12px; margin: 4px 2px; padding: 3px 6px; border-left: 3px solid #999; background: rgba(0,0,0,.04); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag { display: inline-block; font: 10px Arial, sans-serif; padding: 1px 6px; margin: 3px 2px 0; border-radius: 8px; background: #ddd; color: #333; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk { text-align: left; font-size: 11px; margin: 5px 2px 0; padding: 4px 6px; border-left: 3px solid #1e4646; background: rgba(30,70,70,.1); }
+.sheet-rolltemplate-cofd-entry .sheet-long { font-size: 12px; padding: 3px 8px; border-top: 1px dotted rgba(0,0,0,.2); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mortal { background: #2a2d80; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter { background: #1e4646; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire { background: #6e1e1e; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf { background: #aa5a1e; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mage { background: #beaa5a; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-promethean { background: #1e1e5a; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-changeling { background: #0a6e46; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-geist { background: #82aabe; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mummy { background: #d2be82; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-demon { background: #323246; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-beast { background: #463246; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-deviant-the-renegades { background: #5a1e1e; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce { background: #232326; color: #e6e6e6; border-color: #000; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry th { color: #e09a9a; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-out { background: rgba(255,255,255,.06); }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-flag { background: #444; color: #ddd; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-risk { background: rgba(120,180,180,.12); }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-roll { border-top-color: rgba(255,255,255,.15); }
+.sheet-rolltemplate-wod table, .sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-wod-initiative table { width: 100%; background: #f1eee6 !important; border: 2px solid #2b2b2b; border-radius: 4px; font-family: Georgia, serif; color: #1d1d1d; }
+.sheet-rolltemplate-wod th, .sheet-rolltemplate-wod-attack th, .sheet-rolltemplate-wod-simple th, .sheet-rolltemplate-wod-3part th, .sheet-rolltemplate-wod-initiative th { background: #1d1d1d; color: #eee; padding: 4px 6px; font-size: 14px; }
+.sheet-rolltemplate-wod td, .sheet-rolltemplate-wod-attack td, .sheet-rolltemplate-wod-simple td, .sheet-rolltemplate-wod-3part td, .sheet-rolltemplate-wod-initiative td { padding: 2px 6px; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative table { background: #1f1f23 !important; color: #e4e4e4; border-color: #555; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .sheet-result { color: #e8a0a0; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-specialrollflag { color: #fff !important; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-reroll { text-align: center; margin: 4px 0 2px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-reroll a { display: inline-block; padding: 2px 10px; border-radius: 999px; border: 1px solid #b0542a; background: #3a1c10; color: #f3d9b8; font-size: 12px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-emote { font-style: italic; text-align: center; margin: 2px 0 4px; opacity: .9; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-wpst { text-align: center; font-size: 11px; font-weight: bold; color: #e0a060; }
 .charsheet {
     font-family: "Courier";
 
@@ -706,120 +879,27 @@ button.sheet-zero:hover {
     opacity: 0.25;
 }
 
-.sheet-rolltemplate-wod table,
-.sheet-rolltemplate-wod-attack table,
-.sheet-rolltemplate-wod-simple table,
-.sheet-rolltemplate-wod-3part table,
-.sheet-rolltemplate-wod-initiative table
-{
-    width: 189px;
-    height: 100%;
-    background: url(https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/roll.jpg) no-repeat top left;
-    background-size: 189px 100%;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: bold;
-    border-spacing: 0;
-}
-
-.sheet-rolltemplate-wod th,
-.sheet-rolltemplate-wod-attack th,
-.sheet-rolltemplate-wod-simple th,
-.sheet-rolltemplate-wod-3part th,
-.sheet-rolltemplate-wod-initiative th
-{
-    color: rgb(112, 0, 0);
-    padding: 20px 20px 2px 20px;
-    line-height: 1.2em;
-    font-size: 1.2em;
-    text-align: left;
-}
 
 
-.sheet-rolltemplate-wod td,
-.sheet-rolltemplate-wod-attack td,
-.sheet-rolltemplate-wod-simple td,
-.sheet-rolltemplate-wod-3part td ,
-.sheet-rolltemplate-wod-initiative td
-{
-    padding: 2px 20px 2px 20px;
-    font-size: 1.0em;
-    vertical-align: top;
-}
-
-.sheet-rolltemplate-wod .sheet-result,
-.sheet-rolltemplate-wod-attack .sheet-result,
-.sheet-rolltemplate-wod-simple .sheet-result,
-.sheet-rolltemplate-wod-3part .sheet-result ,
-.sheet-rolltemplate-wod-initiative .sheet-result
-{
-    font-size: 1.2em;
-    text-align: center;
-    color: rgb(112, 0, 0);
-    padding: 2px 20px 2px 20px;
-}
 
 
-.sheet-rolltemplate-wod .inlinerollresult,
-.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult,
-.sheet-rolltemplate-wod-simple .inlinerollresult,
-.sheet-rolltemplate-wod-3part .inlinerollresult,
-.sheet-rolltemplate-wod-initiative .inlinerollresult
-{
-    background-color: rgba(0,0,0,0);
-    color: #000000;
-    border: none;
-}
 
-.sheet-rolltemplate-wod-attack .inlinerollresult
- {
-    background-color: rgba(0,0,0,0);
-    color: #000000;
-    border: none;
-    font-size: 1em;
-    padding: 0px;
-}
 
-.sheet-rolltemplate-wod .inlinerollresult.fullcrit,
-.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullcrit,
-.sheet-rolltemplate-wod-simple .inlinerollresult.fullcrit,
-.sheet-rolltemplate-wod-3part .inlinerollresult.fullcrit,
-.sheet-rolltemplate-wod-initiative .inlinerollresult.fullcrit
-{
-    color: #000000;
-    border: none;
-}
 
-.sheet-rolltemplate-wod .inlinerollresult.fullfail,
-.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullfail,
-.sheet-rolltemplate-wod-simple .inlinerollresult.fullfail,
-.sheet-rolltemplate-wod-3part .inlinerollresult.fullfail,
-.sheet-rolltemplate-wod-initiative .inlinerollresult.fullfail
-{
-    color: #000000;
-    border: none;
-}
 
-.sheet-rolltemplate-wod .inlinerollresult.importantroll,
-.sheet-rolltemplate-wod-attack .inlinerollresult.importantroll,
-.sheet-rolltemplate-wod-simple .inlinerollresult.importantroll,
-.sheet-rolltemplate-wod-3part .inlinerollresult.importantroll,
-.sheet-rolltemplate-wod-initiative .inlinerollresult.importantroll
-{
-    color: #000000;
-    border: none;
-}
 
-.sheet-rolltemplate-wod .sheet-specialrollflag,
-.sheet-rolltemplate-wod-attack .sheet-specialrollflag,
-.sheet-rolltemplate-wod-simple .sheet-specialrollflag,
-.sheet-rolltemplate-wod-3part .sheet-specialrollflag ,
-.sheet-rolltemplate-wod-initiative .sheet-specialrollflag
-{
-    color: #000000;
-    height: 30px;
-    text-align: right;
-    vertical-align: top;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .sheet-spread {
     justify-content: space-evenly;
@@ -1258,19 +1338,19 @@ table.sheet-forms-table td { background: rgba(255,255,255,.55); }
 input.sheet-urkhar-flag:not([value="1"]) ~ table.sheet-forms-table .sheet-urkhar-col { display: none; }
 
 
-.sheet-rolltemplate-cofd-entry .sheet-ce { border: 2px solid #2b2b2b; background: #f1eee6; font-family: Georgia, serif; border-radius: 4px; overflow: hidden; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: #1d1d1d; color: #eee; padding: 4px 6px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #c9a227; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 15px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dots { float: right; letter-spacing: 1px; }
-.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; }
-.sheet-rolltemplate-cofd-entry th { text-align: left; width: 32%; padding: 1px 6px; color: #5a1010; }
-.sheet-rolltemplate-cofd-entry td { padding: 1px 6px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; font-size: 16px; padding: 4px; border-top: 1px solid #999; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-exc { color: #0b6b0b; font-size: 12px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-fail { color: #8a0000; font-size: 12px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-flag { font-size: 11px; opacity: .8; }
-.sheet-rolltemplate-cofd-entry .sheet-long { padding: 4px 6px; font-size: 12px; border-top: 1px dotted #aaa; white-space: pre-wrap; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 input.sheet-page[value="powers"] ~ .sheet-page:not(.sheet-powers) { display: none; }
@@ -1298,9 +1378,9 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "L"; font-family: "Pict
 .sheet-legacy-specs { display: none !important; }
 .sheet-outcomes { border-top: 1px dashed #999; margin-top: 4px; padding-top: 2px; }
 .sheet-ohint { font-size: 10px; color: #666; font-style: italic; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-out { font-size: 12px; padding: 2px 4px; border-left: 3px solid #888; margin: 2px 0; white-space: pre-wrap; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-succ { color: #1a6b1a; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dram { color: #900; font-weight: bold; text-transform: uppercase; }
+
+
+
 
 .sheet-cond-grid-wrap { margin: 6px 0 10px; }
 .sheet-cg-mods { font-size: 12px; margin: 4px 0; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
@@ -1355,7 +1435,7 @@ table.sheet-hw-table { table-layout: fixed; width: 100%; }
 
 .sheet-wp-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 11px; margin: 2px 0; width: 100%; }
 div.sheet-wp-bar select, .charsheet div.sheet-wp-bar select { width: 170px !important; min-width: 170px; font-size: 10px; height: 20px; padding: 0; border: 1px solid #666; background: #fff; display: inline-block; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-risk { font-size: 11px; background: rgba(30,70,70,.12); border-left: 3px solid #1e4646; padding: 2px 4px; margin: 2px 0; }
+
 
 
 .sheet-p1-combat { width: 100%; flex-basis: 100%; clear: both; margin-top: 6px; box-sizing: border-box; }
@@ -1639,47 +1719,47 @@ select.sheet-vamp-sel { width: 100%; }
 .sheet-background { padding-bottom: 150px !important; }
 
 
-.sheet-rolltemplate-cofd-entry .sheet-ce { border: 1px solid #2b2b2b; background: #f6f3ec; color: #1b1b1b; font-family: Georgia, "Times New Roman", serif; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.3); margin-left: -7px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band { height: 6px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: linear-gradient(#262626,#141414); color: #f2f2f2; padding: 5px 8px 6px; position: relative; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-char { display: block; font-size: 10px; color: #bdbdbd; font-family: Arial, sans-serif; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #d4b25a; font-family: Arial, sans-serif; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 16px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-badge { position: absolute; right: 8px; top: 8px; width: 22px; height: 22px; border-radius: 50%; text-align: center; font: bold 13px/22px Arial, sans-serif; color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.6); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-b { background: #3d6fb5; } .sheet-rolltemplate-cofd-entry .sheet-ce-l { background: #b8860b; } .sheet-rolltemplate-cofd-entry .sheet-ce-a { background: #a01010; }
-.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; border-collapse: collapse; margin: 3px 0; }
-.sheet-rolltemplate-cofd-entry th { text-align: left; width: 30%; padding: 2px 8px; color: #6b1a1a; font: bold 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; }
-.sheet-rolltemplate-cofd-entry td { padding: 2px 8px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; padding: 6px 4px 4px; border-top: 1px solid rgba(0,0,0,.2); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-big, .sheet-rolltemplate-cofd-entry .sheet-ce-big .inlinerollresult { font-size: 34px; font-weight: bold; line-height: 38px; background: rgba(0,0,0,0) !important; border: none !important; padding: 0 !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-sl { font: 10px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: #777; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dram, .sheet-rolltemplate-cofd-entry .sheet-ce-fail, .sheet-rolltemplate-cofd-entry .sheet-ce-succ, .sheet-rolltemplate-cofd-entry .sheet-ce-exc { display: block; margin: 5px -4px 0; padding: 4px; color: #fff !important; font: bold 12px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dram { background: #5c0000; } .sheet-rolltemplate-cofd-entry .sheet-ce-fail { background: #6d6d6d; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-succ { background: #2e7d32; } .sheet-rolltemplate-cofd-entry .sheet-ce-exc { background: linear-gradient(90deg,#b8860b,#e3b23c); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-out { text-align: left; font-size: 12px; margin: 4px 2px; padding: 3px 6px; border-left: 3px solid #999; background: rgba(0,0,0,.04); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-flag { display: inline-block; font: 10px Arial, sans-serif; padding: 1px 6px; margin: 3px 2px 0; border-radius: 8px; background: #ddd; color: #333; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-risk { text-align: left; font-size: 11px; margin: 5px 2px 0; padding: 4px 6px; border-left: 3px solid #1e4646; background: rgba(30,70,70,.1); }
-.sheet-rolltemplate-cofd-entry .sheet-long { font-size: 12px; padding: 3px 8px; border-top: 1px dotted rgba(0,0,0,.2); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-mortal { background: #2a2d80; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter { background: #1e4646; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire { background: #6e1e1e; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf { background: #aa5a1e; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-mage { background: #beaa5a; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-promethean { background: #1e1e5a; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-changeling { background: #0a6e46; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-geist { background: #82aabe; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-mummy { background: #d2be82; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-demon { background: #323246; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-beast { background: #463246; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-deviant-the-renegades { background: #5a1e1e; }
 
 
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce { background: #232326; color: #e6e6e6; border-color: #000; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry th { color: #e09a9a; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-out { background: rgba(255,255,255,.06); }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-flag { background: #444; color: #ddd; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-risk { background: rgba(120,180,180,.12); }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-roll { border-top-color: rgba(255,255,255,.15); }.charsheet.sheet-darkmode,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.charsheet.sheet-darkmode,
 .sheet-darkmode .sheet-background,
 input.sheet-dm[value="1"] ~ .sheet-background,
 input.sheet-dm[value="1"] ~ .sheet-background { color: #e4e4e4; }.sheet-darkmode input[type=text],
@@ -1977,12 +2057,12 @@ input.sheet-rolltype-select[value="rote"] ~ * .sheet-rollcontainer::before { con
 .charsheet .sheet-attributes .sheet-dots { padding-right: 6px; }
 
 
-.sheet-rolltemplate-wod table, .sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-wod-initiative table { width: 100%; background: #f1eee6 !important; border: 2px solid #2b2b2b; border-radius: 4px; font-family: Georgia, serif; color: #1d1d1d; }
-.sheet-rolltemplate-wod th, .sheet-rolltemplate-wod-attack th, .sheet-rolltemplate-wod-simple th, .sheet-rolltemplate-wod-3part th, .sheet-rolltemplate-wod-initiative th { background: #1d1d1d; color: #eee; padding: 4px 6px; font-size: 14px; }
-.sheet-rolltemplate-wod td, .sheet-rolltemplate-wod-attack td, .sheet-rolltemplate-wod-simple td, .sheet-rolltemplate-wod-3part td, .sheet-rolltemplate-wod-initiative td { padding: 2px 6px; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative table { background: #1f1f23 !important; color: #e4e4e4; border-color: #555; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .sheet-result { color: #e8a0a0; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-specialrollflag { color: #fff !important; }
+
+
+
+
+
+
 
 
 .charsheet button[type="roll"]::before,
@@ -2226,8 +2306,8 @@ input.sheet-urkhar-flag:not([value="1"]) ~ .sheet-fcard.sheet-urkhar-col { displ
 .charsheet .sheet-breeds-head { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 4px 10px; }
 .charsheet .sheet-breeds-head label { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .charsheet .sheet-breeds-head label input { flex: 1 1 auto; width: 100% !important; min-width: 0; }
-.charsheet .repeating_power-list input[type=text], .charsheet .repeating_power2-list input[type=text] { width: 100% !important; min-width: 240px; box-sizing: border-box; }
-.charsheet .repeating_abilities .sheet-input-group, .charsheet .repeating_abilities2 .sheet-input-group { display: flex; flex-wrap: wrap; }
+.charsheet .repcontainer[data-groupname="repeating_power-list"] input[type=text], .charsheet .repcontainer[data-groupname="repeating_power2-list"] input[type=text] { width: 100% !important; min-width: 240px; box-sizing: border-box; }
+.charsheet .repcontainer[data-groupname="repeating_abilities"] .sheet-input-group, .charsheet .repcontainer[data-groupname="repeating_abilities2"] .sheet-input-group { display: flex; flex-wrap: wrap; }
 .charsheet input[name=attr_ability_name], .charsheet input[name=attr_ability2_name] { flex: 1 1 290px; min-width: 290px; width: auto !important; }
 .charsheet label:has(> input[name=attr_aspiration]) { grid-column: 1 / -1; }
 .charsheet label > input[name=attr_aspiration] { width: 100% !important; }
@@ -2268,7 +2348,7 @@ body .charsheet .sheet-subheader > button.sheet-toggle { color: inherit !importa
 .charsheet .sheet-main-forms .sheet-form-picker { display: flex !important; justify-content: center; flex-wrap: wrap; gap: 6px !important; }
 .charsheet .sheet-main-forms button.sheet-form-btn, .charsheet .sheet-main-forms button.sheet-form-btn:first-child, .charsheet .sheet-main-forms button.sheet-form-btn:last-child { flex: 0 0 auto !important; border-radius: 999px !important; padding: 3px 14px !important; border-width: 1px !important; }
 
-.charsheet .repeating_gifts .sheet-entry-head .sheet-dots { display: none !important; }
+.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-head .sheet-dots { display: none !important; }
 
 .charsheet .sheet-skills > .sheet-skills-renown { grid-column: 1 / -1; margin-top: 8px; }
 .charsheet .sheet-skills-renown .sheet-renown-row { display: grid; grid-template-columns: 108px 78px; align-items: center; }
@@ -2979,10 +3059,10 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ .sheet-section-header.sheet-section-header.sheet-section-header, .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ * .sheet-section-header.sheet-section-header.sheet-section-header, .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ .sheet-subheader.sheet-subheader.sheet-subheader, .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ * .sheet-subheader.sheet-subheader.sheet-subheader, .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ button.sheet-midtab-btn.sheet-midtab-btn.sheet-midtab-btn, .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ * button.sheet-midtab-btn.sheet-midtab-btn.sheet-midtab-btn, .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ button.sheet-toggle.sheet-toggle.sheet-toggle[name^="act_page_"], .charsheet.charsheet input.sheet-type.sheet-type[value="mummy2"] ~ * button.sheet-toggle.sheet-toggle.sheet-toggle[name^="act_page_"] { font-family: "Cinzel", serif !important; }
 
 .charsheet button.sheet-hidden-act { display: none !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-reroll { text-align: center; margin: 4px 0 2px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-reroll a { display: inline-block; padding: 2px 10px; border-radius: 999px; border: 1px solid #b0542a; background: #3a1c10; color: #f3d9b8; font-size: 12px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-emote { font-style: italic; text-align: center; margin: 2px 0 4px; opacity: .9; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-wpst { text-align: center; font-size: 11px; font-weight: bold; color: #e0a060; }
+
+
+
+
 
 /* r8 Willpower counter */
 .charsheet .sheet-wp-old { display: none !important; }
@@ -3010,7 +3090,7 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet input.sheet-kmode[value="1"] ~ .sheet-page .sheet-midtabs { border-bottom-color: #c0302a !important; }
 .charsheet input.sheet-kmode[value="1"] ~ .sheet-page .sheet-dots button.sheet-dot { border-color: #c0302a !important; }
 .charsheet .sheet-km-rules { margin: 4px 0 8px; padding: 6px 8px; border: 1px solid #c0302a; border-radius: 4px; background: rgba(140,20,20,.15); font-size: 12px; line-height: 1.35; }
-.charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_academics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_academics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_computer"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_computer"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_crafts"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_crafts"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_investigation"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_investigation"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_medicine"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_medicine"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_occult"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_occult"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_politics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_politics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_science"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_science"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_drive"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_drive"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_firearms"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_firearms"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_larceny"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_larceny"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_weaponry"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_weaponry"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_animalken"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_animalken"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_empathy"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_empathy"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_expression"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_expression"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_persuasion"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_persuasion"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_socialize"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_socialize"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_streetwise"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_streetwise"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_subterfuge"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_subterfuge"]) { opacity: .22 !important; pointer-events: none !important; filter: grayscale(1); }
+.charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_academics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_academics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_computer"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_computer"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_crafts"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_crafts"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_investigation"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_investigation"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_medicine"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_medicine"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_occult"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_occult"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_politics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_politics"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_science"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_science"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_drive"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_drive"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_firearms"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_firearms"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_larceny"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_larceny"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_weaponry"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_weaponry"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_animalken"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_animalken"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_empathy"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_empathy"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name^="attr_expr"][name$="ssion"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name^="attr_expr"][name$="ssion"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_persuasion"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_persuasion"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_socialize"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_socialize"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_streetwise"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_streetwise"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div:has(+ div.sheet-dots > input[name="attr_subterfuge"]), .charsheet input.sheet-kmode[value="1"] ~ .sheet-page div.sheet-dots:has(> input[name="attr_subterfuge"]) { opacity: .22 !important; pointer-events: none !important; filter: grayscale(1); }
 .charsheet input.sheet-kmode[value="1"] ~ .sheet-page button.sheet-mt-merits, .charsheet input.sheet-kmode[value="1"] ~ .sheet-page button.sheet-mt-gear, .charsheet input.sheet-kmode[value="1"] ~ .sheet-page .sheet-midpane.sheet-mp-gear, .charsheet input.sheet-kmode[value="1"] ~ .sheet-page .sheet-rollcontainer select, .charsheet input.sheet-kmode[value="1"] ~ .sheet-page input.sheet-midtab[value="merits"] ~ .sheet-midtabs + .sheet-columns { opacity: .22 !important; pointer-events: none !important; filter: grayscale(1); }
 
 .charsheet.charsheet.charsheet .sheet-details-page { padding: 6px 10px !important; }
@@ -3024,7 +3104,7 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet span.sheet-vb { display: inline-block; margin-left: 3px; padding: 0 4px; border-radius: 8px; background: #8e1616; color: #fff; font: bold 10px/14px Arial, sans-serif; vertical-align: middle; }
 .charsheet span.sheet-vb:empty { display: none !important; }
 .charsheet .sheet-rit-help { font-size: 11px; opacity: .8; margin: 2px 0 6px; }
-.charsheet .repeating_rituals .sheet-rit { border: 1px solid rgba(160,130,90,.4); border-radius: 6px; padding: 4px 6px; margin-bottom: 6px; }
+.charsheet .repcontainer[data-groupname="repeating_rituals"] .sheet-rit { border: 1px solid rgba(160,130,90,.4); border-radius: 6px; padding: 4px 6px; margin-bottom: 6px; }
 .charsheet .sheet-rit-top { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
 .charsheet.charsheet .sheet-rit-top input.sheet-rit-name { flex: 1 1 160px; min-width: 120px; width: auto !important; }
 .charsheet.charsheet .sheet-rit-top select { width: auto !important; min-width: 0; height: 22px; padding: 0 2px; font-size: 12px; }
@@ -3035,20 +3115,20 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet.charsheet.charsheet .sheet-midtabs { display: flex !important; flex-wrap: wrap; justify-content: center; gap: 6px !important; border-bottom: 0 !important; margin: 4px 0 8px !important; }
 .charsheet.charsheet.charsheet .sheet-midtabs button.sheet-midtab-btn.sheet-midtab-btn, .charsheet.charsheet.charsheet input.sheet-type ~ * .sheet-midtabs button[type=action].sheet-midtab-btn.sheet-midtab-btn { margin: 0 !important; padding: 3px 12px !important; border: 2px solid rgba(160,130,90,.7) !important; border-radius: 999px !important; background: rgba(244,240,232,.92) !important; color: #222 !important; opacity: 1 !important; font: bold 12px/16px Arial, sans-serif !important; }
 .charsheet.charsheet.charsheet .sheet-midtabs button.sheet-midtab-btn span { color: inherit !important; text-shadow: none !important; font: inherit !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #1e4646 !important; border-color: #1e4646 !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #6e1e1e !important; border-color: #6e1e1e !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #aa5a1e !important; border-color: #aa5a1e !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #beaa5a !important; border-color: #beaa5a !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #1e1e5a !important; border-color: #1e1e5a !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #0a6e46 !important; border-color: #0a6e46 !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #82aabe !important; border-color: #82aabe !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #d2be82 !important; border-color: #d2be82 !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #323246 !important; border-color: #323246 !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #463246 !important; border-color: #463246 !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #5a1e1e !important; border-color: #5a1e1e !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #5a321e !important; border-color: #5a321e !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #2a2d80 !important; border-color: #2a2d80 !important; color: #fff !important; }
-.charsheet.charsheet.charsheet input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { box-shadow: 0 0 6px rgba(0,0,0,.35); }
+.charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #1e4646 !important; color: #fff !important; box-shadow: 0 0 6px #1e4646 !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #6e1e1e !important; color: #fff !important; box-shadow: 0 0 6px #6e1e1e !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #aa5a1e !important; color: #fff !important; box-shadow: 0 0 6px #aa5a1e !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #beaa5a !important; color: #fff !important; box-shadow: 0 0 6px #beaa5a !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #1e1e5a !important; color: #fff !important; box-shadow: 0 0 6px #1e1e5a !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #0a6e46 !important; color: #fff !important; box-shadow: 0 0 6px #0a6e46 !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #82aabe !important; color: #fff !important; box-shadow: 0 0 6px #82aabe !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #d2be82 !important; color: #fff !important; box-shadow: 0 0 6px #d2be82 !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #323246 !important; color: #fff !important; box-shadow: 0 0 6px #323246 !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #463246 !important; color: #fff !important; box-shadow: 0 0 6px #463246 !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #5a1e1e !important; color: #fff !important; box-shadow: 0 0 6px #5a1e1e !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #5a321e !important; color: #fff !important; box-shadow: 0 0 6px #5a321e !important; }
+.charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #000 !important; border-color: #2a2d80 !important; color: #fff !important; box-shadow: 0 0 6px #2a2d80 !important; }
+.charsheet.charsheet.charsheet input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-midtab[value="rites"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rites, .charsheet.charsheet.charsheet input.sheet-midtab[value="totem"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-totem, .charsheet.charsheet.charsheet input.sheet-midtab[value="devotions"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-devotions, .charsheet.charsheet.charsheet input.sheet-midtab[value="frenzy"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-frenzy, .charsheet.charsheet.charsheet input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { box-shadow: 0 0 6px rgba(0,0,0,.35); }
 
 .charsheet .sheet-vv { display: flex; gap: 4px; align-items: center; min-width: 0; }
 .charsheet.charsheet .sheet-vv select.sheet-vv-sel { display: none; flex: 0 1 auto; min-width: 0; max-width: 100%; height: 22px; padding: 0 2px; }
@@ -3089,10 +3169,10 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet.charsheet .sheet-merits .repitem .sheet-entry-head { min-height: 0 !important; gap: 3px !important; padding: 0 !important; }
 .charsheet.charsheet .sheet-merits .repitem .sheet-entry-body { padding: 3px 2px !important; gap: 3px 6px !important; }
 
-.charsheet.charsheet .repeating_armor .sheet-entry-head { display: flex !important; flex-wrap: wrap !important; align-items: center; gap: 3px 6px !important; }
-.charsheet.charsheet .repeating_armor .sheet-entry-head > button.sheet-entry-post { display: none !important; }
-.charsheet.charsheet .repeating_armor .sheet-entry-head > input.sheet-ar-name { flex: 1 1 100% !important; order: -2; width: 100% !important; max-width: none !important; min-width: 0 !important; box-sizing: border-box; font-weight: bold; white-space: nowrap; }
-.charsheet.charsheet .repeating_armor .sheet-entry-head > input.sheet-entry-toggle { order: -3; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_armor"] .sheet-entry-head { display: flex !important; flex-wrap: wrap !important; align-items: center; gap: 3px 6px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_armor"] .sheet-entry-head > button.sheet-entry-post { display: none !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_armor"] .sheet-entry-head > input.sheet-ar-name { flex: 1 1 100% !important; order: -2; width: 100% !important; max-width: none !important; min-width: 0 !important; box-sizing: border-box; font-weight: bold; white-space: nowrap; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_armor"] .sheet-entry-head > input.sheet-entry-toggle { order: -3; }
 .charsheet .sheet-ar-steps { display: flex; flex-wrap: wrap; gap: 3px 8px; flex: 1 1 auto; }
 .charsheet .sheet-stp { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; white-space: nowrap; }
 .charsheet .sheet-stp-l { margin-right: 2px; opacity: .85; }
@@ -3100,11 +3180,11 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet.charsheet .sheet-stp input.sheet-stp-v { width: 30px !important; min-width: 0 !important; height: 18px !important; padding: 0 !important; text-align: center !important; -moz-appearance: textfield; }
 .charsheet .sheet-stp input.sheet-stp-v::-webkit-inner-spin-button, .charsheet .sheet-stp input.sheet-stp-v::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .charsheet label.sheet-ar-dtog { flex: 1 1 100%; font-size: 11px; cursor: pointer; opacity: .85; display: flex; align-items: center; gap: 4px; }
-.charsheet.charsheet .repeating_armor textarea.sheet-ar-desc { display: none; flex: 1 1 100%; width: 100% !important; box-sizing: border-box; height: 44px; resize: vertical; }
-.charsheet.charsheet .repeating_armor label.sheet-ar-dtog:has(input:checked) + textarea.sheet-ar-desc { display: block !important; }
-.charsheet.charsheet .repeating_weapons .sheet-entry-head { display: flex !important; align-items: center; gap: 4px !important; }
-.charsheet.charsheet .repeating_weapons .sheet-entry-head > button.sheet-w-atk { flex: 1 1 0 !important; min-width: 0 !important; width: auto !important; max-width: none !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; padding: 1px 4px !important; background: none !important; border: 0 !important; font-weight: bold; cursor: pointer; }
-.charsheet.charsheet .repeating_weapons .sheet-entry-head > button.sheet-w-atk:hover { text-decoration: underline; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_armor"] textarea.sheet-ar-desc { display: none; flex: 1 1 100%; width: 100% !important; box-sizing: border-box; height: 44px; resize: vertical; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_armor"] label.sheet-ar-dtog:has(input:checked) + textarea.sheet-ar-desc { display: block !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_weapons"] .sheet-entry-head { display: flex !important; align-items: center; gap: 4px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_weapons"] .sheet-entry-head > button.sheet-w-atk { flex: 1 1 0 !important; min-width: 0 !important; width: auto !important; max-width: none !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; padding: 1px 4px !important; background: none !important; border: 0 !important; font-weight: bold; cursor: pointer; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_weapons"] .sheet-entry-head > button.sheet-w-atk:hover { text-decoration: underline; }
 .charsheet.charsheet button.sheet-entry-post.sheet-post-ic { flex: 0 0 auto !important; width: 22px !important; height: 20px !important; min-width: 0 !important; padding: 0 !important; font-size: 13px !important; line-height: 18px !important; text-align: center; border-radius: 4px !important; }
 .charsheet.charsheet .sheet-entry-body input[type=number] { width: 52px !important; min-width: 0 !important; }
 .charsheet.charsheet .sheet-entry-body select { width: auto !important; max-width: 100%; min-width: 0 !important; }
@@ -3116,6 +3196,195 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet.charsheet .sheet-rp-forms select.sheet-rp-formsel { width: 170px !important; max-width: 100%; height: 24px; margin: 2px auto 0 !important; display: block; font-weight: bold; }
 .charsheet .sheet-rp-hw { font-size: 12px; opacity: .9; margin-top: 2px; min-height: 14px; }
 .charsheet.charsheet.charsheet .sheet-page1 .sheet-grow > .sheet-flex > div:last-child .sheet-subheader { text-align: center !important; justify-content: center !important; }
+
+/* r10: armor head as a grid; name full width on top */
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) { display: grid !important; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; gap: 4px 6px !important; width: 100%; box-sizing: border-box; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > * { order: 0 !important; min-width: 0; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > input.sheet-ar-name { grid-column: 1 / 3; grid-row: 1; width: 100% !important; min-width: 120px !important; max-width: none !important; box-sizing: border-box; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; writing-mode: horizontal-tb; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > button.sheet-entry-post { display: inline-block !important; grid-column: 3; grid-row: 1; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > .sheet-ar-steps { grid-column: 1 / -1; grid-row: 2; display: flex !important; flex-wrap: wrap; gap: 3px 10px; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > label.sheet-ar-dtog { grid-column: 1; grid-row: 3; justify-self: start; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > label.sheet-ar-eq { grid-column: 2 / -1; grid-row: 3; justify-self: end; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > textarea.sheet-ar-desc { grid-column: 1 / -1; grid-row: 4; display: none; width: 100% !important; box-sizing: border-box; height: 48px; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > label.sheet-ar-dtog:has(input:checked) ~ textarea.sheet-ar-desc { display: block !important; }
+.charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > input.sheet-entry-toggle, .charsheet.charsheet .sheet-entry-head:has(> input.sheet-ar-name) > span.sheet-entry-name { display: none !important; }
+.charsheet .sheet-stp { display: inline-flex; align-items: center; gap: 2px; white-space: nowrap; }
+.charsheet.charsheet .sheet-stp input.sheet-stp-v { width: 30px !important; min-width: 0 !important; text-align: center; padding: 0 !important; }
+.charsheet.charsheet .sheet-stp button.sheet-stp-b { width: 18px !important; height: 18px !important; min-width: 0 !important; padding: 0 !important; line-height: 16px !important; border-radius: 50% !important; }
+/* r10: black middle-tab pills; active = splat accent border */
+.charsheet.charsheet.charsheet .sheet-midtabs button.sheet-midtab-btn.sheet-midtab-btn, .charsheet.charsheet.charsheet input.sheet-type ~ * .sheet-midtabs button[type=action].sheet-midtab-btn.sheet-midtab-btn { background: #0d0d0d !important; color: #d8d2c8 !important; border: 2px solid rgba(255,255,255,.16) !important; }
+/* r10: d10 roller icon fills and centres in its cell; the old CSS-drawn d6 pseudo-element is gone */
+.charsheet.charsheet .sheet-rollcontainer > button::after, .charsheet.charsheet .sheet-rollcontainer > button::before { content: none !important; display: none !important; background: none !important; border: 0 !important; }
+.charsheet.charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll.sheet-rollstyle.sheet-rollstyle { background: url("https://cdn.jsdelivr.net/gh/leonembers/cofd2e-roll20-sheet@461496b99b8a13e963bb1da89d61f3e058c15aba/assets/d10.png") center / contain no-repeat !important; inset: 1px !important; }
+.charsheet.charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll.sheet-rollstyle.sheet-rollstyle:hover { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd2e-roll20-sheet@461496b99b8a13e963bb1da89d61f3e058c15aba/assets/d10-hover.png") !important; }
+.charsheet.charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button.sheet-was-roll.sheet-rollstyle.sheet-rollstyle:active { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd2e-roll20-sheet@461496b99b8a13e963bb1da89d61f3e058c15aba/assets/d10-pressed.png") !important; }
+
+.charsheet input.sheet-midtab[value="rites"] ~ .sheet-midpane.sheet-mp-powers { display: block !important; }
+.charsheet input.sheet-midtab[value="totem"] ~ .sheet-midpane.sheet-mp-powers { display: block !important; }
+.charsheet input.sheet-midtab[value="devotions"] ~ .sheet-midpane.sheet-mp-powers { display: block !important; }
+.charsheet input.sheet-midtab[value="frenzy"] ~ .sheet-midpane.sheet-mp-frenzy { display: block !important; }
+.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="powers"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-totem, .charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="powers"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-writes { display: none !important; }
+.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="rites"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-gifts, .charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="rites"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-totem { display: none !important; }
+.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="rites"] ~ .sheet-midpane.sheet-mp-powers .sheet-wolf-block, .charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="rites"] ~ .sheet-midpane.sheet-mp-powers .sheet-leon-pane > .sheet-entry-section-head { display: none !important; }
+.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="totem"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-gifts, .charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="totem"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-writes { display: none !important; }
+.charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="totem"] ~ .sheet-midpane.sheet-mp-powers .sheet-wolf-block, .charsheet input.sheet-type[value="werewolf2"] ~ * input.sheet-midtab[value="totem"] ~ .sheet-midpane.sheet-mp-powers .sheet-leon-pane > .sheet-entry-section-head { display: none !important; }
+.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="powers"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-devotions, .charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="powers"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-vinculum, .charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="powers"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-vrites { display: none !important; }
+.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="devotions"] ~ .sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-disciplines { display: none !important; }
+.charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="devotions"] ~ .sheet-midpane.sheet-mp-powers .sheet-wolf-block, .charsheet input.sheet-type[value="vampire2"] ~ * input.sheet-midtab[value="devotions"] ~ .sheet-midpane.sheet-mp-powers .sheet-leon-pane > .sheet-entry-section-head { display: none !important; }
+.charsheet .sheet-mp-powers .sheet-wolf-moon { display: none !important; }
+.charsheet input.sheet-type:not([value="breeds2"]) ~ * .sheet-breeds2:not(.sheet-werewolf2), .charsheet input.sheet-type:not([value="breeds2"]) ~ .sheet-breeds2:not(.sheet-werewolf2) { display: none !important; }
+.charsheet input.sheet-type[value="breeds2"] ~ * .sheet-werewolf2:not(.sheet-breeds2) { display: none !important; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane { display: flex !important; flex-direction: column; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane > * { order: 9; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane > .sheet-subheader:not(:has(span[data-i18n="kuruth-triggers"])) { order: 1; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane > .sheet-wolf-ts { order: 2; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane > .sheet-subheader:has(span[data-i18n="kuruth-triggers"]) { order: 3; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane > .sheet-kuruth-tiers { order: 4; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane > .sheet-kuruth-rolls { order: 5; }
+.charsheet .sheet-mp-kuruth > .sheet-leon-pane > .sheet-km-rules { order: 6; }
+.charsheet .sheet-kuruth-rolls { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.charsheet.charsheet button.sheet-basu { background: #5a0d0d !important; color: #fff !important; border: 1px solid #e03a2f !important; border-radius: 999px !important; padding: 3px 12px !important; font-weight: bold; width: auto !important; height: auto !important; }
+.charsheet .sheet-fr-trig { font-size: 12px; margin: 0 0 8px; opacity: .9; }
+.charsheet .sheet-fm-banner { display: none; }
+.charsheet input.sheet-fmode[value="1"] ~ .sheet-fm-banner { display: flex !important; align-items: center; justify-content: center; gap: 10px; margin: 4px 6px; padding: 6px 10px; background: linear-gradient(90deg, #4a0b0b, #8e1616, #4a0b0b); border: 2px solid #e03a2f; border-radius: 6px; box-shadow: 0 0 14px rgba(224,58,47,.55); color: #fff; }
+.charsheet input.sheet-fmode[value="1"] ~ .sheet-fm-banner .sheet-km-title { font-size: 18px; font-weight: bold; letter-spacing: 2px; }
+.charsheet.charsheet .sheet-fm-banner button.sheet-km-end { background: #fff !important; color: #8e1616 !important; border-radius: 4px; padding: 3px 12px !important; font-weight: bold; width: auto !important; height: auto !important; }
+.charsheet input.sheet-fmode[value="1"] ~ .sheet-page { box-shadow: inset 0 0 40px rgba(200,30,30,.35); background-color: rgba(120,0,0,.12); }
+.charsheet input.sheet-fmode[value="1"] ~ .sheet-page .sheet-subheader { color: #ff5a4a !important; }
+.charsheet.charsheet .sheet-background > .sheet-fm-banner { order: 0; }
+.charsheet.charsheet select.sheet-gfilt { width: 84px !important; height: 22px; margin-left: auto; font-size: 12px; }
+.charsheet .sheet-entry-section.sheet-gifts:has(select.sheet-gfilt option[value="Moon"]:checked) .repitem:not(:has(input.sheet-gt-flag[value="Moon"])) { display: none !important; }
+.charsheet .sheet-entry-section.sheet-gifts:has(select.sheet-gfilt option[value="Shadow"]:checked) .repitem:not(:has(input.sheet-gt-flag[value="Shadow"])) { display: none !important; }
+.charsheet .sheet-entry-section.sheet-gifts:has(select.sheet-gfilt option[value="Wolf"]:checked) .repitem:not(:has(input.sheet-gt-flag[value="Wolf"])) { display: none !important; }
+.charsheet .sheet-entry-section.sheet-gifts:has(select.sheet-gfilt option[value="Other"]:checked) .repitem:not(:has(input.sheet-gt-flag[value="Other"])) { display: none !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-head { display: flex !important; flex-wrap: nowrap !important; align-items: center; gap: 4px !important; min-height: 24px; padding: 1px 4px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-head > button.sheet-entry-post { flex: 1 1 0 !important; min-width: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-head > .sheet-entry-pool { flex: 0 1 auto; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-body { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 8px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-body > .sheet-wide, .charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-body > .sheet-pw-box, .charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-body > .sheet-outcomes { grid-column: 1 / -1; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-body input[type=number] { width: 52px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-body input[type=text], .charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-body select { width: 100% !important; box-sizing: border-box; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_gifts"] .sheet-entry-item { margin-bottom: 2px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-head { display: flex !important; flex-wrap: nowrap !important; align-items: center; gap: 4px !important; min-height: 24px; padding: 1px 4px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-head > button.sheet-entry-post { flex: 1 1 0 !important; min-width: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-head > .sheet-entry-pool { flex: 0 1 auto; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-body { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 8px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-body > .sheet-wide, .charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-body > .sheet-pw-box, .charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-body > .sheet-outcomes { grid-column: 1 / -1; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-body input[type=number] { width: 52px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-body input[type=text], .charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-body select { width: 100% !important; box-sizing: border-box; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_disciplines"] .sheet-entry-item { margin-bottom: 2px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-head { display: flex !important; flex-wrap: nowrap !important; align-items: center; gap: 4px !important; min-height: 24px; padding: 1px 4px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-head > button.sheet-entry-post { flex: 1 1 0 !important; min-width: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-head > .sheet-entry-pool { flex: 0 1 auto; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-body { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 8px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-body > .sheet-wide, .charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-body > .sheet-pw-box, .charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-body > .sheet-outcomes { grid-column: 1 / -1; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-body input[type=number] { width: 52px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-body input[type=text], .charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-body select { width: 100% !important; box-sizing: border-box; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_devotions"] .sheet-entry-item { margin-bottom: 2px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-head { display: flex !important; flex-wrap: nowrap !important; align-items: center; gap: 4px !important; min-height: 24px; padding: 1px 4px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-head > button.sheet-entry-post { flex: 1 1 0 !important; min-width: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-head > .sheet-entry-pool { flex: 0 1 auto; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-body { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 8px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-body > .sheet-wide, .charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-body > .sheet-pw-box, .charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-body > .sheet-outcomes { grid-column: 1 / -1; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-body input[type=number] { width: 52px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-body input[type=text], .charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-body select { width: 100% !important; box-sizing: border-box; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_writes"] .sheet-entry-item { margin-bottom: 2px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-head { display: flex !important; flex-wrap: nowrap !important; align-items: center; gap: 4px !important; min-height: 24px; padding: 1px 4px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-head > button.sheet-entry-post { flex: 1 1 0 !important; min-width: 0 !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-head > .sheet-entry-pool { flex: 0 1 auto; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-body { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 8px; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-body > .sheet-wide, .charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-body > .sheet-pw-box, .charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-body > .sheet-outcomes { grid-column: 1 / -1; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-body input[type=number] { width: 52px !important; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-body input[type=text], .charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-body select { width: 100% !important; box-sizing: border-box; }
+.charsheet.charsheet .repcontainer[data-groupname="repeating_vrites"] .sheet-entry-item { margin-bottom: 2px !important; }
+@font-face { font-family: "WolfsRain"; src: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@79f50b7a14503fe7c6009d1b7febafb78b2d2094/fonts/wolfsrain/WolfsRain.ttf") format("truetype"); font-display: swap; }
+.charsheet.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-subheader, .charsheet.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-subheader span, .charsheet.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-midtabs button, .charsheet.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * h1, .charsheet.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * h2, .charsheet.charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * h3 { font-family: "WolfsRain", "IM Fell English SC", serif !important; letter-spacing: 1px; }
+.charsheet .sheet-fontcredit { display: none; font-size: 10px; opacity: .6; text-align: center; margin: 6px 0; }
+.charsheet input.sheet-type[value="werewolf2"] ~ .sheet-fontcredit, .charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-fontcredit { display: block !important; }
+.charsheet.charsheet .sheet-settings .sheet-cfg-grid { display: block !important; column-width: 300px; column-count: 3; column-gap: 10px; }
+.charsheet.charsheet .sheet-settings .sheet-cfg-grid > .sheet-cfg-card { display: inline-block !important; width: 100% !important; box-sizing: border-box; break-inside: avoid; margin: 0 0 10px !important; vertical-align: top; }
+.charsheet.charsheet .sheet-settings .sheet-cfg-grid > .sheet-cfg-card.sheet-cfg-wide { column-span: all; display: block !important; }
+.charsheet.charsheet .sheet-settings input[type=checkbox]:not(.sheet-cfg-sw > input):not(.sheet-switch > input) { -webkit-appearance: none !important; appearance: none !important; position: relative; display: inline-block !important; width: 32px !important; height: 16px !important; min-width: 32px; margin: 0 4px !important; padding: 0 !important; border: 0 !important; border-radius: 8px !important; background: #777 !important; opacity: 1 !important; cursor: pointer; vertical-align: middle; transition: background .15s; }
+.charsheet.charsheet .sheet-settings input[type=checkbox]:not(.sheet-cfg-sw > input):not(.sheet-switch > input)::after { content: ""; position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; transition: left .15s; }
+.charsheet.charsheet .sheet-settings input[type=checkbox]:not(.sheet-cfg-sw > input):not(.sheet-switch > input):checked { background: #b4743a !important; }
+.charsheet.charsheet .sheet-settings input[type=checkbox]:not(.sheet-cfg-sw > input):not(.sheet-switch > input):checked::after { left: 18px; }
+.charsheet.charsheet .sheet-settings input[type=checkbox]:not(.sheet-cfg-sw > input):not(.sheet-switch > input)::before { display: none !important; content: none !important; }
+.charsheet.charsheet.charsheet .sheet-settings input.sheet-flag ~ button:not(.sheet-toggle) { display: none !important; }
+.charsheet.charsheet.charsheet .sheet-settings button.sheet-toggle:not([name^="act_sheet_type_"]), .charsheet.charsheet.charsheet.charsheet input.sheet-dm ~ .sheet-background .sheet-settings button.sheet-toggle:not([name^="act_sheet_type_"]), .charsheet.charsheet.charsheet.charsheet .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle:not([name^="act_sheet_type_"]) { background: rgba(0,0,0,0) !important; background-color: rgba(0,0,0,0) !important; color: inherit !important; border: 0 !important; box-shadow: none !important; }
+.charsheet.charsheet.charsheet .sheet-settings button.sheet-toggle:not([name^="act_sheet_type_"]) { position: relative; background: rgba(0,0,0,0) !important; border: 0 !important; box-shadow: none !important; color: inherit !important; padding: 2px 4px 2px 42px !important; text-align: left; min-height: 20px; }
+.charsheet.charsheet.charsheet .sheet-settings button.sheet-toggle:not([name^="act_sheet_type_"])::before { content: "" !important; display: block !important; position: absolute; left: 4px; top: 50%; margin-top: -8px; width: 32px; height: 16px; border-radius: 8px; background: #777; border: 0 !important; }
+.charsheet.charsheet.charsheet .sheet-settings button.sheet-toggle:not([name^="act_sheet_type_"])::after { content: "" !important; display: block !important; position: absolute; left: 6px; top: 50%; margin-top: -6px; width: 12px; height: 12px; border-radius: 50%; background: #fff; transition: left .15s; }
+.charsheet.charsheet.charsheet .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle:not([name^="act_sheet_type_"])::before { background: #b4743a; }
+.charsheet.charsheet.charsheet .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle:not([name^="act_sheet_type_"])::after { left: 22px; }
+.charsheet .sheet-quick-actions.sheet-hunter2 { display: flex !important; flex-wrap: wrap; justify-content: center !important; text-align: center !important; }
+.charsheet div:has(> .sheet-quick-actions.sheet-hunter2) { text-align: center !important; }
+.charsheet div:has(> .sheet-quick-actions.sheet-hunter2) > .sheet-subheader { justify-content: center !important; text-align: center !important; }
+.charsheet.charsheet.charsheet .sheet-diceroller-options { display: flex !important; flex-wrap: wrap; justify-content: center !important; gap: 4px; border: 0 !important; background: none !important; box-shadow: none !important; outline: 0 !important; }
+.charsheet.charsheet .sheet-spacer:has(+ .sheet-page.sheet-page1), .charsheet.charsheet .sheet-background > button.sheet-page-conditions + .sheet-spacer, .charsheet.charsheet .sheet-page.sheet-page1 > .sheet-spacer:first-child { display: none !important; }
+.charsheet.charsheet .sheet-page.sheet-page1 > .sheet-corporeal:first-of-type > .sheet-section-header:first-child { margin-top: 6px !important; }
+.charsheet.charsheet input.sheet-type[value="hunter2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="hunter2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="hunter2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #1e4646 !important; }
+.charsheet.charsheet input.sheet-type[value="vampire2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #6e1e1e !important; }
+.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #aa5a1e !important; }
+.charsheet.charsheet input.sheet-type[value="mage2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="mage2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="mage2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="mage2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #beaa5a !important; }
+.charsheet.charsheet input.sheet-type[value="promethean2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="promethean2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="promethean2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="promethean2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #1e1e5a !important; }
+.charsheet.charsheet input.sheet-type[value="changeling2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="changeling2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="changeling2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #0a6e46 !important; }
+.charsheet.charsheet input.sheet-type[value="geist2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="geist2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="geist2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="geist2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #82aabe !important; }
+.charsheet.charsheet input.sheet-type[value="mummy2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="mummy2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="mummy2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="mummy2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #d2be82 !important; }
+.charsheet.charsheet input.sheet-type[value="demon"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="demon"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="demon"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="demon"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #323246 !important; }
+.charsheet.charsheet input.sheet-type[value="beast"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="beast"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="beast"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="beast"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #463246 !important; }
+.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #5a1e1e !important; }
+.charsheet.charsheet input.sheet-type[value="breeds2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="breeds2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="breeds2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #5a321e !important; }
+.charsheet.charsheet input.sheet-type[value="mortal2"] ~ .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="mortal2"] ~ * .sheet-settings input[type=checkbox]:checked, .charsheet.charsheet input.sheet-type[value="mortal2"] ~ * .sheet-settings input.sheet-flag[value="1"] ~ button.sheet-toggle::before, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * .sheet-settings .sheet-cfg-sw > input:checked + .sheet-cfg-knob { background: #2a2d80 !important; }
+
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 { grid-auto-flow: row dense !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has([name="attr_character_name"]) { grid-column: 1 / span 1 !important; grid-row: 1 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has([name="attr_Player"]) { grid-column: 1 / span 1 !important; grid-row: 2 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has([name="attr_Chronicle"]) { grid-column: 1 / span 1 !important; grid-row: 3 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has([name="attr_Virtue"]) { grid-column: 2 / span 1 !important; grid-row: 1 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has([name="attr_Vice"]) { grid-column: 2 / span 1 !important; grid-row: 2 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has([name="attr_Concept"]) { grid-column: 2 / span 1 !important; grid-row: 3 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has([name="attr_GroupName"]) { grid-column: 3 / span 1 !important; grid-row: 2 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield:has(input[name="attr_Faction"]) { grid-column: 3 / span 1 !important; grid-row: 3 !important; }
+.charsheet.charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-info-grid.sheet-ig2.sheet-ig2 > .sheet-ifield:has(input[name="attr_Faction"]) { grid-row: 2 !important; }
+.charsheet.charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-info-grid.sheet-ig2.sheet-ig2 > .sheet-ifield:has(input[name="attr_GroupName"]) { grid-row: auto !important; grid-column: auto !important; }
+.charsheet.charsheet.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-info-grid.sheet-ig2.sheet-ig2 > .sheet-ifield:has(select[name="attr_covenant"]) { grid-column: 3 / span 1 !important; grid-row: 3 !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-info-grid.sheet-ig2 > .sheet-ifield { grid-column-end: span 1 !important; min-width: 0; }
+.charsheet.charsheet.charsheet .sheet-risk-ctl > label { width: auto !important; flex: 0 0 auto !important; padding: 1px 8px !important; white-space: nowrap; }
+.charsheet.charsheet.charsheet .sheet-risk-ctl { display: inline-flex; flex-wrap: wrap; gap: 4px; align-items: center; width: auto !important; }
+.charsheet.charsheet.charsheet .sheet-risk-ctl:not(:has(input[name="attr_wp_risk"]:checked)) > select { display: none !important; }
+
+.charsheet.charsheet.charsheet .sheet-ovwin { display: none; position: absolute; z-index: 60; left: 70px; right: 60px; top: 150px; max-height: 1400px; overflow: auto; padding: 8px 12px 12px; background: #141210; border: 2px solid var(--color-game-line, #b4743a); border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,.85); }
+.charsheet.charsheet.charsheet .sheet-ov-tilt { top: 190px; left: 110px; right: 30px; z-index: 61; }
+.charsheet:has(input.sheet-ovf[name="attr_ov_cond"]:checked) .sheet-ovwin.sheet-ov-cond, .charsheet:has(input.sheet-ovf[name="attr_ov_tilt"]:checked) .sheet-ovwin.sheet-ov-tilt { display: block !important; }
+.charsheet.charsheet.charsheet .sheet-ovwin input.sheet-ov-x { -webkit-appearance: none; appearance: none; float: right; width: 26px !important; height: 26px !important; margin: 0 0 4px 8px !important; border-radius: 50%; background: #3a1010 !important; border: 1px solid #e03a2f !important; cursor: pointer; opacity: 1 !important; }
+.charsheet.charsheet.charsheet .sheet-ovwin input.sheet-ov-x::after { content: "X"; display: block; text-align: center; line-height: 24px; color: #fff; font: bold 14px/24px Arial, sans-serif; }
+.charsheet.charsheet.charsheet .sheet-ov-note { font-size: 12px; opacity: .8; margin: 2px 0 6px; text-align: center; }
+.charsheet.charsheet.charsheet .sheet-background > button.sheet-page-conditions { display: none !important; }
+.charsheet.charsheet.charsheet label.sheet-ovbtn { order: 2; display: inline-flex !important; align-items: center; gap: 5px; margin: 0 4px; padding: 2px 10px; border: 1px solid var(--color-game-line, #b4743a); border-radius: 999px; background: #0d0d0d; color: #d8d2c8; cursor: pointer; font-weight: bold; font-size: 13px; width: auto !important; }
+.charsheet.charsheet.charsheet label.sheet-ovbtn > input.sheet-ovf { display: none !important; }
+.charsheet.charsheet.charsheet label.sheet-ovbtn:has(input.sheet-ovf:checked) { background: var(--color-game-line, #b4743a); color: #fff; }
+.charsheet.charsheet.charsheet .sheet-ov-badge { display: inline-block; min-width: 16px; padding: 0 4px; border-radius: 8px; background: #8e1616; color: #fff; font-size: 11px; line-height: 16px; text-align: center; }
+.charsheet.charsheet.charsheet .sheet-ov-badge:has(input.sheet-ov-cnt[value="0"]) { display: none; }
+.charsheet.charsheet.charsheet .sheet-det-splat { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px 10px; }
+.charsheet.charsheet.charsheet .sheet-det-splat > * { grid-column: span 2; min-width: 0; margin: 0 !important; }
+.charsheet.charsheet.charsheet .sheet-det-splat > .sheet-subheader { grid-column: 1 / -1; }
+.charsheet.charsheet.charsheet .sheet-det-splat > label.sheet-wide, .charsheet.charsheet.charsheet .sheet-det-splat > .sheet-wide { grid-column: span 3; }
+.charsheet.charsheet.charsheet .sheet-det-splat > div:has(table), .charsheet.charsheet.charsheet .sheet-det-splat > table { grid-column: 1 / -1; }
+.charsheet.charsheet.charsheet .sheet-det-splat input, .charsheet.charsheet.charsheet .sheet-det-long textarea, .charsheet.charsheet.charsheet .sheet-det-splat textarea { width: 100% !important; box-sizing: border-box; }
+.charsheet.charsheet.charsheet .sheet-det-long { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; }
+.charsheet.charsheet.charsheet .sheet-det-long > label { grid-column: auto !important; margin: 0 !important; min-width: 0; }
+.charsheet.charsheet.charsheet .sheet-details textarea { field-sizing: content; min-height: 54px; resize: vertical; }
+.charsheet.charsheet.charsheet .sheet-res-ctr { display: flex !important; align-items: center; justify-content: center; gap: 2px; }
+.charsheet.charsheet.charsheet .sheet-res-ctr input.sheet-res-cur { -webkit-appearance: none; appearance: none; -moz-appearance: textfield; background: rgba(0,0,0,0) !important; border: 0 !important; box-shadow: none !important; outline: 0 !important; padding: 0 !important; margin: 0 !important; width: 2.4ch !important; min-width: 0 !important; height: auto !important; text-align: right; font: inherit !important; color: inherit !important; pointer-events: none; }
+.charsheet.charsheet.charsheet .sheet-res-ctr input.sheet-res-cur::-webkit-inner-spin-button, .charsheet.charsheet.charsheet .sheet-res-ctr input.sheet-res-cur::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.charsheet.charsheet.charsheet .sheet-res-ctr .sheet-res-max { min-width: 2.4ch; text-align: left; }
+
+.charsheet.charsheet.charsheet .sheet-hp-pen { margin-top: 1px !important; min-height: 0 !important; height: auto !important; }
+.charsheet.charsheet.charsheet .sheet-hp-pen > .sheet-healthbox { height: 12px !important; min-height: 0 !important; border: 0 !important; background: none !important; box-shadow: none !important; }
+.charsheet.charsheet.charsheet .sheet-hp-pen > span.sheet-healthbox { font: bold 10px/12px Arial, sans-serif !important; text-align: center; color: #e0a040; }
+.charsheet.charsheet.charsheet .sheet-heal-row { display: flex !important; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.charsheet.charsheet.charsheet button.sheet-hb-full { height: 18px !important; width: auto !important; padding: 0 7px !important; border-radius: 9px !important; border: 1px solid #3f8f4f !important; background: #12301a !important; color: #9fe0a8 !important; font: bold 11px/16px Arial, sans-serif !important; cursor: pointer; }
+.charsheet.charsheet.charsheet button.sheet-hb-full:hover { background: #1f5a2e !important; color: #fff !important; }
 
 /* isolation: each sheet type shows only its own game-line content */
 .charsheet input.sheet-game-line[value="mortal"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2):not(.sheet-mortal2-ghost):not(.sheet-mortal2-organization),

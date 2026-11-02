@@ -1,7 +1,7 @@
 """r9: Vampire Rituals tab, physical Discipline bonuses, pill-style middle tabs."""
 import json, os, re
 HERE = os.path.dirname(os.path.abspath(__file__))
-TABS = ['merits', 'powers', 'weapons', 'kuruth', 'rituals', 'gear']
+TABS = ['merits', 'powers', 'rites', 'totem', 'devotions', 'frenzy', 'weapons', 'kuruth', 'rituals', 'gear']
 ROLL = ('&amp;{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Ritual}} '
         '{{name=@{rit_name}}} {{f_category=@{rit_trad_name}}} {{f_level=@{rit_level}}} {{f_costs=@{rit_cost}}} {{f_pool=@{rit_pool_txt}}} '
         '{{f_description=@{rit_desc}}} {{roll=[[{((@{rit_pool}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod})@{rolltype_eff}')
@@ -106,7 +106,7 @@ def apply(h, c):
     for k, col in cols.items():
         for t in extras.TYPE_OF.get(k, []):
             s = ', '.join(f'.charsheet.charsheet.charsheet input.sheet-type[value="{t}"] ~ * input.sheet-midtab[value="{tb}"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-{tb}' for tb in TABS)
-            c += s + f' {{ background: {col} !important; border-color: {col} !important; color: #fff !important; }}\n'
+            c += s + f' {{ background: #000 !important; border-color: {col} !important; color: #fff !important; box-shadow: 0 0 6px {col} !important; }}\n'
     c += (', '.join(f'{P[:-len(" .sheet-midtabs")]} input.sheet-midtab[value="{tb}"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-{tb}' for tb in TABS)
           + ' { box-shadow: 0 0 6px rgba(0,0,0,.35); }\n')
     return h, c

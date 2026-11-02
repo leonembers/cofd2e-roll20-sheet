@@ -15,7 +15,7 @@ MAP = [  # (sheet types, PDF header font, Google font, fallback)
 ]
 def css():
     fams = sorted({g for _, _, g, _ in MAP if g != 'Sorts Mill Goudy'})
-    imp = '@import url("https://fonts.googleapis.com/css2?' + '&'.join('family=' + f.replace(' ', '+') for f in fams) + '&display=swap");\n'
+    imp = '@import url("https://fonts.googleapis.com/css?family=' + '%7C'.join(f.replace(' ', '+') for f in fams) + '&display=swap");\n'
     tgt = ['.sheet-section-header.sheet-section-header.sheet-section-header', '.sheet-subheader.sheet-subheader.sheet-subheader', 'button.sheet-midtab-btn.sheet-midtab-btn.sheet-midtab-btn', 'button.sheet-toggle.sheet-toggle.sheet-toggle[name^="act_page_"]']
     o = []
     for types, _, g, fb in MAP:

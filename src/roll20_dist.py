@@ -370,6 +370,16 @@ import gear9 as _g9
 h, c = _g9.apply(h, c)
 import formsel as _fs
 h, c = _fs.apply(h, c)
+import r10 as _r10
+h, c = _r10.apply(h, c)
+import r10b as _r10b
+h, c = _r10b.apply(h, c)
+import r10c as _r10c
+h, c = _r10c.apply(h, c)
+import r10d as _r10d
+h, c = _r10d.apply(h, c)
+import r10e as _r10e
+h, c = _r10e.apply(h, c)
 import isolate as _iso
 h, c, _nis = _iso.apply(h, c); print('isolation selectors', _nis)
 open(f'{R}/dist/sheet.html', 'w', encoding='utf-8').write(h)
@@ -378,6 +388,7 @@ if _ab:
     _ps = pdfstyle.css(_ab, _ex.TYPE_OF)
     _imp = _ps.split('\n', 1)[0]; c = _imp + '\n' + c + '\n' + _ps.split('\n', 1)[1]
 c = _iso.expand_is(c)
+c = _r10.final(c)
 open(f'{R}/dist/sheet.css', 'w', encoding='utf-8').write(c)
 t = json.load(open(f'{R}/translation.json', encoding='utf-8'))
 for _k in _ndgone: t.pop(_k, None)
