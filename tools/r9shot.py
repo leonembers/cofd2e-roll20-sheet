@@ -1,0 +1,21 @@
+exec('\n'.join(open('/workspace/cofd/roll20/tools/r7shot.py').read().split('\n')[:10])+r'''
+    def full(n): pg.screenshot(path=S+n,full_page=True); print(n)
+    for w in (700,1300):
+        go(pg,'werewolf2',page='1',w=w); full(f'r9-werewolf-main-{w}.png')
+    for w in (700,1300):
+        go(pg,'werewolf2',page='details',w=w)
+        print('notes',w,pg.evaluate("()=>{const d=document.querySelector('.sheet-details-page');const p=d.querySelector('.sheet-det-portrait').getBoundingClientRect(),g=d.querySelector('.sheet-det-grid').getBoundingClientRect();return [getComputedStyle(d.parentElement).display,Math.round(p.width),Math.round(g.left-p.right),Math.round(g.top-p.top),Math.round(d.getBoundingClientRect().width),[...document.querySelectorAll('button.sheet-page-details')].filter(b=>b.getClientRects().length).length]}"))
+        full(f'r9-notes-page-{w}.png')
+    go(pg,'werewolf2',page='forms',w=1000); full('r9-forms.png')
+    go(pg,'werewolf2',page='1',w=1000)
+    pg.evaluate("()=>setAttrs({mid_tab:'kuruth',morality:'5'})"); pg.wait_for_timeout(500)
+    print('kuruth H5',pg.evaluate("()=>[...document.querySelectorAll('.sheet-kt-rows label')].map(l=>l.className.split(' ').pop()+':'+getComputedStyle(l).opacity+':'+Math.round(l.getBoundingClientRect().width)+'x'+Math.round(l.querySelector('textarea').getBoundingClientRect().height))"))
+    print('kuruth btns',pg.evaluate("()=>[...document.querySelectorAll('.sheet-mp-kuruth button')].map(b=>b.name)"))
+    pg.query_selector('.sheet-mp-kuruth').screenshot(path=S+'r9-kuruth.png')
+    print('midtabs',pg.evaluate("()=>[...document.querySelectorAll('.sheet-midtabs button')].filter(b=>b.getClientRects().length).map(b=>b.innerText.trim().split('\\n')[0])"))
+    print('main rage btns',pg.evaluate("()=>[...document.querySelectorAll('.sheet-page1 button')].filter(b=>/wasuim|basuim/.test(b.name)&&b.getClientRects().length&&!b.closest('.sheet-mp-kuruth')).length"))
+    pg.evaluate("()=>setAttrs({mid_tab:'merits',healthbox_1:'3',healthbox_2:'2',healthbox_3:'1'})"); pg.wait_for_timeout(300)
+    e=pg.query_selector('.sheet-heal-row'); b=e.bounding_box(); pg.screenshot(path=S+'r9-health-crop.png',clip={'x':b['x']-60,'y':b['y']-50,'width':b['width']+120,'height':b['height']+60})
+    go(pg,'vampire2',page='1',w=1000); full('r9-vampire-main.png')
+    print('vamp midtabs',pg.evaluate("()=>[...document.querySelectorAll('.sheet-midtabs button')].filter(b=>b.getClientRects().length).map(b=>b.innerText.trim().split('\\n')[0])"))
+''')

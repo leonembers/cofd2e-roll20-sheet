@@ -311,7 +311,7 @@ _ka, _kb = _div_span(h, _kr); _kcol = h[_ka:_kb]; h = h[:_ka] + h[_kb:]
 _tiers = re.findall(r'<label><span data-i18n="(passive|common|specific)">(.*?)</span>(<textarea[^>]*></textarea>)</label>', _kcol, re.S)
 assert len(_tiers) == 3, _tiers
 _rage = re.findall(r'<button type="roll"[^>]*name="roll_(?:wasuim|basuim)"[^>]*>.*?</button>', h, re.S)
-assert len(_rage) == 2
+assert len(_rage) == 1
 _tip = {'passive': 'Passive triggers: resist with Wasu-Im', 'common': 'Common triggers', 'specific': 'Specific / Active triggers from low Harmony'}
 _ktab = ('<div class="sheet-midpane sheet-mp-kuruth"><div class="sheet-leon-page sheet-leon-pane">'
          '<div class="sheet-subheader"><span data-i18n="kuruth-triggers">Kuruth Triggers</span></div>'
@@ -351,6 +351,14 @@ h = _calcs.apply(h)
 h, c, _nrr = _rr.apply(h, c); print('reroll buttons', _nrr)
 import wpcounter as _wpc
 h, c, _wpl = _wpc.apply(h, c); print('wp box refs left in JS', _wpl)
+import kuruthrows as _kr
+h, c = _kr.apply(h, c)
+import kuruthmode as _km
+h, c = _km.apply(h, c)
+import notespage as _np
+h, c = _np.apply(h, c)
+import vamprit as _vr
+h, c = _vr.apply(h, c)
 import isolate as _iso
 h, c, _nis = _iso.apply(h, c); print('isolation selectors', _nis)
 open(f'{R}/dist/sheet.html', 'w', encoding='utf-8').write(h)

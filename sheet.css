@@ -1423,7 +1423,7 @@ div.sheet-wp-bar select, .charsheet div.sheet-wp-bar select { width: 170px !impo
 .sheet-entry-section.sheet-weapons .sheet-entry-head { min-height: 20px; }
 .sheet-entry-section.sheet-weapons .sheet-entry-pool { max-width: 260px; }
 .charsheet button[type=roll].sheet-hl-poolbtn { margin-left: auto; padding: 0 4px; border: 0; background: none; box-shadow: none; text-shadow: none; color: inherit; cursor: pointer; font: inherit; line-height: 16px; height: 18px; }
-.charsheet button[type=roll].sheet-hl-poolbtn::before { content: "94"; margin-right: 3px; }
+.charsheet button[type=roll].sheet-hl-poolbtn::before { content: none; }
 .charsheet button[type=roll].sheet-hl-poolbtn:hover .sheet-entry-pool { text-decoration: underline; }
 .sheet-entry-section.sheet-weapons .sheet-entry-body { gap: 3px 8px; }
 .sheet-entry-section.sheet-weapons .sheet-entry-body label { flex: 1 1 96px; min-width: 88px; max-width: 200px; font-size: 10px; }
@@ -1563,8 +1563,7 @@ input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote { backg
 /* collapsed row: one small badge, only when something non-default is set (never wraps) */
 .sheet-skm { display: inline-flex; align-items: center; margin-left: 2px; vertical-align: middle; flex: 0 0 auto; white-space: nowrap; }
 .sheet-skm-badge { display: none; height: 11px; min-width: 11px; padding: 0 2px; box-sizing: border-box; border-radius: 6px; font: bold 8px/11px Arial, sans-serif; text-align: center; color: #fff !important; background: var(--temp-dot, #555) !important; }
-.sheet-skm-markv[value="1"] ~ .sheet-skm-badge, .sheet-skm-mkv[value="1"] ~ .sheet-skm-badge, .sheet-skm-q[value="9"] + .sheet-skm-badge, .sheet-skm-q[value="8"] + .sheet-skm-badge, .sheet-skm-q[value="no10"] + .sheet-skm-badge { display: inline-block; }
-.sheet-skm-markv[value="1"] ~ .sheet-skm-badge::before { content: ""; display: inline-block; width: 4px; height: 4px; transform: rotate(45deg); background: currentColor; margin: 0 1px 1px; vertical-align: middle; }
+.sheet-skm-mkv[value="1"] ~ .sheet-skm-badge, .sheet-skm-q[value="9"] + .sheet-skm-badge, .sheet-skm-q[value="8"] + .sheet-skm-badge, .sheet-skm-q[value="no10"] + .sheet-skm-badge { display: inline-block; }
 .sheet-skm-mkv[value="1"] ~ .sheet-skm-badge::after { content: "MK"; }
 .sheet-skm-q[value="9"] + .sheet-skm-badge::after { content: "9"; }
 .sheet-skm-q[value="8"] + .sheet-skm-badge::after { content: "8"; }
@@ -1584,6 +1583,13 @@ input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote { backg
 .charsheet .sheet-skm-pill input { position: absolute; inset: 0; opacity: 0; margin: 0; width: 100%; height: 100%; cursor: pointer; z-index: 1; }
 .charsheet .sheet-skm-pill input:checked + span { font-weight: bold; }
 .charsheet .sheet-spec-inner label.sheet-skm-pill:has(input:checked) { background: color-mix(in srgb, var(--temp-dot, #8b1010) 30%, rgba(0,0,0,0)); border-color: var(--temp-dot, #8b1010); }
+.charsheet input.sheet-type:not([value="breeds2"]) ~ * .sheet-skm input.sheet-skm-cb.sheet-skm-breeds2.sheet-skm-breeds2 { display: none !important; }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb { -webkit-appearance: none; -moz-appearance: none; appearance: none; flex: 0 0 11px; width: 11px !important; height: 11px !important; min-width: 0 !important; margin: 0 3px 0 1px !important; padding: 0 !important; border: 1.5px solid currentColor; border-radius: 2px; background: rgba(0,0,0,0); box-sizing: border-box !important; cursor: pointer; vertical-align: middle; opacity: .8; position: static !important; }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb:checked { opacity: 1; }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-werewolf2:checked { background: #aa5a1e !important; border-color: #aa5a1e !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-breeds2:checked { background: #5a321e !important; border-color: #5a321e !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-hunter2:checked { background: #1e4646 !important; border-color: #1e4646 !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb.sheet-skm-mage2:checked { background: #beaa5a !important; border-color: #beaa5a !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
 .sheet-wolf-block { border: 1px solid var(--temp-dot,#aa5a1e); border-radius: 8px; padding: 6px 10px; margin: 6px 0 10px; background: rgba(170,90,30,.08); }
 .sheet-wolf-ab, .sheet-wolf-mg, .sheet-wolf-tr { display: none; }
 .sheet-wolf-ab { gap: 12px; align-items: flex-start; }
@@ -1783,7 +1789,7 @@ button.sheet-dot { filter: none !important; background-image: none !important; b
 .sheet-darkmode .sheet-rollcontainer > button[type=roll]::after { border-color: rgba(255,255,255,.55); }
 /* (C) no horizontal overflow inside the Roll20 dialog */
 .charsheet { max-width: 100%; box-sizing: border-box; }
-.charsheet .sheet-background { box-sizing: border-box; max-width: 100%; }
+.charsheet .sheet-background { box-sizing: border-box; }
 .charsheet .sheet-background-image, .charsheet .sheet-background-image::after, .charsheet img { max-width: 100%; }
 /* attribute grid: let columns shrink instead of pushing past the dialog edge (10-dot tracks for Werewolf forms) */
 .charsheet .sheet-attributes { grid-template-columns: minmax(0,auto) 6px repeat(2, minmax(0,auto)) 6px repeat(2, minmax(0,auto)) 6px repeat(2, minmax(0,auto)); justify-content: space-between; }
@@ -2015,10 +2021,6 @@ input.sheet-dm[value="1"] ~ .sheet-background .repcontrol .repcontrol_add::befor
 .charsheet .sheet-armor .sheet-entry-head label, .charsheet .sheet-armor .sheet-entry-head .sheet-ar-pill { white-space: nowrap; flex-shrink: 0; }
 
 /* roller: D10 icon (pinned in cofd-sheet-art icons/) */
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type=roll].sheet-rollstyle.sheet-rollstyle { width: 32px !important; min-width: 32px !important; height: 32px !important; flex: 0 0 32px; font-size: 0 !important; color: rgba(0,0,0,0) !important; background: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver.png") center / 30px 30px no-repeat !important; }
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type=roll].sheet-rollstyle.sheet-rollstyle:hover { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver-hover.png") !important; }
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type=roll].sheet-rollstyle.sheet-rollstyle:active { background-image: url("https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@e4bf0904448b0247d0aefa0421c531c37345ea4e/icons/d10-silver-pressed.png") !important; transform: translateY(1px); }
-body .charsheet.charsheet .sheet-rollbar.sheet-rollbar .sheet-rollcontainer > button[type=roll].sheet-rollstyle.sheet-rollstyle::before { content: "" !important; display: none !important; }
 
 /* werewolf: touchstones under Renown, Kuruth triggers as wrapping textareas */
 .charsheet .sheet-two-col > .sheet-wolf-lcol, .charsheet .sheet-two-col > .sheet-wolf-rcol { display: flex; flex-direction: column; gap: 4px; }
@@ -2235,6 +2237,94 @@ body .charsheet .sheet-subheader > button.sheet-toggle { color: inherit !importa
 .charsheet.charsheet .sheet-midpane .sheet-breeds-head.sheet-breeds-head { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)) !important; }
 .charsheet.charsheet .sheet-midpane .sheet-subheader { white-space: normal !important; max-width: 100%; }
 .charsheet.charsheet .sheet-midpane .sheet-entry-section-head { flex-wrap: wrap; min-width: 0; }
+
+/* r8: character details: compact fluid grid, field widths sized to typical content */
+.charsheet.charsheet .sheet-det-top > .sheet-det-grid.sheet-det-grid, .charsheet.charsheet .sheet-det-grid.sheet-det-grid { display: flex !important; flex-wrap: wrap; gap: 4px 8px; align-content: flex-start; }
+.charsheet.charsheet .sheet-det-grid > label { min-width: 0; box-sizing: border-box; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-s { flex: 1 1 64px; max-width: 120px; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-m { flex: 1 1 120px; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-l { flex: 1 1 215px; min-width: min(100%, 215px); }
+.charsheet.charsheet .sheet-det-grid > label input, .charsheet.charsheet .sheet-det-grid > label select { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; font-size: 11px !important; padding: 1px 4px !important; }
+.charsheet.charsheet .sheet-det-grid > label select { height: 22px; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-sex { flex: 0 1 84px; min-width: 76px; }
+.charsheet.charsheet .sheet-det-grid > label textarea.sheet-det-ta { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; font-size: 11px !important; padding: 2px 4px !important; resize: none !important; overflow: hidden; min-height: 22px !important; height: auto; field-sizing: content; line-height: 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.charsheet.charsheet .sheet-det-grid > label.sheet-det-m { flex: 1 1 150px; }
+.charsheet.charsheet .sheet-det-grid > label { display: flex !important; flex-direction: column; justify-content: flex-start !important; gap: 1px; margin: 0 !important; padding: 0 !important; height: auto !important; min-height: 0 !important; line-height: 14px; }
+.charsheet.charsheet .sheet-det-grid > label > span { line-height: 14px; }
+.charsheet.charsheet .sheet-det-grid > label input, .charsheet.charsheet .sheet-det-grid > label select, .charsheet.charsheet .sheet-det-grid > label textarea { margin: 0 !important; }
+.charsheet.charsheet .sheet-det-grid > label:has(input[name="attr_det_eyes"]), .charsheet.charsheet .sheet-det-grid > label:has(textarea[name="attr_det_eyes"]) { flex: 1 1 80px; }
+
+/* r8: roller rows: equal heights, centred, consistent gaps, no clipped edges */
+.charsheet.charsheet .sheet-diceroller-grid.sheet-diceroller-grid { display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 6px 8px !important; padding: 2px 2px !important; box-sizing: border-box; overflow: visible !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-rollcontainer.sheet-rollcontainer { flex: 0 0 48px !important; min-height: 40px !important; height: 40px !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options { display: inline-flex !important; align-items: center !important; flex-wrap: wrap; height: auto !important; min-height: 28px; margin: 0 !important; padding: 0 1px !important; overflow: visible !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options button.sheet-toggle { font-size: 12px !important; line-height: 20px !important; height: 24px !important; padding: 1px 10px !important; margin: 0 !important; box-sizing: border-box !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-rolldisplay { flex: 1 1 160px !important; height: 28px !important; min-height: 0 !important; margin: 0 !important; box-sizing: border-box !important; align-self: center !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options:last-child, .charsheet.charsheet .sheet-diceroller-grid > .sheet-diceroller-options ~ .sheet-rolldisplay ~ .sheet-diceroller-options { flex: 1 1 100% !important; }
+.charsheet.charsheet .sheet-diceroller-grid > .sheet-rolldisplay.sheet-rolldisplay { width: auto !important; max-width: none !important; height: 30px !important; }
+
+/* r8: splat-skill check box fits beside the name without clipping */
+.charsheet.charsheet .sheet-skm input.sheet-skm-cb { flex: 0 0 10px; width: 10px !important; height: 10px !important; margin: 0 0 0 1px !important; }
+.charsheet.charsheet .sheet-skm { margin-left: 0 !important; }
+.charsheet.charsheet button.sheet-spec-caret { width: 9px !important; min-width: 0 !important; padding: 0 !important; flex: 0 0 9px !important; }
+.charsheet.charsheet.charsheet .sheet-skills button.sheet-toggle.sheet-toggle { font-size: 12.5px !important; letter-spacing: -0.25px; padding-left: 1px !important; padding-right: 1px !important; }
+
+/* r8: Renown icon alignment: square 18px icon box, centred row, label optically centred */
+.charsheet.charsheet .sheet-skills-renown .sheet-renown-row { align-items: center !important; min-height: 20px; }
+.charsheet.charsheet .sheet-skills-renown .sheet-renown-row > span:first-child { display: flex !important; align-items: center !important; gap: 6px; height: 20px; }
+.charsheet.charsheet .sheet-renown-row span.sheet-ren-ic, .charsheet.charsheet span.sheet-ren-ic.sheet-ren-badge { flex: 0 0 18px !important; width: 18px !important; height: 18px !important; margin: 0 !important; vertical-align: middle !important; background-size: 18px 18px !important; background-position: center !important; align-self: center; }
+.charsheet.charsheet .sheet-skills-renown .sheet-renown-row > span:first-child > span[data-i18n] { line-height: 18px; position: relative; top: 1px; }
+.charsheet.charsheet .sheet-mgx .sheet-mgf-dots { display: inline-flex !important; align-items: center !important; gap: 4px; line-height: 16px; }
+.charsheet.charsheet .sheet-mgx .sheet-mgf-dots span.sheet-ren-ic { margin: 0 !important; vertical-align: middle !important; position: relative; top: -1px; }
+
+/* r8 focus: inset ring so containers never clip it */
+.charsheet input[type="text"], .charsheet input[type="number"], .charsheet textarea, .charsheet select { box-sizing: border-box; }
+.charsheet input[type="text"]:focus, .charsheet input[type="number"]:focus, .charsheet textarea:focus, .charsheet select:focus { outline: none !important; box-shadow: inset 0 0 0 2px var(--temp-dot, #8a6d3b) !important; }
+.charsheet .sheet-det-grid, .charsheet .sheet-fc-notes, .charsheet .sheet-midpane, .charsheet .sheet-repcontainer, .charsheet .sheet-hw-table td { padding-left: 2px; padding-right: 2px; }
+
+/* r8 gutters: middle panel takes the space between Skills and the right pane */
+.charsheet .sheet-page1 > .sheet-flex > .sheet-corporeal.sheet-horizontal-spacer { flex: 0 0 9px !important; width: 9px !important; min-width: 0 !important; padding: 0 !important; margin: 0 !important; }
+.charsheet .sheet-page1 .sheet-grow > .sheet-flex { column-gap: 9px !important; }
+.charsheet .sheet-page1 .sheet-grow > .sheet-flex > .sheet-horizontal-spacer { display: none !important; }
+.charsheet .sheet-page1 .sheet-grow > .sheet-flex > div:last-child { margin-left: 0 !important; }
+
+/* r8 notes: portrait left (fixed), details grid right; wraps under when narrow */
+.charsheet .sheet-mp-notes .sheet-det-top { display: flex !important; flex-wrap: wrap; align-items: flex-start; gap: 8px 12px; padding: 2px; box-sizing: border-box; }
+.charsheet .sheet-mp-notes .sheet-det-top > .sheet-det-portrait { flex: 0 0 210px !important; width: 210px !important; max-width: 100%; box-sizing: border-box; }
+.charsheet .sheet-mp-notes .sheet-det-top > .sheet-det-grid { flex: 1 1 240px !important; min-width: 0 !important; width: auto !important; }
+
+/* r8 werewolf identity: Tribe directly under Auspice, full width of that column */
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) { grid-column: 3 / 4 !important; grid-row: 2 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Chronicle"]) { grid-column: 2 / 3 !important; grid-row: 2 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) .sheet-wolf-hdr-wrap { flex: 1 1 auto; min-width: 0; display: flex; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) select.sheet-wolf-sel { flex: 1 1 auto; width: 100% !important; min-width: 0; max-width: none !important; box-sizing: border-box; padding-left: 3px; padding-right: 14px; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_GroupName"]) { grid-column: 2 / 3 !important; grid-row: 1 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Concept"]) { grid-column: 1 / 3 !important; grid-row: 3 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) { display: grid !important; grid-template-columns: minmax(0, 1fr); align-items: center; row-gap: 0; grid-row: 2 / 4 !important; align-self: start; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) > .sheet-input-label { width: auto !important; min-width: 0 !important; margin: 0 !important; text-align: left !important; line-height: 14px; }
+
+/* r8 werewolf header: Blood and Bone are edited only in the Blood and Bone section */
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Virtue"]), input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Vice"]) { display: none !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Concept"]) input { max-width: 246px; }
+
+/* r8 skill marker: fixed slot at the row start, same x on every row, centred on the name */
+.charsheet .sheet-skills div:has(> span.sheet-skm) { display: flex !important; align-items: center !important; }
+.charsheet.charsheet .sheet-skills span.sheet-skm { order: -1; flex: 0 0 11px !important; width: 11px !important; height: 11px; margin: 0 2px 0 0 !important; padding: 0 !important; display: inline-flex !important; align-items: center; justify-content: center; align-self: center; }
+.charsheet.charsheet .sheet-skills span.sheet-skm input.sheet-skm-cb { margin: 0 !important; position: static !important; vertical-align: middle; }
+.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle, .charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-spec-caret { align-self: center; margin-top: 0 !important; margin-bottom: 0 !important; }
+input.sheet-type:not([value="werewolf2"]):not([value="breeds2"]):not([value="hunter2"]):not([value="mage2"]) ~ * .sheet-skills span.sheet-skm { display: none !important; }
+.charsheet.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle.sheet-toggle { font-size: 12px !important; letter-spacing: -.3px !important; }
+
+/* r9 skill names: wider Skills column, name track flexes, ellipsis only as a last resort */
+.charsheet.charsheet.charsheet .sheet-page1 .sheet-skills.sheet-skills { flex: 0 0 192px !important; width: 192px !important; grid-template-columns: minmax(0, 1fr) 78px !important; }
+.charsheet.charsheet.charsheet .sheet-skills div:has(+ div.sheet-dots) { min-width: 0 !important; overflow: visible !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle.sheet-toggle, .charsheet.charsheet.charsheet .sheet-skills button.sheet-toggle { font-size: 13px !important; letter-spacing: 0 !important; flex: 0 1 auto !important; min-width: 0 !important; max-width: none !important; width: auto !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+/* r9: full skill names never clipped */
+.charsheet.charsheet.charsheet.charsheet.charsheet .sheet-page1 .sheet-skills.sheet-skills.sheet-skills { flex: 0 0 196px !important; width: 196px !important; min-width: 196px !important; max-width: 196px !important; grid-template-columns: minmax(0, 1fr) 78px !important; }
+.charsheet.charsheet.charsheet.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle.sheet-toggle.sheet-toggle { flex: 0 0 auto !important; overflow: visible !important; text-overflow: clip !important; padding-left: 0 !important; padding-right: 0 !important; }
+/* r9: fixed sheet width (no fluid stretching); Roll20 scrolls narrower windows */
+.charsheet.charsheet { overflow-x: auto; }
+.charsheet.charsheet .sheet-background { width: 905px !important; min-width: 905px !important; max-width: none !important; padding-left: 59px !important; padding-right: 59px !important; box-sizing: border-box !important; }
 .charsheet .sheet-entry-head .sheet-mcat-badge { display: inline-block; flex: 0 0 auto; margin: 0 4px; padding: 0 4px; border-radius: 7px; font: bold 9px/13px Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; border: 1px solid currentColor; opacity: .9; color: #6a5a3a; vertical-align: middle; }
 .charsheet .sheet-entry-head .sheet-mcat-badge:empty { display: none; }
 .charsheet .sheet-entry > input.sheet-mcat-flag[value="Mental"] ~ .sheet-entry-head .sheet-mcat-badge { color: #3a6fb0; }

@@ -22,7 +22,7 @@ button.sheet-dot { filter: none !important; background-image: none !important; b
 .sheet-darkmode .sheet-rollcontainer > button[type=roll]::after { border-color: rgba(255,255,255,.55); }
 /* (C) no horizontal overflow inside the Roll20 dialog */
 .charsheet { max-width: 100%; box-sizing: border-box; }
-.charsheet .sheet-background { box-sizing: border-box; max-width: 100%; }
+.charsheet .sheet-background { box-sizing: border-box; }
 .charsheet .sheet-background-image, .charsheet .sheet-background-image::after, .charsheet img { max-width: 100%; }
 /* attribute grid: let columns shrink instead of pushing past the dialog edge (10-dot tracks for Werewolf forms) */
 .charsheet .sheet-attributes { grid-template-columns: minmax(0,auto) 6px repeat(2, minmax(0,auto)) 6px repeat(2, minmax(0,auto)) 6px repeat(2, minmax(0,auto)); justify-content: space-between; }
@@ -547,3 +547,14 @@ input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[nam
 .charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle, .charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-spec-caret { align-self: center; margin-top: 0 !important; margin-bottom: 0 !important; }
 input.sheet-type:not([value="werewolf2"]):not([value="breeds2"]):not([value="hunter2"]):not([value="mage2"]) ~ * .sheet-skills span.sheet-skm { display: none !important; }
 .charsheet.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle.sheet-toggle { font-size: 12px !important; letter-spacing: -.3px !important; }
+
+/* r9 skill names: wider Skills column, name track flexes, ellipsis only as a last resort */
+.charsheet.charsheet.charsheet .sheet-page1 .sheet-skills.sheet-skills { flex: 0 0 192px !important; width: 192px !important; grid-template-columns: minmax(0, 1fr) 78px !important; }
+.charsheet.charsheet.charsheet .sheet-skills div:has(+ div.sheet-dots) { min-width: 0 !important; overflow: visible !important; }
+.charsheet.charsheet.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle.sheet-toggle, .charsheet.charsheet.charsheet .sheet-skills button.sheet-toggle { font-size: 13px !important; letter-spacing: 0 !important; flex: 0 1 auto !important; min-width: 0 !important; max-width: none !important; width: auto !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+/* r9: full skill names never clipped */
+.charsheet.charsheet.charsheet.charsheet.charsheet .sheet-page1 .sheet-skills.sheet-skills.sheet-skills { flex: 0 0 196px !important; width: 196px !important; min-width: 196px !important; max-width: 196px !important; grid-template-columns: minmax(0, 1fr) 78px !important; }
+.charsheet.charsheet.charsheet.charsheet.charsheet .sheet-skills div:has(> span.sheet-skm) > button.sheet-toggle.sheet-toggle.sheet-toggle { flex: 0 0 auto !important; overflow: visible !important; text-overflow: clip !important; padding-left: 0 !important; padding-right: 0 !important; }
+/* r9: fixed sheet width (no fluid stretching); Roll20 scrolls narrower windows */
+.charsheet.charsheet { overflow-x: auto; }
+.charsheet.charsheet .sheet-background { width: 905px !important; min-width: 905px !important; max-width: none !important; padding-left: 59px !important; padding-right: 59px !important; box-sizing: border-box !important; }

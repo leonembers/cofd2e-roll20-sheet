@@ -17,7 +17,7 @@ render = ns['render']
 def legacy_template_css(c):
     hits = []
     for pat, why in [(r'\.webp', '.webp image'), (r'webp', "'webp' substring"), (r'\\0*77\b|\\0*57\b', 'escaped w (decoded by sanitizer)'), (r'\*\*', 'double asterisk'), (r'eval', "'eval' substring"), (r'overscroll-behavior', 'overscroll-behavior'),
-                     (r'@charset', '@charset'), (r'parent', "'parent' substring")]:
+                     (r'@charset', '@charset'), (r'url\([^)]*;', "';' inside url() (statement split breaks quote balance)"), (r'\\', 'backslash escape'), (r'parent', "'parent' substring")]:
         m = re.search(pat, c, re.I)
         if m: hits.append(f'{why}: ...{c[max(0, m.start()-50):m.end()+10]!r}')
     if any(ord(ch) > 127 for ch in c): hits.append('raw non-ASCII char')
@@ -56,7 +56,7 @@ def card(name, roll, over):
         if k in d: d[k] = over.get(k, '0')
     if 'f_init' in f: d.pop('roll'); return d
     return d
-CARDS = [('roll_wasuim', (3, False), dict(f_mod='0', f_wounds='0')), ('roll_basuim', (0, False), dict(f_mod='0', f_wounds='0')),
+CARDS = [('roll_wasuim', (3, False), dict(f_mod='0', f_wounds='0')), ('roll_wasuim', (0, False), dict(f_mod='0', f_wounds='0')),
          ('roll_sheet', (5, False), dict(name='Wits (3) + Occult (2)', f_pool='5 dice', f_mod='0', f_wounds='0')),
          ('roll_perception', (0, False), dict(f_pool='Wits 3 + Composure 3 + Form 1 + Wounds 0', f_mod='Modifier 0')),
          ('roll_initiative', (0, False), dict(f_pool='1d10 + Dexterity 3 + Composure 3 + Fast Reflexes 0 + Penalty 0', f_init='13')),
@@ -79,6 +79,9 @@ def page(dark):
 os.makedirs(f'{R}/shots', exist_ok=True)
 for dark in (False, True):
     open(f'{R}/shots/chatmock-{"dark" if dark else "light"}.html', 'w').write(page(dark))
+_dk = page(True)
+assert _dk.count('Resisted: you keep control') == 1 and _dk.count('Basu-Im! Hard Rage') == 1, 'Death Rage card outcomes'
+assert 'roll_basuim' not in open(f'{R}/dist/sheet.html').read(), 'standalone Basu-Im button'
 from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path='/usr/bin/google-chrome')

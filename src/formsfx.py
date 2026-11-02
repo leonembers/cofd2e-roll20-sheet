@@ -51,7 +51,7 @@ def apply(h, c):
     m = re.search(r'<div class="sheet-quick-actions sheet-game-line sheet-werewolf2 sheet-breeds2">(.*?)</div>', h, re.S); assert m
     blk = m.group(1)
     hw = re.search(r'<span class="sheet-form-hw-mini".*?</span></span>', blk, re.S).group(0)
-    rage = ''.join(re.findall(r'<button type="(?:action|roll)" class="sheet-quick sheet-rage[^"]*"[^>]*name="(?:act_rr|roll)_(?:wasuim|basuim)"[^>]*>.*?</button>', blk, re.S)); assert rage.count('<button') == 2
+    rage = ''.join(re.findall(r'<button type="(?:action|roll)" class="sheet-quick sheet-rage[^"]*"[^>]*name="(?:act_rr|roll)_(?:wasuim|basuim)"[^>]*>.*?</button>', blk, re.S)); assert rage.count('<button') == 1
     h = h.replace(m.group(0), m.group(0).replace('sheet-game-line sheet-werewolf2 sheet-breeds2"', 'sheet-game-line sheet-breeds2"', 1), 1)
     a = '<div class="sheet-form-picker">'; assert h.count(a) == 1
     h = h.replace(a, '<div class="sheet-form-qrow">' + hw + '</div>' + a, 1)
@@ -109,7 +109,7 @@ def apply(h, c):
         const urTurns = (d) => getAttrs(["urkhar_turns"], v => { setAttrs({urkhar_turns: Math.max(0, Math.min(30, (parseInt(v.urkhar_turns) || 0) + d))}); });
         on("clicked:urkhar_turn_dec", () => urTurns(-1)); on("clicked:urkhar_turn_inc", () => urTurns(1));
         on("sheet:opened change:urkhar_enabled", () => getAttrs(["urkhar_enabled"], v => setAttrs({urkhar_basu_note: v.urkhar_enabled === "1" ?
-            "Form of the Firstborn: Basu-Im forces Ur'Khar now. It lasts as long as the Death Rage, with no conscious control, and does not use the once-per-story allowance." : ""}, {silent: true})));
+            "If this fails (Basu-Im): Form of the Firstborn forces Ur'Khar. It lasts as long as the Death Rage, with no conscious control, and does not use the once-per-story allowance." : ""}, {silent: true})));
         on("change:form", (ev) => { if (ev.sourceType !== "player" || ev.newValue !== "urkhar") return;
             getAttrs(["urkhar_enabled", "urkhar_used", "stamina", "potency"], v => { if (v.urkhar_enabled !== "1") return;
                 const turns = (parseInt(v.stamina) || 0) + (parseInt(v.potency) || 0);

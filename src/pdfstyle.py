@@ -2,7 +2,7 @@
 Returns CSS (ASCII only). base = https art folder (tex/<splat>-tex.jpg)."""
 import json, os
 HERE = os.path.dirname(__file__)
-FONTS = "@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Sorts+Mill+Goudy:ital@0;1&display=swap');\n"
+FONTS = '@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Sorts+Mill+Goudy:ital@0%3B1&display=swap");\n'
 # splat: (light-mode accent, dark-mode accent, banner colour)
 ACC = {'mortal': ('#2d3a6e', '#9fb0e8', '#1c2140'), 'vampire': ('#7a1418', '#e0565c', '#2a0d0e'),
        'werewolf': ('#7a3a12', '#d98a4a', '#1c2416'), 'mage': ('#3a2f7a', '#b9a8ff', '#1a1640'),
