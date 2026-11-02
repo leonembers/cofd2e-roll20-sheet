@@ -6,7 +6,16 @@
  "breeds2": {},
  "mage2": {},
  "promethean2": {},
- "changeling2": {},
+ "changeling2": {
+  "beast:Family": [
+   "1|opt:Family",
+   "conditions|opt:Family",
+   "forms|opt:Family",
+   "mt:gear|opt:Family",
+   "mt:kuruth|opt:Family",
+   "mt:merits|opt:Family"
+  ]
+ },
  "hunter2": {},
  "geist2": {},
  "demon": {},

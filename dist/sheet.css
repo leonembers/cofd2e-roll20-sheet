@@ -2416,7 +2416,7 @@ input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[na
 input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) > .sheet-input-label { width: auto !important; min-width: 0 !important; margin: 0 !important; text-align: left !important; line-height: 14px; }
 
 
-input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Virtue"]), input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Vice"]) { display: none !important; }
+
 input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Concept"]) input { max-width: 246px; }
 
 
@@ -2437,6 +2437,22 @@ input.sheet-type:not([value="werewolf2"]):not([value="breeds2"]):not([value="hun
 
 .charsheet.charsheet { overflow-x: auto; }
 .charsheet.charsheet .sheet-background { width: 905px !important; min-width: 905px !important; max-width: none !important; padding-left: 59px !important; padding-right: 59px !important; box-sizing: border-box !important; }
+
+
+.charsheet.charsheet .sheet-bloodbone { display: none !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Virtue"]) { grid-column: 1 / 2 !important; grid-row: 4 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Vice"]) { grid-column: 2 / 3 !important; grid-row: 4 !important; }
+
+.charsheet.charsheet.charsheet .sheet-page1 .sheet-grow > .sheet-flex > div:last-child { flex: 0 0 206px !important; width: 206px !important; min-width: 206px !important; max-width: 206px !important; }
+.charsheet.charsheet.charsheet .sheet-page1 .sheet-healthboxes { flex-wrap: nowrap !important; justify-content: center; }
+
+.charsheet.charsheet .sheet-background { display: flex !important; flex-wrap: wrap !important; align-items: flex-end; align-content: flex-start; }
+.charsheet.charsheet .sheet-background > div, .charsheet.charsheet .sheet-background > fieldset, .charsheet.charsheet .sheet-background > .repcontainer { flex: 0 0 100%; order: 3; min-width: 0; }
+.charsheet.charsheet .sheet-background > .sheet-topinfo, .charsheet.charsheet .sheet-background > .sheet-km-banner { order: 0; }
+.charsheet.charsheet .sheet-background > div.sheet-page:has(.sheet-diceroller-grid) { order: 1; }
+.charsheet.charsheet .sheet-background > button.sheet-toggle { order: 2; flex: 0 0 auto; margin-top: 6px !important; }
+.charsheet.charsheet .sheet-background > .sheet-spacer { order: 2; }
+.charsheet.charsheet .sheet-background > .sheet-background-image { order: -1; }
 .charsheet .sheet-entry-head .sheet-mcat-badge { display: inline-block; flex: 0 0 auto; margin: 0 4px; padding: 0 4px; border-radius: 7px; font: bold 9px/13px Arial, sans-serif; text-transform: uppercase; letter-spacing: .4px; border: 1px solid currentColor; opacity: .9; color: #6a5a3a; vertical-align: middle; }
 .charsheet .sheet-entry-head .sheet-mcat-badge:empty { display: none; }
 .charsheet .sheet-entry > input.sheet-mcat-flag[value="Mental"] ~ .sheet-entry-head .sheet-mcat-badge { color: #3a6fb0; }input.sheet-dm[value="1"] ~ .sheet-background .sheet-entry > input.sheet-mcat-flag[value="Mental"] ~ .sheet-entry-head .sheet-mcat-badge,
@@ -3033,6 +3049,73 @@ input.sheet-spec-has[value="1"] ~ span::after { content: "*" !important; font-fa
 .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #5a321e !important; border-color: #5a321e !important; color: #fff !important; }
 .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { background: #2a2d80 !important; border-color: #2a2d80 !important; color: #fff !important; }
 .charsheet.charsheet.charsheet input.sheet-midtab[value="merits"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-merits, .charsheet.charsheet.charsheet input.sheet-midtab[value="powers"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-powers, .charsheet.charsheet.charsheet input.sheet-midtab[value="weapons"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-weapons, .charsheet.charsheet.charsheet input.sheet-midtab[value="kuruth"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-kuruth, .charsheet.charsheet.charsheet input.sheet-midtab[value="rituals"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-rituals, .charsheet.charsheet.charsheet input.sheet-midtab[value="gear"] + .sheet-midtabs button.sheet-midtab-btn.sheet-mt-gear { box-shadow: 0 0 6px rgba(0,0,0,.35); }
+
+.charsheet .sheet-vv { display: flex; gap: 4px; align-items: center; min-width: 0; }
+.charsheet.charsheet .sheet-vv select.sheet-vv-sel { display: none; flex: 0 1 auto; min-width: 0; max-width: 100%; height: 22px; padding: 0 2px; }
+.charsheet.charsheet .sheet-vv input.sheet-vv-txt { flex: 1 1 60px; min-width: 0; }
+.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * .sheet-vv select.sheet-vv-mortal2 { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="mortal2"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+.charsheet.charsheet input.sheet-type[value="mage2"] ~ * .sheet-vv select.sheet-vv-mage2 { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="mage2"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * .sheet-vv select.sheet-vv-hunter2 { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="hunter2"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * .sheet-vv select.sheet-vv-breeds2 { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="breeds2"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+.charsheet.charsheet input.sheet-type[value="demon"] ~ * .sheet-vv select.sheet-vv-demon { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="demon"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-vv select.sheet-vv-vampire2 { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="vampire2"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-vv select.sheet-vv-werewolf2 { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="werewolf2"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * .sheet-vv select.sheet-vv-changeling2 { display: block !important; flex: 1 1 auto; }
+.charsheet.charsheet input.sheet-type[value="changeling2"] ~ * .sheet-vv input.sheet-vv-txt { flex: 0 1 70px !important; }
+
+.charsheet .sheet-rolldisplay { display: flex !important; align-items: center; gap: 6px; }
+.charsheet.charsheet .sheet-rolldisplay button.sheet-pool-clear { flex: 0 0 auto; order: 2; padding: 1px 10px !important; height: 22px !important; width: auto !important; border-radius: 11px !important; font: bold 11px/18px Arial, sans-serif !important; }
+.charsheet.charsheet .sheet-rolldisplay input.sheet-pooltxt { flex: 1 1 auto; min-width: 0; }
+
+.charsheet .sheet-ts-kuruth { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; margin: 2px 0 8px; }
+.charsheet .sheet-ts-kuruth label { display: flex; flex-direction: column; font-size: 12px; font-weight: bold; }
+
+.charsheet input.sheet-mfilter[value="Style"] ~ .repcontainer > .repitem:not(:has(input.sheet-mcat-flag[value="Style"])) { display: none !important; }
+.charsheet.charsheet .sheet-mstyle-badge { display: none !important; }
+.charsheet label.sheet-switch { display: inline-flex !important; align-items: center; gap: 5px; cursor: pointer; position: relative; }
+.charsheet.charsheet label.sheet-switch > input[type=checkbox] { position: absolute !important; opacity: 0 !important; width: 34px !important; height: 18px !important; margin: 0 !important; z-index: 2; cursor: pointer; }
+.charsheet label.sheet-switch .sheet-sw-track { position: relative; width: 32px; height: 16px; border-radius: 8px; background: #777; transition: background .15s; flex: 0 0 auto; }
+.charsheet label.sheet-switch .sheet-sw-track::after { content: ""; position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; transition: left .15s; }
+.charsheet label.sheet-switch > input:checked + .sheet-sw-track { background: #b4743a; }
+.charsheet label.sheet-switch > input:checked + .sheet-sw-track::after { left: 18px; }
+.charsheet.charsheet .sheet-merits .repitem .sheet-entry { margin: 0 0 3px !important; padding: 2px 4px !important; }
+.charsheet.charsheet .sheet-merits .repitem .sheet-entry-head { min-height: 0 !important; gap: 3px !important; padding: 0 !important; }
+.charsheet.charsheet .sheet-merits .repitem .sheet-entry-body { padding: 3px 2px !important; gap: 3px 6px !important; }
+
+.charsheet.charsheet .repeating_armor .sheet-entry-head { display: flex !important; flex-wrap: wrap !important; align-items: center; gap: 3px 6px !important; }
+.charsheet.charsheet .repeating_armor .sheet-entry-head > button.sheet-entry-post { display: none !important; }
+.charsheet.charsheet .repeating_armor .sheet-entry-head > input.sheet-ar-name { flex: 1 1 100% !important; order: -2; width: 100% !important; max-width: none !important; min-width: 0 !important; box-sizing: border-box; font-weight: bold; white-space: nowrap; }
+.charsheet.charsheet .repeating_armor .sheet-entry-head > input.sheet-entry-toggle { order: -3; }
+.charsheet .sheet-ar-steps { display: flex; flex-wrap: wrap; gap: 3px 8px; flex: 1 1 auto; }
+.charsheet .sheet-stp { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; white-space: nowrap; }
+.charsheet .sheet-stp-l { margin-right: 2px; opacity: .85; }
+.charsheet.charsheet .sheet-stp button.sheet-stp-b { width: 16px !important; height: 16px !important; min-width: 0 !important; padding: 0 !important; line-height: 14px !important; border-radius: 50% !important; border: 1px solid currentColor !important; font: bold 11px/14px Arial, sans-serif !important; text-align: center; }
+.charsheet.charsheet .sheet-stp input.sheet-stp-v { width: 30px !important; min-width: 0 !important; height: 18px !important; padding: 0 !important; text-align: center !important; -moz-appearance: textfield; }
+.charsheet .sheet-stp input.sheet-stp-v::-webkit-inner-spin-button, .charsheet .sheet-stp input.sheet-stp-v::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.charsheet label.sheet-ar-dtog { flex: 1 1 100%; font-size: 11px; cursor: pointer; opacity: .85; display: flex; align-items: center; gap: 4px; }
+.charsheet.charsheet .repeating_armor textarea.sheet-ar-desc { display: none; flex: 1 1 100%; width: 100% !important; box-sizing: border-box; height: 44px; resize: vertical; }
+.charsheet.charsheet .repeating_armor label.sheet-ar-dtog:has(input:checked) + textarea.sheet-ar-desc { display: block !important; }
+.charsheet.charsheet .repeating_weapons .sheet-entry-head { display: flex !important; align-items: center; gap: 4px !important; }
+.charsheet.charsheet .repeating_weapons .sheet-entry-head > button.sheet-w-atk { flex: 1 1 0 !important; min-width: 0 !important; width: auto !important; max-width: none !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; padding: 1px 4px !important; background: none !important; border: 0 !important; font-weight: bold; cursor: pointer; }
+.charsheet.charsheet .repeating_weapons .sheet-entry-head > button.sheet-w-atk:hover { text-decoration: underline; }
+.charsheet.charsheet button.sheet-entry-post.sheet-post-ic { flex: 0 0 auto !important; width: 22px !important; height: 20px !important; min-width: 0 !important; padding: 0 !important; font-size: 13px !important; line-height: 18px !important; text-align: center; border-radius: 4px !important; }
+.charsheet.charsheet .sheet-entry-body input[type=number] { width: 52px !important; min-width: 0 !important; }
+.charsheet.charsheet .sheet-entry-body select { width: auto !important; max-width: 100%; min-width: 0 !important; }
+.charsheet.charsheet .sheet-entry-section .repitem .sheet-entry-body { gap: 3px 8px !important; }
+.charsheet.charsheet .sheet-entry-section .repitem .sheet-entry-body > label:not(.sheet-wide) { flex: 0 1 auto !important; width: auto !important; min-width: 0 !important; }
+
+.charsheet.charsheet .sheet-page1 .sheet-main-forms .sheet-form-picker, .charsheet.charsheet .sheet-page1 .sheet-main-forms .sheet-form-qrow { display: none !important; }
+.charsheet .sheet-rp-forms { text-align: center; margin-bottom: 6px; }
+.charsheet.charsheet .sheet-rp-forms select.sheet-rp-formsel { width: 170px !important; max-width: 100%; height: 24px; margin: 2px auto 0 !important; display: block; font-weight: bold; }
+.charsheet .sheet-rp-hw { font-size: 12px; opacity: .9; margin-top: 2px; min-height: 14px; }
+.charsheet.charsheet.charsheet .sheet-page1 .sheet-grow > .sheet-flex > div:last-child .sheet-subheader { text-align: center !important; justify-content: center !important; }
 
 /* isolation: each sheet type shows only its own game-line content */
 .charsheet input.sheet-game-line[value="mortal"] ~ * .sheet-game-line.sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2):not(.sheet-mortal2-ghost):not(.sheet-mortal2-organization),

@@ -537,7 +537,7 @@ input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[na
 input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) > .sheet-input-label { width: auto !important; min-width: 0 !important; margin: 0 !important; text-align: left !important; line-height: 14px; }
 
 /* r8 werewolf header: Blood and Bone are edited only in the Blood and Bone section */
-input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Virtue"]), input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Vice"]) { display: none !important; }
+
 input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Concept"]) input { max-width: 246px; }
 
 /* r8 skill marker: fixed slot at the row start, same x on every row, centred on the name */
@@ -558,3 +558,19 @@ input.sheet-type:not([value="werewolf2"]):not([value="breeds2"]):not([value="hun
 /* r9: fixed sheet width (no fluid stretching); Roll20 scrolls narrower windows */
 .charsheet.charsheet { overflow-x: auto; }
 .charsheet.charsheet .sheet-background { width: 905px !important; min-width: 905px !important; max-width: none !important; padding-left: 59px !important; padding-right: 59px !important; box-sizing: border-box !important; }
+
+/* r9: Blood/Bone back in the header; section under Attributes removed (attrs kept) */
+.charsheet.charsheet .sheet-bloodbone { display: none !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Virtue"]) { grid-column: 1 / 2 !important; grid-row: 4 !important; }
+input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(input[name="attr_Vice"]) { grid-column: 2 / 3 !important; grid-row: 4 !important; }
+/* r9: right pane wide enough for ~15 Health boxes on one line (fixed sheet width) */
+.charsheet.charsheet.charsheet .sheet-page1 .sheet-grow > .sheet-flex > div:last-child { flex: 0 0 206px !important; width: 206px !important; min-width: 206px !important; max-width: 206px !important; }
+.charsheet.charsheet.charsheet .sheet-page1 .sheet-healthboxes { flex-wrap: nowrap !important; justify-content: center; }
+/* r9: page tabs sit under the dice roller */
+.charsheet.charsheet .sheet-background { display: flex !important; flex-wrap: wrap !important; align-items: flex-end; align-content: flex-start; }
+.charsheet.charsheet .sheet-background > div, .charsheet.charsheet .sheet-background > fieldset, .charsheet.charsheet .sheet-background > .repcontainer { flex: 0 0 100%; order: 3; min-width: 0; }
+.charsheet.charsheet .sheet-background > .sheet-topinfo, .charsheet.charsheet .sheet-background > .sheet-km-banner { order: 0; }
+.charsheet.charsheet .sheet-background > div.sheet-page:has(.sheet-diceroller-grid) { order: 1; }
+.charsheet.charsheet .sheet-background > button.sheet-toggle { order: 2; flex: 0 0 auto; margin-top: 6px !important; }
+.charsheet.charsheet .sheet-background > .sheet-spacer { order: 2; }
+.charsheet.charsheet .sheet-background > .sheet-background-image { order: -1; }
