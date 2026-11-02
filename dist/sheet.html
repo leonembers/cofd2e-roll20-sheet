@@ -274,7 +274,7 @@
             </div>
             
             <div class="sheet-rolldisplay">
-                <button type="action" class="sheet-pool-clear" name="act_pool_clear" title="Clear the selected traits from the dice pool">Clear</button><input type="text" readonly class="sheet-rollstyle sheet-sheet sheet-pooltxt" name="attr_rolldisplay" value="" title="Dice pool from the selected traits (abbreviated). Click into the field and scroll to read it in full." />
+                <button type="action" class="sheet-pool-clear" name="act_poolclear" title="Clear the selected traits from the dice pool">Clear</button><input type="text" readonly class="sheet-rollstyle sheet-sheet sheet-pooltxt" name="attr_rolldisplay" value="" title="Dice pool from the selected traits (abbreviated). Click into the field and scroll to read it in full." />
                 <div class="sheet-rollstyle sheet-attack">Attack</div>
                 <div class="sheet-rollstyle sheet-simple">Simple</div>
             </div>
@@ -5546,7 +5546,7 @@
         });
         on("sheet:opened change:sheettype change:virtue change:vice", vvSync);
 
-        on("clicked:pool_clear", () => { const u = resetRollFlags(); delete u.rolltype_select; setAttrs(u); });
+        on("clicked:poolclear", () => { const u = resetRollFlags(); delete u.rolltype_select; setAttrs(u); });
         on("sheet:opened", () => getAttrs(["rollstyle"], v => { if (v.rollstyle && v.rollstyle !== "sheet") setAttrs({rollstyle: "sheet"}); }));
 
         // r9 merits: Style toggle <-> Style category; Splat category retired (-> Supernatural)
@@ -5593,6 +5593,12 @@
 
         on("clicked:fullheal", () => { const u = {}; for (let i = 1; i <= 16; i++) u["healthbox_" + i] = "0"; setAttrs(u); });
         on("sheet:opened change:iron_stamina change:health", () => getAttrs(["iron_stamina"], v => setAttrs(getWoundPenalties(parseInt(v.iron_stamina, 10) || 0), {silent: true})));
+
+        on("clicked:poolclear", () => setAttrs({dice_pool_attributes: "", dice_pool: "0", dice_pool_label: "", rolldisplay: ""}));
+        ["ceremonies","vessels","covers","fetishes"].forEach((sec) => { for (let d = 0; d <= 5; d++) on(`clicked:repeating_${sec}:rating-${d}`, () => setAttrs({[`repeating_${sec}_rating`]: d})); });
+        on("clicked:ride_box", () => getAttrs(["ride_box"], v => setAttrs({ride_box: v.ride_box === "1" ? "0" : "1"})));
+        on("clicked:goblin-debt", () => getAttrs(["goblin-debt_flag"], v => setAttrs({"goblin-debt_flag": v["goblin-debt_flag"] === "1" ? "0" : "1"})));
+        on("sheet:opened", () => getAttrs(["modifiermacro", "dicepoolmacro"], v => { const u = {}; if (!v.modifiermacro || v.modifiermacro === "false") u.modifiermacro = "Modifier"; if (!v.dicepoolmacro || v.dicepoolmacro === "false") u.dicepoolmacro = "Dice pool"; if (Object.keys(u).length) setAttrs(u, {silent: true}); }));
 
         on("sheet:opened change:sheettype", () => getAttrs(["sheettype","mid_tab"], v => { if (v.mid_tab === "kuruth" && v.sheettype !== "werewolf2") setAttrs({mid_tab: "merits"}, {silent: true}); }));
 

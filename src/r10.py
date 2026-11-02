@@ -1,7 +1,7 @@
 """r10 live fixes: repcontainer-safe selectors, armor grid, black pills, dark-only, d10 icon, robust sheet roll,
 roll-template CSS hardening (sanitizer-safe words, template rules hoisted right after @import)."""
 import re
-D10 = 'https://cdn.jsdelivr.net/gh/leonembers/cofd2e-roll20-sheet@461496b99b8a13e963bb1da89d61f3e058c15aba/assets/'
+D10 = 'https://cdn.jsdelivr.net/gh/leonembers/cofd2e-roll20-sheet@10c766812d896be950b27d239f20084a1960c364/assets/'
 
 def apply(h, c):
     # armor: post button becomes an icon (no squeezed name span)
@@ -85,4 +85,5 @@ def final(c):
             tpl.append(m.group(0).strip()); return ''
         return m.group(0)
     body = re.sub(r'(?m)(?:^|(?<=\}))([^@{}\n][^{}]*?)\{[^{}]*\}', grab, body)
-    return ''.join(imps) + '\n'.join(tpl) + '\n' + body
+    import r10f
+    return '\n'.join(tpl) + '\n' + r10f.fonts() + body
