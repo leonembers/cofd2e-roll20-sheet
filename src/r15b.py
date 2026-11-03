@@ -2055,3 +2055,37 @@ def r97(h, c):
     assert h.count(a) == 1, 'armor'
     h = h.replace(a, 'name="attr_general_armor_display" value="@{general_armor}" disabled="disabled" title="General armor: subtracts that many points of damage from every attack (worn armor plus Merits and powers)."')
     return h, c
+
+
+def r98(h, c):
+    """(108) per-card Reroll: each roll gets its own slot (ring of 20) holding its exact resolved pool."""
+    N = 20
+    a = '<button type="action" name="act_wp_reroll" class="sheet-hidden-act" title="Reroll your last roll"></button>'
+    assert h.count(a) == 1, 'wp btn'
+    h = h.replace(a, a + ''.join(f'<button type="action" name="act_rrs{i}" class="sheet-hidden-act" title="Reroll"></button><input type="hidden" name="attr_rr_s{i}" value="" />' for i in range(N)) + '<input type="hidden" name="attr_rr_next" value="0" />')
+    a = 'const rrRun0 = (mac, isRe) => startRoll(mac + (isRe ? "" : rrTag), (r) => {'
+    assert h.count(a) == 1, 'rrRun0'
+    h = h.replace(a, '''const rrRun0 = (mac, isRe) => isRe ? rrRun1(mac, true, -1) : getAttrs(["rr_next"], v => { const s = ((parseInt(v.rr_next, 10) || 0) % RR_N + RR_N) % RR_N; setAttrs({rr_next: (s + 1) % RR_N}, {silent: true}); rrRun1(mac, false, s); });
+        const rrRun1 = (mac, isRe, slot) => startRoll(mac + (isRe ? "" : ` {{reroll=[Reroll](~@{character_id}|rrs${slot})}}`), (r) => {
+            if (!isRe && slot >= 0) { const R0 = r.results || {}; setAttrs({["rr_s" + slot]: JSON.stringify({m: mac, x: R0.roll ? String(R0.roll.expression || "") : ""})}, {silent: true}); }''')
+    js = '''
+        // (108) per-card reroll: rebuild THAT card from its slot; exact rolled expression, no prompts, no added dice
+        const RR_N = %d;
+        const rrCut = (m) => { const i = m.indexOf("{{roll=[["); if (i < 0) return [m, ""]; let j = m.indexOf("]]}}", i), k = m.indexOf(" {{", i + 9);
+            if (k >= 0 && (j < 0 || k < j)) return [m.slice(0, i) + m.slice(k), m.slice(i + 9, k)]; return j < 0 ? [m.slice(0, i), m.slice(i + 9)] : [m.slice(0, i) + m.slice(j + 4), m.slice(i + 9, j)]; };
+        for (let s = 0; s < RR_N; s++) on(`clicked:rrs${s}`, () => getAttrs(["rr_s" + s], (v) => {
+            const head = "&{template:cofd-entry} {{charname=@{character_name}}} {{kind=Reroll}} ";
+            let o = null; try { o = JSON.parse(v["rr_s" + s] || ""); } catch (e) { o = null; }
+            if (!o || !o.m) return startRoll(head + "{{name=Nothing to reroll}} {{f_short=This roll is too old to reroll; roll it again.}}", r => finishRoll(r.rollId));
+            let [m, ex] = rrCut(String(o.m)); if (o.x && !/\{\{|\]\]/.test(o.x)) ex = String(o.x);
+            m = m.replace(/\\s*\\{\\{(reroll|wpst)=[^}]*\\}\\}/g, "");
+            m = /\\{\\{kind=[^}]*\\}\\}/.test(m) ? m.replace(/\\{\\{kind=[^}]*\\}\\}/, "{{kind=Reroll}}") : m.replace(/(&\\{template:[^}]*\\})/, "$1 {{kind=Reroll}}");
+            m = /\\{\\{name=/.test(m) ? m.replace(/\\{\\{name=/, "{{name=Reroll: ") : m + " {{name=Reroll}}";
+            m = rrStrip(m); ex = rrStrip(ex);
+            startRoll(m + (ex ? ` {{roll=[[${ex}` + (/@\{[^{}]*\}\s*$/.test(ex) ? "" : "]]}}") : ""), r => finishRoll(r.rollId));
+        }));
+''' % N
+    b = '        on("clicked:wp_reroll", () => getAttrs('
+    assert h.count(b) == 1
+    h = h.replace(b, js + b)
+    return h, c
