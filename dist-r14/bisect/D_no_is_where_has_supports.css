@@ -1,0 +1,1944 @@
+.charsheet {
+    font-family: "Courier";
+
+    
+    --color-mortal:     #2A2D80;
+    --color-vampire:    #B21800;
+    --color-werewolf:   #E9813E;
+    --color-mage:       #0000FF;
+    --color-promethean: #660099;
+    --color-changeling: #006600;
+    --color-geist:      #316195;
+    --color-mummy:      #996600;
+    --color-demon:      #2A2D80;
+    --color-beast:      #2A2D80;
+    --color-hunter:     #203e2f;
+    --color-homebrew:   #2A2D80;
+    --color-wod-demon:  #e95500;
+    --color-deviant-the-renegades: #a04b4b;
+}
+.sheet-background {
+    background: none;
+    position: relative;
+    padding: 18px 80px 80px 90px;
+    width: 905px;
+}
+.sheet-background-image {
+    width: 100%;
+    z-index: -1;
+}
+input.sheet-game-line[value="mortal"] ~ * .sheet-game-line:not(.sheet-mortal):not(.sheet-mortal1):not(.sheet-mortal2):not(.sheet-mortal2-ghost):not(.sheet-mortal2-organization),
+input.sheet-type[value="mortal1"] ~ * .sheet-game-line:not(.sheet-mortal):not(.sheet-mortal1),
+input.sheet-type[value="mortal2"] ~ * .sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2),
+input.sheet-type[value="mortal2-ghost"] ~ * .sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2-ghost),
+input.sheet-type[value="mortal2-organization"] ~ * .sheet-game-line:not(.sheet-mortal):not(.sheet-mortal2-organization),
+input.sheet-game-line[value="vampire"] ~ * .sheet-game-line:not(.sheet-vampire):not(.sheet-vampire1):not(.sheet-vampire2),
+input.sheet-type[value="vampire1"] ~ * .sheet-game-line:not(.sheet-vampire):not(.sheet-vampire1),
+input.sheet-type[value="vampire2"] ~ * .sheet-game-line:not(.sheet-vampire):not(.sheet-vampire2),
+input.sheet-game-line[value="werewolf"] ~ * .sheet-game-line:not(.sheet-werewolf):not(.sheet-werewolf1):not(.sheet-werewolf2),
+input.sheet-type[value="werewolf1"] ~ * .sheet-game-line:not(.sheet-werewolf):not(.sheet-werewolf1),
+input.sheet-type[value="werewolf2"] ~ * .sheet-game-line:not(.sheet-werewolf):not(.sheet-werewolf2),
+input.sheet-game-line[value="mage"] ~ * .sheet-game-line:not(.sheet-mage):not(.sheet-mage1):not(.sheet-mage2),
+input.sheet-type[value="mage1"] ~ * .sheet-game-line:not(.sheet-mage):not(.sheet-mage1),
+input.sheet-type[value="mage2"] ~ * .sheet-game-line:not(.sheet-mage):not(.sheet-mage2),
+input.sheet-game-line[value="promethean"] ~ * .sheet-game-line:not(.sheet-promethean):not(.sheet-promethean1):not(.sheet-promethean2),
+input.sheet-type[value="promethean1"] ~ * .sheet-game-line:not(.sheet-promethean):not(.sheet-promethean1),
+input.sheet-type[value="promethean2"] ~ * .sheet-game-line:not(.sheet-promethean):not(.sheet-promethean2),
+input.sheet-game-line[value="changeling"] ~ * .sheet-game-line:not(.sheet-changeling):not(.sheet-changeling1):not(.sheet-changeling2),
+input.sheet-type[value="changeling1"] ~ * .sheet-game-line:not(.sheet-changeling):not(.sheet-changeling1),
+input.sheet-type[value="changeling2"] ~ * .sheet-game-line:not(.sheet-changeling):not(.sheet-changeling2),
+input.sheet-game-line[value="hunter"] ~ * .sheet-game-line:not(.sheet-hunter):not(.sheet-hunter1):not(.sheet-hunter2),
+input.sheet-type[value="hunter1"] ~ * .sheet-game-line:not(.sheet-hunter):not(.sheet-hunter1),
+input.sheet-type[value="hunter2"] ~ * .sheet-game-line:not(.sheet-hunter):not(.sheet-hunter2),
+input.sheet-game-line[value="geist"] ~ * .sheet-game-line:not(.sheet-geist):not(.sheet-geist1):not(.sheet-geist2):not(.sheet-geist2-geist):not(.sheet-geist2-organization),
+input.sheet-type[value="geist1"] ~ * .sheet-game-line:not(.sheet-geist):not(.sheet-geist1),
+input.sheet-type[value="geist2"] ~ * .sheet-game-line:not(.sheet-geist):not(.sheet-geist2),
+input.sheet-type[value="geist2-geist"] ~ * .sheet-game-line:not(.sheet-geist):not(.sheet-geist2-geist),
+input.sheet-type[value="geist2-organization"] ~ * .sheet-game-line:not(.sheet-geist):not(.sheet-geist2-organization),
+input.sheet-game-line[value="mummy"] ~ * .sheet-game-line:not(.sheet-mummy):not(.sheet-mummy1):not(.sheet-mummy2),
+input.sheet-type[value="mummy1"] ~ * .sheet-game-line:not(.sheet-mummy):not(.sheet-mummy1),
+input.sheet-type[value="mummy2"] ~ * .sheet-game-line:not(.sheet-mummy):not(.sheet-mummy2),
+input.sheet-game-line[value="demon"] ~ * .sheet-game-line:not(.sheet-demon):not(.sheet-demon1):not(.sheet-demon2),
+input.sheet-type[value="demon1"] ~ * .sheet-game-line:not(.sheet-demon):not(.sheet-demon1),
+input.sheet-type[value="demon2"] ~ * .sheet-game-line:not(.sheet-demon):not(.sheet-demon2),
+input.sheet-game-line[value="beast"] ~ * .sheet-game-line:not(.sheet-beast):not(.sheet-beast1):not(.sheet-beast2),
+input.sheet-type[value="beast1"] ~ * .sheet-game-line:not(.sheet-beast):not(.sheet-beast1),
+input.sheet-type[value="beast2"] ~ * .sheet-game-line:not(.sheet-beast):not(.sheet-beast2),
+input.sheet-game-line[value="homebrew"] ~ * .sheet-game-line:not(.sheet-homebrew):not(.sheet-homebrew1):not(.sheet-homebrew2),
+input.sheet-type[value="homebrew1"] ~ * .sheet-game-line:not(.sheet-homebrew):not(.sheet-homebrew1),
+input.sheet-type[value="homebrew2"] ~ * .sheet-game-line:not(.sheet-homebrew):not(.sheet-homebrew2),
+input.sheet-game-line[value="wod-demon"] ~ * .sheet-game-line:not(.sheet-wod-demon):not(.sheet-wod-demon1):not(.sheet-wod-demon2),
+input.sheet-type[value="wod-demon2"] ~ * .sheet-game-line:not(.sheet-wod-demon):not(.sheet-wod-demon2),
+input.sheet-type[value="deviant-the-renegades"] ~ * .sheet-game-line:not(.sheet-deviant-the-renegades) {
+    display: none;
+}
+input.sheet-type[value="changeling2"] ~ * .sheet-changeling2-inverse,
+input.sheet-type[value="deviant-the-renegades"] ~ * .sheet-deviant-the-renegades-inverse  
+input.sheet-type[value="mummy"] ~ * .sheet-mummy-inverse {
+    display: none;
+}
+input.sheet-page[value="settings"] ~ .sheet-page:not(.sheet-settings),
+input.sheet-page[value="1"] ~ .sheet-page:not(.sheet-page1),
+input.sheet-page[value="2"] ~ .sheet-page:not(.sheet-page2),
+input.sheet-page[value="3"] ~ .sheet-page:not(.sheet-page3),
+input.sheet-page[value="scars-variations"] ~ .sheet-page:not(.sheet-scars-variations),
+input.sheet-page[value="conditions"] ~ .sheet-page:not(.sheet-conditions),
+input.sheet-settingssheet:not(:checked) ~ .sheet-settings,
+input.sheet-page1-sheet:not(:checked) ~ .sheet-page1,
+input.sheet-page2-sheet:not(:checked) ~ .sheet-page2,
+input.sheet-page3-sheet:not(:checked) ~ .sheet-page3,
+input.sheet-scars-variations-sheet:not(:checked) ~ .sheet-scars-variations,
+input.sheet-conditions-sheet:not(:checked) ~ .sheet-conditions,
+input.sheet-edition[value="1"] ~ .sheet-2nd,
+input.sheet-edition[value="1"] ~ * .sheet-2nd,
+input.sheet-edition[value="2"] ~ .sheet-1st,
+input.sheet-edition[value="2"] ~ * .sheet-1st,
+input.sheet-entity:not([value="corporeal"]) ~ .sheet-corporeal,
+input.sheet-entity:not([value="corporeal"]) ~ * .sheet-corporeal,
+input.sheet-entity[value="corporeal"] ~ .sheet-corporeal-inverse,
+input.sheet-entity[value="corporeal"] ~ * .sheet-corporeal-inverse,
+input.sheet-entity:not([value="ephemeral"]) ~ .sheet-ephemeral,
+input.sheet-entity:not([value="ephemeral"]) ~ * .sheet-ephemeral,
+input.sheet-entity[value="ephemeral"] ~ .sheet-ephemeral-inverse,
+input.sheet-entity[value="ephemeral"] ~ * .sheet-ephemeral-inverse,
+input.sheet-entity:not([value="organization"]) ~ .sheet-organization,
+input.sheet-entity:not([value="organization"]) ~ * .sheet-organization,
+input.sheet-entity[value="organization"] ~ .sheet-organization-inverse,
+input.sheet-entity[value="organization"] ~ * .sheet-organization-inverse {
+    display: none !important;
+}
+input.sheet-archery-era[value="1"] ~ .sheet-not-archery-era,
+input.sheet-archery-era:not([value="1"]) ~ .sheet-is-archery-era,
+input.sheet-ride-era[value="1"] ~ .sheet-not-ride-era,
+input.sheet-ride-era:not([value="1"]) ~ .sheet-is-ride-era,
+input.sheet-enigmas-era[value="1"] ~ .sheet-not-enigmas-era,
+input.sheet-enigmas-era:not([value="1"]) ~ .sheet-is-enigmas-era {
+    display: none;
+}
+.sheet-edition-label {
+    font-weight: bold;
+}
+.sheet-background-image::after {
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+input.sheet-game-line[value="mortal"] ~ .sheet-background-image::after,
+input.sheet-game-line[value="homebrew"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/chronicles-bg.jpg');
+    background-size: 100% 100%;
+    opacity: 0.2
+}
+input.sheet-game-line[value="vampire"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/vampire-bg.jpg');
+    background-size: 100% 105%;
+}
+input.sheet-game-line[value="werewolf"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/werewolf-bg.png');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="mage"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/mage-bg.png');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="promethean"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/promethean-bg.png');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="changeling"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/changeling-bg.png');
+    background-size: 100% 102%;
+}
+input.sheet-game-line[value="geist"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/AdolfoDomingues/roll20-character-sheets/adf6900d6b57636eb5273d731ccd6a22adb57a1d/Chronicles%20of%20Darkness/images/Geist2eBG.jpg');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="mummy"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/AdolfoDomingues/roll20-character-sheets/8902b1801a7fe6024739f64e41d8c85f6ace7489/Chronicles%20of%20Darkness/images/mummy2-bg.jpg');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="demon"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/demon-bg.png');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="beast"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/beast-bg.png');
+    background-size: 100% 101%;
+}
+input.sheet-game-line[value="hunter"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/hunter-bg.png');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="wod-demon"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/demon-fallen-bg.png');
+    background-size: 100% 100%;
+}
+input.sheet-game-line[value="deviant-the-renegades"] ~ .sheet-background-image::after {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/Deviant-bg.jpg');
+    background-size: 100% 100%;
+}
+input.sheet-settingssheet:checked ~ .sheet-background-image::after,
+input.sheet-page2-sheet:checked ~ .sheet-background-image::after,
+input.sheet-page3-sheet:checked ~ .sheet-background-image::after,
+input.sheet-scars-variations-sheet:checked ~ .sheet-background-image::after {
+    background-size: 100%;
+}
+.sheet-logo {
+    display: flex;
+    justify-content: center;
+    min-height: 190px;
+}
+.sheet-logo img.sheet-mortal,
+.sheet-logo img.sheet-homebrew,
+.sheet-logo img.sheet-vampire,
+.sheet-logo img.sheet-werewolf,
+.sheet-logo img.sheet-mage,
+.sheet-logo img.sheet-promethean,
+.sheet-logo img.sheet-hunter2,
+.sheet-logo img.sheet-changeling {
+    height: 150px;
+}
+.sheet-logo img.sheet-hunter1,
+.sheet-logo img.sheet-deviant-the-renegades {
+    height: 120px;
+}
+.sheet-logo img.sheet-geist,
+.sheet-logo img.sheet-mummy,
+.sheet-logo img.sheet-demon {
+    height: 200px;
+}
+.sheet-logo img.sheet-wod-demon {
+    height: 180px;
+}
+.sheet-rollcontainer > button[type=roll],
+button.sheet-toggle {
+    
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+    overflow: visible;
+    text-transform: none;
+    border-style: none;
+
+    padding: 0 4px;
+    background: white;
+    border-radius: 4px;
+    font-weight: bold;
+}
+input.sheet-game-line[value="mortal"] ~ * {
+    --color-game-line: var(--color-mortal);
+}
+input.sheet-game-line[value="vampire"] ~ * {
+    --color-game-line: var(--color-vampire);
+}
+input.sheet-game-line[value="werewolf"] ~ * {
+    --color-game-line: var(--color-werewolf);
+}
+input.sheet-game-line[value="mage"] ~ * {
+    --color-game-line: var(--color-mage);
+}
+input.sheet-game-line[value="promethean"] ~ * {
+    --color-game-line: var(--color-promethean);
+}
+input.sheet-game-line[value="changeling"] ~ * {
+    --color-game-line: var(--color-changeling);
+}
+input.sheet-game-line[value="geist"] ~ * {
+    --color-game-line: var(--color-geist);
+}
+input.sheet-game-line[value="mummy"] ~ * {
+    --color-game-line: var(--color-mummy);
+}
+input.sheet-game-line[value="demon"] ~ * {
+    --color-game-line: var(--color-demon);
+}
+input.sheet-game-line[value="beast"] ~ * {
+    --color-game-line: var(--color-beast);
+}
+input.sheet-game-line[value="hunter"] ~ * {
+    --color-game-line: var(--color-hunter);
+}
+input.sheet-game-line[value="homebrew"] ~ * {
+    --color-game-line: var(--color-mortal);
+}
+input.sheet-game-line[value="wod-demon"] ~ * {
+    --color-game-line: var(--color-wod-demon);
+}
+input.sheet-game-line[value="deviant-the-renegades"] ~ * {
+    --color-game-line: var(--color-deviant-the-renegades);
+}
+button.sheet-active,
+input.sheet-flag[value="1"] ~ .sheet-toggle,
+input.sheet-page[value="settings"] ~ button.sheet-page-settings,
+input.sheet-page[value="1"] ~ button.sheet-page-1,
+input.sheet-page[value="2"] ~ button.sheet-page-2,
+input.sheet-page[value="3"] ~ button.sheet-page-3,
+input.sheet-page[value="scars-variations"] ~ button.sheet-page-scars-variations,
+input.sheet-page[value="conditions"] ~ button.sheet-page-conditions,
+input.sheet-type[value="mortal1"] ~ * button.sheet-active-mortal1,
+input.sheet-type[value="mortal2"] ~ * button.sheet-active-mortal2,
+input.sheet-type[value="mortal2-ghost"] ~ * button.sheet-active-mortal2-ghost,
+input.sheet-type[value="mortal2-organization"] ~ * button.sheet-active-mortal2-organization,
+input.sheet-type[value="vampire1"] ~ * button.sheet-active-vampire1,
+input.sheet-type[value="vampire2"] ~ * button.sheet-active-vampire2,
+input.sheet-type[value="werewolf1"] ~ * button.sheet-active-werewolf1,
+input.sheet-type[value="werewolf2"] ~ * button.sheet-active-werewolf2,
+input.sheet-type[value="mage1"] ~ * button.sheet-active-mage1,
+input.sheet-type[value="mage2"] ~ * button.sheet-active-mage2,
+input.sheet-type[value="promethean1"] ~ * button.sheet-active-promethean1,
+input.sheet-type[value="promethean2"] ~ * button.sheet-active-promethean2,
+input.sheet-type[value="changeling1"] ~ * button.sheet-active-changeling1,
+input.sheet-type[value="changeling2"] ~ * button.sheet-active-changeling2,
+input.sheet-type[value="hunter"] ~ * button.sheet-active-hunter,
+input.sheet-type[value="hunter2"] ~ * button.sheet-active-hunter2,
+input.sheet-type[value="geist1"] ~ * button.sheet-active-geist1,
+input.sheet-type[value="geist2"] ~ * button.sheet-active-geist2,
+input.sheet-type[value="geist2-geist"] ~ * button.sheet-active-geist2-geist,
+input.sheet-type[value="geist2-organization"] ~ * button.sheet-active-geist2-organization,
+input.sheet-type[value="mummy1"] ~ * button.sheet-active-mummy1,
+input.sheet-type[value="mummy2"] ~ * button.sheet-active-mummy2,
+input.sheet-type[value="demon"] ~ * button.sheet-active-demon,
+input.sheet-type[value="beast"] ~ * button.sheet-active-beast,
+input.sheet-type[value="homebrew1"] ~ * button.sheet-active-homebrew1,
+input.sheet-type[value="homebrew2"] ~ * button.sheet-active-homebrew2,
+input.sheet-type[value="wod-demon2"] ~ * button.sheet-active-wod-demon2,
+input.sheet-type[value="deviant-the-renegades"] ~ * button.sheet-active-deviant-the-renegades,
+input.sheet-rollstyle[value="sheet"] ~ * button.sheet-rollstyle-sheet,
+input.sheet-rollstyle[value="attack"] ~ * button.sheet-rollstyle-attack,
+input.sheet-rollstyle[value="simple"] ~ * button.sheet-rollstyle-simple,
+input.sheet-rolltype-select[value="chance"] ~ * button.sheet-rolltype-chance,
+input.sheet-rolltype-select[value="normal"] ~ * button.sheet-rolltype-normal,
+input.sheet-rolltype-select[value="9-again"] ~ * button.sheet-rolltype-9-again,
+input.sheet-rolltype-select[value="8-again"] ~ * button.sheet-rolltype-8-again,
+input.sheet-rolltype-select[value="dont-reroll"] ~ * button.sheet-rolltype-dont-reroll,
+input.sheet-rolltype-select[value="chance-rote"] ~ * button.sheet-rolltype-chance-rote,
+input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote {
+    color: var(--color-game-line);
+    text-shadow: 0px 0px 10px black;
+    font-weight: bold;
+}
+.sheet-rolltemplates {
+    display: none;
+}
+.sheet-el_spacer {
+    height: 10px;
+}
+.sheet-spacer {
+    height: 20px;
+}
+.sheet-vertical-separator {
+    height: 100%;
+    border-left: 1px solid #404040;
+}
+.sheet-diceroller {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+}
+.sheet-diceroller-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
+.sheet-diceroller-grid > * {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.sheet-diceroller-grid > .sheet-diceroller-options {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.sheet-diceroller-grid > .sheet-diceroller-options > * {
+    padding: 2px 3px;
+}
+.sheet-rolldisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sheet-diceroller > input.sheet-rollstyle[value="sheet"] ~ * .sheet-rollstyle:not(.sheet-sheet),
+.sheet-diceroller > input.sheet-rollstyle[value="attack"] ~ * .sheet-rollstyle:not(.sheet-attack),
+.sheet-diceroller > input.sheet-rollstyle[value="simple"] ~ * .sheet-rollstyle:not(.sheet-simple) {
+    display: none;
+}
+.sheet-rollcontainer {
+    position: relative;
+}
+.sheet-rollcontainer > button:before {
+    display: none;
+}
+.sheet-rollcontainer > button[type=roll] {
+    background: url('https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/die.png') no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    width: 100%;
+    padding: 0;
+}
+.sheet-diceroller .sheet-rolldisplay > * {
+    resize: none;
+    overflow: hidden;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border: none;
+    padding: 0px;
+    text-align: center;
+    height: 70px;
+    pointer-events: none;
+    width: 120px;
+    margin: 0;
+    font-weight: normal;
+}
+.charsheet input[type=text] {
+    width: 165px;
+    font-family: "Courier";
+    font-size: 12px;
+    height: 20px;
+    border: 0px;
+    border-radius: 0px;
+    background: none;
+
+    -moz-box-shadow: 0px 1px 0px #000;
+    -webkit-box-shadow: 0px 1px 0px #000;
+    box-shadow: 0px 1px 0px #000;
+}
+.charsheet textarea {
+    margin:10px 0 0 0;
+    resize:vertical;
+    width: calc(100% - 10px);
+    height: 74px;
+}
+.sheet-preserve-whitespace {
+    white-space: pre;
+}
+.sheet-flex {
+    display: flex;
+    align-items: start;
+}
+.sheet-inline-flex {
+    display: inline-flex;
+}
+.sheet-grow {
+    flex-grow: 1;
+}
+.sheet-columns {
+    display: flex;
+    justify-content: space-between;
+}
+.sheet-columns > :not(.sheet-horizontal-spacer) {
+    flex-grow: 1;
+}
+.sheet-horizontal-spacer {
+    padding: 0 15px;
+}
+.sheet-input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0;
+}
+.sheet-input-label {
+    width: 85px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.sheet-input-group > input[type="text"],
+.sheet-input-group > button.sheet-toggle {
+    width: 0;
+    flex-grow: 1;
+}
+.sheet-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto minmax(0, 1fr) 30px) auto minmax(0, 1fr);
+    align-items: center;
+}
+.sheet-info-grid > input[type="text"] {
+    width: auto;
+}
+.sheet-simple-attribute {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+.charsheet table td, .charsheet table th {
+    font-size: 1em;
+    font-weight: bolder;
+    font-family: "Courier";
+    text-align: left;
+    border: 0px #000000;
+    padding: 2px;
+    vertical-align: middle;
+    color: #000000;
+    margin:0px 0px;
+    line-height: 1em;
+}
+.charsheets table td {
+    white-space: nowrap;
+    text-align: left;
+}
+.sheet-section-header {
+    line-height: 1em;
+    font-size: 1.7em;
+    font-weight: bolder;
+    font-family: "Courier";
+    color: #000000;
+    text-decoration: overline underline;
+    text-transform: uppercase;
+    text-align: center;
+}
+.sheet-subheader {
+    line-height: 1em;
+    font-size: 1.4em;
+    font-weight: bolder;
+    text-align: center;
+}
+.sheet-subsubheader {
+    line-height: 1em;
+    font-size: 0.8em;
+    text-align: center;
+    font-style: italic;
+    font-weight: bolder;
+}
+.sheet-span {
+    text-align: center;
+}
+.sheet-skills {
+    display: inline-grid;
+    grid-template-columns: 1fr auto;
+}
+.sheet-diceroller-grid > .sheet-span,
+.sheet-skills > .sheet-section-header,
+.sheet-diceroller-grid > .sheet-subheader,
+.sheet-skills > .sheet-subheader,
+.sheet-skills > .sheet-subsubheader {
+    grid-column: 1 / span 2;
+}
+.sheet-attributes {
+    display: grid;
+    grid-template-areas:
+        "category . mental mental . physical physical . social social"
+        "category . mental mental . physical physical . social social"
+        "category . mental mental . physical physical . social social";
+    grid-template-columns: 1fr 6px repeat(2, 1fr) 6px repeat(2, 1fr) 6px repeat(2, 1fr);
+    font-weight: bold;
+}
+.sheet-attributes > * {
+    padding: 0 4px;
+}
+.sheet-attributes > .sheet-mental.sheet-border {
+    grid-area: mental;
+}
+.sheet-attributes > .sheet-physical.sheet-border {
+    grid-area: physical;
+}
+.sheet-attributes > .sheet-social.sheet-border {
+    grid-area: social;
+}
+.sheet-attributes > .sheet-border {
+    border: 1px solid black;
+}
+.sheet-attributes > .sheet-power {
+    grid-row: 1;
+}
+.sheet-attributes > .sheet-magnitude {
+    grid-row: 1;
+    grid-column: 3;
+}
+.sheet-attributes > .sheet-finesse {
+    grid-row: 2;
+}
+.sheet-attributes > .sheet-resistance {
+    grid-row: 3;
+}
+.sheet-attributes > .sheet-attributes-category {
+    grid-column: category;
+    text-align: right;
+}
+.sheet-attributes > .sheet-mental.sheet-label {
+    grid-column-start: mental-start;
+}
+.sheet-attributes > .sheet-mental.sheet-dots {
+    grid-column-end: mental-end;
+}
+.sheet-attributes > .sheet-physical.sheet-label {
+    grid-column-start: physical-start;
+}
+.sheet-attributes > .sheet-physical.sheet-dots {
+    grid-column-end: physical-end;
+}
+.sheet-attributes > .sheet-social.sheet-label {
+    grid-column-start: social-start;
+}
+.sheet-attributes > .sheet-social.sheet-dots {
+    grid-column-end: social-end;
+}
+.sheet-dots,
+.sheet-healthboxes,
+.sheet-checkboxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button.sheet-dot,
+.sheet-checkbox > input[type="hidden"] + button,
+.sheet-healthbox > button,
+input.sheet-flag + button.sheet-radio {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: solid 1px #000000;
+    line-height: 11px;
+    background: #efefef;
+}
+button.sheet-dot,
+input.sheet-flag + button.sheet-radio {
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+input.sheet-flag[value="1"] + button.sheet-radio {
+    background: radial-gradient(circle, currentColor 40%, #efefef 50%);
+}
+input[type="hidden"][value="1"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-1),
+input[type="hidden"][value="2"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-2),
+input[type="hidden"][value="3"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-3),
+input[type="hidden"][value="4"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-4),
+input[type="hidden"][value="5"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-5),
+input[type="hidden"][value="6"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-6),
+input[type="hidden"][value="7"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-7),
+input[type="hidden"][value="8"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-8),
+input[type="hidden"][value="9"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-9),
+input[type="hidden"][value="10"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-10),
+input[type="hidden"][value="11"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-11),
+input[type="hidden"][value="12"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-12),
+input[type="hidden"][value="13"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-13),
+input[type="hidden"][value="14"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-14),
+input[type="hidden"][value="15"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-15) {
+    background: currentColor;
+}
+button.sheet-zero {
+    opacity: 0;
+}
+button.sheet-zero:hover {
+    opacity: 0.25;
+}
+.sheet-rolltemplate-wod table,
+.sheet-rolltemplate-wod-attack table,
+.sheet-rolltemplate-wod-simple table,
+.sheet-rolltemplate-wod-3part table,
+.sheet-rolltemplate-wod-initiative table {
+    width: 189px;
+    height: 100%;
+    background: url(https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/roll.jpg) no-repeat top left;
+    background-size: 189px 100%;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    border-spacing: 0;
+}
+.sheet-rolltemplate-wod th,
+.sheet-rolltemplate-wod-attack th,
+.sheet-rolltemplate-wod-simple th,
+.sheet-rolltemplate-wod-3part th,
+.sheet-rolltemplate-wod-initiative th {
+    color: rgb(112, 0, 0);
+    padding: 20px 20px 2px 20px;
+    line-height: 1.2em;
+    font-size: 1.2em;
+    text-align: left;
+}
+.sheet-rolltemplate-wod td,
+.sheet-rolltemplate-wod-attack td,
+.sheet-rolltemplate-wod-simple td,
+.sheet-rolltemplate-wod-3part td ,
+.sheet-rolltemplate-wod-initiative td {
+    padding: 2px 20px 2px 20px;
+    font-size: 1.0em;
+    vertical-align: top;
+}
+.sheet-rolltemplate-wod .sheet-result,
+.sheet-rolltemplate-wod-attack .sheet-result,
+.sheet-rolltemplate-wod-simple .sheet-result,
+.sheet-rolltemplate-wod-3part .sheet-result ,
+.sheet-rolltemplate-wod-initiative .sheet-result {
+    font-size: 1.2em;
+    text-align: center;
+    color: rgb(112, 0, 0);
+    padding: 2px 20px 2px 20px;
+}
+.sheet-rolltemplate-wod .inlinerollresult,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult,
+.sheet-rolltemplate-wod-simple .inlinerollresult,
+.sheet-rolltemplate-wod-3part .inlinerollresult,
+.sheet-rolltemplate-wod-initiative .inlinerollresult {
+    background-color: rgba(0,0,0,0);
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod-attack .inlinerollresult {
+    background-color: rgba(0,0,0,0);
+    color: #000000;
+    border: none;
+    font-size: 1em;
+    padding: 0px;
+}
+.sheet-rolltemplate-wod .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-simple .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-3part .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.fullcrit {
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-simple .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-3part .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.fullfail {
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-attack .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-simple .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-3part .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.importantroll {
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .sheet-specialrollflag,
+.sheet-rolltemplate-wod-attack .sheet-specialrollflag,
+.sheet-rolltemplate-wod-simple .sheet-specialrollflag,
+.sheet-rolltemplate-wod-3part .sheet-specialrollflag ,
+.sheet-rolltemplate-wod-initiative .sheet-specialrollflag {
+    color: #000000;
+    height: 30px;
+    text-align: right;
+    vertical-align: top;
+}
+.sheet-spread {
+    justify-content: space-evenly;
+    padding: 10px;
+}
+input.sheet-if[value="1"] ~ .sheet-ne-1,
+input.sheet-if:not([value="1"]) ~ .sheet-eq-1,
+input.sheet-if[value="2"] ~ .sheet-ne-2,
+input.sheet-if[value="3"] ~ .sheet-ne-3,
+input.sheet-if[value="4"] ~ .sheet-ne-4,
+input.sheet-if[value="5"] ~ .sheet-ne-5,
+input.sheet-if[value="6"] ~ .sheet-ne-6,
+input.sheet-if[value="7"] ~ .sheet-ne-7,
+input.sheet-if[value="8"] ~ .sheet-ne-8,
+input.sheet-if[value="9"] ~ .sheet-ne-9,
+input.sheet-if[value="10"] ~ .sheet-ne-10,
+input.sheet-if[value="11"] ~ .sheet-ne-11,
+input.sheet-if[value="12"] ~ .sheet-ne-12,
+input.sheet-if[value="13"] ~ .sheet-ne-13,
+input.sheet-if[value="14"] ~ .sheet-ne-14,
+input.sheet-if[value="15"] ~ .sheet-ne-15,
+input.sheet-if[value="16"] ~ .sheet-ne-16 {
+    display: none;
+}
+.sheet-healthbox {
+    width: 12px;
+    font-size: 10px;
+}
+.sheet-healthbox > input[value="1"] ~ button.sheet-damage {
+    background:
+        linear-gradient(to top left,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 0.8px),
+        currentColor 50%,
+        rgba(0,0,0,0) calc(50% + 0.8px),
+        rgba(0,0,0,0) 100%),
+        #efefef;
+}
+.sheet-healthbox > input[value="2"] ~ button.sheet-damage,
+.sheet-checkbox > input[value="1"] + button,
+.sheet-checkbox > input[value="on"] + button {
+    background:
+        linear-gradient(to top left,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) calc(50% - 0.8px),
+        currentColor 50%,
+        rgba(0,0,0,0) calc(50% + 0.8px),
+        rgba(0,0,0,0) 100%),
+        linear-gradient(to top right,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,0) calc(50% - 0.8px),
+            currentColor 50%,
+            rgba(0,0,0,0) calc(50% + 0.8px),
+            rgba(0,0,0,0) 100%),
+        #efefef;
+}
+.sheet-healthbox > input[value="3"] ~ button.sheet-damage {
+    background:
+        linear-gradient(to top left,
+           rgba(0,0,0,0) 0%,
+           rgba(0,0,0,0) calc(50% - 0.8px),
+           currentColor 50%,
+           rgba(0,0,0,0) calc(50% + 0.8px),
+           rgba(0,0,0,0) 100%),
+       linear-gradient(to top right,
+           rgba(0,0,0,0) 0%,
+           rgba(0,0,0,0) calc(50% - 0.8px),
+           currentColor 50%,
+           rgba(0,0,0,0) calc(50% + 0.8px),
+           rgba(0,0,0,0) 100%),
+        linear-gradient(to right,
+        rgba(0,0,0,0) 0%,
+           rgba(0,0,0,0) calc(50% - 0.8px),
+           currentColor 50%,
+           rgba(0,0,0,0) calc(50% + 0.8px),
+           rgba(0,0,0,0) 100%),
+        #efefef;
+}
+.sheet-derived input[type=number] {
+    width: 18px;
+    padding: 0px;
+    background: none;
+    color: black;
+    font-family: "Courier";
+    text-align: center;
+    border: none;
+    cursor: default;
+    box-shadow: none;
+    height: 18px;
+}
+.sheet-settings input[type=number] {
+    width: 28px;
+    padding: 2px;
+    background: none;
+    color: black;
+    font-family: "Courier";
+    text-align: center;
+    border: none;
+    cursor: default;
+    -moz-box-shadow: 0px 1px 0px #000;
+    -webkit-box-shadow: 0px 1px 0px #000;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    margin-bottom: 0px;
+}
+.sheet-derived input {
+    -moz-appearance: textfield;
+}
+.sheet-derived input::-webkit-outer-spin-button,
+.sheet-derived input::-webkit-inner-spin-button {
+    
+    -webkit-appearance: none;
+    margin: 0; 
+}
+.sheet-weapongrid,
+.sheet-armorgrid {
+    display: grid;
+    column-gap: 4px;
+}
+.sheet-weapongrid {
+    grid-template-columns: auto 1fr 4em 2em 4em 2em 2em 2em 2em;
+}
+.sheet-armorgrid {
+    grid-template-columns: auto 1fr 4em 2em 2em 2em 1fr;
+}
+.sheet-weapongrid > :nth-child(-n+9),
+.sheet-armorgrid > :nth-child(-n+7) {
+    justify-self: center;
+    font-weight: bolder;
+}
+.sheet-weapongrid > :nth-child(n+10),
+.sheet-armorgrid > :nth-child(n+8) {
+    justify-self: stretch;
+    display: flex;
+    height: 18px;
+}
+.sheet-weapongrid input[type="text"],
+.sheet-weapongrid select,
+.sheet-armorgrid input[type="text"],
+.sheet-armorgrid select {
+    width: 0;
+    height: 14px;
+    flex-grow: 1;
+}
+select {
+    width: 80px;
+    height: 14px;
+    padding: 0px;
+    background: none;
+    color: black;
+    font-family: "Courier";
+    font-size: 12px;
+    border: none;
+    cursor: default;
+    box-shadow: 0px 1px 0px #000;
+    border-radius: 0px;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    margin-bottom: 0px;
+    line-height: 14px;
+}
+.sheet-page2 input[type="text"].sheet-partname {
+    width: 116px;
+}
+.sheet-page2 input[type="text"].sheet-name {
+    width: 150px;
+}
+.sheet-page2 input[type="text"].sheet-partpool {
+    width: 20px;
+    padding: 1px;
+    margin-left: 3px;
+    background: none;
+    color: black;
+    font-family: "Courier";
+    text-align: center;
+    border: none;
+    cursor: default;
+    -moz-box-shadow: 0px 1px 0px #000;
+    -webkit-box-shadow: 0px 1px 0px #000;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    margin-bottom: 0px;
+}
+.sheet-page2 .sheet-rollcontainer {
+    height: 40px;
+    width: 40px;
+    float: right;
+}
+.sheet-page2 .sheet-customroll {
+    border: solid 1px black;
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+.sheet-leftcolumn {
+    display: inline-block;
+    margin-right: 10px;
+}
+.sheet-rightcolumn {
+    display: inline-block;
+    float: right;
+}
+.sheet-vitae {
+    padding: 0px;
+    text-align: center;
+}
+.sheet-vitae input[type=checkbox] {
+    margin-top: 0px;
+    width: 12px;
+}
+input[type=text].sheet-title {
+    text-align: center;
+    width: 300px;
+    font-size: 1.4em;
+    font-weight: bolder;
+    padding: 0px;
+}
+.sheet-page3 {
+    text-align: center;
+}
+.sheet-page3 .sheet-subheader {
+    width: 300px;
+    font-size: 1.4em;
+    font-weight: bolder;
+}
+.sheet-scars-variations .sheet-rollcontainer {
+    height: 40px;
+    width: 40px;
+    float: right;
+}
+.repcontainer[data-groupname="repeating_scar"] {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1em 4ch;
+}
+.repcontainer[data-groupname="repeating_scar"] > div.repitem {
+    max-width: 66ch;
+    border: solid 1px var(--color-game-line);
+    border-radius: 4px;
+    padding: 25px;
+    margin-bottom: 15px;
+}
+.repcontainer[data-groupname="repeating_variation"] {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1em 4ch;
+}
+.repcontainer[data-groupname="repeating_variation"] > div.repitem {
+    max-width: 66ch;
+    border: solid 1px var(--color-game-line);
+    border-radius: 4px;
+    padding: 25px;
+    margin-bottom: 15px;
+}
+.sheet-hint {
+    max-width: 66ch;
+    margin: auto;
+}
+.sheet-hint > span:first-child {
+    font-weight: bold;
+}
+.sheet-hint ol > li {
+    margin-left: 4ch;
+}
+.repcontainer[data-groupname="repeating_conditions"] {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1em 4ch;
+}
+.repcontainer[data-groupname="repeating_conditions"] > div.repitem {
+    max-width: 66ch;
+}
+.sheet-condition > h3 {
+    background-image: linear-gradient(var(--color-game-line), rgba(255,0,0,0));
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    padding: 0.5em;
+}
+.sheet-condition > h3 > input[type="text"] {
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    color: white;
+    text-transform: uppercase;
+}
+.sheet-condition > textarea {
+    height: 2.5em;
+    margin: 0;
+    border-color: rgba(255,0,0,0);
+}
+.sheet-condition > textarea:focus,
+.sheet-condition > textarea:placeholder-shown,
+.sheet-condition > textarea:hover {
+    border-color: #ccc;
+}
+.sheet-condition > textarea.sheet-description {
+    height: 6em;
+}
+.charsheet .repcontainer.editmode .repitem .itemcontrol {
+    z-index: 100;
+}
+.sheet-logo img.sheet-leon-logo { max-height: 150px; max-width: 520px; height: auto; width: auto; }
+.sheet-splat-select button { margin: 2px; }
+.sheet-dice-rule { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.sheet-dice-rule select { width: auto; }
+.sheet-dice-rule .sheet-hint { font-size: 11px; opacity: .75; }
+.sheet-diceroller.sheet-rollbar { position: relative; top: auto; right: auto; margin: 0 0 6px 0; padding: 4px 6px; background: rgba(255,255,255,.92); border: 1px solid #333; border-radius: 4px; z-index: 2; }
+.sheet-rollbar .sheet-diceroller-options > * { display: inline-block; padding: 0 4px; }
+.sheet-rollbar .sheet-diceroller-grid > * { margin: 0; }
+.sheet-rollbar .sheet-diceroller-grid { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.sheet-rollbar .sheet-rolldisplay textarea { height: 22px; min-height: 22px; width: 240px; resize: none; }
+.sheet-rollbar .sheet-diceroller-options { display: flex; flex-wrap: wrap; gap: 2px; }
+button.sheet-quick {
+    border: 1px solid #222; border-radius: 3px; background: #1f1f1f; color: #eee; padding: 1px 7px;
+    font-size: 12px; line-height: 18px; margin: 2px; white-space: nowrap;
+}
+button.sheet-quick::before { content: none; }
+button.sheet-quick:hover { background: #4a1010; }
+.sheet-quick-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin: 4px 0; }
+.sheet-quick-actions select { width: auto; height: 22px; padding: 0 2px; margin: 0 4px; }
+.sheet-urkhar-toggle input { width: auto; opacity: 1; position: static; }
+.sheet-entry-section { margin: 8px 0 10px; }
+.sheet-entry-section-head { display: flex; align-items: center; gap: 6px; border-bottom: 1px dashed #333; }
+.sheet-entry-section-head .sheet-subheader { flex: 1; }
+button.sheet-mini { font-size: 10px; padding: 0 5px; line-height: 15px; background: #2a2a2a; color: #ddd; border: 1px solid #111; border-radius: 3px; }
+.sheet-entry { position: relative; border-bottom: 1px solid rgba(0,0,0,.18); padding: 2px 0 2px 20px; }
+input[type="checkbox"].sheet-entry-toggle {
+    position: absolute; left: 0; top: 3px; width: 16px; height: 16px; margin: 0; opacity: 0; z-index: 2; cursor: pointer;
+}
+input[type="checkbox"].sheet-entry-toggle + .sheet-entry-head::before {
+    content: "3"; font-family: "Pictos"; position: absolute; left: 3px; top: 1px; font-size: 13px; color: #6b0f0f;
+}
+input[type="checkbox"].sheet-entry-toggle:checked + .sheet-entry-head::before { content: "3"; font-family: "Pictos"; transform: rotate(90deg); }
+input[type="checkbox"].sheet-entry-toggle:not(:checked) ~ .sheet-entry-body { display: none; }
+.sheet-entry-head { display: flex; align-items: center; gap: 6px; min-height: 20px; }
+button.sheet-entry-post {
+    flex: 1; text-align: left; background: none; border: none; box-shadow: none; padding: 0 2px;
+    font-weight: bold; color: #111; font-size: 13px; cursor: pointer; text-shadow: none;
+}
+button.sheet-entry-post::before { content: "w "; font-family: "Pictos"; font-weight: normal; font-size: 11px; }
+button.sheet-entry-post:hover { color: #7a0000; text-decoration: underline; }
+.sheet-entry-name:not(:empty) + .sheet-entry-ph { display: none; }
+.sheet-entry-ph { font-style: italic; font-weight: normal; opacity: .55; }
+.sheet-entry-pool { font-size: 11px; opacity: .8; max-width: 180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+button.sheet-entry-roll { background: #1f1f1f; color: #fff; border-radius: 3px; border: 1px solid #000; padding: 0 5px; line-height: 18px; }
+button.sheet-entry-roll::before { content: none; }
+input.sheet-haspool[value="0"] + button.sheet-entry-roll, input.sheet-haspool[value=""] + button.sheet-entry-roll { display: none; }
+.sheet-entry-body { display: flex; flex-wrap: wrap; gap: 4px 10px; padding: 4px 0 6px; }
+.sheet-entry-body label { display: flex; flex-direction: column; font-size: 11px; font-weight: bold; min-width: 120px; flex: 1 1 140px; }
+.sheet-entry-body label.sheet-wide { flex: 1 1 100%; }
+.sheet-entry-body input[type="text"], .sheet-entry-body input[type="number"], .sheet-entry-body select { width: 100%; height: 22px; font-weight: normal; }
+.sheet-entry-body input[type="checkbox"] { width: auto; height: auto; opacity: 1; position: static; }
+.sheet-entry-body textarea { width: 100%; min-height: 54px; font-weight: normal; box-sizing: border-box; }
+.sheet-leon-page { padding: 4px 6px; }
+.sheet-two-col { display: flex; gap: 16px; }
+.sheet-two-col > * { flex: 1; }
+.sheet-leon-page label { display: block; font-weight: bold; font-size: 12px; }
+.sheet-leon-page label input[type="text"] { width: 100%; }
+.sheet-leon-page label.sheet-block textarea { width: 100%; box-sizing: border-box; }
+.sheet-renown-row { display: flex; justify-content: space-between; align-items: center; max-width: 240px; }
+table.sheet-forms-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 8px; }
+table.sheet-forms-table th, table.sheet-forms-table td { border: 1px solid rgba(0,0,0,.35); padding: 2px 4px; text-align: center; vertical-align: top; }
+table.sheet-forms-table td { background: rgba(255,255,255,.55); }
+input.sheet-urkhar-flag:not([value="1"]) ~ table.sheet-forms-table .sheet-urkhar-col { display: none; }
+.sheet-rolltemplate-cofd-entry .sheet-ce { border: 2px solid #2b2b2b; background: #f1eee6; font-family: Georgia, serif; border-radius: 4px; overflow: hidden; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: #1d1d1d; color: #eee; padding: 4px 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #c9a227; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 15px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dots { float: right; letter-spacing: 1px; }
+.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; }
+.sheet-rolltemplate-cofd-entry th { text-align: left; width: 32%; padding: 1px 6px; color: #5a1010; }
+.sheet-rolltemplate-cofd-entry td { padding: 1px 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; font-size: 16px; padding: 4px; border-top: 1px solid #999; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc { color: #0b6b0b; font-size: 12px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail { color: #8a0000; font-size: 12px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag { font-size: 11px; opacity: .8; }
+.sheet-rolltemplate-cofd-entry .sheet-long { padding: 4px 6px; font-size: 12px; border-top: 1px dotted #aaa; white-space: pre-wrap; }
+input.sheet-page[value="powers"] ~ .sheet-page:not(.sheet-powers) { display: none; }
+input.sheet-page:not([value="powers"]) ~ .sheet-page.sheet-powers:not(.sheet-page1):not(.sheet-page2):not(.sheet-page3):not(.sheet-conditions) { display: none; }
+input.sheet-page[value="powers"] ~ button.sheet-page-powers { background: #000; color: #fff; }
+input[type="checkbox"].sheet-entry-toggle + .sheet-entry-head::before { content: "y"; font-family: "Pictos"; transform: none; color: #777; font-size: 14px; top: 0; }
+input[type="checkbox"].sheet-entry-toggle:checked + .sheet-entry-head::before { content: "y"; font-family: "Pictos"; transform: none; color: #8b1010; text-shadow: 0 0 3px #e66; }
+.sheet-entry-tools { display: flex; gap: 4px; align-items: center; flex-basis: 100%; }
+button.sheet-mini.sheet-danger { background: #6b0f0f; }
+.sheet-entry-tools-hint { font-size: 9px; color: #777; font-style: italic; }
+button.sheet-page-settings { position: absolute; top: 14px; right: 84px; font-size: 20px !important; line-height: 22px; padding: 0 4px; z-index: 5; }
+button.sheet-spec-caret { background: none; border: none; padding: 0 2px; cursor: pointer; font-size: 10px; color: #555; }
+button.sheet-spec-caret > span::before { content: "3"; font-family: "Pictos"; display: inline-block; }
+input.sheet-spec-openflag[value="1"] ~ span::before { content: "3"; transform: rotate(90deg); }
+input.sheet-spec-has[value="1"] ~ span::after { content: "L"; font-family: "Pictos"; color: #b8860b; font-size: 9px; }
+.sheet-spec-row { grid-column: 1 / -1; }
+.sheet-spec-row > input.sheet-spec-openflag:not([value="1"]) ~ .sheet-spec-inner { display: none; }
+.sheet-spec-inner { display: flex; gap: 4px; align-items: center; padding: 0 0 3px 10px; }
+.sheet-spec-inner textarea { height: 20px; min-height: 20px; flex: 1; font-size: 10px; resize: vertical; }
+.sheet-spec-inner label { font-size: 9px; white-space: nowrap; }
+.sheet-legacy-specs { display: none !important; }
+.sheet-outcomes { border-top: 1px dashed #999; margin-top: 4px; padding-top: 2px; }
+.sheet-ohint { font-size: 10px; color: #666; font-style: italic; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-out { font-size: 12px; padding: 2px 4px; border-left: 3px solid #888; margin: 2px 0; white-space: pre-wrap; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ { color: #1a6b1a; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram { color: #900; font-weight: bold; text-transform: uppercase; }
+.sheet-cond-grid-wrap { margin: 6px 0 10px; }
+.sheet-cg-mods { font-size: 12px; margin: 4px 0; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.sheet-cg-mods input[type="number"] { width: 40px; }
+.sheet-cg-note { font-style: italic; color: #7a1010; }
+.sheet-cg-glabel { font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; margin-top: 6px; }
+.sheet-cg-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin-top: 3px; }
+.sheet-cg-cell { position: relative; display: flex; align-items: stretch; }
+.sheet-cg-cell input.sheet-cg-toggle { position: absolute; opacity: 0; width: calc(100% - 22px); height: 100%; margin: 0; z-index: 2; cursor: pointer; }
+.sheet-cg-btn { flex: 1; font-size: 11px; padding: 3px 4px; border: 1px solid #555; border-radius: 4px; background: rgba(255,255,255,.85); color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sheet-cg-icon { margin-right: 3px; filter: grayscale(1); opacity: .6; }
+input.sheet-cg-toggle:checked + .sheet-cg-btn { background: #7a1010; color: #fff; border-color: #300; font-weight: bold; box-shadow: 0 0 4px #c33; }
+input.sheet-cg-toggle:checked + .sheet-cg-btn .sheet-cg-icon { filter: none; opacity: 1; }
+.sheet-cg-cell.sheet-persistent .sheet-cg-btn { border-style: double; border-width: 3px; }
+button.sheet-cg-chat { width: 22px; padding: 0; font-size: 11px; background: none; border: none; }
+input.sheet-page[value="forms"] ~ .sheet-page:not(.sheet-forms), input.sheet-page[value="details"] ~ .sheet-page:not(.sheet-details) { display: none; }
+input.sheet-page[value="forms"] ~ button.sheet-page-forms, input.sheet-page[value="details"] ~ button.sheet-page-details { background: #000; color: #fff; }
+input.sheet-type:not([value="werewolf2"]):not([value="breeds2"]) ~ button.sheet-page-forms { display: none; }
+.sheet-form-picker { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+button.sheet-form-btn { min-width: 90px; padding: 6px 10px; border: 2px solid #333; border-radius: 6px; background: #f4f0e8; font-weight: bold; }
+input.sheet-form-cur[value="hishu"] + span.sheet-fb-hishu { color: #fff; }
+button.sheet-form-btn input.sheet-form-cur[value="hishu"] ~ .sheet-fb-hishu { color: #fff; }
+input.sheet-form-cur[value="dalu"] + span.sheet-fb-dalu { color: #fff; }
+button.sheet-form-btn input.sheet-form-cur[value="dalu"] ~ .sheet-fb-dalu { color: #fff; }
+input.sheet-form-cur[value="gauru"] + span.sheet-fb-gauru { color: #fff; }
+button.sheet-form-btn input.sheet-form-cur[value="gauru"] ~ .sheet-fb-gauru { color: #fff; }
+input.sheet-form-cur[value="urkhar"] + span.sheet-fb-urkhar { color: #fff; }
+button.sheet-form-btn input.sheet-form-cur[value="urkhar"] ~ .sheet-fb-urkhar { color: #fff; }
+input.sheet-form-cur[value="urshul"] + span.sheet-fb-urshul { color: #fff; }
+button.sheet-form-btn input.sheet-form-cur[value="urshul"] ~ .sheet-fb-urshul { color: #fff; }
+input.sheet-form-cur[value="urhan"] + span.sheet-fb-urhan { color: #fff; }
+button.sheet-form-btn input.sheet-form-cur[value="urhan"] ~ .sheet-fb-urhan { color: #fff; }
+input.sheet-urkhar-flag:not([value="1"]) ~ .sheet-form-picker .sheet-urkhar-col { display: none; }
+.sheet-form-active { margin: 6px 0; font-size: 13px; }
+.sheet-form-hw-mini { font-size: 10px; color: #555; margin-right: 4px; }
+.sheet-det-top { display: flex; gap: 12px; }
+.sheet-det-portrait { width: 200px; }
+.sheet-det-portrait img { display: block; width: 200px; min-height: 120px; max-height: 260px; object-fit: cover; border: 1px solid #333; background: rgba(0,0,0,.05); }
+.sheet-det-portrait .sheet-portrait-ph { display: none; width: 200px; height: 200px; box-sizing: border-box; border: 1px dashed rgba(127,127,127,.6); border-radius: 4px; background: rgba(127,127,127,.12); color: rgba(127,127,127,.9); font-size: 12px; align-items: center; justify-content: center; }
+.sheet-det-portrait input.sheet-portrait-flag[value=""] ~ img.sheet-portrait-img { display: none; }
+.sheet-det-portrait input.sheet-portrait-flag[value=""] ~ .sheet-portrait-ph { display: flex; }
+.sheet-det-grid { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 12px; }
+.sheet-det-grid label, .sheet-det-splat label, .sheet-det-long label { display: flex; flex-direction: column; font-weight: bold; font-size: 11px; }
+.sheet-det-long textarea { min-height: 70px; width: 100%; }
+.sheet-hw-table input { width: 90%; }
+input.sheet-urkhar-flag:not([value="1"]) ~ table .sheet-urkhar-col { display: none; }
+table.sheet-hw-table { table-layout: fixed; width: 100%; }
+.sheet-wp-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 11px; margin: 2px 0; width: 100%; }
+div.sheet-wp-bar select, .charsheet div.sheet-wp-bar select { width: 170px !important; min-width: 170px; font-size: 10px; height: 20px; padding: 0; border: 1px solid #666; background: #fff; display: inline-block; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk { font-size: 11px; background: rgba(30,70,70,.12); border-left: 3px solid #1e4646; padding: 2px 4px; margin: 2px 0; }
+.sheet-p1-weapons { width: 100%; margin-top: 6px; }
+.sheet-armor-line { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: flex-end; border-top: 1px solid #555; border-bottom: 1px solid #555; padding: 4px 2px; margin: 6px 0; font-size: 11px; background: rgba(255,255,255,.35); }
+.sheet-armor-line .sheet-al-h { font-weight: bold; font-size: 14px; }
+.sheet-armor-line label { display: flex; flex-direction: column; font-weight: bold; }
+.sheet-armor-line input[type=text] { width: 120px; }
+.sheet-armor-line select { width: 52px !important; min-width: 52px; height: 20px; padding: 0; font-size: 11px; display: inline-block; }
+.sheet-armor-line .sheet-al-notes { flex: 1; }
+.sheet-armor-line .sheet-al-notes input { width: 100%; }
+.sheet-entry-section.sheet-weapons select { width: 100% !important; height: 22px; padding: 0; display: inline-block; }
+button.sheet-toggle[name^="act_page_"] { background: rgba(0,0,0,0) !important; border: none !important; box-shadow: none !important; color: #111; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 6px #fff; padding: 2px 6px; border-bottom: 3px solid rgba(0,0,0,0) !important; }
+input.sheet-page[value="1"] ~ button.sheet-page-1, input.sheet-page[value="3"] ~ button.sheet-page-3, input.sheet-page[value="scars-variations"] ~ button.sheet-page-scars-variations,
+input.sheet-page[value="conditions"] ~ button.sheet-page-conditions, input.sheet-page[value="powers"] ~ button.sheet-page-powers, input.sheet-page[value="forms"] ~ button.sheet-page-forms,
+input.sheet-page[value="details"] ~ button.sheet-page-details, input.sheet-page[value="settings"] ~ button.sheet-page-settings { background: rgba(0,0,0,0) !important; color: var(--temp-dot, #000) !important; border-bottom: 3px solid var(--temp-dot, #000) !important; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 6px #fff; }
+.charsheet .sheet-diceroller.sheet-rollbar { background: rgba(255,255,255,.55); backdrop-filter: blur(2px); border: 1px solid var(--temp-dot,#333); border-left: 6px solid var(--temp-dot,#333); border-radius: 8px; padding: 6px 10px; box-shadow: 0 1px 4px rgba(0,0,0,.25); font-family: inherit; }
+.charsheet .sheet-rollbar .sheet-diceroller-grid { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.charsheet .sheet-rollbar .sheet-diceroller-grid > .sheet-span { order: 1; }
+.charsheet .sheet-rollbar .sheet-wp-bar { order: 2; width: auto; flex: 1 1 auto; margin: 0; }
+.charsheet .sheet-rollbar .sheet-rollcontainer { order: 3; }
+.charsheet .sheet-rollbar .sheet-diceroller-options { order: 4; }
+.charsheet .sheet-rollbar .sheet-rolldisplay { order: 5; flex: 1 1 160px; }
+.charsheet .sheet-rollbar .sheet-rolldisplay ~ .sheet-diceroller-options { order: 6; flex: 1 1 100%; }
+.charsheet .sheet-rollbar button[name="roll_initiative"], .charsheet .sheet-rollbar button.sheet-perception { background: var(--temp-dot,#333) !important; color: #fff !important; border: none !important; border-radius: 14px; padding: 3px 12px; font-size: 12px; font-weight: bold; box-shadow: 0 1px 2px rgba(0,0,0,.4); }
+.charsheet .sheet-rollbar .sheet-diceroller-options { display: inline-flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--temp-dot,#333); border-radius: 6px; overflow: hidden; background: rgba(255,255,255,.4); }
+.charsheet .sheet-rollbar .sheet-diceroller-options > button.sheet-toggle { display: inline-block; margin: 0; padding: 3px 9px; font-size: 11px; font-weight: bold; font-family: inherit; color: #222; background: rgba(0,0,0,0); border: none; border-right: 1px solid rgba(0,0,0,.15); text-shadow: none !important; line-height: 16px; }
+.charsheet .sheet-rollbar .sheet-diceroller-options > button.sheet-toggle:last-child { border-right: none; }
+.charsheet .sheet-rollbar .sheet-diceroller-options > button.sheet-toggle:hover { background: rgba(0,0,0,.08); }
+input.sheet-rollstyle[value="sheet"] ~ * button.sheet-rollstyle-sheet, input.sheet-rollstyle[value="sheet"] ~ .sheet-diceroller-grid button.sheet-rollstyle-sheet { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rollstyle[value="attack"] ~ * button.sheet-rollstyle-attack, input.sheet-rollstyle[value="attack"] ~ .sheet-diceroller-grid button.sheet-rollstyle-attack { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rollstyle[value="simple"] ~ * button.sheet-rollstyle-simple, input.sheet-rollstyle[value="simple"] ~ .sheet-diceroller-grid button.sheet-rollstyle-simple { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rolltype-select[value="chance"] ~ * button.sheet-rolltype-chance { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rolltype-select[value="normal"] ~ * button.sheet-rolltype-normal { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rolltype-select[value="9-again"] ~ * button.sheet-rolltype-9-again { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rolltype-select[value="8-again"] ~ * button.sheet-rolltype-8-again { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rolltype-select[value="dont-reroll"] ~ * button.sheet-rolltype-dont-reroll { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rolltype-select[value="chance-rote"] ~ * button.sheet-rolltype-chance-rote { background: var(--temp-dot,#333) !important; color: #fff !important; }
+input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote { background: var(--temp-dot,#333) !important; color: #fff !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer button[type=roll] { filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); transform: scale(1.15); }
+.charsheet .sheet-rollbar .sheet-rolldisplay textarea, .charsheet .sheet-rollbar .sheet-rolldisplay > div { width: 100%; height: 24px; min-height: 24px; resize: none; border: 1px solid rgba(0,0,0,.3); border-radius: 4px; background: rgba(255,255,255,.6); font-size: 11px; padding: 2px 6px; box-sizing: border-box; line-height: 18px; }
+.charsheet .sheet-wp-bar { gap: 6px; font-size: 11px; }
+.charsheet .sheet-wp-bar label { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px 2px 4px; border: 1px solid var(--temp-dot,#333); border-radius: 12px; background: rgba(255,255,255,.5); font-weight: bold; cursor: pointer; }
+.charsheet .sheet-wp-bar label input[type=checkbox] { margin: 0; width: 13px; height: 13px; accent-color: var(--temp-dot,#333); }
+.charsheet .sheet-wp-bar .sheet-risk-ctl { display: inline-flex; gap: 6px; align-items: center; }
+.charsheet .sheet-wp-bar select, .charsheet div.sheet-wp-bar select { width: 165px !important; min-width: 0; height: 22px; padding: 0 4px; font-size: 11px; border: 1px solid rgba(0,0,0,.35); border-radius: 4px; background: rgba(255,255,255,.7); }
+.sheet-darkmode .sheet-diceroller.sheet-rollbar,
+.charsheet.sheet-darkmode .sheet-diceroller.sheet-rollbar,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-diceroller.sheet-rollbar,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-diceroller.sheet-rollbar { background: rgba(20,20,24,.72); color: #e8e8e8; }
+.sheet-darkmode .sheet-rollbar .sheet-diceroller-options,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollbar .sheet-diceroller-options { background: rgba(0,0,0,.35); }
+.sheet-darkmode .sheet-rollbar .sheet-diceroller-options > button.sheet-toggle,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollbar .sheet-diceroller-options > button.sheet-toggle { color: #e8e8e8; border-right-color: rgba(255,255,255,.15); }
+.sheet-darkmode .sheet-rollbar .sheet-rolldisplay textarea,
+.sheet-darkmode .sheet-rollbar .sheet-rolldisplay > div,
+.sheet-darkmode .sheet-wp-bar label,
+.sheet-darkmode .sheet-wp-bar select,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollbar .sheet-rolldisplay textarea,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollbar .sheet-rolldisplay > div,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-wp-bar label,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-wp-bar select { background: rgba(0,0,0,.45); color: #eee; border-color: rgba(255,255,255,.3); }
+.charsheet .sheet-rollbar .sheet-diceroller-grid { border: none !important; }
+.charsheet .sheet-rollbar .sheet-diceroller-grid > * { border: none; }
+.charsheet .sheet-rollbar .sheet-diceroller-grid > .sheet-diceroller-options { flex-direction: row !important; align-items: stretch; border: 1px solid var(--temp-dot,#333) !important; flex: 0 0 auto; }
+.charsheet .sheet-rollbar .sheet-diceroller-grid > .sheet-diceroller-options > * { padding: 3px 9px; width: auto; }
+.charsheet .sheet-rollbar .sheet-rolldisplay ~ .sheet-diceroller-options { flex: 0 1 auto !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer { width: 38px; height: 38px; flex: 0 0 38px; }
+.charsheet .sheet-rollbar .sheet-rolldisplay { justify-content: flex-start; }
+.charsheet .sheet-rollbar .sheet-diceroller .sheet-rolldisplay > *, .charsheet .sheet-rollbar .sheet-rolldisplay > * { height: 24px !important; width: 100% !important; text-align: left; padding: 2px 6px !important; }
+.charsheet .sheet-rollbar .sheet-wp-bar { flex: 1 1 100%; order: 2; }
+.sheet-skm { display: inline-flex; align-items: center; gap: 2px; margin-left: 2px; vertical-align: middle; }
+.sheet-skm-mark { position: relative; display: inline-block; width: 11px; height: 11px; cursor: pointer; }
+.sheet-skm-mark input { position: absolute; opacity: 0; width: 11px; height: 11px; margin: 0; z-index: 2; cursor: pointer; }
+.sheet-skm-gem { position: absolute; left: 2px; top: 2px; width: 6px; height: 6px; transform: rotate(45deg); border: 1.5px solid var(--temp-dot,#555); opacity: .4; }
+.sheet-skm-mark input:checked + .sheet-skm-gem { background: var(--temp-dot,#555); opacity: 1; box-shadow: 0 0 3px var(--temp-dot,#555); }
+.sheet-skm-qwrap { position: relative; display: inline-block; width: 13px; height: 12px; }
+.sheet-skm-badge { position: absolute; inset: 0; border-radius: 6px; font: bold 9px/12px Arial, sans-serif; text-align: center; color: var(--temp-dot,#555); border: 1px dashed rgba(127,127,127,.6); box-sizing: border-box; }
+.sheet-skm-badge::after { content: "-"; }
+input.sheet-skm-q[value="9"] + .sheet-skm-badge, input.sheet-skm-q[value="8"] + .sheet-skm-badge { background: var(--temp-dot,#555); color: #fff; border: none; }
+input.sheet-skm-q[value="9"] + .sheet-skm-badge::after { content: "9"; }
+input.sheet-skm-q[value="8"] + .sheet-skm-badge::after { content: "8"; }
+input.sheet-skm-q[value="no10"] + .sheet-skm-badge { color: #c33; border-color: #c33; }
+input.sheet-skm-q[value="no10"] + .sheet-skm-badge::after { content: "x"; }
+.charsheet select.sheet-skm-sel { position: absolute; inset: 0; width: 13px !important; min-width: 0 !important; height: 12px !important; padding: 0 !important; margin: 0 !important; opacity: 0; cursor: pointer; }
+.sheet-skm-mk { display: inline-flex; align-items: center; font: bold 8px Arial, sans-serif; color: var(--temp-dot,#555); cursor: pointer; }
+.sheet-skm-mk input { width: 9px; height: 9px; margin: 0 1px 0 0; accent-color: var(--temp-dot,#555); }
+.sheet-darkmode .sheet-skm-badge::after,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skm-badge::after { color: inherit; }
+.sheet-darkmode input.sheet-skm-q[value=""] + .sheet-skm-badge,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-skm-q[value=""] + .sheet-skm-badge { color: #bbb; }
+.sheet-darkmode .sheet-skm .sheet-skm-mark input:checked + span.sheet-skm-gem,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skm .sheet-skm-mark input:checked + span.sheet-skm-gem { background-color: var(--temp-dot,#555) !important; filter: brightness(2.4) saturate(1.3); }
+.sheet-darkmode .sheet-skm .sheet-skm-gem,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skm .sheet-skm-gem { filter: brightness(2.4); }
+.sheet-darkmode .sheet-skm input.sheet-skm-q[value="9"] + span.sheet-skm-badge,
+.sheet-darkmode .sheet-skm input.sheet-skm-q[value="8"] + span.sheet-skm-badge,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skm input.sheet-skm-q[value="9"] + span.sheet-skm-badge,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skm input.sheet-skm-q[value="8"] + span.sheet-skm-badge { background-color: var(--temp-dot,#555) !important; color: #fff !important; filter: brightness(1.8); box-shadow: 0 0 0 1px rgba(255,255,255,.5); }
+.sheet-wolf-block { border: 1px solid var(--temp-dot,#aa5a1e); border-radius: 8px; padding: 6px 10px; margin: 6px 0 10px; background: rgba(170,90,30,.08); }
+.sheet-wolf-ab, .sheet-wolf-mg, .sheet-wolf-tr { display: none; }
+.sheet-wolf-ab { gap: 12px; align-items: flex-start; }
+.sheet-wolf-moon { text-align: center; min-width: 74px; }
+.sheet-wolf-moonname { font: bold 10px Arial; color: var(--temp-dot,#aa5a1e); text-transform: uppercase; letter-spacing: 1px; }
+.sheet-wolf-h { font-weight: bold; font-size: 13px; }
+.sheet-wolf-t { font-size: 12px; }
+.sheet-wolf-sub { font-size: 11px; opacity: .8; margin-top: 3px; }
+.sheet-wolf-unv { font-size: 10px; opacity: .7; }
+.sheet-wolf-mgrow { display: flex; gap: 8px; align-items: center; margin: 6px 0 2px; }
+.sheet-wolf-mgrow input[type=text] { flex: 1; }
+.sheet-wolf-dot { position: relative; display: inline-block; width: 12px; height: 12px; }
+.sheet-wolf-dot input { position: absolute; opacity: 0; inset: 0; margin: 0; z-index: 2; cursor: pointer; width: 12px; height: 12px; }
+.sheet-wolf-dot span { position: absolute; inset: 1px; border-radius: 50%; border: 1.5px solid var(--temp-dot,#aa5a1e); }
+.sheet-wolf-dot:first-child { width: 0; overflow: hidden; }
+input.sheet-wolf-a:not([value=""]) ~ .sheet-wolf-none { display: none; }
+.sheet-wolf-hdr-wrap { display: contents; }
+input.sheet-game-line[value="werewolf"] ~ * .sheet-wolf-hdr-wrap input.sheet-wolf-generic { display: none; }
+select.sheet-wolf-sel { width: 100%; }
+.sheet-darkmode .sheet-wolf-block,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-wolf-block { background: rgba(224,138,60,.08); border-color: #e08a3c; }
+.sheet-darkmode .sheet-wolf-moonname,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-wolf-moonname { color: #e08a3c !important; }
+.sheet-darkmode .sheet-wolf-dot span,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-wolf-dot span { border-color: #e08a3c; }
+input.sheet-wolf-a[value="Cahalith"] ~ .sheet-wolf-ab-cahalith { display: flex; }
+input.sheet-wolf-a[value="Cahalith"] ~ .sheet-wolf-mg-gibbous { display: block; }
+input.sheet-wolf-a[value="Elodoth"] ~ .sheet-wolf-ab-elodoth { display: flex; }
+input.sheet-wolf-a[value="Elodoth"] ~ .sheet-wolf-mg-half { display: block; }
+input.sheet-wolf-a[value="Irraka"] ~ .sheet-wolf-ab-irraka { display: flex; }
+input.sheet-wolf-a[value="Irraka"] ~ .sheet-wolf-mg-new { display: block; }
+input.sheet-wolf-a[value="Ithaeur"] ~ .sheet-wolf-ab-ithaeur { display: flex; }
+input.sheet-wolf-a[value="Ithaeur"] ~ .sheet-wolf-mg-crescent { display: block; }
+input.sheet-wolf-a[value="Rahu"] ~ .sheet-wolf-ab-rahu { display: flex; }
+input.sheet-wolf-a[value="Rahu"] ~ .sheet-wolf-mg-full { display: block; }
+input.sheet-wolf-tk[value="blood-talons"] ~ .sheet-wolf-tr-blood-talons { display: block; }
+input.sheet-wolf-tk[value="bone-shadows"] ~ .sheet-wolf-tr-bone-shadows { display: block; }
+input.sheet-wolf-tk[value="hunters-in-darkness"] ~ .sheet-wolf-tr-hunters-in-darkness { display: block; }
+input.sheet-wolf-tk[value="storm-lords"] ~ .sheet-wolf-tr-storm-lords { display: block; }
+input.sheet-wolf-tk[value="iron-masters"] ~ .sheet-wolf-tr-iron-masters { display: block; }
+input.sheet-wolf-tk[value="ghost-wolves"] ~ .sheet-wolf-tr-ghost-wolves { display: block; }
+input.sheet-wolf-tk[value="fire-touched"] ~ .sheet-wolf-tr-fire-touched { display: block; }
+input.sheet-wolf-tk[value="ivory-claws"] ~ .sheet-wolf-tr-ivory-claws { display: block; }
+input.sheet-wolf-tk[value="predator-kings"] ~ .sheet-wolf-tr-predator-kings { display: block; }
+.sheet-wolf-dots { display: inline-flex; gap: 2px; }
+.sheet-wolf-dot:first-child span { display: none; }
+.sheet-vamp-banes { border: 1px solid var(--temp-dot,#6e1e1e); border-radius: 8px; padding: 6px 10px; margin: 6px 0 10px; background: rgba(110,30,30,.08); font-size: 12px; }
+.sheet-vb-row { margin: 3px 0; }
+.sheet-vb-t { font-size: 12px; margin: 2px 0 0 10px; opacity: .9; }
+.sheet-darkmode .sheet-vamp-banes,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-vamp-banes { border-color: #c04848; background: rgba(192,72,72,.10); }
+input.sheet-game-line[value="vampire"] ~ * .sheet-wolf-hdr-wrap input.sheet-wolf-generic, input.sheet-game-line[value="vampire"] ~ * .sheet-vamp-cov input.sheet-vamp-generic { display: none; }
+select.sheet-vamp-sel { width: 100%; }
+.sheet-background { padding-bottom: 150px !important; }
+.sheet-rolltemplate-cofd-entry .sheet-ce { border: 1px solid #2b2b2b; background: #f6f3ec; color: #1b1b1b; font-family: Georgia, "Times New Roman", serif; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.3); margin-left: -7px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band { height: 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: linear-gradient(#262626,#141414); color: #f2f2f2; padding: 5px 8px 6px; position: relative; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-char { display: block; font-size: 10px; color: #bdbdbd; font-family: Arial, sans-serif; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #d4b25a; font-family: Arial, sans-serif; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 16px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-badge { position: absolute; right: 8px; top: 8px; width: 22px; height: 22px; border-radius: 50%; text-align: center; font: bold 13px/22px Arial, sans-serif; color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.6); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-b { background: #3d6fb5; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-l { background: #b8860b; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-a { background: #a01010; }
+.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; border-collapse: collapse; margin: 3px 0; }
+.sheet-rolltemplate-cofd-entry th { text-align: left; width: 30%; padding: 2px 8px; color: #6b1a1a; font: bold 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; }
+.sheet-rolltemplate-cofd-entry td { padding: 2px 8px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; padding: 6px 4px 4px; border-top: 1px solid rgba(0,0,0,.2); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-big, .sheet-rolltemplate-cofd-entry .sheet-ce-big .inlinerollresult { font-size: 34px; font-weight: bold; line-height: 38px; background: rgba(0,0,0,0) !important; border: none !important; padding: 0 !important; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-sl { font: 10px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: #777; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram, .sheet-rolltemplate-cofd-entry .sheet-ce-fail, .sheet-rolltemplate-cofd-entry .sheet-ce-succ, .sheet-rolltemplate-cofd-entry .sheet-ce-exc { display: block; margin: 5px -4px 0; padding: 4px; color: #fff !important; font: bold 12px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram { background: #5c0000; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail { background: #6d6d6d; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ { background: #2e7d32; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc { background: linear-gradient(90deg,#b8860b,#e3b23c); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-out { text-align: left; font-size: 12px; margin: 4px 2px; padding: 3px 6px; border-left: 3px solid #999; background: rgba(0,0,0,.04); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag { display: inline-block; font: 10px Arial, sans-serif; padding: 1px 6px; margin: 3px 2px 0; border-radius: 8px; background: #ddd; color: #333; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk { text-align: left; font-size: 11px; margin: 5px 2px 0; padding: 4px 6px; border-left: 3px solid #1e4646; background: rgba(30,70,70,.1); }
+.sheet-rolltemplate-cofd-entry .sheet-long { font-size: 12px; padding: 3px 8px; border-top: 1px dotted rgba(0,0,0,.2); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mortal { background: #2a2d80; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter { background: #1e4646; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire { background: #6e1e1e; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf { background: #aa5a1e; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mage { background: #beaa5a; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-promethean { background: #1e1e5a; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-changeling { background: #0a6e46; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-geist { background: #82aabe; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mummy { background: #d2be82; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-demon { background: #323246; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-beast { background: #463246; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-deviant-the-renegades { background: #5a1e1e; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce { background: #232326; color: #e6e6e6; border-color: #000; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry th { color: #e09a9a; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-out { background: rgba(255,255,255,.06); }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-flag { background: #444; color: #ddd; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-risk { background: rgba(120,180,180,.12); }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-roll { border-top-color: rgba(255,255,255,.15); }
+.charsheet.sheet-darkmode,
+.sheet-darkmode .sheet-background,
+input.sheet-dm[value="1"] ~ .sheet-background,
+input.sheet-dm[value="1"] ~ .sheet-background { color: #e4e4e4; }
+.sheet-darkmode input[type=text],
+.sheet-darkmode input[type=number],
+.sheet-darkmode textarea,
+.sheet-darkmode select,
+input.sheet-dm[value="1"] ~ .sheet-background input[type=text],
+input.sheet-dm[value="1"] ~ .sheet-background input[type=number],
+input.sheet-dm[value="1"] ~ .sheet-background textarea,
+input.sheet-dm[value="1"] ~ .sheet-background select { color: #eee !important; background-color: rgba(0,0,0,.35) !important; border-color: rgba(255,255,255,.35) !important; }
+.sheet-darkmode .sheet-subheader,
+.sheet-darkmode .sheet-section-header,
+.sheet-darkmode .sheet-input-label,
+.sheet-darkmode label,
+.sheet-darkmode span,
+.sheet-darkmode div,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-subheader,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-section-header,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-input-label,
+input.sheet-dm[value="1"] ~ .sheet-background label,
+input.sheet-dm[value="1"] ~ .sheet-background span,
+input.sheet-dm[value="1"] ~ .sheet-background div { color: inherit; }
+.sheet-darkmode .sheet-entry,
+.sheet-darkmode .sheet-armor-line,
+.sheet-darkmode table.sheet-forms-table td,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-entry,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-armor-line,
+input.sheet-dm[value="1"] ~ .sheet-background table.sheet-forms-table td { background: rgba(0,0,0,.35) !important; }
+.sheet-darkmode button.sheet-toggle[name^="act_page_"],
+input.sheet-dm[value="1"] ~ .sheet-background button.sheet-toggle[name^="act_page_"] { color: #eee; text-shadow: 0 0 3px #000, 0 0 6px #000; }
+.sheet-darkmode img.sheet-leon-logo,
+input.sheet-dm[value="1"] ~ .sheet-background img.sheet-leon-logo { filter: drop-shadow(0 0 6px rgba(255,255,255,.25)); }
+.sheet-darkmode .sheet-form-btn,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-form-btn { background: #2a2a2a; color: #eee; border-color: #888; }
+.sheet-darkmode span:not(.sheet-ce-badge),
+.sheet-darkmode label,
+.sheet-darkmode .sheet-entry summary,
+.sheet-darkmode .sheet-entry-head *,
+input.sheet-dm[value="1"] ~ .sheet-background span:not(.sheet-ce-badge),
+input.sheet-dm[value="1"] ~ .sheet-background label,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-entry summary,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-entry-head * { background-color: rgba(0,0,0,0) !important; color: #e4e4e4 !important; text-shadow: 0 0 3px #000; }
+.sheet-darkmode input[type=text]::placeholder,
+input.sheet-dm[value="1"] ~ .sheet-background input[type=text]::placeholder { color: #999; }
+.sheet-darkmode h1,
+.sheet-darkmode h2,
+.sheet-darkmode h3,
+.sheet-darkmode h4,
+input.sheet-dm[value="1"] ~ .sheet-background h1,
+input.sheet-dm[value="1"] ~ .sheet-background h2,
+input.sheet-dm[value="1"] ~ .sheet-background h3,
+input.sheet-dm[value="1"] ~ .sheet-background h4 { color: #f0f0f0; }
+.sheet-darkmode button.sheet-toggle,
+.sheet-darkmode button[type=roll]:not(.sheet-rollcontainer > button),
+.sheet-darkmode button[type=action]:not(.sheet-dot):not(.sheet-form-btn),
+input.sheet-dm[value="1"] ~ .sheet-background button.sheet-toggle,
+input.sheet-dm[value="1"] ~ .sheet-background button[type=roll]:not(.sheet-rollcontainer > button),
+input.sheet-dm[value="1"] ~ .sheet-background button[type=action]:not(.sheet-dot):not(.sheet-form-btn) { background: rgba(0,0,0,0) !important; color: #e8e8e8 !important; text-shadow: 0 0 3px #000; border-color: rgba(255,255,255,.3); }
+.sheet-darkmode button.sheet-toggle:hover,
+input.sheet-dm[value="1"] ~ .sheet-background button.sheet-toggle:hover { background: rgba(255,255,255,.08) !important; }
+.sheet-darkmode .sheet-rollcontainer > button[type=roll],
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > button[type=roll] { background-color: rgba(0,0,0,0) !important; }
+.sheet-darkmode,
+.sheet-darkmode div,
+.sheet-darkmode td,
+.sheet-darkmode th,
+.sheet-darkmode p,
+.sheet-darkmode b,
+.sheet-darkmode i,
+.sheet-darkmode small,
+.sheet-darkmode summary,
+.sheet-darkmode,
+input.sheet-dm[value="1"] ~ .sheet-background div,
+input.sheet-dm[value="1"] ~ .sheet-background td,
+input.sheet-dm[value="1"] ~ .sheet-background th,
+input.sheet-dm[value="1"] ~ .sheet-background p,
+input.sheet-dm[value="1"] ~ .sheet-background b,
+input.sheet-dm[value="1"] ~ .sheet-background i,
+input.sheet-dm[value="1"] ~ .sheet-background small,
+input.sheet-dm[value="1"] ~ .sheet-background summary { color: #e8e8e8; }
+.sheet-darkmode .sheet-subheader,
+.sheet-darkmode .sheet-header,
+.sheet-darkmode [class*="header"],
+.sheet-darkmode [class*="title"],
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-subheader,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-header,
+input.sheet-dm[value="1"] ~ .sheet-background [class*="header"],
+input.sheet-dm[value="1"] ~ .sheet-background [class*="title"] { color: #f0f0f0 !important; background-color: rgba(0,0,0,0) !important; }
+.sheet-darkmode .repcontrol button,
+.sheet-darkmode .repcontrol_add,
+.sheet-darkmode .repcontrol_edit,
+.sheet-darkmode button.btn,
+.sheet-darkmode .sheet-fold-btn,
+.sheet-darkmode [class*="add"] > button,
+input.sheet-dm[value="1"] ~ .sheet-background .repcontrol button,
+input.sheet-dm[value="1"] ~ .sheet-background .repcontrol_add,
+input.sheet-dm[value="1"] ~ .sheet-background .repcontrol_edit,
+input.sheet-dm[value="1"] ~ .sheet-background button.btn,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-fold-btn,
+input.sheet-dm[value="1"] ~ .sheet-background [class*="add"] > button { background: #2c2c30 !important; color: #e8e8e8 !important; border: 1px solid #777 !important; text-shadow: none; }
+.sheet-darkmode input[type=text],
+.sheet-darkmode input[type=number],
+.sheet-darkmode input:not([type]),
+.sheet-darkmode textarea,
+.sheet-darkmode select,
+.sheet-darkmode option,
+input.sheet-dm[value="1"] ~ .sheet-background input[type=text],
+input.sheet-dm[value="1"] ~ .sheet-background input[type=number],
+input.sheet-dm[value="1"] ~ .sheet-background input:not([type]),
+input.sheet-dm[value="1"] ~ .sheet-background textarea,
+input.sheet-dm[value="1"] ~ .sheet-background select,
+input.sheet-dm[value="1"] ~ .sheet-background option { background-color: #1e1e22 !important; color: #e8e8e8 !important; border-color: #666 !important; }
+.sheet-darkmode .sheet-cg-btn,
+.sheet-darkmode .sheet-form-btn,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-cg-btn,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-form-btn { background: #2a2a2e !important; color: #e8e8e8 !important; }
+.sheet-darkmode table.sheet-forms-table td,
+.sheet-darkmode .sheet-armor-line,
+.sheet-darkmode .sheet-entry,
+input.sheet-dm[value="1"] ~ .sheet-background table.sheet-forms-table td,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-armor-line,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-entry { background: rgba(0,0,0,.4) !important; }
+.sheet-darkmode button.sheet-toggle[name^="act_page"],
+input.sheet-dm[value="1"] ~ .sheet-background button.sheet-toggle[name^="act_page"] { text-shadow: 0 0 3px #000 !important; }
+.sheet-darkmode .sheet-rollbar button[name="roll_initiative"],
+.sheet-darkmode .sheet-rollbar button.sheet-perception,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollbar button[name="roll_initiative"],
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollbar button.sheet-perception { background: var(--temp-dot,#333) !important; }
+.sheet-darkmode .sheet-background,
+input.sheet-dm[value="1"] ~ .sheet-background { background: rgba(0,0,0,0) !important; }
+.sheet-darkmode .sheet-background-image::after,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-background-image::after { filter: invert(1) hue-rotate(180deg) brightness(.55) contrast(1.2) saturate(1.6); }
+.sheet-darkmode .sheet-logo img.sheet-mortal,
+.sheet-darkmode .sheet-logo img.sheet-geist1,
+.sheet-darkmode .sheet-logo img.sheet-geist2,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-logo img.sheet-mortal,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-logo img.sheet-geist1,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-logo img.sheet-geist2 { filter: invert(1) hue-rotate(180deg) brightness(.9); }
+input.sheet-type[value="breeds2"] ~ * .sheet-game-line.sheet-werewolf2:not(.sheet-breeds2), input.sheet-type[value="breeds2"] ~ * .sheet-game-line.sheet-werewolf1:not(.sheet-breeds2) { display: none; }
+input.sheet-type:not([value="breeds2"]) ~ * .sheet-game-line.sheet-breeds2:not(.sheet-werewolf2) { display: none; }
+.sheet-breeds-head { display: flex; gap: 8px; margin: 4px 0; }
+.sheet-breeds-head label { flex: 1; font-weight: bold; }
+.sheet-kt label { display: block; font-weight: bold; }
+button.sheet-dot { filter: none !important; background-image: none !important; box-shadow: none !important; text-shadow: none !important; box-sizing: border-box; }
+.charsheet button.sheet-dot { width: 12px !important; height: 12px !important; min-width: 0 !important; padding: 0 !important; margin: 0 1px; border-radius: 50% !important; line-height: 10px !important; font-size: 9px; vertical-align: middle; flex: 0 0 auto; }
+.sheet-darkmode .sheet-background div button.sheet-dot,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-dot { color: #ffffff; border-color: #cfcfcf; background-color: rgba(0,0,0,0); }
+.sheet-darkmode .sheet-background div button.sheet-dot.sheet-zero,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-dot.sheet-zero { color: #ececec; }
+.charsheet .sheet-rollcontainer > button[type=roll] { background: none !important; background-image: none !important; border: none !important; box-shadow: none !important; }
+.charsheet .sheet-rollcontainer > button[type=roll]::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 6px; box-sizing: border-box;
+  border: 2px solid rgba(0,0,0,.55);
+  background:
+    radial-gradient(circle at 25% 25%, #fff 0 2.6px, rgba(0,0,0,0) 3.2px),
+    radial-gradient(circle at 75% 25%, #fff 0 2.6px, rgba(0,0,0,0) 3.2px),
+    radial-gradient(circle at 50% 50%, #fff 0 2.6px, rgba(0,0,0,0) 3.2px),
+    radial-gradient(circle at 25% 75%, #fff 0 2.6px, rgba(0,0,0,0) 3.2px),
+    radial-gradient(circle at 75% 75%, #fff 0 2.6px, rgba(0,0,0,0) 3.2px),
+    var(--temp-dot, #333);
+}
+.sheet-darkmode .sheet-rollcontainer > button[type=roll]::after,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-rollcontainer > button[type=roll]::after { border-color: rgba(255,255,255,.55); }
+.charsheet { max-width: 100%; box-sizing: border-box; }
+.charsheet .sheet-background { box-sizing: border-box; max-width: 100%; }
+.charsheet .sheet-background-image, .charsheet .sheet-background-image::after, .charsheet img { max-width: 100%; }
+.charsheet .sheet-attributes { grid-template-columns: minmax(0,auto) 6px repeat(2, minmax(0,auto)) 6px repeat(2, minmax(0,auto)) 6px repeat(2, minmax(0,auto)); justify-content: space-between; }
+.charsheet .sheet-attributes > * { min-width: 0; }
+.charsheet .sheet-attributes .sheet-dots { display: flex; flex-wrap: nowrap; align-items: center; }
+.charsheet .sheet-attributes .sheet-dots button.sheet-dot { width: 11px !important; height: 11px !important; margin: 0 1px; flex: 0 0 auto; }
+.charsheet .sheet-attributes .sheet-label button.sheet-toggle { padding: 2px 6px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.charsheet .sheet-healthboxes, .charsheet .sheet-corporeal.sheet-dots { display: flex; flex-wrap: wrap; max-width: 100%; }
+.charsheet .sheet-grow, .charsheet .sheet-flex > * { min-width: 0; }
+.charsheet .sheet-footer { width: auto !important; max-width: 100% !important; box-sizing: border-box; white-space: normal; }
+.charsheet .sheet-healthbox > button.sheet-damage { width: 12px !important; height: 12px !important; min-width: 0 !important; padding: 0 !important; border: 1px solid #000 !important; border-radius: 0 !important; background-image: none !important; background-color: #efefef !important; color: #000; box-shadow: none !important; text-shadow: none !important; filter: none !important; }
+.sheet-darkmode .charsheet .sheet-healthbox > button.sheet-damage,
+.sheet-darkmode .sheet-healthbox > button.sheet-damage,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-healthbox > button.sheet-damage,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-healthbox > button.sheet-damage { background-color: rgba(0,0,0,0) !important; border-color: #cfcfcf !important; color: #fff; }
+.charsheet .sheet-healthbox > input[value="1"] ~ button.sheet-damage,
+.sheet-darkmode .sheet-background div.sheet-healthbox > input[value="1"] ~ button.sheet-damage,
+input.sheet-dm[value="1"] ~ .sheet-background div.sheet-healthbox > input[value="1"] ~ button.sheet-damage { background-image: linear-gradient(to top left, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)) !important; }
+.charsheet .sheet-healthbox > input[value="2"] ~ button.sheet-damage,
+.sheet-darkmode .sheet-background div.sheet-healthbox > input[value="2"] ~ button.sheet-damage,
+input.sheet-dm[value="1"] ~ .sheet-background div.sheet-healthbox > input[value="2"] ~ button.sheet-damage { background-image: linear-gradient(to top left, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to top right, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)) !important; }
+.charsheet .sheet-healthbox > input[value="3"] ~ button.sheet-damage,
+.sheet-darkmode .sheet-background div.sheet-healthbox > input[value="3"] ~ button.sheet-damage,
+input.sheet-dm[value="1"] ~ .sheet-background div.sheet-healthbox > input[value="3"] ~ button.sheet-damage { background-image: linear-gradient(to top left, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to top right, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to right, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to bottom, rgba(0,0,0,0) calc(50% - 1px), currentColor 50%, rgba(0,0,0,0) calc(50% + 1px)) !important; }
+.sheet-darkmode .sheet-background div .sheet-healthbox > button.sheet-damage,
+input.sheet-dm[value="1"] ~ .sheet-background div .sheet-healthbox > button.sheet-damage { background-color: rgba(0,0,0,0) !important; border-color: #cfcfcf !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div .sheet-checkbox > input[type="hidden"] + button[type="action"],
+input.sheet-dm[value="1"] ~ .sheet-background div .sheet-checkbox > input[type="hidden"] + button[type="action"] { background-color: rgba(0,0,0,0) !important; border: 1px solid #cfcfcf !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div .sheet-checkbox > input[value="1"] + button[type="action"],
+.sheet-darkmode .sheet-background div .sheet-checkbox > input[value="on"] + button[type="action"],
+input.sheet-dm[value="1"] ~ .sheet-background div .sheet-checkbox > input[value="1"] + button[type="action"],
+input.sheet-dm[value="1"] ~ .sheet-background div .sheet-checkbox > input[value="on"] + button[type="action"] { background: linear-gradient(to top left, rgba(0,0,0,0) calc(50% - 1px), #fff 50%, rgba(0,0,0,0) calc(50% + 1px)), linear-gradient(to top right, rgba(0,0,0,0) calc(50% - 1px), #fff 50%, rgba(0,0,0,0) calc(50% + 1px)) !important; }
+.sheet-darkmode .sheet-background div input.sheet-flag[value="1"] ~ button.sheet-toggle,
+.sheet-darkmode .sheet-background div input.sheet-flag[value="1"] ~ .sheet-toggle,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-flag[value="1"] ~ button.sheet-toggle,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-flag[value="1"] ~ .sheet-toggle { background: rgba(255,255,255,.88) !important; color: #111 !important; text-shadow: none !important; }
+.sheet-darkmode .sheet-background div input.sheet-flag[value="1"] + button.sheet-radio,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-flag[value="1"] + button.sheet-radio { background: radial-gradient(circle, #fff 40%, rgba(0,0,0,0) 50%) !important; border-color: #cfcfcf !important; }
+.sheet-darkmode .sheet-background div input.sheet-rolltype-select[value="chance"] ~ * button.sheet-rolltype-chance,
+.sheet-darkmode .sheet-background input.sheet-rolltype-select[value="chance"] ~ * button.sheet-rolltype-chance,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rolltype-select[value="chance"] ~ * button.sheet-rolltype-chance,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rolltype-select[value="chance"] ~ * button.sheet-rolltype-chance { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rolltype-select[value="normal"] ~ * button.sheet-rolltype-normal,
+.sheet-darkmode .sheet-background input.sheet-rolltype-select[value="normal"] ~ * button.sheet-rolltype-normal,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rolltype-select[value="normal"] ~ * button.sheet-rolltype-normal,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rolltype-select[value="normal"] ~ * button.sheet-rolltype-normal { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rolltype-select[value="9-again"] ~ * button.sheet-rolltype-9-again,
+.sheet-darkmode .sheet-background input.sheet-rolltype-select[value="9-again"] ~ * button.sheet-rolltype-9-again,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rolltype-select[value="9-again"] ~ * button.sheet-rolltype-9-again,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rolltype-select[value="9-again"] ~ * button.sheet-rolltype-9-again { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rolltype-select[value="8-again"] ~ * button.sheet-rolltype-8-again,
+.sheet-darkmode .sheet-background input.sheet-rolltype-select[value="8-again"] ~ * button.sheet-rolltype-8-again,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rolltype-select[value="8-again"] ~ * button.sheet-rolltype-8-again,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rolltype-select[value="8-again"] ~ * button.sheet-rolltype-8-again { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rolltype-select[value="dont-reroll"] ~ * button.sheet-rolltype-dont-reroll,
+.sheet-darkmode .sheet-background input.sheet-rolltype-select[value="dont-reroll"] ~ * button.sheet-rolltype-dont-reroll,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rolltype-select[value="dont-reroll"] ~ * button.sheet-rolltype-dont-reroll,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rolltype-select[value="dont-reroll"] ~ * button.sheet-rolltype-dont-reroll { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rolltype-select[value="chance-rote"] ~ * button.sheet-rolltype-chance-rote,
+.sheet-darkmode .sheet-background input.sheet-rolltype-select[value="chance-rote"] ~ * button.sheet-rolltype-chance-rote,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rolltype-select[value="chance-rote"] ~ * button.sheet-rolltype-chance-rote,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rolltype-select[value="chance-rote"] ~ * button.sheet-rolltype-chance-rote { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote,
+.sheet-darkmode .sheet-background input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rolltype-select[value="rote"] ~ * button.sheet-rolltype-rote { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rollstyle[value="sheet"] ~ * button.sheet-rollstyle-sheet,
+.sheet-darkmode .sheet-background input.sheet-rollstyle[value="sheet"] ~ * button.sheet-rollstyle-sheet,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rollstyle[value="sheet"] ~ * button.sheet-rollstyle-sheet,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rollstyle[value="sheet"] ~ * button.sheet-rollstyle-sheet { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rollstyle[value="attack"] ~ * button.sheet-rollstyle-attack,
+.sheet-darkmode .sheet-background input.sheet-rollstyle[value="attack"] ~ * button.sheet-rollstyle-attack,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rollstyle[value="attack"] ~ * button.sheet-rollstyle-attack,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rollstyle[value="attack"] ~ * button.sheet-rollstyle-attack { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div input.sheet-rollstyle[value="simple"] ~ * button.sheet-rollstyle-simple,
+.sheet-darkmode .sheet-background input.sheet-rollstyle[value="simple"] ~ * button.sheet-rollstyle-simple,
+input.sheet-dm[value="1"] ~ .sheet-background div input.sheet-rollstyle[value="simple"] ~ * button.sheet-rollstyle-simple,
+input.sheet-dm[value="1"] ~ .sheet-background input.sheet-rollstyle[value="simple"] ~ * button.sheet-rollstyle-simple { background: var(--temp-dot,#555) !important; color: #fff !important; }
+.sheet-darkmode .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="hishu"] + span.sheet-fb-hishu,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="hishu"] + span.sheet-fb-hishu { color: #fff !important; font-weight: 900; text-decoration: underline; }
+.sheet-darkmode .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="dalu"] + span.sheet-fb-dalu,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="dalu"] + span.sheet-fb-dalu { color: #fff !important; font-weight: 900; text-decoration: underline; }
+.sheet-darkmode .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="gauru"] + span.sheet-fb-gauru,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="gauru"] + span.sheet-fb-gauru { color: #fff !important; font-weight: 900; text-decoration: underline; }
+.sheet-darkmode .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="urshul"] + span.sheet-fb-urshul,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="urshul"] + span.sheet-fb-urshul { color: #fff !important; font-weight: 900; text-decoration: underline; }
+.sheet-darkmode .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="urhan"] + span.sheet-fb-urhan,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="urhan"] + span.sheet-fb-urhan { color: #fff !important; font-weight: 900; text-decoration: underline; }
+.sheet-darkmode .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="urkhar"] + span.sheet-fb-urkhar,
+input.sheet-dm[value="1"] ~ .sheet-background div button.sheet-form-btn input.sheet-form-cur[value="urkhar"] + span.sheet-fb-urkhar { color: #fff !important; font-weight: 900; text-decoration: underline; }
+.charsheet .sheet-rollbar .sheet-rollcontainer { position: relative; margin-bottom: 12px; }
+.charsheet .sheet-rollbar .sheet-rollcontainer::before { position: absolute; left: 50%; bottom: -13px; transform: translateX(-50%); white-space: nowrap; font: bold 9px/11px Arial, sans-serif; padding: 0 4px; border-radius: 6px; background: var(--temp-dot,#333); color: #fff; content: "10-again"; pointer-events: none; }
+input.sheet-rolltype-select[value="chance"] ~ * .sheet-rollcontainer::before { content: "Chance" !important; }
+input.sheet-rolltype-select[value="normal"] ~ * .sheet-rollcontainer::before { content: "10-again" !important; }
+input.sheet-rolltype-select[value="9-again"] ~ * .sheet-rollcontainer::before { content: "9-again" !important; }
+input.sheet-rolltype-select[value="8-again"] ~ * .sheet-rollcontainer::before { content: "8-again" !important; }
+input.sheet-rolltype-select[value="dont-reroll"] ~ * .sheet-rollcontainer::before { content: "No 10-again" !important; }
+input.sheet-rolltype-select[value="chance-rote"] ~ * .sheet-rollcontainer::before { content: "Chance+Rote" !important; }
+input.sheet-rolltype-select[value="rote"] ~ * .sheet-rollcontainer::before { content: "Rote" !important; }
+.charsheet .sheet-form-picker { justify-content: center; flex-wrap: wrap; }
+.charsheet .sheet-forms .sheet-hint { text-align: center; }
+.charsheet .sheet-skills { display: grid; grid-template-columns: minmax(0,1fr) auto; column-gap: 0; row-gap: 0; min-width: 0; max-width: 100%; box-sizing: border-box; }
+.charsheet .sheet-skills > div:not(.sheet-dots):not(.sheet-spec-row):not(.sheet-section-header):not(.sheet-subheader):not(.sheet-subsubheader) {
+  display: flex; flex-wrap: nowrap; align-items: center; min-width: 0; white-space: nowrap; overflow: hidden;
+  border: 1px solid rgba(127,127,127,.55); border-right: none; border-radius: 4px 0 0 4px; margin-top: 2px; padding: 0 2px; height: 20px; box-sizing: border-box; }
+.charsheet .sheet-skills > div.sheet-dots { display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end;
+  border: 1px solid rgba(127,127,127,.55); border-left: none; border-radius: 0 4px 4px 0; margin-top: 2px; padding: 0 3px 0 2px; height: 20px; box-sizing: border-box; }
+.charsheet .sheet-skills > div.sheet-dots button.sheet-dot { width: 10px !important; height: 10px !important; margin: 0 1px; font-size: 8px; line-height: 8px !important; }
+.charsheet .sheet-skills > div.sheet-spec-row { grid-column: 1 / span 2; }
+.charsheet .sheet-skills button.sheet-toggle { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 3px !important; margin: 0; line-height: 16px !important; font-size: 12px; border: none !important; background-image: none !important; background-color: rgba(0,0,0,0); box-shadow: none !important; }
+.charsheet .sheet-skills button.sheet-spec-caret { flex: 0 0 auto; padding: 0 2px !important; margin: 0; line-height: 14px !important; border: none !important; background-image: none !important; }
+.charsheet .sheet-skills .sheet-skm { flex: 0 0 auto; margin-left: 1px; }
+.charsheet .sheet-skills .sheet-checkbox { flex: 0 0 auto; }
+.charsheet .sheet-attributes .sheet-dots { justify-content: flex-end; }
+.charsheet .sheet-flex input[type=text], .charsheet .sheet-flex input[type=number] { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.charsheet .sheet-skills > div:not(.sheet-dots):not(.sheet-spec-row):not(.sheet-section-header):not(.sheet-subheader):not(.sheet-subsubheader),
+.charsheet .sheet-skills > div.sheet-dots { height: 18px; margin-top: 1px; }
+.charsheet .sheet-skills button.sheet-toggle { text-align: left; justify-content: flex-start; font-weight: bold; }
+.charsheet .sheet-attributes .sheet-label button.sheet-toggle { text-align: left; }
+.charsheet .sheet-flex > .sheet-skills { flex: 0 0 auto; grid-template-columns: max-content auto; }
+.charsheet .sheet-skills button.sheet-toggle { flex: 0 0 auto; overflow: visible; }
+.charsheet .sheet-skills > div:not(.sheet-dots):not(.sheet-spec-row):not(.sheet-section-header):not(.sheet-subheader):not(.sheet-subsubheader) { overflow: visible; padding-right: 6px; }
+.charsheet .sheet-attributes .sheet-label button.sheet-toggle { overflow: visible; text-overflow: clip; padding: 0 4px !important; }
+.charsheet .sheet-attributes .sheet-label { white-space: nowrap; }
+.charsheet .sheet-attributes .sheet-dots button.sheet-dot { width: 9px !important; height: 9px !important; margin: 0 .5px; }
+.charsheet .sheet-attributes { grid-template-columns: auto 6px max-content minmax(0,1fr) 6px max-content minmax(0,1fr) 6px max-content minmax(0,1fr); column-gap: 0; }
+.charsheet .sheet-attributes .sheet-label { padding-right: 3px; }
+.charsheet .sheet-attributes .sheet-dots { justify-content: safe flex-end; min-width: max-content; }
+.charsheet .sheet-flex > .sheet-skills ~ .sheet-horizontal-spacer { width: 12px !important; min-width: 12px; flex: 0 0 12px; }
+.charsheet .sheet-flex > .sheet-grow > .sheet-flex > div:last-child { flex: 0 0 auto; min-width: 150px; max-width: 190px; margin-left: 6px; }
+.charsheet .sheet-flex > .sheet-grow > .sheet-flex > .sheet-grow { flex: 1 1 0; min-width: 0; }
+.charsheet .sheet-flex > .sheet-grow > .sheet-flex > .sheet-grow .sheet-columns { flex-wrap: wrap; min-width: 0; }
+.charsheet .sheet-flex > .sheet-grow > .sheet-flex > .sheet-grow .sheet-columns > * { min-width: 0; flex: 1 1 140px; }
+.charsheet .sheet-flex > .sheet-grow > .sheet-flex > div:last-child .sheet-quick { white-space: normal; max-width: 100%; }
+.charsheet .sheet-skills .sheet-skm, .charsheet .sheet-skills .sheet-skm * { box-sizing: border-box; }
+.charsheet .sheet-skills .sheet-skm { display: inline-flex !important; flex-wrap: nowrap; align-items: center; gap: 2px; height: 14px; line-height: 12px; font-size: 9px; }
+.charsheet .sheet-skills label.sheet-skm-mark { display: inline-block !important; position: relative; width: 11px !important; height: 11px !important; margin: 0 !important; padding: 0 !important; line-height: 11px; font-size: 9px; }
+.charsheet .sheet-skills label.sheet-skm-mark input[type=checkbox] { position: absolute; left: 0; top: 0; width: 11px !important; height: 11px !important; margin: 0 !important; padding: 0 !important; opacity: 0; appearance: none; -webkit-appearance: none; }
+.charsheet .sheet-skills .sheet-skm-qwrap { display: inline-block !important; width: 13px !important; height: 12px !important; margin: 0 !important; }
+.charsheet .sheet-skills select.sheet-skm-sel { appearance: none; -webkit-appearance: none; width: 13px !important; height: 12px !important; max-width: 13px; padding: 0 !important; margin: 0 !important; font-size: 9px !important; line-height: 12px !important; border: 0 !important; opacity: 0; }
+.charsheet .sheet-skills label.sheet-skm-mk { display: inline-flex; align-items: center; margin: 0 !important; padding: 0 !important; height: 12px; font: bold 8px/10px Arial, sans-serif !important; white-space: nowrap; }
+.charsheet .sheet-skills label.sheet-skm-mk input[type=checkbox] { width: 9px !important; height: 9px !important; margin: 0 1px 0 0 !important; padding: 0 !important; }
+.charsheet .sheet-skills .sheet-checkbox, .charsheet .sheet-skills .sheet-checkbox button { margin-top: 0 !important; margin-bottom: 0 !important; }
+.charsheet .sheet-skills .sheet-spec-caret input, .charsheet .sheet-skills .sheet-skm input[type=hidden] { display: none; }
+.charsheet .sheet-attributes .sheet-dots { padding-right: 6px; }
+.sheet-rolltemplate-wod table, .sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-wod-initiative table { width: 100%; background: #f1eee6 !important; border: 2px solid #2b2b2b; border-radius: 4px; font-family: Georgia, serif; color: #1d1d1d; }
+.sheet-rolltemplate-wod th, .sheet-rolltemplate-wod-attack th, .sheet-rolltemplate-wod-simple th, .sheet-rolltemplate-wod-3part th, .sheet-rolltemplate-wod-initiative th { background: #1d1d1d; color: #eee; padding: 4px 6px; font-size: 14px; }
+.sheet-rolltemplate-wod td, .sheet-rolltemplate-wod-attack td, .sheet-rolltemplate-wod-simple td, .sheet-rolltemplate-wod-3part td, .sheet-rolltemplate-wod-initiative td { padding: 2px 6px; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative table { background: #1f1f23 !important; color: #e4e4e4; border-color: #555; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .sheet-result { color: #e8a0a0; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-specialrollflag { color: #fff !important; }
+.charsheet button[type=roll]::before, .charsheet button[type=roll][class]::before, .charsheet .sheet-rollcontainer > button[type=roll]::before { content: none !important; display: none !important; }
+.charsheet button[type=roll].sheet-entry-post::before { content: "w " !important; display: inline !important; font-family: "Pictos" !important; font-weight: normal; font-size: 11px; }
+.charsheet table.sheet-hw-table { width: auto !important; max-width: 100%; margin: 4px auto 8px !important; table-layout: fixed; }
+.charsheet table.sheet-hw-table th, .charsheet table.sheet-hw-table td { text-align: center !important; vertical-align: middle !important; width: 88px; }
+.charsheet table.sheet-hw-table tr > th:first-child { width: 60px; }
+.charsheet table.sheet-hw-table input[type=text] { display: block; width: 100% !important; box-sizing: border-box; margin: 0 auto !important; text-align: center !important; height: 22px; padding: 1px 2px; }
+.charsheet table.sheet-hw-table label { display: block; margin: 0; text-align: center !important; }
+.charsheet .sheet-entry { padding: 0 0 0 18px !important; min-height: 18px; }
+.charsheet .sheet-entry > input[type=checkbox].sheet-entry-toggle { top: 1px !important; width: 16px !important; height: 16px !important; margin: 0 !important; }
+.charsheet .sheet-entry > input[type=checkbox].sheet-entry-toggle + .sheet-entry-head::before { font-size: 12px !important; line-height: 18px !important; top: 0 !important; left: 2px !important; }
+.charsheet .sheet-entry-head { min-height: 18px !important; height: 18px; gap: 4px !important; align-items: center !important; overflow: hidden; }
+.charsheet .sheet-entry-head button.sheet-entry-post { flex: 1 1 auto; min-width: 0; height: 18px !important; margin: 0 !important; padding: 0 2px !important; font-size: 12px !important; line-height: 18px !important; border: none !important; background: none !important; box-shadow: none !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left !important; }
+.charsheet .sheet-entry-head button.sheet-entry-post::before, .charsheet button[type=roll].sheet-entry-post::before { font-size: 10px !important; }
+.charsheet .sheet-entry-head > .sheet-dots { display: flex !important; align-items: center; height: 18px; margin: 0 !important; flex: 0 0 auto; }
+.charsheet .sheet-entry-head > .sheet-dots button.sheet-dot { width: 10px !important; height: 10px !important; min-width: 0 !important; margin: 0 1px !important; padding: 0 !important; font-size: 8px !important; line-height: 8px !important; }
+.charsheet .sheet-entry-head button:not(.sheet-entry-post):not(.sheet-dot) { height: 16px !important; min-width: 0 !important; margin: 0 !important; padding: 0 4px !important; font-size: 11px !important; line-height: 14px !important; flex: 0 0 auto; }
+.charsheet .sheet-entry-head button:not(.sheet-entry-post):not(.sheet-dot)::before { content: none !important; }
+.charsheet .sheet-entry-head .sheet-entry-pool { font-size: 11px !important; line-height: 18px; }
+.charsheet .sheet-entry-head input, .charsheet .sheet-entry-head select { height: 16px !important; margin: 0 !important; padding: 0 2px !important; font-size: 11px !important; line-height: 14px !important; }
+.charsheet .repitem > .sheet-input-group { display: flex !important; align-items: center; gap: 4px; min-height: 18px; height: 18px; margin: 0 0 1px !important; padding: 0 !important; }
+.charsheet .repitem > .sheet-input-group input[type=text] { flex: 1 1 auto; min-width: 0; height: 18px !important; margin: 0 !important; padding: 0 3px !important; font-size: 12px !important; line-height: 16px !important; box-sizing: border-box; }
+.charsheet .repitem > .sheet-input-group .sheet-dots { display: flex !important; align-items: center; height: 18px; margin: 0 !important; flex: 0 0 auto; }
+.charsheet .repitem > .sheet-input-group button.sheet-dot { width: 10px !important; height: 10px !important; min-width: 0 !important; margin: 0 1px !important; padding: 0 !important; font-size: 8px !important; line-height: 8px !important; }
+.charsheet .repitem > .sheet-input-group button.sheet-radio { width: 10px !important; height: 10px !important; min-width: 0 !important; padding: 0 !important; margin: 0 2px 0 0 !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer { position: relative !important; box-sizing: border-box; min-width: 64px !important; padding-bottom: 14px !important; margin-bottom: 0 !important; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+.charsheet .sheet-rollbar .sheet-rollcontainer::before { bottom: 2px !important; left: 50% !important; transform: translateX(-50%) !important; font: bold 8px/10px Arial, sans-serif !important; padding: 0 3px !important; max-width: calc(100% - 4px); box-sizing: border-box; overflow: hidden; text-overflow: clip; }
+.charsheet .sheet-input-label { width: auto !important; min-width: 85px; flex: 0 0 auto; overflow: visible !important; text-overflow: clip !important; padding-left: 2px; padding-right: 4px; box-sizing: border-box; }
+.charsheet .sheet-attributes { grid-template-columns: max-content 6px max-content minmax(0,1fr) 6px max-content minmax(0,1fr) 6px max-content minmax(0,1fr) !important; }
+.charsheet .sheet-attributes > .sheet-attributes-category { min-width: max-content; padding-left: 4px; padding-right: 4px; overflow: visible !important; white-space: nowrap; }
+.charsheet .sheet-background { padding-left: max(40px, 2.5em) !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer,
+body.sheet-darkmode .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer,
+input.sheet-dm[value="1"] ~ .sheet-background .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer { border: none !important; background: rgba(0,0,0,0) !important; box-shadow: none !important; outline: none !important; border-radius: 0 !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer > button[type=roll],
+body.sheet-darkmode .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > button[type=roll],
+input.sheet-dm[value="1"] ~ .sheet-background .ui-dialog .charsheet .sheet-rollbar .sheet-rollcontainer > button[type=roll] { border: none !important; background: rgba(0,0,0,0) !important; background-image: none !important; box-shadow: none !important; outline: none !important; text-shadow: none !important; padding: 0 !important; margin: 0 !important; min-width: 32px; height: 28px; }
+.charsheet .sheet-rollbar .sheet-rollcontainer > button[type=roll]::after { border: none !important; box-shadow: none !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer::before { z-index: 3; }
+.charsheet .sheet-rollbar button.sheet-toggle, .charsheet .sheet-rollbar .sheet-diceroller-options button, .charsheet .sheet-rollbar button[name^="act_rolltype"], .charsheet .sheet-rollbar button[name^="act_rollstyle"], .charsheet .sheet-rollbar button[class*="sheet-rollstyle-"], .charsheet .sheet-rollbar button[class*="sheet-rolltype-"] {
+  width: auto !important; min-width: max-content !important; max-width: none !important; height: auto !important; padding: 2px 8px !important; margin: 0 !important; white-space: nowrap !important; overflow: visible !important; font-size: 11px !important; line-height: 16px !important; box-sizing: border-box; flex: 0 0 auto !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer { height: 44px !important; padding-bottom: 0 !important; justify-content: flex-start !important; }
+.charsheet .sheet-rollbar .sheet-rollcontainer > button[type=roll] { height: 30px !important; flex: 0 0 30px; }
+.charsheet .sheet-rollbar .sheet-rollcontainer::before { bottom: 1px !important; }
+.charsheet .sheet-skills > div.sheet-spec-row { grid-column: 1 / -1 !important; width: 100%; box-sizing: border-box; }
+.charsheet .sheet-skills .sheet-spec-row > .sheet-spec-inner { display: flex; padding: 1px 0 3px !important; margin: 0 !important; width: 100%; box-sizing: border-box; }
+.charsheet .sheet-skills .sheet-spec-row > input.sheet-spec-openflag:not([value="1"]) ~ .sheet-spec-inner { display: none !important; }
+.charsheet .sheet-skills .sheet-spec-inner input[type=text].sheet-spec-input { flex: 1 1 auto; display: block; width: 100% !important; max-width: none !important; min-width: 0; height: 20px !important; margin: 0 !important; padding: 1px 5px !important; box-sizing: border-box; font-size: 12px !important; line-height: 16px !important; border: 1px solid #ccc; border-radius: 3px; background: #fff; color: #222; }
+body.sheet-darkmode .charsheet .sheet-skills .sheet-spec-inner input[type=text].sheet-spec-input,
+.sheet-darkmode .sheet-skills .sheet-spec-inner input[type=text].sheet-spec-input,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skills .sheet-spec-inner input[type=text].sheet-spec-input,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skills .sheet-spec-inner input[type=text].sheet-spec-input,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-skills .sheet-spec-inner input[type=text].sheet-spec-input { background: #1e1e22 !important; color: #e8e8e8 !important; border: 1px solid rgba(255,255,255,.3) !important; }
+.charsheet .sheet-skills .sheet-spec-inner input[type=text].sheet-spec-input::placeholder { color: rgba(150,150,150,.85); font-style: italic; }
+.charsheet .sheet-pictos { font-family: "Pictos" !important; font-weight: normal !important; font-style: normal; display: inline-block; line-height: 1; }
+.charsheet .sheet-pictos.sheet-ic-down { transform: rotate(90deg); }
+.charsheet button[name="act_page_settings"] .sheet-pictos { font-size: 16px; }
+input.sheet-eff[value="1"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-1),
+input.sheet-eff[value="2"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-2),
+input.sheet-eff[value="2"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-2),
+input.sheet-eff[value="3"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-3),
+input.sheet-eff[value="3"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-3),
+input.sheet-eff[value="3"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-3),
+input.sheet-eff[value="4"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-4),
+input.sheet-eff[value="4"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-4),
+input.sheet-eff[value="4"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-4),
+input.sheet-eff[value="4"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-4),
+input.sheet-eff[value="5"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-5),
+input.sheet-eff[value="5"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-5),
+input.sheet-eff[value="5"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-5),
+input.sheet-eff[value="5"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-5),
+input.sheet-eff[value="5"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-5),
+input.sheet-eff[value="6"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-6),
+input.sheet-eff[value="6"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-6),
+input.sheet-eff[value="6"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-6),
+input.sheet-eff[value="6"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-6),
+input.sheet-eff[value="6"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-6),
+input.sheet-eff[value="6"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-6),
+input.sheet-eff[value="7"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-7),
+input.sheet-eff[value="7"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-7),
+input.sheet-eff[value="7"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-7),
+input.sheet-eff[value="7"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-7),
+input.sheet-eff[value="7"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-7),
+input.sheet-eff[value="7"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-7),
+input.sheet-eff[value="7"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-7),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-8),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-8),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-8),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-8),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-8),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-8),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-8),
+input.sheet-eff[value="8"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-8),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-9),
+input.sheet-eff[value="9"] ~ input.sheet-perm[value="8"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-8:not(.sheet-ne-9),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="8"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-8:not(.sheet-ne-10),
+input.sheet-eff[value="10"] ~ input.sheet-perm[value="9"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-9:not(.sheet-ne-10),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="8"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-8:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="9"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-9:not(.sheet-ne-11),
+input.sheet-eff[value="11"] ~ input.sheet-perm[value="10"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-10:not(.sheet-ne-11),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="8"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-8:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="9"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-9:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="10"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-10:not(.sheet-ne-12),
+input.sheet-eff[value="12"] ~ input.sheet-perm[value="11"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-11:not(.sheet-ne-12),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="8"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-8:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="9"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-9:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="10"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-10:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="11"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-11:not(.sheet-ne-13),
+input.sheet-eff[value="13"] ~ input.sheet-perm[value="12"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-12:not(.sheet-ne-13),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="8"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-8:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="9"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-9:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="10"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-10:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="11"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-11:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="12"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-12:not(.sheet-ne-14),
+input.sheet-eff[value="14"] ~ input.sheet-perm[value="13"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-13:not(.sheet-ne-14),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="0"] ~ button.sheet-dot:not(.sheet-zero):not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="1"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-1:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="2"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-2:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="3"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-3:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="4"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-4:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="5"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-5:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="6"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-6:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="7"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-7:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="8"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-8:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="9"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-9:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="10"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-10:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="11"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-11:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="12"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-12:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="13"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-13:not(.sheet-ne-15),
+input.sheet-eff[value="15"] ~ input.sheet-perm[value="14"] ~ button.sheet-dot:not(.sheet-zero).sheet-ne-14:not(.sheet-ne-15) { background: var(--temp-dot, #c0392b) !important; border-color: var(--temp-dot, #c0392b) !important; }
+button.sheet-dot.sheet-ext { margin-left: 1px; }
+input.sheet-type[value="mortal2"] ~ * input.sheet-eff[value="0"] ~ button.sheet-ext, input.sheet-type[value="mortal2"] ~ * input.sheet-eff[value="1"] ~ button.sheet-ext, input.sheet-type[value="mortal2"] ~ * input.sheet-eff[value="2"] ~ button.sheet-ext, input.sheet-type[value="mortal2"] ~ * input.sheet-eff[value="3"] ~ button.sheet-ext, input.sheet-type[value="mortal2"] ~ * input.sheet-eff[value="4"] ~ button.sheet-ext, input.sheet-type[value="mortal2"] ~ * input.sheet-eff[value="5"] ~ button.sheet-ext { display: none; }
+input.sheet-type[value="hunter2"] ~ * input.sheet-eff[value="0"] ~ button.sheet-ext, input.sheet-type[value="hunter2"] ~ * input.sheet-eff[value="1"] ~ button.sheet-ext, input.sheet-type[value="hunter2"] ~ * input.sheet-eff[value="2"] ~ button.sheet-ext, input.sheet-type[value="hunter2"] ~ * input.sheet-eff[value="3"] ~ button.sheet-ext, input.sheet-type[value="hunter2"] ~ * input.sheet-eff[value="4"] ~ button.sheet-ext, input.sheet-type[value="hunter2"] ~ * input.sheet-eff[value="5"] ~ button.sheet-ext { display: none; }
+input.sheet-type[value="hunter2"] ~ * { --temp-dot: #1e4646; }
+input.sheet-type[value="vampire2"] ~ * { --temp-dot: #6e1e1e; }
+input.sheet-type[value="werewolf2"] ~ * { --temp-dot: #aa5a1e; }
+input.sheet-type[value="mage2"] ~ * { --temp-dot: #beaa5a; }
+input.sheet-type[value="promethean2"] ~ * { --temp-dot: #1e1e5a; }
+input.sheet-type[value="changeling2"] ~ * { --temp-dot: #0a6e46; }
+input.sheet-type[value="geist2"] ~ * { --temp-dot: #82aabe; }
+input.sheet-type[value="mummy2"] ~ * { --temp-dot: #d2be82; }
+input.sheet-type[value="demon"] ~ * { --temp-dot: #323246; }
+input.sheet-type[value="beast"] ~ * { --temp-dot: #463246; }
+input.sheet-type[value="deviant-the-renegades"] ~ * { --temp-dot: #5a1e1e; }
+input.sheet-type[value="breeds2"] ~ * { --temp-dot: #5a321e; }
+input.sheet-type[value="mortal2"] ~ * { --temp-dot: #2a2d80; }
+.charsheet .sheet-background { width: auto !important; max-width: 905px; box-sizing: border-box; padding: 14px 34px 60px 40px; }
+.charsheet button.sheet-page-settings { position: static !important; vertical-align: middle; margin-right: 4px; }
+.charsheet .sheet-background img, .charsheet .sheet-background textarea, .charsheet .sheet-background input[type=text] { max-width: 100%; }
+.charsheet .sheet-rollbar, .charsheet .sheet-wp-bar, .charsheet .sheet-entry-body { flex-wrap: wrap; }
+/* ---- Roll20 fixes: stacking context so the z-index:-1 frame art is not painted behind Roll20's dialog ---- */
+.charsheet .sheet-background { position: relative; z-index: 0; isolation: isolate; }
+/* ---- dark theme base (Roll20 native dark mode OR the sheet's own Dark mode checkbox) ---- */
+body.sheet-darkmode .sheet-background, input.sheet-dm[value="1"] ~ .sheet-background { background: #141417 !important; color: #e4e4e4; border-radius: 6px; }
+/* splat picker as pills */
+.charsheet .sheet-splat-select { display: flex; flex-wrap: wrap; gap: 6px; }
+.charsheet .sheet-splat-select button.sheet-toggle, .charsheet .sheet-settings button.sheet-toggle[name^="act_sheet_type_"] { margin: 0; padding: 4px 12px; border: 1px solid #888 !important; border-radius: 14px; background: #f4f1ea !important; color: #222 !important; font-weight: bold; text-shadow: none !important; cursor: pointer; }
+body.sheet-darkmode .sheet-background .sheet-splat-select button.sheet-toggle, input.sheet-dm[value="1"] ~ .sheet-background .sheet-splat-select button.sheet-toggle, body.sheet-darkmode .sheet-background .sheet-settings button.sheet-toggle[name^="act_sheet_type_"], input.sheet-dm[value="1"] ~ .sheet-background .sheet-settings button.sheet-toggle[name^="act_sheet_type_"] { background: #26262b !important; color: #e8e8e8 !important; border-color: #5a5a62 !important; }
+.charsheet input.sheet-type[value="beast"] ~ * button.sheet-active-beast,
+.charsheet input.sheet-type[value="breeds2"] ~ * button.sheet-active-breeds2,
+.charsheet input.sheet-type[value="changeling2"] ~ * button.sheet-active-changeling2,
+.charsheet input.sheet-type[value="demon"] ~ * button.sheet-active-demon,
+.charsheet input.sheet-type[value="deviant-the-renegades"] ~ * button.sheet-active-deviant-the-renegades,
+.charsheet input.sheet-type[value="geist2"] ~ * button.sheet-active-geist2,
+.charsheet input.sheet-type[value="hunter2"] ~ * button.sheet-active-hunter2,
+.charsheet input.sheet-type[value="mage2"] ~ * button.sheet-active-mage2,
+.charsheet input.sheet-type[value="mortal2"] ~ * button.sheet-active-mortal2,
+.charsheet input.sheet-type[value="mummy2"] ~ * button.sheet-active-mummy2,
+.charsheet input.sheet-type[value="promethean2"] ~ * button.sheet-active-promethean2,
+.charsheet input.sheet-type[value="vampire2"] ~ * button.sheet-active-vampire2,
+.charsheet input.sheet-type[value="werewolf2"] ~ * button.sheet-active-werewolf2,
+.charsheet input.sheet-type[value="wod-demon2"] ~ * button.sheet-active-wod-demon2 { background: var(--temp-dot, #7a1a1a) !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 0 2px var(--temp-dot, #7a1a1a); }
+.charsheet .sheet-display-opts label { font-weight: bold; }
+body.sheet-darkmode .sheet-background .sheet-edition-label, input.sheet-dm[value="1"] ~ .sheet-background .sheet-edition-label { color: #d4b25a !important; letter-spacing: 1px; }
+.sheet-bgart { display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+.sheet-bgart img { display: block; width: 100%; height: auto; max-width: 100%; margin: 0; padding: 0; border: 0; }
+.sheet-bgart .sheet-bgart-top { position: absolute; top: 0; left: 0; }
+.sheet-bgart .sheet-bgart-bot { position: absolute; bottom: 0; left: 0; }
+input.sheet-type[value="hunter2"] ~ .sheet-background-image .sheet-bgart-hunter2,
+input.sheet-type[value="vampire2"] ~ .sheet-background-image .sheet-bgart-vampire2,
+input.sheet-type[value="werewolf2"] ~ .sheet-background-image .sheet-bgart-werewolf2,
+input.sheet-type[value="mage2"] ~ .sheet-background-image .sheet-bgart-mage2,
+input.sheet-type[value="promethean2"] ~ .sheet-background-image .sheet-bgart-promethean2,
+input.sheet-type[value="changeling2"] ~ .sheet-background-image .sheet-bgart-changeling2,
+input.sheet-type[value="geist2"] ~ .sheet-background-image .sheet-bgart-geist2,
+input.sheet-type[value="mummy2"] ~ .sheet-background-image .sheet-bgart-mummy2,
+input.sheet-type[value="demon"] ~ .sheet-background-image .sheet-bgart-demon,
+input.sheet-type[value="beast"] ~ .sheet-background-image .sheet-bgart-beast,
+input.sheet-type[value="deviant-the-renegades"] ~ .sheet-background-image .sheet-bgart-deviant-the-renegades,
+input.sheet-type[value="breeds2"] ~ .sheet-background-image .sheet-bgart-breeds2 { display: block; }
+input.sheet-type[value="hunter2"] ~ .sheet-background-image::after,
+input.sheet-type[value="vampire2"] ~ .sheet-background-image::after,
+input.sheet-type[value="werewolf2"] ~ .sheet-background-image::after,
+input.sheet-type[value="mage2"] ~ .sheet-background-image::after,
+input.sheet-type[value="promethean2"] ~ .sheet-background-image::after,
+input.sheet-type[value="changeling2"] ~ .sheet-background-image::after,
+input.sheet-type[value="geist2"] ~ .sheet-background-image::after,
+input.sheet-type[value="mummy2"] ~ .sheet-background-image::after,
+input.sheet-type[value="demon"] ~ .sheet-background-image::after,
+input.sheet-type[value="beast"] ~ .sheet-background-image::after,
+input.sheet-type[value="deviant-the-renegades"] ~ .sheet-background-image::after,
+input.sheet-type[value="breeds2"] ~ .sheet-background-image::after { background: none; }
+.sheet-darkmode .sheet-bgart,
+input.sheet-dm[value="1"] ~ .sheet-background .sheet-bgart { filter: invert(1) hue-rotate(180deg) brightness(.55) contrast(1.2) saturate(1.6); }

@@ -72,8 +72,8 @@ WVIS = {
     'wsize': ('melee', 'thrown', 'ranged', 'bow', 'explosive'),
     'avail': ('melee', 'thrown', 'ranged', 'bow', 'explosive'),
     'max_range': ('thrown', 'ranged', 'bow', 'explosive'),
-    'capacity': ('ranged', 'bow'),
-    'piercing': ('melee', 'ranged', 'bow'),
+    'capacity': ('ranged',),  # r14: Leon - no Capacity on bows
+    'piercing': ('melee', 'thrown', 'ranged', 'bow'),  # r14: Leon - thrown weapons show Armor piercing
     'expl_delivery': ('explosive',), 'blast': ('explosive',), 'force': ('explosive',),
     'onehanded': ('melee', 'ranged'),
 }
@@ -224,7 +224,8 @@ def devnotes(h, c):
         (r' \(rules reading not checked against the V:tR 2E book; verify\)', ''),
         (r' \(verify vs V:tR 2E\)', ''),
         (r' \(the instinctive Skill list is a best reading, not checked against the W:tF 2E book; verify\)', ''),
-        (r' \(pool not re-checked against the W:tF 2E book; apply trigger modifiers in the prompt\)', ' (apply trigger modifiers in the prompt)'),
+        (r' \(pool not re-checked against the W:tF 2E book; apply trigger modifiers in the prompt\)', ''),  # r14: triggers carry no modifiers (Leon)
+        (r' The Rage lasts until the scene ends, the werewolf drops unconscious, or nothing is left to attack; press End Death Rage then\.', ' Death Rage ends only when the werewolf is killed or its duration (set by Primal Urge) runs out; in play the scene often cuts away first. Afterwards the werewolf remembers nothing of the time in Basu-Im. Press End Death Rage then.'),
     ]
     for pat, rep in subs:
         h = re.sub(pat, rep, h)
