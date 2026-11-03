@@ -1912,3 +1912,29 @@ def r93(h, c):
     assert h.count(a) == 1, 'cga'
     h = h.replace(a, '"defense_base","defense_penalty","inst_def",', 1)
     return h, c
+
+
+def r94(h, c):
+    """polish: Merit Requires roll / Effects by outcome as the Facet slide switches (splat colour)"""
+    import re as _re
+    h, n = _re.subn(r'(<input type="checkbox" class="sheet-gfx-sw sheet-m-(?:nr|bo)"[^>]*/>)', r'<span class="sheet-gfx-swr">\1<span class="sheet-gfx-trk"></span></span>', h)
+    assert n == 2, ('msw', n)
+    G = f'{P}{P}{P}{P}{P} .sheet-mswz'
+    rules = [
+        f'{G} .sheet-gfx-swr {{ position: relative; display: inline-block !important; flex: 0 0 24px !important; width: 24px !important; height: 12px !important; min-width: 24px !important; padding: 0 !important; margin: 0 !important; overflow: visible !important; vertical-align: middle; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw {{ -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; position: absolute !important; inset: 0; width: 24px !important; height: 12px !important; margin: 0 !important; padding: 0 !important; opacity: 0 !important; z-index: 2; cursor: pointer; border: 0 !important; background: none !important; box-shadow: none !important; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw::before, {G} .sheet-gfx-swr input.sheet-gfx-sw::after {{ content: none !important; display: none !important; }}',
+        f'{G} .sheet-gfx-trk {{ position: absolute; display: block !important; left: 0 !important; top: 0 !important; width: 24px !important; height: 12px !important; border-radius: 6px !important; background: #555 !important; pointer-events: none; }}',
+        f'{G} .sheet-gfx-trk::after {{ content: ""; position: absolute; left: 1px; top: 1px; width: 10px; height: 10px; border-radius: 50%; background: #ddd; transition: left .15s; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw:checked + .sheet-gfx-trk {{ background: var(--color-game-line, #b4743a) !important; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw:checked + .sheet-gfx-trk::after {{ left: 13px; background: #fff; }}',
+        f'{G} label.sheet-m-nrl {{ display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; justify-content: flex-start !important; align-items: center !important; gap: 6px; cursor: pointer; text-align: left !important; }}', f'{G} label.sheet-m-nrl > span:not(.sheet-gfx-swr) {{ display: inline !important; margin: 0 !important; width: auto !important; }}',
+    ]
+    M = (f'{P}{P}{P}{P}{P} .repeating_merits ~ .repcontainer .repitem', f'{P}{P}{P}{P}{P} .repcontainer[data-groupname="repeating_merits"] .repitem')
+    out = []
+    for r in rules:
+        sel, body = r.split('{', 1)
+        ps = [p.strip() for p in sel.split(', ')]
+        out.append(', '.join(p.replace(G, m) for p in ps for m in M) + ' {' + body)
+    c += '\n' + '\n'.join(out) + '\n'
+    return h, c

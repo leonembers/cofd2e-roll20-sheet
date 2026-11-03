@@ -44,7 +44,7 @@ def _sheet(c):
 def _prune(css,html):
     # drop selectors that name a sheet-* class that never appears in the HTML/worker (never matches); :not/:is/:where/:has args are
     # only consulted for :has (a dead class there can never match), the others are left alone
-    if not html: return css
+    if not html or os.environ.get('CSS_NOPRUNE'): return css
     cls=set(re.findall(r'sheet-[\w-]+',html))
     def strip(p):
         while True:

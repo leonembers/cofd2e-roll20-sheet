@@ -107,7 +107,7 @@ def pills(h, c):
 
 
 def apply(h, c):
-    for f in (powers, fullheal, warriors_hide, pills, wolftabs, giftrows, midaudit, merits, tooltips, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22, r24, r26, r27, r28, r29, r31, r32, r33, r37, r38, r39, r40, r41, r42, r45, r46, r48, r49, r50, r51, r60, r64, r65, r66, r67, r68, r74, r78, r81, r83, r86, r87, r88, r89, r90, r91, r92, r93):
+    for f in (powers, fullheal, warriors_hide, pills, wolftabs, giftrows, midaudit, merits, tooltips, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22, r24, r26, r27, r28, r29, r31, r32, r33, r37, r38, r39, r40, r41, r42, r45, r46, r48, r49, r50, r51, r60, r64, r65, r66, r67, r68, r74, r78, r81, r83, r86, r87, r88, r89, r90, r91, r92, r93, r94):
         h, c = f(h, c)
     return h, c
-from r15b import wolftabs, midaudit, merits, tooltips, giftrows, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22, r24, r26, r27, r28, r29, r31, r32, r33, r37, r38, r39, r40, r41, r42, r45, r46, r48, r49, r50, r51, r60, r64, r65, r66, r67, r68, r74, r78, r81, r83, r86, r87, r88, r89, r90, r91, r92, r93  # noqa: E402
+from r15b import wolftabs, midaudit, merits, tooltips, giftrows, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22, r24, r26, r27, r28, r29, r31, r32, r33, r37, r38, r39, r40, r41, r42, r45, r46, r48, r49, r50, r51, r60, r64, r65, r66, r67, r68, r74, r78, r81, r83, r86, r87, r88, r89, r90, r91, r92, r93, r94  # noqa: E402
