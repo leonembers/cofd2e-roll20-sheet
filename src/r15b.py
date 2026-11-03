@@ -1973,3 +1973,85 @@ def r96(h, c):
           f'\n{H} > button.sheet-mini:nth-of-type(1) {{ right: 57px !important; }}'
           f'\n{H} > button.sheet-mini:nth-of-type(2) {{ right: 40px !important; }}\n')
     return h, c
+
+
+def r97(h, c):
+    """(107) Facets get the Merit dice-pool layout: centred heading, 3 equal selects, +Renown, Mod/WP/Ess steppers; Cost row
+    kept as a read-out.  (b) General armor tooltip is static text."""
+    import re as _re
+    K = ['pur', 'glo', 'hon', 'wis', 'cun']
+    def fst(k, a, lbl, lo, hi):
+        d = f'fx-{k}-{a}'
+        return (f'<span class="sheet-stp sheet-fx-stp" title="{lbl}"><span class="sheet-stp-l">{lbl}</span><span class="sheet-fx-stc">'
+                f'<button type="action" class="sheet-stp-b" name="act_{d}-dec" title="{lbl} -1">-</button>'
+                f'<input type="number" class="sheet-stp-v" name="attr_f_{k}_{a}" value="0" min="{lo}" max="{hi}" step="1" />'
+                f'<button type="action" class="sheet-stp-b" name="act_{d}-inc" title="{lbl} +1">+</button></span></span>')
+    FS = [('mod', 'Mod', -10, 10), ('wp', 'WP', 0, 10), ('ess', 'Ess', 0, 20)]
+    for k in K:
+        a = f'<div class="sheet-gfx-r"><select name="attr_f_{k}_attr"'
+        assert h.count(a) == 2, ('fx attr', k, h.count(a))
+        h = h.replace(a, f'<div class="sheet-pw-hd sheet-fx-hd">Dice Pool</div><div class="sheet-gfx-r sheet-fx-3"><select name="attr_f_{k}_attr"')
+        h, n = _re.subn(r'(<div class="sheet-gfx-r sheet-gfx-rn"><label class="sheet-gfn" title="Add [A-Za-z]+ to the pool">.*?</label></div>)',
+                        lambda m: m.group(1) + '<div class="sheet-gfx-r sheet-fx-stps">' + ''.join(fst(k, *x) for x in FS) + '</div>' if f'attr_f_{k}_addren' in m.group(1) else m.group(1), h)
+        a = f'<label class="sheet-gfn">Mod<input type="number" name="attr_f_{k}_mod" value="0" min="-10" max="10" /></label>'
+        assert h.count(a) == 2, ('fx mod', k)
+        h = h.replace(a, '')
+        rx = (r'<div class="sheet-gfx-cost"><label class="sheet-gfn">Cost<input type="number" name="attr_f_' + k +
+              r'_cost" value="0" min="0" max="20" /></label><select class="sheet-gfx-ct" name="attr_f_' + k + r'_ctype".*?</select></div>')
+        h, n = _re.subn(rx, f'<div class="sheet-gfx-cost sheet-fx-cro"><span class="sheet-gfn">Cost</span><span class="sheet-fx-cd" name="attr_f_{k}_cdisp">-</span>'
+                        f'<input type="hidden" name="attr_f_{k}_cost" value="0" /><input type="hidden" name="attr_f_{k}_ctype" value="Essence" /></div>', h)
+        assert n == 2, ('fx cost', k, n)
+    assert h.count('sheet-fx-stps') == 10, h.count('sheet-fx-stps')
+    # worker: WP / Ess steppers are the cost; cost/ctype + read-out kept in sync for the card and older code
+    a = 'const cn = parseInt(v[f + "cost"]) || 0, ct = v[f + "ctype"] || "Essence";\n                    const ess = ct === "Essence" ? cn : 0, wp = ct === "Willpower" ? cn : 0;'
+    assert a in h, 'fx roll'
+    h = h.replace(a, 'const ess = parseInt(v[f + "ess"]) || 0, wp = parseInt(v[f + "wp"]) || 0;', 1)
+    a = 'const fl = ["name", "on", "attr", "skill", "x3", "mod", "cost", "ctype",'
+    assert a in h
+    h = h.replace(a, 'const fl = ["name", "on", "attr", "skill", "x3", "mod", "wp", "ess", "cost", "ctype",', 1)
+    a = '        const r15CostMig = () =>'
+    assert a in h
+    h = h.replace(a, '''        // (107) Facet Mod / WP / Ess steppers; WP + Ess are the cost.  Once per Facet (flag cmig3) seed them from the current Cost + type
+        const FX_ST = {mod: [-10, 10], wp: [0, 10], ess: [0, 20]};
+        const fxCd = (u, f, w, e) => { u[f + "cdisp"] = [e ? e + " Ess" : "", w ? w + " WP" : ""].filter(Boolean).join(" + ") || "None";
+            u[f + "cost"] = String(e || w || 0); u[f + "ctype"] = e ? "Essence" : (w ? "Willpower" : "Essence"); };
+        ["gifts", "wgifts"].forEach(sec => Object.keys(R15_RN).forEach(k => {
+            Object.keys(FX_ST).forEach(a => [["dec", -1], ["inc", 1]].forEach(([d, s]) => on(`clicked:repeating_${sec}:fx-${k}-${a}-${d}`, ev => {
+                const p = `repeating_${sec}_${r85Id(ev, sec)}_f_${k}_${a}`; getAttrs([p], v => { const [lo, hi] = FX_ST[a]; setAttrs({[p]: Math.max(lo, Math.min(hi, (parseInt(v[p], 10) || 0) + s))}); }); })));
+            on(`change:repeating_${sec}:f_${k}_wp change:repeating_${sec}:f_${k}_ess`, ev => { const id = ev.sourceAttribute.split("_")[2]; const f = `repeating_${sec}_${id}_f_${k}_`;
+                getAttrs([f + "wp", f + "ess"], v => { const u = {}; fxCd(u, f, parseInt(v[f + "wp"]) || 0, parseInt(v[f + "ess"]) || 0); setAttrs(u, {silent: true}); }); });
+        }));
+        const fxMig = () => ["gifts", "wgifts"].forEach(sec => getSectionIDs(sec, ids => {
+            const ks = []; ids.forEach(id => Object.keys(R15_RN).forEach(k => ["cost", "ctype", "wp", "ess", "cmig3"].forEach(x => ks.push(`repeating_${sec}_${id}_f_${k}_${x}`))));
+            getAttrs(ks, v => { const u = {};
+                ids.forEach(id => Object.keys(R15_RN).forEach(k => { const f = `repeating_${sec}_${id}_f_${k}_`;
+                    let w = parseInt(v[f + "wp"]) || 0, e = parseInt(v[f + "ess"]) || 0;
+                    if (v[f + "cmig3"] !== "1") { const cn = parseInt(v[f + "cost"]) || 0, ct = v[f + "ctype"] || "Essence";
+                        if (cn > 0) { e = ct === "Essence" ? cn : 0; w = ct === "Willpower" ? cn : 0; }
+                        u[f + "ess"] = String(e); u[f + "wp"] = String(w); u[f + "cmig3"] = "1"; }
+                    fxCd(u, f, w, e); }));
+                if (Object.keys(u).length) setAttrs(u, {silent: true}); });
+        }));
+        on("sheet:opened", () => setTimeout(fxMig, 0));
+''' + a, 1)
+    # CSS: fit the Facet column
+    G = f'{P}{P}{P}{P}{P}{P}{P} .sheet-gifts'
+    c += '\n'.join(['',
+        f'{G} .sheet-fx-hd {{ text-align: center !important; font-weight: bold; margin: 3px 0 1px !important; }}',
+        f'{G} .sheet-gfx-r.sheet-fx-3 {{ display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 3px !important; }}',
+        f'{G} .sheet-gfx-r.sheet-fx-3 > select {{ width: 100% !important; min-width: 0 !important; max-width: none !important; margin: 0 !important; box-sizing: border-box !important; text-overflow: ellipsis; }}',
+        f'{G} .sheet-gfx-r.sheet-fx-stps {{ display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 3px !important; }}',
+        f'{G} .sheet-fx-stp {{ display: flex !important; flex-direction: column !important; align-items: center !important; min-width: 0 !important; gap: 1px; }}',
+        f'{G} .sheet-fx-stp .sheet-stp-l {{ font-size: 10px !important; line-height: 12px !important; }}',
+        f'{G} .sheet-fx-stc {{ display: flex !important; align-items: center !important; justify-content: center !important; gap: 1px; min-width: 0 !important; }}',
+        f'{G} .sheet-fx-stp button.sheet-stp-b {{ width: 13px !important; height: 13px !important; min-width: 0 !important; padding: 0 !important; border-radius: 50% !important; border: 1px solid currentColor !important; font: bold 9px/11px Arial, sans-serif !important; text-align: center; background: none !important; color: inherit !important; flex: 0 0 13px !important; }}',
+        f'{G} .sheet-fx-stp input.sheet-stp-v {{ width: 20px !important; min-width: 0 !important; flex: 0 1 20px !important; text-align: center; padding: 0 !important; -moz-appearance: textfield; appearance: textfield; }}',
+        f'{G} .sheet-fx-stp input.sheet-stp-v::-webkit-inner-spin-button, {G} .sheet-fx-stp input.sheet-stp-v::-webkit-outer-spin-button {{ -webkit-appearance: none; margin: 0; }}',
+        f'{G} .sheet-fx-cro {{ display: flex !important; align-items: center !important; gap: 6px; }}',
+        f'{G} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) > .sheet-fx-hd, {G} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) > .sheet-gfx-r.sheet-fx-3 {{ display: none !important; }}',
+        f'{G} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) .sheet-fx-stp:first-child {{ visibility: hidden !important; }}', ''])
+    # (b) armor tooltip
+    a = 'name="attr_general_armor_display" value="@{general_armor}" disabled="disabled" title="@{armor_calc}"'
+    assert h.count(a) == 1, 'armor'
+    h = h.replace(a, 'name="attr_general_armor_display" value="@{general_armor}" disabled="disabled" title="General armor: subtracts that many points of damage from every attack (worn armor plus Merits and powers)."')
+    return h, c
