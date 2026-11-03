@@ -316,10 +316,12 @@ def gift_row(gt):
         f'<div class="sheet-gfx-top"><input type="checkbox" class="sheet-gfx-sw" name="attr_f_{k}_on" value="1" title="Learned" />'
         f'<span class="sheet-gf-ic"></span><input type="text" class="sheet-gfx-nm" name="attr_f_{k}_name" placeholder="{n} Facet" /></div>'
         f'<div class="sheet-gfx-body"><textarea name="attr_f_{k}_desc" placeholder="Description"></textarea>'
-        f'<div class="sheet-gfx-r"><input type="text" name="attr_f_{k}_action" placeholder="Action / duration" /><input type="text" name="attr_f_{k}_src" placeholder="Source / page" /></div>'
+        f'<div class="sheet-gfx-r"><input type="text" name="attr_f_{k}_action" placeholder="Action / duration" /><input type="text" name="attr_f_{k}_dur" placeholder="Duration" /><input type="text" name="attr_f_{k}_src" placeholder="Source / page" /></div>'
         f'<div class="sheet-gfx-r">{stp("Ess", k + "_ess", 0, 20)}{stp("WP", k + "_wp", 0, 10)}{stp("Mod", k + "_mod", -10, 10)}'
-        f'<label class="sheet-gfn" title="Deduct the cost when rolled"><input type="checkbox" class="sheet-gfx-sw" name="attr_f_{k}_deduct" value="1" />Deduct</label></div>'
+        f'<label class="sheet-gfn" title="Add {n} to the pool"><input type="checkbox" class="sheet-gfx-sw" name="attr_f_{k}_addren" value="1" checked />+{n}</label></div>'
         f'<div class="sheet-gfx-r"><select name="attr_f_{k}_attr" title="Attribute">{_opts(ATTRS)}</select><select name="attr_f_{k}_skill" title="Skill">{_opts(SKILLS)}</select></div>'
+        f'<textarea class="sheet-gfx-o" name="attr_f_{k}_oexc" placeholder="Exceptional success effect"></textarea><textarea class="sheet-gfx-o" name="attr_f_{k}_osucc" placeholder="Success effect"></textarea>'
+        f'<textarea class="sheet-gfx-o" name="attr_f_{k}_ofail" placeholder="Failure effect"></textarea><textarea class="sheet-gfx-o" name="attr_f_{k}_odram" placeholder="Dramatic failure effect"></textarea>'
         f'</div></div>' for k, n, _ in REN)
     return (f'<div class="sheet-gift"><input type="checkbox" class="sheet-gift-tg" name="attr_show" value="1" title="Expand / collapse" />'
             f'<input type="hidden" name="attr_gtype" value="{gt}" /><input type="hidden" name="attr_gv" value="" />'
@@ -341,7 +343,7 @@ def giftgrid(h, c):
     css = [
         f'{G} .repcontainer {{ display: flex !important; flex-wrap: wrap !important; gap: 4px !important; container-type: inline-size; }}',
         f'{G} .repcontainer > .repitem {{ flex: 0 0 auto !important; margin: 0 !important; padding: 0 !important; max-width: 100% !important; }}',
-        f'{G} .sheet-gift {{ position: relative; box-sizing: border-box; width: 112px; width: calc((100cqw - 9px) / 3); border: 1px solid var(--splat, #c8732a); border-radius: 5px; padding: 3px 3px 3px 15px; background: rgba(0,0,0,.25); }}',
+        f'{G} .sheet-gift {{ position: relative; box-sizing: border-box; width: 172px; width: calc((100cqw - 5px) / 2); border: 1px solid var(--splat, #c8732a); border-radius: 5px; padding: 3px 3px 3px 15px; background: rgba(0,0,0,.25); }}',
         f'{G} .sheet-gift:has(> .sheet-gift-tg:checked), {G} .sheet-gift-tg:checked ~ .sheet-gift-body {{ }}',
         f'{G} .sheet-gift-tg {{ appearance: none; position: absolute; left: 2px; top: 5px; width: 12px; height: 12px; margin: 0; cursor: pointer; z-index: 2; }}',
         f'{G} .sheet-gift-tg::before {{ content: ">"; display: block; color: var(--splat, #c8732a); font: bold 12px Arial, sans-serif; line-height: 12px; text-align: center; }}',
@@ -396,7 +398,8 @@ WORKER = r'''
         // r15: one repeating row per Gift; its 5 Facets are prefixed fields f_cun_*, f_glo_*, f_hon_*, f_pur_*, f_wis_*
         const R15_RK = {Cunning: "cun", Glory: "glo", Honor: "hon", Purity: "pur", Wisdom: "wis"};
         const R15_RN = {cun: "Cunning", glo: "Glory", hon: "Honor", pur: "Purity", wis: "Wisdom"};
-        const R15_OLD = ["name", "facet", "renown", "gtype", "gv", "cost", "action", "source", "description", "notes", "short_desc", "pp_attr", "pp_skill", "pp_mod", "cost_wp", "cost_pw", "cost_auto"];
+        const R15_OLD = ["name", "facet", "renown", "gtype", "gv", "cost", "action", "source", "description", "notes", "short_desc", "pp_attr", "pp_skill", "pp_mod", "cost_wp", "cost_pw", "o_exceptional", "o_success", "o_failure", "o_dramatic"];
+        // Non-destructive: old per-Facet rows are copied into new Gift rows and flagged gv=old; nothing is deleted.
         let r15GBusy = false;
         const r15MigrateGifts = () => {
             if (r15GBusy) return; r15GBusy = true;
@@ -404,56 +407,170 @@ WORKER = r'''
                 const rows = gi.map(id => ["gifts", id]).concat(wi.map(id => ["wgifts", id]));
                 const keys = []; rows.forEach(([s, id]) => { R15_OLD.forEach(a => keys.push(`repeating_${s}_${id}_${a}`)); Object.keys(R15_RN).forEach(k => keys.push(`repeating_${s}_${id}_f_${k}_name`)); });
                 getAttrs(keys, v => {
-                    const out = {}, gone = [], byKey = {};
+                    const out = {}, byKey = {};
                     const g = (s, id, a) => v[`repeating_${s}_${id}_${a}`] || "";
-                    rows.forEach(([s, id]) => { if (g(s, id, "gv") === "2" || !(g(s, id, "renown") || g(s, id, "facet"))) byKey[s + "|" + g(s, id, "name").trim().toLowerCase()] = [s, id]; });
+                    const isOld = (s, id) => g(s, id, "gv") === "" && !!(g(s, id, "renown") || g(s, id, "facet") || g(s, id, "description") || g(s, id, "cost"));
+                    rows.forEach(([s, id]) => { if (g(s, id, "gv") !== "old" && !isOld(s, id)) byKey[s + "|" + g(s, id, "name").trim().toLowerCase()] = [s, id]; });
                     rows.forEach(([s, id]) => {
-                        if (g(s, id, "gv") === "2" || !(g(s, id, "renown") || g(s, id, "facet") || g(s, id, "description") || g(s, id, "cost"))) return;
+                        if (!isOld(s, id)) return;
                         const dst = g(s, id, "gtype") === "Wolf" ? "wgifts" : "gifts";
                         const gift = (g(s, id, "facet") || g(s, id, "name") || "Unnamed Gift").trim();
                         const key = dst + "|" + gift.toLowerCase();
                         let tgt = byKey[key];
-                        if (!tgt) { tgt = [dst, s === dst ? id : generateRowID()]; byKey[key] = tgt; const p = `repeating_${tgt[0]}_${tgt[1]}_`; out[p + "gv"] = "2"; out[p + "name"] = gift; out[p + "gtype"] = dst === "wgifts" ? "Wolf" : "Shadow"; }
+                        if (!tgt) { tgt = [dst, generateRowID()]; byKey[key] = tgt; const p = `repeating_${dst}_${tgt[1]}_`; out[p + "gv"] = "2"; out[p + "name"] = gift; out[p + "gtype"] = dst === "wgifts" ? "Wolf" : "Shadow"; }
                         const p = `repeating_${tgt[0]}_${tgt[1]}_`;
                         const k = R15_RK[g(s, id, "renown")];
-                        const taken = k && ((out[p + `f_${k}_name`]) || (tgt[1] !== id && v[p + `f_${k}_name`]));
+                        const taken = k && (out[p + `f_${k}_name`] || v[p + `f_${k}_name`]);
                         const fname = g(s, id, "facet") ? g(s, id, "name") : "";
                         if (k && !taken) {
                             const f = p + `f_${k}_`;
                             Object.assign(out, {[f + "name"]: fname || R15_RN[k] + " Facet", [f + "on"]: "1", [f + "desc"]: g(s, id, "description") || g(s, id, "short_desc"), [f + "action"]: g(s, id, "action"), [f + "src"]: g(s, id, "source"),
-                                [f + "ess"]: g(s, id, "cost_pw") || "0", [f + "wp"]: g(s, id, "cost_wp") || "0", [f + "mod"]: g(s, id, "pp_mod") || "0", [f + "attr"]: g(s, id, "pp_attr"), [f + "skill"]: g(s, id, "pp_skill"), [f + "deduct"]: g(s, id, "cost_auto") === "1" ? "1" : "0"});
+                                [f + "ess"]: g(s, id, "cost_pw") || "0", [f + "wp"]: g(s, id, "cost_wp") || "0", [f + "mod"]: g(s, id, "pp_mod") || "0", [f + "attr"]: g(s, id, "pp_attr"), [f + "skill"]: g(s, id, "pp_skill"),
+                                [f + "oexc"]: g(s, id, "o_exceptional"), [f + "osucc"]: g(s, id, "o_success"), [f + "ofail"]: g(s, id, "o_failure"), [f + "odram"]: g(s, id, "o_dramatic")});
                         } else {
                             out[p + "notes"] = ((out[p + "notes"] || "") + `\nUnplaced Facet: ${fname || gift} (${g(s, id, "renown") || "no Renown"}) ${g(s, id, "cost")} ${g(s, id, "description")}`).trim();
                         }
-                        if (g(s, id, "notes")) out[p + "notes"] = ((out[p + "notes"] || "") + "\n" + g(s, id, "notes")).trim();
-                        if (tgt[1] !== id) gone.push(`repeating_${s}_${id}`);
+                        out[`repeating_${s}_${id}_gv`] = "old";
                     });
-                    gone.forEach(r => removeRepeatingRow(r));
                     setAttrs(out, {silent: true}, () => { r15GBusy = false; });
                 });
             }));
         };
         on("sheet:opened change:repeating_gifts:renown change:repeating_wgifts:renown change:repeating_gifts:gtype change:repeating_wgifts:gtype", r15MigrateGifts);
+        // r15b: one global "Deduct costs when rolled" switch drives every power row's cost_auto flag
+        const r15DedSecs = () => Object.keys(RR_FIELDS).filter(s => RR_FIELDS[s].includes("cost_auto"));
+        const r15SyncDeduct = (first) => getAttrs(["deduct_auto", "deduct_mig"], gv => {
+            const secs = r15DedSecs(); let left = secs.length; const all = [];
+            secs.forEach(sec => getSectionIDs(sec, ids => { ids.forEach(id => all.push(`repeating_${sec}_${id}_cost_auto`)); if (--left) return;
+                getAttrs(all, rv => {
+                    let on1 = gv.deduct_auto === "1"; const u = {};
+                    if (gv.deduct_mig !== "1") { on1 = all.some(k => rv[k] === "1"); u.deduct_auto = on1 ? "1" : "0"; u.deduct_mig = "1"; }
+                    all.forEach(k => { const want = on1 ? "1" : "0"; if (rv[k] !== want) u[k] = want; });
+                    setAttrs(u, {silent: true});
+                });
+            }));
+        });
+        on("sheet:opened change:deduct_auto", () => r15SyncDeduct());
+        Object.keys(RR_FIELDS).forEach(sec => { if ((RR_FIELDS[sec] || []).includes("cost_auto")) on(`change:repeating_${sec}:name change:repeating_${sec}:merit_name`, () => r15SyncDeduct()); });
+        const r15Fx = (v) => String(v === undefined || v === null ? "" : v).replace(/[{}\[\]|]/g, " ").replace(/\s+/g, " ").trim();
+        const r15Lbl = (x) => x === "animalken" ? "Animal Ken" : x.charAt(0).toUpperCase() + x.slice(1);
         ["gifts", "wgifts"].forEach(sec => Object.keys(R15_RN).forEach(k => on(`clicked:repeating_${sec}:froll_${k}`, ev => {
             const id = (ev.sourceAttribute || ev.triggerName).split("_")[2]; const p = `repeating_${sec}_${id}_`, f = p + `f_${k}_`;
-            getAttrs([p + "name", f + "name", f + "on", f + "attr", f + "skill", f + "mod", f + "ess", f + "wp", f + "deduct", f + "desc", f + "action", "vitae", "willpower", "willpower_cur"], v => {
+            const fl = ["name", "on", "attr", "skill", "mod", "ess", "wp", "addren", "desc", "action", "dur", "oexc", "osucc", "ofail", "odram"];
+            getAttrs([p + "name", "deduct_auto", "vitae", "willpower", "willpower_cur", "game_line", "sheettype"].concat(fl.map(x => f + x)), v => {
                 if (v[f + "on"] !== "1") return;
-                const st = [v[f + "attr"], v[f + "skill"]].filter(Boolean);
+                const ren = "renown_" + R15_RN[k].toLowerCase();
+                const st = [v[f + "attr"], v[f + "skill"]].filter(Boolean); if (v[f + "addren"] !== "0") st.push(ren);
                 getAttrs(st, sv => {
-                    const dice = st.reduce((t, a) => t + (parseInt(sv[a]) || 0), 0) + (parseInt(v[f + "mod"]) || 0);
+                    const mod = parseInt(v[f + "mod"]) || 0;
+                    const dice = st.reduce((t, a) => t + (parseInt(sv[a]) || 0), 0) + mod;
                     const ess = parseInt(v[f + "ess"]) || 0, wp = parseInt(v[f + "wp"]) || 0;
-                    const tidy = x => String(x || "").replace(/[{}\[\]|]/g, " ");
-                    let tpl = `&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=${sec === "wgifts" ? "Wolf Gift" : "Shadow Gift"} - ${R15_RN[k]}}} {{name=${tidy(v[p + "name"])}: ${tidy(v[f + "name"])}}} {{f_action=${tidy(v[f + "action"])}}} {{f_description=${tidy(v[f + "desc"])}}}`;
-                    if (ess || wp) tpl += ` {{f_costs=${[ess ? ess + " Ess" : "", wp ? wp + " WP" : ""].filter(Boolean).join(" + ")}}}`;
-                    if (st.length) tpl += ` {{roll=[[{((${dice}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{spec_bonus})@{rolltype_eff}`;
-                    if (v[f + "deduct"] === "1" && (ess || wp)) {
+                    const poolTxt = st.map(a => a === ren ? R15_RN[k] : r15Lbl(a)).join(" + ") + (mod ? (mod > 0 ? " + " : " - ") + Math.abs(mod) : "");
+                    const gl = r15Fx(v.game_line) || "werewolf";
+                    const kv = {charname: "@{character_name}", ["gl_" + gl]: "1", splat: gl, name: `${sec === "wgifts" ? "Wolf" : "Shadow"} Gift roll`,
+                        f_title: r15Fx(v[p + "name"]) || "Gift", f_sub: r15Fx(v[f + "name"]), f_fdesc: r15Fx(v[f + "desc"]), f_fpool: st.length ? `${poolTxt} (${dice} dice)` : "",
+                        f_costs: [ess ? ess + " Essence" : "", wp ? wp + " Willpower" : ""].filter(Boolean).join(" + "), f_action: r15Fx(v[f + "action"]), f_duration: r15Fx(v[f + "dur"]),
+                        o_exc: r15Fx(v[f + "oexc"]), o_succ: r15Fx(v[f + "osucc"]), o_fail: r15Fx(v[f + "ofail"]), o_dram: r15Fx(v[f + "odram"])};
+                    if (dice <= 0 && st.length) kv.chance = "1";
+                    if (v.deduct_auto === "1" && (ess || wp)) {
                         const free = parseInt(v.willpower_cur) || 0, pool = parseInt(v.vitae) || 0;
-                        if (wp > free || ess > pool) { startRoll(`&{template:cofd-entry} {{charname=@{character_name}}} {{splat=@{game_line}}} {{kind=Gift}} {{name=${tidy(v[p + "name"])}: ${tidy(v[f + "name"])}}} {{f_short=Not activated: not enough Essence or Willpower}}`, r => finishRoll(r.rollId)); return; }
+                        if (wp > free || ess > pool) { startRoll(`&{template:cofd-entry} {{charname=@{character_name}}} {{splat=${gl}}} {{name=Gift roll}} {{f_title=${kv.f_title}}} {{f_sub=${kv.f_sub}}} {{f_short=Not activated: not enough Essence or Willpower}}`, r => finishRoll(r.rollId)); return; }
                         setAttrs({vitae: pool - ess, willpower_cur: free - wp});
-                        tpl += ` {{wpst=Paid ${[ess ? ess + " Essence" : "", wp ? wp + " WP" : ""].filter(Boolean).join(" + ")}}}`;
+                        kv.wpst = `Paid ${kv.f_costs}. Left: Willpower ${free - wp}/${parseInt(v.willpower) || 0}, Essence ${pool - ess}`;
                     }
+                    let tpl = "&{template:cofd-entry}" + Object.entries(kv).filter(([a, b]) => b !== "").map(([a, b]) => ` {{${a}=${b}}}`).join("");
+                    if (st.length) tpl += dice > 0 ? ` {{roll=[[{((${dice}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{spec_bonus})@{rolltype_eff}` : ` {{roll=[[{1d10cf1}>10]]}}`;
                     startRoll(tpl, r => finishRoll(r.rollId));
                 });
             });
         })));
 '''
+
+
+def r16(h, c):
+    # (17) remove per-row deduct switches; one global switch on Config
+    n0 = h.count('<label class="sheet-pw-auto sheet-switch"')
+    h = re.sub(r'<label class="sheet-pw-auto sheet-switch".*?</label>', '', h, flags=re.S)
+    assert n0 and 'sheet-pw-auto sheet-switch' not in h
+    h = h.replace('<div class="sheet-config-title">CONFIG</div>', '<div class="sheet-config-title">CONFIG</div><label class="sheet-cfg-ded" title="Power rolls automatically spend their Willpower and Essence / Vitae / pool cost"><input type="checkbox" class="sheet-cfg-sw" name="attr_deduct_auto" value="1" /><span>Deduct costs when rolled</span></label>', 1)
+    assert 'attr_deduct_auto' in h
+    # (16) repeating refs that only exist on spans or nowhere: give each a hidden empty default so @{x} resolves to ""
+    added = 0
+    def fix(m):
+        nonlocal added
+        f = m.group(0)
+        refs = set(re.findall(r'@\{([a-z0-9_]+)\}', f))
+        have = set(re.findall(r'<(?:input|select|textarea)[^>]*name="attr_([a-z0-9_]+)"', f))
+        glob = GLOBAL
+        miss = sorted(r for r in refs if r not in have and r not in glob)
+        added += len(miss)
+        if not miss: return f
+        k = f.index('>', f.index('<fieldset')) + 1
+        k = f.index('>', k) + 1  # after first inner tag
+        return f[:k] + ''.join(f'<input type="hidden" name="attr_{r}" value="" />' for r in miss) + f[k:]
+    out = re.sub(r'<fieldset class="repeating_[a-z0-9_]+">.*?</fieldset>', lambda m: m.group(0), h, flags=re.S)
+    nofs = re.sub(r'<fieldset class="repeating_[a-z0-9_]+">.*?</fieldset>', '', h, flags=re.S)
+    GLOBAL = set(re.findall(r'name="attr_([a-z0-9_]+)"', nofs)) | {'character_name', 'character_id'}
+    h = re.sub(r'<fieldset class="repeating_[a-z0-9_]+">.*?</fieldset>', fix, out, flags=re.S)
+    print('r16 hidden defaults added', added)
+    # (16) Facet card rows in cofd-entry
+    i = h.index('<rolltemplate class="sheet-rolltemplate-cofd-entry">'); j = h.index('</rolltemplate>', i); t = h[i:j]
+    t = t.replace('</div>\n            <table>', '</div>\n            {{#f_title}}<div class="sheet-ce-ttl">{{f_title}}{{#f_sub}}<div class="sheet-ce-sub">{{f_sub}}</div>{{/f_sub}}</div>{{/f_title}}<table>'
+                  '{{#f_fdesc}}<tr><th>Description</th><td>{{f_fdesc}}</td></tr>{{/f_fdesc}}{{#f_fpool}}<tr><th>Dice pool</th><td>{{f_fpool}}</td></tr>{{/f_fpool}}', 1)
+    t = t.replace('{{#f_action}}<tr><th>Action</th><td>{{f_action}}</td></tr>{{/f_action}}', '{{#f_action}}<tr><th>Action</th><td>{{f_action}}</td></tr>{{/f_action}}{{#f_duration}}<tr><th>Duration</th><td>{{f_duration}}</td></tr>{{/f_duration}}', 1)
+    assert 'f_fdesc' in t and 'f_duration' in t
+    h = h[:i] + t + h[j:]
+    R = '.sheet-rolltemplate-cofd-entry'
+    S = f'{P}{P}'
+    c += '\n'.join([
+        f'{R} .sheet-ce-ttl {{ text-align: center; font: 700 17px "Sorts Mill Goudy", serif; padding: 4px 6px 2px; }}',
+        f'{R} .sheet-ce-sub {{ font: italic 13px "Sorts Mill Goudy", serif; opacity: .85; }}',
+        f'{R} .sheet-ce-out::before {{ content: "Effect: "; font-weight: 700; }}',
+        f'{S} .sheet-cfg-ded {{ display: flex !important; align-items: center; justify-content: center; gap: 6px; margin: 4px auto 8px !important; font: 700 13px "Sorts Mill Goudy", serif; cursor: pointer; }}',
+        f'{S} input.sheet-cfg-sw {{ appearance: none; flex: 0 0 28px; width: 28px !important; height: 14px !important; margin: 0 !important; border-radius: 7px; background: #555; position: relative; cursor: pointer; opacity: 1 !important; }}',
+        f'{S} input.sheet-cfg-sw::before {{ content: ""; position: absolute; left: 1px; top: 1px; width: 12px; height: 12px; border-radius: 50%; background: #ddd; }}',
+        f'{S} input.sheet-cfg-sw:checked {{ background: var(--splat, #c8732a); }}',
+        f'{S} input.sheet-cfg-sw:checked::before {{ left: 15px; }}',
+        f'{S} {S} select.sheet-rp-formsel, {S} {S} select.sheet-rp-formsel option {{ font-family: "Sorts Mill Goudy", "Goudy Old Style", Georgia, serif !important; font-size: 13px !important; font-weight: 700 !important; text-transform: none !important; letter-spacing: normal !important; text-align: center !important; text-align-last: center !important; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r16css(h, c):
+    S = f'{P}{P}'
+    c += '\n'.join([
+        # (21) skill selection box: clean box only, no ring / pseudo dot / focus ring
+        f'{S} .sheet-skills input[type="checkbox"], {S} .sheet-skills input[type="checkbox"]:checked, {S} .sheet-skills input[type="checkbox"]:focus {{ outline: none !important; -webkit-appearance: none !important; appearance: none !important; border-radius: 2px !important; }}',
+        f'{S} .sheet-skills input[type="checkbox"]::before, {S} .sheet-skills input[type="checkbox"]::after {{ content: none !important; display: none !important; }}',
+        f'{S} .sheet-skills input[type="checkbox"]:checked {{ box-shadow: none !important; }}',
+        f'{S} .sheet-skills button:focus, {S} .sheet-skills button:focus-visible {{ outline: none !important; box-shadow: none !important; }}',
+        # (20) Renown rows: same geometry as skill rows, all 5 dots and the border visible
+        f'{S} .sheet-renown-row {{ display: flex !important; align-items: center !important; box-sizing: border-box !important; width: 100% !important; max-width: 100% !important; min-height: 18px; padding: 0 4px 0 2px !important; gap: 4px !important; overflow: visible !important; }}',
+        f'{S} .sheet-renown-row > span {{ flex: 1 1 auto !important; min-width: 0 !important; display: flex; align-items: center; gap: 4px; overflow: hidden; white-space: nowrap; }}',
+        f'{S} .sheet-renown-row > .sheet-dots {{ flex: 0 0 auto !important; width: auto !important; margin: 0 0 0 auto !important; padding: 0 !important; display: flex !important; flex-wrap: nowrap !important; gap: 0 !important; overflow: visible !important; }}',
+        f'{S} .sheet-renown-row > .sheet-dots button.sheet-dot:not(.sheet-zero) {{ flex: 0 0 auto !important; }}',
+        f'{S} .sheet-renown-row, {S} .sheet-renown-row * {{ box-sizing: border-box; }}',
+        # (20) left column: every panel full column width with identical edges
+        f'{S} .sheet-corporeal.sheet-skills, {S} .sheet-corporeal.sheet-skills ~ * {{ box-sizing: border-box !important; }}',
+        f'{S} .sheet-corporeal.sheet-skills > div:not([class*="header"]) {{ min-height: 18px; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r22(h, c):
+    k = h.index('<script type="text/worker">'); e = h.index('</script>', k); js = h[k:e]
+    a = 'if (!isRe) setAttrs({rr_last_mac: mac, rr_last_expr: ex, rr_last_id: String(r.rollId), rr_used: ""}, {silent: true});'
+    assert js.count(a) == 1
+    js = js.replace(a, 'if (!isRe) setAttrs({rr_last_mac: mac, rr_last_base: rrBase(mac), rr_last_expr: ex, rr_last_id: String(r.rollId), rr_used: ""}, {silent: true});')
+    b = 'const rrTag = '
+    js = js.replace(b, '// r15b: rerolls never carry the modifier or penalties (wounds, WP dice, conditions, specialty)\n        const rrBase = (m) => { const i = m.search(/\\{\\{roll=\\[\\[/); if (i < 0) return ""; let r = m.slice(i).replace(/\\?\\{@\\{modifiermacro\\}\\|0\\}/g, "0"); ["wound_penalty", "wp_dice", "cond_mod", "spec_bonus"].forEach(x => { r = r.split("@{" + x + "}").join("0"); }); return r.replace(/\\}\\}\\s*\\{\\{[\\s\\S]*$/, "}}").replace(/^\\{\\{roll=\\[\\[\\{\\(\\(/, "{{roll=[[{((3+"); };\n        ' + b, 1)
+    c1 = 'getAttrs(["rr_last_mac", "rr_last_expr", "rr_last_id", "rr_used", "willpower", "willpower_cur"]'
+    assert js.count(c1) == 1
+    js = js.replace(c1, 'getAttrs(["rr_last_mac", "rr_last_base", "rr_last_expr", "rr_last_id", "rr_used", "willpower", "willpower_cur"]')
+    d = 'mac += ` {{roll=[[${ex}]]}} {{wpspend=1}}'
+    assert js.count(d) == 1
+    a1 = js.index('        // r15b: one global'); a2 = js.index('        const r15Fx', a1)
+    blk = js[a1:a2]; js = js[:a1] + js[a2:] + '\n' + blk
+    js = js.replace(d, 'mac += (v.rr_last_base && v.rr_last_base.indexOf("{{roll=[[{((3+") === 0 ? " " + v.rr_last_base : ` {{roll=[[${ex}]]}}`) + ` {{f_mod=0}} {{wpspend=1}}')
+    h = h[:k] + js + h[e:]
+    return h, c
