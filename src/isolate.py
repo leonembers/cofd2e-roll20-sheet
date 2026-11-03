@@ -12,7 +12,7 @@ def apply(h, c):
     # Kuruth pane is Werewolf-only even if mid_tab is left on "kuruth" after a sheet-type change
     h = h.replace('<div class="sheet-midpane sheet-mp-kuruth">', '<div class="sheet-midpane sheet-mp-kuruth sheet-game-line sheet-werewolf2">', 1)
     js = ('\n        on("sheet:opened change:sheettype", () => getAttrs(["sheettype","mid_tab"], v => { '
-          'if (v.mid_tab === "kuruth" && v.sheettype !== "werewolf2") setAttrs({mid_tab: "merits"}, {silent: true}); }));\n')
+          'if (v.mid_tab === "kuruth" && v.sheettype !== "werewolf2") setAttrs({mid_tab: "weapons"}, {silent: true}); }));\n')
     i = h.rfind('</script>'); h = h[:i] + js + h[i:]
     # pool counter (Vitae / Essence / Mana / Glamour / ... share one counter): buttons only, value is display text
     old = '<input type="number" min="0" class="sheet-res-cur" name="attr_vitae" title="Current pool: type to edit" />'

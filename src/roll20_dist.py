@@ -312,7 +312,7 @@ _tiers = re.findall(r'<label><span data-i18n="(passive|common|specific)">(.*?)</
 assert len(_tiers) == 3, _tiers
 _rage = re.findall(r'<button type="roll"[^>]*name="roll_(?:wasuim|basuim)"[^>]*>.*?</button>', h, re.S)
 assert len(_rage) == 1
-_tip = {'passive': 'Passive triggers: resist with Wasu-Im', 'common': 'Common triggers', 'specific': 'Specific / Active triggers from low Harmony'}
+_tip = {'passive': 'Passive triggers: resist with Wasu-Im', 'common': 'Common triggers', 'specific': 'Specific triggers: apply at every Harmony except 5'}
 _ktab = ('<div class="sheet-midpane sheet-mp-kuruth"><div class="sheet-leon-page sheet-leon-pane">'
          '<div class="sheet-subheader"><span data-i18n="kuruth-triggers">Kuruth Triggers</span></div>'
          '<div class="sheet-kuruth-rolls">' + ''.join(b.replace('sheet-quick sheet-rage', 'sheet-kuruth-roll sheet-rage') for b in _rage) + '</div>'
@@ -386,6 +386,8 @@ import r12 as _r12
 h, c = _r12.apply(h, c)
 import vv as _vv
 h, c = _vv.apply(h, c)
+import r13 as _r13
+h, c = _r13.apply(h, c)
 import isolate as _iso
 h, c, _nis = _iso.apply(h, c); print('isolation selectors', _nis)
 open(f'{R}/dist/sheet.html', 'w', encoding='utf-8').write(h)
