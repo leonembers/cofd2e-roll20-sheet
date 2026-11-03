@@ -1641,9 +1641,34 @@ def r87(h, c):
         f'{G} > .sheet-gfx-cost {{ display: grid !important; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px; flex: 1 1 100% !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; padding: 0 3px 0 0 !important; margin: 0 !important; }}',
         f'{G} > .sheet-gfx-cost > label.sheet-gfn {{ display: inline-flex !important; align-items: center; gap: 3px; text-transform: none !important; font-variant: normal !important; letter-spacing: normal !important; font-size: 13px !important; min-width: 0 !important; margin: 0 !important; white-space: nowrap; }}',
         f'{G} > .sheet-gfx-cost > label.sheet-gfn > input[type="number"] {{ width: 38px !important; min-width: 0 !important; max-width: 38px !important; height: 20px !important; margin: 0 !important; padding: 0 2px !important; box-sizing: border-box !important; }}',
-        f'{G} > .sheet-gfx-cost > select.sheet-gfx-ct {{ display: block !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; height: 20px !important; margin: 0 !important; padding: 0 2px !important; box-sizing: border-box !important; flex: none !important; -webkit-appearance: menulist !important; appearance: auto !important; background-image: none !important; font-size: 12px !important; line-height: 18px !important; }}',
+        f'{G} > .sheet-gfx-cost > select.sheet-gfx-ct {{ display: block !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; height: 20px !important; margin: 0 !important; padding: 0 2px !important; box-sizing: border-box !important; flex: none !important; -webkit-appearance: none !important; appearance: none !important; padding-right: 12px !important; background-image: linear-gradient(45deg, rgba(0,0,0,0) 50%, #bbb 50%), linear-gradient(135deg, #bbb 50%, rgba(0,0,0,0) 50%) !important; background-position: calc(100% - 7px) 8px, calc(100% - 3px) 8px !important; background-size: 4px 4px, 4px 4px !important; background-repeat: no-repeat !important; font-size: 12px !important; line-height: 18px !important; }}',
     ])
-    # (86b) live CSS editor line count: drop comments and blank lines so the pasted text and the file match one to one
-    c = re.sub(r'/\*.*?\*/', '', c, flags=re.S)
-    c = '\n'.join(l for l in c.split('\n') if l.strip()) + '\n'
+    return h, c
+
+
+def r88(h, c):
+    # (87) RR_MAC repeating rolls: same "_" row-id bug as (85); and empty attrs that were never written
+    # (hidden inputs with value="") print as "Name|attr" in chat, so send literal row values instead
+    a = 'const mm = (ev.sourceAttribute || ev.triggerName || "").match(new RegExp("repeating_" + sec.replace(/[-]/g, "\\\\-") + "_([^_]+)_", "i"));\n                    const id = mm ? mm[1] : "";'
+    assert a in h, 'rr id'
+    h = h.replace(a, 'const id = r85Id(ev, sec);', 1)
+    a = """                    mac = mac.replace(/@\\{([\\w-]+)\\}/g, (a, n) => F.includes(n) ? `@{repeating_${sec}_${id}_${n}}` : a);
+                }
+                if (k === "sheet") return rrSheet(mac);
+                rrRun(mac, false);"""
+    assert a in h, 'rr sub'
+    h = h.replace(a, """                    const used = [...new Set([...mac.matchAll(/@\\{([\\w-]+)\\}/g)].map(x => x[1]).filter(n => F.includes(n)))];
+                    return getAttrs(used.map(n => `repeating_${sec}_${id}_${n}`), rv => {
+                        const m2 = mac.replace(/@\\{([\\w-]+)\\}/g, (a, n) => F.includes(n) ? String(rv[`repeating_${sec}_${id}_${n}`] ?? "").replace(/[{}|]/g, " ").replace(/\\]\\]/g, "] ]").trim() : a);
+                        if (k === "sheet") return rrSheet(m2);
+                        rrRun(m2, false);
+                    });
+                }
+                if (k === "sheet") return rrSheet(mac);
+                rrRun(mac, false);""", 1)
+    # (88) Willpower reroll: no "+3" text on the card or the button
+    for o, n in [('"{{kind=Willpower reroll (+3)}}"', '"{{kind=Willpower reroll}}"'), ('Willpower reroll (+3 dice) of your last roll', 'Willpower reroll of your last roll'),
+                 ('{{wpspend=1}} {{wpst=Willpower reroll: +3 dice, WP ${free - 1}/${max}}}', '{{wpst=Willpower reroll: WP ${free - 1}/${max}}}')]:
+        assert o in h, o
+        h = h.replace(o, n)
     return h, c
