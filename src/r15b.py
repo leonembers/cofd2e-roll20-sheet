@@ -1023,10 +1023,9 @@ def r41(h, c):
     h = h[:i] + js + h[i:]
     sel = 'input.sheet-ren-flag[value="1"] ~ button.sheet-ren-tg'
     c += '\n'.join([
-        f'{S}{P} .sheet-renown-row button.sheet-ren-tg {{ all: unset; cursor: pointer; font: inherit; color: inherit; padding: 0 3px !important; border-radius: 3px; outline: none !important; box-shadow: none !important; background: rgba(0,0,0,0) !important; border: 0 !important; }}',
+        f'{S}{P} .sheet-renown-row button.sheet-ren-tg {{ cursor: pointer; font: inherit; margin: 0; line-height: 1.15; padding: 0 3px !important; border-radius: 4px; background-color: rgba(0,0,0,0); outline: none !important; box-shadow: none !important; border: 0 !important; }}',
         f'{S}{P} .sheet-renown-row button.sheet-ren-tg:focus, {S}{P} .sheet-renown-row button.sheet-ren-tg:focus-visible, {S}{P} .sheet-renown-row button.sheet-ren-tg:active {{ outline: none !important; box-shadow: none !important; }}',
-        f'{S}{P} .sheet-renown-row {sel}, {S}{P} .sheet-renown-row {sel} span {{ color: var(--pa, #c9a227) !important; text-shadow: 0 0 6px color-mix(in srgb, var(--pa, #c9a227) 60%, rgba(0,0,0,0)) !important; font-weight: bold; }}',
-        f'{S}{P} .sheet-renown-row {sel} {{ background: color-mix(in srgb, var(--pa, #c9a227) 18%, rgba(0,0,0,0)) !important; }}',
+        # (44) selected state: no override, so the sheet's own selected-toggle rule applies exactly as on skills/attributes
     ]) + '\n'
     return h, c
 
@@ -1072,4 +1071,13 @@ def r42(h, c):
 '''
     i = h.rfind('</script>')
     h = h[:i] + js + h[i:]
+    return h, c
+
+
+def r45(h, c):
+    import re
+    # (45) no trailing colons on derived stat labels (Size, Speed, Defense, Armor, Initiative, Perception, ...)
+    h, n = re.subn(r'(<div class="(?:sheet-)?derived[^"]*"[^>]*>\s*(?:<span[^>]*></span>)?\s*<span data-i18n="[a-z-]+"[^>]*>[^<:]*</span>)\s*:', r'\1', h)
+    h, n2 = re.subn(r'(<span data-i18n="(?:perception|health|willpower|size|speed|defense|initiative|armor)"[^>]*>[^<]*)\s*:\s*(</span>)', r'\1\2', h)
+    assert n >= 4, n
     return h, c
