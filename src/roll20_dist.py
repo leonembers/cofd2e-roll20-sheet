@@ -414,6 +414,8 @@ c = "@import url('https://fonts.googleapis.com/css?family=" + '|'.join(x.replace
 c = c.replace('"Chomsky", "IM Fell English SC", serif', '"Chomsky", "UnifrakturMaguntia", "IM Fell English SC", serif')
 c = c.replace('"WolfsRain", "IM Fell English SC", serif', '"WolfsRain", "Metal Mania", "IM Fell English SC", serif')
 c = c.replace('"WolfsRain", "Fondamento", cursive', '"WolfsRain", "Metal Mania", "Fondamento", cursive')
+c = re.sub(r'/\*.*?\*/', '', c, flags=re.S)  # (86b) no comments / blank lines: pasted text matches the file line for line
+c = '\n'.join(l.rstrip() for l in c.replace('\r', '').split('\n') if l.strip()) + '\n'
 open(f'{R}/dist/sheet.css', 'w', encoding='utf-8').write(c)
 t = json.load(open(f'{R}/translation.json', encoding='utf-8'))
 for _k in _ndgone: t.pop(_k, None)

@@ -1624,3 +1624,26 @@ def r86(h, c):
         f'{Y} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) label.sheet-gfn:has(input[name$="_addren"]) {{ display: none !important; }}',
     ])
     return h, c
+
+
+def r87(h, c):
+    # (86b) cost row: number box + Ess/WP select in their own grid, select fills the rest with its arrow visible
+    X = f'{P}{P}{P}{P}'
+    n = 0
+    def wrap(m):
+        nonlocal n
+        n += 1
+        return '<div class="sheet-gfx-cost">' + m.group(1) + m.group(2) + '</div>'
+    h = re.sub(r'(<label class="sheet-gfn">Cost<input type="number" name="attr_f_[a-z]+_cost"[^>]*/></label>)(<select class="sheet-gfx-ct".*?</select>)', wrap, h, flags=re.S)
+    assert n == 10, n
+    G = f'{X} .sheet-gifts .sheet-gfx-body .sheet-gfx-r'
+    c += '\n' + '\n'.join([
+        f'{G} > .sheet-gfx-cost {{ display: grid !important; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px; flex: 1 1 100% !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; padding: 0 3px 0 0 !important; margin: 0 !important; }}',
+        f'{G} > .sheet-gfx-cost > label.sheet-gfn {{ display: inline-flex !important; align-items: center; gap: 3px; text-transform: none !important; font-variant: normal !important; letter-spacing: normal !important; font-size: 13px !important; min-width: 0 !important; margin: 0 !important; white-space: nowrap; }}',
+        f'{G} > .sheet-gfx-cost > label.sheet-gfn > input[type="number"] {{ width: 38px !important; min-width: 0 !important; max-width: 38px !important; height: 20px !important; margin: 0 !important; padding: 0 2px !important; box-sizing: border-box !important; }}',
+        f'{G} > .sheet-gfx-cost > select.sheet-gfx-ct {{ display: block !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; height: 20px !important; margin: 0 !important; padding: 0 2px !important; box-sizing: border-box !important; flex: none !important; -webkit-appearance: menulist !important; appearance: auto !important; background-image: none !important; font-size: 12px !important; line-height: 18px !important; }}',
+    ])
+    # (86b) live CSS editor line count: drop comments and blank lines so the pasted text and the file match one to one
+    c = re.sub(r'/\*.*?\*/', '', c, flags=re.S)
+    c = '\n'.join(l for l in c.split('\n') if l.strip()) + '\n'
+    return h, c
