@@ -1302,3 +1302,16 @@ def r65(h, c):
         f'{R} > input[type=checkbox] {{ margin: 0 4px 0 0 !important; vertical-align: middle; align-self: center; }}',
     ]) + '\n'
     return h, c
+
+
+def r66(h, c):
+    # (66a) form selects use the skill-name font; (66b) equal-height Form cards
+    X = f'{P}{P}{P}{P}'
+    FN = "font-family: 'Sorts Mill Goudy', 'Goudy Old Style', Garamond, Georgia, serif !important; font-size: 13px !important; font-weight: 700 !important; line-height: 18px !important; font-style: normal !important; letter-spacing: normal !important; text-transform: none !important;"
+    c += '\n'.join([
+        f'{X} select[name="attr_form"], {X} select[name="attr_form"] option, {X} select.sheet-rp-formsel, {X} select.sheet-rp-formsel option {{ {FN} }}',
+        f'{X} .sheet-fcards {{ align-items: stretch !important; grid-auto-rows: 1fr !important; }}',
+        f'{X} .sheet-fcards > .sheet-fcard {{ height: 100% !important; box-sizing: border-box !important; display: flex; flex-direction: column !important; }}',
+        f'{X} .sheet-fcards > .sheet-fcard > .sheet-fc-detail {{ flex: 1 1 auto !important; }}',
+    ]) + '\n'
+    return h, c
