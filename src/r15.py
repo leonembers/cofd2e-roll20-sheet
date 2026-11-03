@@ -107,7 +107,7 @@ def pills(h, c):
 
 
 def apply(h, c):
-    for f in (powers, fullheal, warriors_hide, pills, wolftabs, giftrows, midaudit, merits, tooltips, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22):
+    for f in (powers, fullheal, warriors_hide, pills, wolftabs, giftrows, midaudit, merits, tooltips, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22, r24, r26, r27, r28, r29, r31):
         h, c = f(h, c)
     return h, c
-from r15b import wolftabs, midaudit, merits, tooltips, giftrows, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22  # noqa: E402
+from r15b import wolftabs, midaudit, merits, tooltips, giftrows, beats, rituals, splitgifts, cardfix, giftgrid, r16, r16css, r22, r24, r26, r27, r28, r29, r31  # noqa: E402

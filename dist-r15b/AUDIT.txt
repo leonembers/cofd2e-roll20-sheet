@@ -1,0 +1,12 @@
+107 roll-referenced attributes initialised on sheet:opened
+attack: no input (worker-set); init ""
+bane_clan_name: no input (worker-set); init ""
+bane_clan_text: no input (worker-set); init ""
+bane_sun: no input (worker-set); init ""
+defense_base: input without default; added value="0"
+giant: input without default; added value="0"
+initiative_base: no input (worker-set); init "0"
+morality: input without default; added value="0"
+small_framed: input without default; added value="0"
+speed_base: no input (worker-set); init "0"
+urkhar_basu_note: no input (worker-set); init ""

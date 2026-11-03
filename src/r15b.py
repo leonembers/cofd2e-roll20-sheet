@@ -587,3 +587,158 @@ def r22(h, c):
     js = js.replace(d, 'mac += (v.rr_last_base && v.rr_last_base.indexOf("{{roll=[[{((3+") === 0 ? " " + v.rr_last_base : ` {{roll=[[${ex}]]}}`) + ` {{f_mod=0}} {{wpspend=1}}')
     h = h[:k] + js + h[e:]
     return h, c
+
+
+def r24(h, c):
+    S = f'{P}{P}'
+    F = 'font-family: "Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif !important; font-size: 13px !important; font-weight: 700 !important; text-transform: none !important; font-variant: normal !important; letter-spacing: normal !important;'
+    B = 'border: 1px solid color-mix(in srgb, var(--pad, var(--pa, #888)) 78%, rgba(0,0,0,0)) !important; border-radius: 10px !important;'
+    bar = f'{S} .sheet-diceroller-grid'
+    c += '\n'.join([
+        # (24a) one Initiative: the unused ephemeral (Finesse + Resistance) copy is hidden; the one beside Perception stays
+        f'{bar} > .sheet-ephemeral.sheet-span {{ display: none !important; }}',
+        # (24b) Initiative / Perception pills = skill-name font, same pill border as Spend 1 WP
+        f'{bar} button.sheet-quick, {bar} button.sheet-quick span, {bar} button[name="roll_initiative"] {{ {F} }}',
+        f'{bar} button.sheet-quick, {bar} button[name="roll_initiative"], {bar} > .sheet-wp-bar > label, {S} .sheet-diceroller-options button.sheet-toggle {{ {B} border-style: solid !important; border-width: 1px !important; }}',
+        # (25) every mid-tab pill / sub-tab / conditions-tilts pill uses the skill-name font
+        f'{S}{P} .sheet-midtabs button, {S}{P} .sheet-midtabs button span, {S}{P} .sheet-midtabs button.sheet-midtab-btn, {S}{P} label.sheet-ovbtn, {S}{P} label.sheet-ovbtn span, {S}{P} button.sheet-quick, {S}{P} button.sheet-quick span, {S} button.sheet-midtab-btn, {S} .sheet-subtabs button, {S} button[class*="subtab"], {S} button[class*="-tab-btn"], {S} .sheet-cg-tabs button, {S} button[name^="act_ctab"], {S} button[name^="act_gtab"], {S} button[name^="act_wtab"] {{ {F} }}',
+    ]) + '\n'
+    return h, c
+
+
+def r26(h, c):
+    import re
+    S = f'{P}{P}'
+    def box(k, w, lab, ph):
+        return f'<label class="sheet-bb3-l">{lab}<textarea class="sheet-bb3-t" name="attr_{k}_{w}" placeholder="{ph}"></textarea></label>'
+    n = 0
+    for k, lab, nm in (('blood', 'Blood', 'Virtue'), ('bone', 'Bone', 'Vice')):
+        wp = box(k, 'wp1', 'Restore 1 Willpower', 'Condition that regains one Willpower') + box(k, 'wpall', 'Fully Restore Willpower', 'Condition that regains all Willpower')
+        pat = re.compile(r'<label class="sheet-bb-desc-l">[^<]*<textarea name="attr_' + k + r'_desc"[^>]*></textarea></label>')
+        h, m = pat.subn('<div class="sheet-bb3">' + box(k, 'desc', 'Description', 'What it means and when it applies') + wp + '</div>', h); n += m
+        pat2 = re.compile(r'(<textarea class="sheet-vv-desc" name="attr_' + k + r'_desc"[^>]*></textarea>)')
+        h, m = pat2.subn(lambda mm: mm.group(1) + '<div class="sheet-game-line sheet-werewolf2 sheet-bb3 sheet-bb3-ov">' + wp + '</div>', h); n += m
+        old = '{{kind=' + lab + '}} {{name=@{' + nm + '}}} {{f_description=@{' + k + '_desc}}}'
+        assert old in h, old
+        h = h.replace(old, old + ' {{f_wp1=@{' + k + '_wp1}}} {{f_wpall=@{' + k + '_wpall}}}')
+    assert n == 4, n
+    i = h.index('{{#f_description}}<div class="sheet-long">')
+    h = h[:i] + '{{#f_wp1}}<div class="sheet-long"><b>Restore 1 Willpower: </b>{{f_wp1}}</div>{{/f_wp1}}{{#f_wpall}}<div class="sheet-long"><b>Fully Restore Willpower: </b>{{f_wpall}}</div>{{/f_wpall}}' + h[i:]
+    F = '"Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif'
+    c += '\n'.join([
+        f'{S} .sheet-bb3 {{ display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0; }}',
+        f'{S} .sheet-ovwin .sheet-bb3-ov {{ margin-top: 4px; }}',
+        f'{S} .sheet-bb3 label.sheet-bb3-l {{ display: flex !important; flex-direction: column; margin: 0 !important; padding: 0 !important; width: 100% !important; text-align: center !important; font-family: {F} !important; font-size: 12px !important; font-weight: 700 !important; text-transform: none !important; letter-spacing: normal !important; line-height: 15px; }}',
+        f'{S} .sheet-bb3 textarea.sheet-bb3-t {{ display: block; width: 100% !important; box-sizing: border-box; min-height: 40px; height: 50px; margin: 1px 0 0 0 !important; padding: 3px 5px !important; resize: vertical; font-size: 12px; line-height: 15px; border-radius: 4px; }}',
+        f'{S} .sheet-bb-entry .sheet-entry-body {{ padding: 4px 6px 6px !important; margin: 0 !important; }}',
+        f'{S} input.sheet-type[value="werewolf2"] ~ * .sheet-ovwin textarea.sheet-vv-desc {{ min-height: 100px !important; height: 130px !important; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r27(h, c):
+    S = f'{P}{P}'
+    c += (f'{S} input.sheet-type[value="werewolf2"] ~ * .sheet-ig2 > .sheet-ifield:has(select[name="attr_tribe"]) > .sheet-input-label '
+          f'{{ text-align: right !important; line-height: normal !important; min-width: 85px !important; width: auto !important; padding: 0 4px 0 2px !important; margin: 0 !important; }}\n')
+    return h, c
+
+
+def r28(h, c):
+    M = f'{P}{P} .repcontainer[data-groupname="repeating_merits"] .sheet-entry-head'
+    c += '\n'.join([
+        # empty pool / cost spans were forcing a 2nd (blank) grid row under every merit
+        f'{M} > span.sheet-entry-pool:empty, {M} > span.sheet-entry-cost:empty {{ display: none !important; }}',
+        f'{M} {{ row-gap: 0 !important; grid-auto-rows: auto !important; min-height: 0 !important; }}',
+        # type pill sizes to its text (incl. the splat-name label)
+        f'{M} > .sheet-mcat-badge {{ width: max-content !important; min-width: 0 !important; max-width: none !important; overflow: visible !important; justify-self: start; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r29(h, c):
+    import re
+    S = f'{P}{P}'
+    m = re.search(r'<div class="sheet-tabfill"></div><div class="sheet-ovrow">(.*?)</div>\s*', h, re.S)
+    assert m
+    labels = m.group(1)
+    h = h[:m.start()] + '<div class="sheet-tabfill"></div>' + h[m.end():]
+    k = h.index('name="act_rolltype_select_rote"'); k = h.index('</button>', k) + 9
+    h = h[:k] + labels.replace('class="sheet-ovbtn ', 'class="sheet-ovbtn sheet-ovbtn-rr ') + h[k:]
+    # (30) Config tab last: move it right after the Notes tab
+    cm = re.search(r'<button type="action" class="sheet-toggle sheet-page-settings"[^>]*>Config</button>\s*', h)
+    cfg = cm.group(0).strip(); h = h[:cm.start()] + h[cm.end():]
+    n = h.index('name="act_page_details"'); n = h.index('</button>', n) + 9
+    h = h[:n] + ' ' + cfg + h[n:]
+    F = 'font-family: "Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif !important; font-size: 13px !important; font-weight: 700 !important; text-transform: none !important; letter-spacing: normal !important;'
+    B = 'border: 1px solid color-mix(in srgb, var(--pad, var(--pa, #888)) 78%, rgba(0,0,0,0)) !important; border-radius: 10px !important;'
+    R = f'{S}{P} .sheet-diceroller-options label.sheet-ovbtn'
+    c += '\n'.join([
+        f'{R} {{ display: inline-flex !important; align-items: center !important; align-self: center !important; gap: 4px; margin: 0 !important; padding: 3px 11px !important; min-height: 23px !important; line-height: 16px !important; box-sizing: border-box !important; white-space: nowrap !important; cursor: pointer; vertical-align: middle; {F} {B} }}',
+        f'{R} > input.sheet-ovf {{ position: absolute !important; opacity: 0 !important; width: 1px !important; height: 1px !important; margin: 0 !important; }}',
+        f'{R}:has(> input:checked) {{ background: var(--pa) !important; color: #fff !important; }}',
+        f'{S} .sheet-background > .sheet-tabfill, {S} .sheet-background > .sheet-ovrow {{ display: none !important; }}',
+        f'{S} .sheet-background > .sheet-spacer {{ height: 2px !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; }}',
+        f'{S} .sheet-background > .sheet-page {{ padding-top: 2px !important; }}',
+        f'{S}{P} .sheet-background > button.sheet-toggle.sheet-page-1 {{ margin-left: auto !important; }}',
+        f'{S}{P} .sheet-background > button.sheet-toggle.sheet-page-settings {{ margin-right: auto !important; }}',
+        f'{S}{P} .sheet-diceroller-options {{ column-gap: 3px !important; }}',
+        f'{S}{P} .sheet-diceroller-options button.sheet-toggle, {R} {{ padding-left: 7px !important; padding-right: 7px !important; }}',
+        # (30) Config tab looks like Main / Forms / Notes
+        f'{S}{P} .sheet-background > input.sheet-page:not([value="settings"]) ~ button.sheet-toggle.sheet-page-settings {{ border-bottom-color: rgba(0,0,0,0) !important; }}',
+        f'{S}{P} .sheet-background > button.sheet-toggle.sheet-page-settings {{ border-top-width: 0 !important; border-left-width: 0 !important; border-right-width: 0 !important; border-bottom-style: solid !important; background: none !important; box-shadow: none !important; outline: 0 !important;  margin-top: 6px !important; margin-left: 0 !important; margin-bottom: 0 !important; order: 2 !important; padding: 2px 6px !important; font-size: 14px !important; line-height: 20px !important; letter-spacing: normal !important; height: 27px !important; border-bottom-width: 3px !important; border-radius: 4px !important; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r31(h, c):
+    import re
+    S = f'{P}{P}'
+    # (a) Used this story -> slide toggle (same label.sheet-switch pattern as the rest of the sheet)
+    old = '<input type="checkbox" name="attr_urkhar_used" value="1" /> Used this story'
+    assert old in h
+    h = h.replace(old, '<input type="checkbox" name="attr_urkhar_used" value="1" /><span class="sheet-sw-track"></span><span>Used this story</span>')
+    h = h.replace('<label class="sheet-ur-used"', '<label class="sheet-ur-used sheet-switch"')
+    # (b) feature pills: fixed row of radios + ONE detail box whose content follows the selected pill
+    def conv(m):
+        block = m.group(0)
+        items = re.findall(r'<span class="sheet-fc-tw"><input type="checkbox" class="sheet-fc-tg" name="attr_fcd_([a-z]+)_(\d+)" value="1" title="([^"]*)" /><span class="sheet-fc-trait">(.*?)</span><span class="sheet-fc-desc">(.*?)</span></span>', block, re.S)
+        if not items:
+            return block
+        form = items[0][0]
+        pills = ''.join(f'<span class="sheet-fc-tw"><input type="radio" class="sheet-fc-tg" name="attr_fcsel_{form}" value="{i}" title="{t}" /><span class="sheet-fc-trait">{tr}</span></span>' for _, i, t, tr, _d in items)
+        det = ''.join(f'<span class="sheet-fc-d sheet-fc-d{i}"><b>{tr}: </b>{d}</span>' for _, i, t, tr, d in items)
+        return (f'<div class="sheet-fc-traits">{pills}</div>'
+                f'<div class="sheet-fc-detail"><input type="hidden" class="sheet-fc-selv" name="attr_fcsel_{form}" value="" />{det}'
+                f'<span class="sheet-fc-d sheet-fc-dnone">Select a feature above to read what it does.</span></div>')
+    h, n = re.subn(r'<div class="sheet-fc-traits">(?:<span class="sheet-fc-tw">.*?</span></span>)+</div>', conv, h, flags=re.S)
+    assert n >= 6, n
+    assert 'class="sheet-fc-desc"' not in h
+    rules = [
+        f'{S} .sheet-fc-traits {{ display: flex !important; flex-wrap: wrap !important; gap: 4px !important; align-items: center !important; }}',
+        f'{S} .sheet-fc-traits > .sheet-fc-tw {{ flex: 0 0 auto !important; position: relative; display: inline-flex !important; }}',
+        f'{S} .sheet-fc-traits > .sheet-fc-tw > input.sheet-fc-tg {{ position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; margin: 0 !important; opacity: 0 !important; cursor: pointer; z-index: 2; }}',
+        f'{S} .sheet-fc-traits > .sheet-fc-tw > .sheet-fc-trait::after {{ display: none !important; }}',
+        f'{S} .sheet-fc-traits > .sheet-fc-tw > input.sheet-fc-tg:checked + .sheet-fc-trait {{ background: color-mix(in srgb, var(--temp-dot, #aa5a1e) 35%, rgba(0,0,0,0)) !important; border-color: var(--temp-dot, #aa5a1e) !important; }}',
+        f'{S} .sheet-fc-detail {{ display: block; margin: 4px 0 0; padding: 4px 8px; min-height: 30px; box-sizing: border-box; font-size: 11px; line-height: 1.35; border-left: 2px solid var(--temp-dot, #aa5a1e); background: rgba(0,0,0,.18); border-radius: 0 4px 4px 0; }}',
+        f'{S} .sheet-fc-detail > .sheet-fc-d {{ display: none; }}',
+        f'{S} .sheet-fc-detail > input.sheet-fc-selv[value=""] ~ .sheet-fc-dnone {{ display: block; opacity: .65; font-style: italic; }}',
+    ] + [f'{S} .sheet-fc-detail > input.sheet-fc-selv[value="{i}"] ~ .sheet-fc-d{i} {{ display: block; }}' for i in range(12)]
+    # (c) compact stats / steppers, inline labels
+    rules += [
+        f'{S} .sheet-fc-urtrack {{ display: flex !important; flex-wrap: wrap; align-items: center !important; gap: 4px 10px !important; margin: 4px 0 0 !important; padding: 0 !important; min-height: 0 !important; }}',
+        f'{S} .sheet-fc-urtrack label.sheet-ur-used {{ display: inline-flex !important; align-items: center; gap: 5px; margin: 0 !important; font-size: 12px; white-space: nowrap; }}',
+        f'{S} .sheet-fc-urtrack .sheet-ur-tl {{ display: inline-flex !important; align-items: center !important; gap: 3px !important; margin: 0 !important; font-size: 12px; white-space: nowrap; }}',
+        f'{S} .sheet-fcard button.sheet-res-btn {{ width: 18px !important; height: 18px !important; min-width: 0 !important; padding: 0 !important; line-height: 16px !important; font-size: 12px !important; margin: 0 !important; }}',
+        f'{S} .sheet-fcard input[type=number] {{ width: 30px !important; min-width: 0 !important; height: 18px !important; padding: 0 2px !important; margin: 0 !important; text-align: center !important; font-size: 12px !important; box-sizing: border-box !important; }}',
+        f'{S} .sheet-fc-urtrack label.sheet-ur-used > input {{ position: absolute !important; opacity: 0 !important; width: 32px !important; height: 16px !important; margin: 0 !important; z-index: 2; cursor: pointer; }}',
+        f'{S} .sheet-fc-urtrack label.sheet-ur-used > .sheet-sw-track {{ display: inline-block !important; position: relative !important; width: 28px !important; height: 14px !important; border-radius: 7px !important; background: #666 !important; flex: 0 0 auto; }}',
+        f'{S} .sheet-fc-urtrack label.sheet-ur-used > .sheet-sw-track::after {{ content: ""; position: absolute; left: 2px; top: 2px; width: 10px; height: 10px; border-radius: 50%; background: #fff; transition: left .15s; }}',
+        f'{S} .sheet-fc-urtrack label.sheet-ur-used > input:checked + .sheet-sw-track {{ background: var(--temp-dot, var(--pa, #aa5a1e)) !important; }}',
+        f'{S} .sheet-fc-urtrack label.sheet-ur-used > input:checked + .sheet-sw-track::after {{ left: 16px; }}',
+        f'{S} .sheet-fc-urtrack label.sheet-ur-used::before, {S} .sheet-fc-urtrack label.sheet-ur-used::after {{ display: none !important; content: none !important; }}',
+        f'{S} .sheet-fc-urinfo {{ flex: 1 1 100%; margin: 0 !important; font-size: 11px; opacity: .8; }}',
+        f'{S} .sheet-fc-stats {{ gap: 3px !important; }}',
+        f'{S} .sheet-fc-stat {{ padding: 1px 5px !important; min-width: 0 !important; width: auto !important; }}',
+    ]
+    c += '\n'.join(rules) + '\n'
+    return h, c

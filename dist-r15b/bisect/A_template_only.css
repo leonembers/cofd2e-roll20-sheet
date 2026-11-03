@@ -1,0 +1,162 @@
+.sheet-rolltemplates {
+    display: none;
+}
+.sheet-rolltemplate-wod table,
+.sheet-rolltemplate-wod-attack table,
+.sheet-rolltemplate-wod-simple table,
+.sheet-rolltemplate-wod-3part table,
+.sheet-rolltemplate-wod-initiative table {
+    width: 189px;
+    height: 100%;
+    background: url(https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Chronicles%20of%20Darkness/images/roll.jpg) no-repeat top left;
+    background-size: 189px 100%;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    border-spacing: 0;
+}
+.sheet-rolltemplate-wod th,
+.sheet-rolltemplate-wod-attack th,
+.sheet-rolltemplate-wod-simple th,
+.sheet-rolltemplate-wod-3part th,
+.sheet-rolltemplate-wod-initiative th {
+    color: rgb(112, 0, 0);
+    padding: 20px 20px 2px 20px;
+    line-height: 1.2em;
+    font-size: 1.2em;
+    text-align: left;
+}
+.sheet-rolltemplate-wod td,
+.sheet-rolltemplate-wod-attack td,
+.sheet-rolltemplate-wod-simple td,
+.sheet-rolltemplate-wod-3part td ,
+.sheet-rolltemplate-wod-initiative td {
+    padding: 2px 20px 2px 20px;
+    font-size: 1.0em;
+    vertical-align: top;
+}
+.sheet-rolltemplate-wod .sheet-result,
+.sheet-rolltemplate-wod-attack .sheet-result,
+.sheet-rolltemplate-wod-simple .sheet-result,
+.sheet-rolltemplate-wod-3part .sheet-result ,
+.sheet-rolltemplate-wod-initiative .sheet-result {
+    font-size: 1.2em;
+    text-align: center;
+    color: rgb(112, 0, 0);
+    padding: 2px 20px 2px 20px;
+}
+.sheet-rolltemplate-wod .inlinerollresult,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult,
+.sheet-rolltemplate-wod-simple .inlinerollresult,
+.sheet-rolltemplate-wod-3part .inlinerollresult,
+.sheet-rolltemplate-wod-initiative .inlinerollresult {
+    background-color: rgba(0,0,0,0);
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod-attack .inlinerollresult {
+    background-color: rgba(0,0,0,0);
+    color: #000000;
+    border: none;
+    font-size: 1em;
+    padding: 0px;
+}
+.sheet-rolltemplate-wod .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-simple .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-3part .inlinerollresult.fullcrit,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.fullcrit {
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-simple .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-3part .inlinerollresult.fullfail,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.fullfail {
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-attack .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-simple .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-3part .inlinerollresult.importantroll,
+.sheet-rolltemplate-wod-initiative .inlinerollresult.importantroll {
+    color: #000000;
+    border: none;
+}
+.sheet-rolltemplate-wod .sheet-specialrollflag,
+.sheet-rolltemplate-wod-attack .sheet-specialrollflag,
+.sheet-rolltemplate-wod-simple .sheet-specialrollflag,
+.sheet-rolltemplate-wod-3part .sheet-specialrollflag ,
+.sheet-rolltemplate-wod-initiative .sheet-specialrollflag {
+    color: #000000;
+    height: 30px;
+    text-align: right;
+    vertical-align: top;
+}
+.sheet-rolltemplate-cofd-entry .sheet-ce { border: 2px solid #2b2b2b; background: #f1eee6; font-family: Georgia, serif; border-radius: 4px; overflow: hidden; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: #1d1d1d; color: #eee; padding: 4px 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #c9a227; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 15px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dots { float: right; letter-spacing: 1px; }
+.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; }
+.sheet-rolltemplate-cofd-entry th { text-align: left; width: 32%; padding: 1px 6px; color: #5a1010; }
+.sheet-rolltemplate-cofd-entry td { padding: 1px 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; font-size: 16px; padding: 4px; border-top: 1px solid #999; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc { color: #0b6b0b; font-size: 12px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail { color: #8a0000; font-size: 12px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag { font-size: 11px; opacity: .8; }
+.sheet-rolltemplate-cofd-entry .sheet-long { padding: 4px 6px; font-size: 12px; border-top: 1px dotted #aaa; white-space: pre-wrap; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-out { font-size: 12px; padding: 2px 4px; border-left: 3px solid #888; margin: 2px 0; white-space: pre-wrap; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ { color: #1a6b1a; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram { color: #900; font-weight: bold; text-transform: uppercase; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk { font-size: 11px; background: rgba(30,70,70,.12); border-left: 3px solid #1e4646; padding: 2px 4px; margin: 2px 0; }
+.sheet-rolltemplate-cofd-entry .sheet-ce { border: 1px solid #2b2b2b; background: #f6f3ec; color: #1b1b1b; font-family: Georgia, "Times New Roman", serif; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.3); margin-left: -7px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band { height: 6px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: linear-gradient(#262626,#141414); color: #f2f2f2; padding: 5px 8px 6px; position: relative; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-char { display: block; font-size: 10px; color: #bdbdbd; font-family: Arial, sans-serif; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #d4b25a; font-family: Arial, sans-serif; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 16px; font-weight: bold; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-badge { position: absolute; right: 8px; top: 8px; width: 22px; height: 22px; border-radius: 50%; text-align: center; font: bold 13px/22px Arial, sans-serif; color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.6); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-b { background: #3d6fb5; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-l { background: #b8860b; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-a { background: #a01010; }
+.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; border-collapse: collapse; margin: 3px 0; }
+.sheet-rolltemplate-cofd-entry th { text-align: left; width: 30%; padding: 2px 8px; color: #6b1a1a; font: bold 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; }
+.sheet-rolltemplate-cofd-entry td { padding: 2px 8px; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; padding: 6px 4px 4px; border-top: 1px solid rgba(0,0,0,.2); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-big, .sheet-rolltemplate-cofd-entry .sheet-ce-big .inlinerollresult { font-size: 34px; font-weight: bold; line-height: 38px; background: rgba(0,0,0,0) !important; border: none !important; padding: 0 !important; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-sl { font: 10px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: #777; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram, .sheet-rolltemplate-cofd-entry .sheet-ce-fail, .sheet-rolltemplate-cofd-entry .sheet-ce-succ, .sheet-rolltemplate-cofd-entry .sheet-ce-exc { display: block; margin: 5px -4px 0; padding: 4px; color: #fff !important; font: bold 12px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram { background: #5c0000; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail { background: #6d6d6d; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ { background: #2e7d32; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc { background: linear-gradient(90deg,#b8860b,#e3b23c); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-out { text-align: left; font-size: 12px; margin: 4px 2px; padding: 3px 6px; border-left: 3px solid #999; background: rgba(0,0,0,.04); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag { display: inline-block; font: 10px Arial, sans-serif; padding: 1px 6px; margin: 3px 2px 0; border-radius: 8px; background: #ddd; color: #333; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk { text-align: left; font-size: 11px; margin: 5px 2px 0; padding: 4px 6px; border-left: 3px solid #1e4646; background: rgba(30,70,70,.1); }
+.sheet-rolltemplate-cofd-entry .sheet-long { font-size: 12px; padding: 3px 8px; border-top: 1px dotted rgba(0,0,0,.2); }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mortal { background: #2a2d80; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter { background: #1e4646; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire { background: #6e1e1e; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf { background: #aa5a1e; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mage { background: #beaa5a; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-promethean { background: #1e1e5a; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-changeling { background: #0a6e46; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-geist { background: #82aabe; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mummy { background: #d2be82; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-demon { background: #323246; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-beast { background: #463246; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-deviant-the-renegades { background: #5a1e1e; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce { background: #232326; color: #e6e6e6; border-color: #000; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry th { color: #e09a9a; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-out { background: rgba(255,255,255,.06); }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-flag { background: #444; color: #ddd; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-risk { background: rgba(120,180,180,.12); }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-roll { border-top-color: rgba(255,255,255,.15); }
+.sheet-rolltemplate-wod table, .sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-wod-initiative table { width: 100%; background: #f1eee6 !important; border: 2px solid #2b2b2b; border-radius: 4px; font-family: Georgia, serif; color: #1d1d1d; }
+.sheet-rolltemplate-wod th, .sheet-rolltemplate-wod-attack th, .sheet-rolltemplate-wod-simple th, .sheet-rolltemplate-wod-3part th, .sheet-rolltemplate-wod-initiative th { background: #1d1d1d; color: #eee; padding: 4px 6px; font-size: 14px; }
+.sheet-rolltemplate-wod td, .sheet-rolltemplate-wod-attack td, .sheet-rolltemplate-wod-simple td, .sheet-rolltemplate-wod-3part td, .sheet-rolltemplate-wod-initiative td { padding: 2px 6px; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative table { background: #1f1f23 !important; color: #e4e4e4; border-color: #555; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .sheet-result { color: #e8a0a0; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-specialrollflag { color: #fff !important; }
