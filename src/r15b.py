@@ -293,7 +293,7 @@ def cardfix(h, c):
 
 
 # (97) same order as the left Renown panel
-REN = [('pur', 'Purity', '#e4e4e4'), ('glo', 'Glory', '#d9a521'), ('hon', 'Honor', '#3f86d6'), ('wis', 'Wisdom', '#3fb39a'), ('cun', 'Cunning', '#9a6ad6')]
+REN = [('pur', 'Purity', '#9ac3cd'), ('glo', 'Glory', '#efbb4a'), ('hon', 'Honor', '#c4af90'), ('wis', 'Wisdom', '#ae8fcd'), ('cun', 'Cunning', '#db8f3d')]  # sampled from the Renown panel icons (icons/renown/*.png)
 REN_URL = 'https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@91c021fee3f302f9f895454d1d06c355c48164e3/icons/renown/{}.png'
 LOCK_URL = 'https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@014361730d569cc5ea0bab7170aaf905b2e79735/icons/lock/lock.svg'
 ATTRS = ['intelligence', 'wits', 'resolve', 'strength', 'dexterity', 'stamina', 'presence', 'manipulation', 'composure']
@@ -1961,4 +1961,15 @@ def r95(h, c):
     c += (f'\n{E}:has(> button.sheet-post-ic:first-child) {{ padding-left: 0 !important; }}'
           f'\n{E} > button.sheet-entry-post.sheet-post-ic:first-child {{ order: -1 !important; flex: 0 0 13px !important; width: 13px !important; height: 13px !important; min-height: 13px !important; max-height: 13px !important; min-width: 13px !important; padding: 0 !important; margin: 0 2px 0 0 !important; '
           f'border: 1px solid rgba(217,138,74,0.7) !important; border-radius: 3px !important; background: #1a1a1a !important; font-size: 7px !important; line-height: 11px !important; text-align: center !important; box-sizing: border-box !important; align-self: center !important; position: relative !important; top: 2px !important; float: none !important; overflow: hidden; }}\n')
+    return h, c
+
+
+def r96(h, c):
+    """(106) Shadow / Wolf Gifts titles centred over the whole grid; expand/collapse buttons absolutely on the right"""
+    H = f'{P}{P}{P}{P}{P} .sheet-gifts > .sheet-entry-section-head'
+    c += (f'\n{H} {{ position: relative !important; justify-content: center !important; padding-left: 0 !important; padding-right: 0 !important; }}'
+          f'\n{H} > .sheet-subheader {{ flex: 1 1 100% !important; width: 100% !important; text-align: center !important; margin: 0 !important; }}'
+          f'\n{H} > button.sheet-mini {{ position: absolute !important; top: 50% !important; transform: translateY(-50%); margin: 0 !important; }}'
+          f'\n{H} > button.sheet-mini:nth-of-type(1) {{ right: 57px !important; }}'
+          f'\n{H} > button.sheet-mini:nth-of-type(2) {{ right: 40px !important; }}\n')
     return h, c
