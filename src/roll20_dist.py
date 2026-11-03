@@ -359,8 +359,6 @@ import notespage as _np
 h, c = _np.apply(h, c)
 import vamprit as _vr
 h, c = _vr.apply(h, c)
-import vv as _vv
-h, c = _vv.apply(h, c)
 import dicepool as _dp
 h, c = _dp.apply(h, c)
 h, c = _dp.touchstones(h, c)
@@ -386,6 +384,8 @@ import r11 as _r11
 h, c = _r11.apply(h, c)
 import r12 as _r12
 h, c = _r12.apply(h, c)
+import vv as _vv
+h, c = _vv.apply(h, c)
 import isolate as _iso
 h, c, _nis = _iso.apply(h, c); print('isolation selectors', _nis)
 open(f'{R}/dist/sheet.html', 'w', encoding='utf-8').write(h)

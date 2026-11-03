@@ -687,12 +687,7 @@ def _tip(m):
     elif n: t = nice(n)
     return m.group(0) if not t else f'<button{a} title="{html.escape(t, quote=True)}">'
 h = re.sub(r'<button\b([^>]*)>', _tip, h)
-css += """
-.charsheet .repcontrol_add, .charsheet .repcontrol_edit { position: relative; }
-.charsheet .repcontrol_add:hover::after, .charsheet .repcontrol_edit:hover::after { position: absolute; bottom: 110%; right: 0; z-index: 50; white-space: nowrap; background: #222; color: #eee; font: 11px sans-serif; padding: 2px 6px; border-radius: 3px; pointer-events: none; }
-.charsheet .repcontrol_add:hover::after { content: "Add entry"; }
-.charsheet .repcontrol_edit:hover::after { content: "Edit list: drag to reorder, delete entries"; }
-"""
+# r12: repcontrol tooltips moved to r12.repctl (the old ::after tooltip was clipped by the 16px icon button)
 open(os.path.join(ROOT, 'sheet.html'), 'w', encoding='utf-8').write(h)
 open(os.path.join(ROOT, 'sheet.css'), 'w', encoding='utf-8').write(css)
 tr.pop('page-1', None); tr.pop('page-2', None); tr.pop('page-3', None); tr['main'] = 'Main'
