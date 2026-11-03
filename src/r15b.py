@@ -742,3 +742,334 @@ def r31(h, c):
     ]
     c += '\n'.join(rules) + '\n'
     return h, c
+
+
+FIMG_JS = '''
+        const fimgSet = (attr) => getAttrs([attr], v => {
+            const cur = String(v[attr] || "").replace(/[|}\\]\\[]/g, "");
+            startRoll("!fimg [[0[?{Image URL (blank to clear)|" + cur + "}]]]", (r) => {
+                finishRoll(r.rollId);
+                const k = Object.keys(r.results || {})[0]; let u = "";
+                if (k) { const m = /\\[(.*)\\]/.exec(r.results[k].expression || ""); u = m ? m[1].trim() : ""; }
+                if (u && !/^https?:\\/\\//i.test(u)) return;
+                const o = {}; o[attr] = u; setAttrs(o);
+            });
+        });
+        ["hishu", "dalu", "gauru", "urkhar", "urshul", "urhan"].forEach(f => on("clicked:fimg_" + f, () => fimgSet("form_" + f + "_img")));
+'''
+
+
+FORMS5 = ['hishu', 'dalu', 'gauru', 'urkhar', 'urshul', 'urhan']
+
+
+def r32(h, c):
+    import re
+    S = f'{P}{P}'
+    for f in FORMS5:
+        a = h.index(f'<div class="sheet-fcard sheet-fc-{f}')
+        b = h.index('<div class="sheet-fcard', a + 10) if f != 'urhan' else h.index('</textarea></div>', h.index(f'name="attr_form_notes_{f}"', a)) + 17
+        card = h[a:b]
+        # stats inline with the title
+        sm = re.search(r'<div class="sheet-fc-stats">.*?</div>', card, re.S)
+        stats = sm.group(0); card = card.replace(stats, '', 1)
+        card = re.sub(r'(<div class="sheet-fc-head"><span class="sheet-fc-name">[^<]*</span>)', lambda m: m.group(1) + stats, card, 1)
+        # image slot at top
+        img = (f'<div class="sheet-fc-img"><span class="sheet-fc-imgph">No image<br/>200 x 300</span>'
+               f'<img class="sheet-fc-imgel" name="attr_form_{f}_img" alt="" /><input type="hidden" name="attr_form_{f}_img" value="" />'
+               f'<button type="action" class="sheet-fc-imgbtn" name="act_fimg_{f}" title="Set image URL">&#9998;</button></div>')
+        card = card.replace('<div class="sheet-fc-glow"></div>', '<div class="sheet-fc-glow"></div>' + img, 1)
+        # description + image URL field
+        card = card.replace(f'<textarea class="sheet-fc-notes" name="attr_form_notes_{f}" rows="2" placeholder="Notes on this form&#8217;s features"></textarea>',
+                            f'<textarea class="sheet-fc-notes" name="attr_form_notes_{f}" rows="3" placeholder="Description of this form"></textarea>'
+                            )
+        # turn counter off the Forms tab
+        card = re.sub(r'<span class="sheet-ur-tl".*?</span>', '', card, 1, re.S)
+        h = h[:a] + card + h[b:]
+    # Main: Ur'Khar turn track under the form picker
+    boxes = ''.join(f'<button type="action" class="sheet-ut-b" name="act_urk_tb_{i}" title="{i} turn(s) left"></button>' for i in range(1, 16))
+    track = (f'<div class="sheet-ut-row sheet-urkhar-col"><span class="sheet-ut-l">Turns left</span>'
+             f'<input type="hidden" class="sheet-ut-v" name="attr_urkhar_turns" value="0" />{boxes}</div>')
+    k = h.index('act_setform_urhan'); e = h.index('</div>', k) + 6
+    h = h[:e] + track + h[e:]
+    js = ('\n        for (let i = 1; i <= 15; i++) on("clicked:urk_tb_" + i, () => getAttrs(["urkhar_turns"], v => { const cur = parseInt(v.urkhar_turns) || 0; setAttrs({urkhar_turns: cur === i ? i - 1 : i}); }));\n')
+    js += FIMG_JS
+    k = h.index('on("clicked:urkhar_turn_dec"'); k = h.index('\n', k)
+    h = h[:k] + js + h[k:]
+    F = f'{S} .sheet-fcards'
+    rules = [
+        f'{F} {{ display: grid !important; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important; gap: 8px !important; align-items: start !important; }}',
+        f'{F} > input {{ display: none !important; }}',
+        f'{F} > .sheet-fcard {{ min-width: 0 !important; width: auto !important; margin: 0 !important; padding: 6px !important; box-sizing: border-box !important; display: flex !important; flex-direction: column; gap: 4px; }}',
+        f'{F} > input.sheet-urkhar-flag:not([value="1"]) ~ .sheet-fcard.sheet-fc-urkhar {{ display: none !important; }}',
+        f'{F} .sheet-fc-img {{ position: relative; width: 100%; max-width: 200px; height: 300px; margin: 0 auto; border: 1px dashed rgba(255,255,255,.25); border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.2); box-sizing: border-box; }}',
+        f'{F} .sheet-fc-imgph {{ font-size: 11px; opacity: .5; text-align: center; }}',
+        f'{F} img.sheet-fc-imgel {{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }}',
+        f'{F} img.sheet-fc-imgel:not([src]), {F} img.sheet-fc-imgel[src=""] {{ display: none; }}',
+        f'{F} .sheet-fc-head {{ display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 3px 6px !important; margin: 0 !important; padding: 0 !important; }}',
+        f'{F} .sheet-fc-head > .sheet-fc-stats {{ display: flex !important; flex-wrap: wrap !important; gap: 2px !important; margin: 0 !important; padding: 0 !important; flex: 1 1 auto; }}',
+        f'{F} .sheet-fc-head .sheet-fc-stat {{ font-size: 10px !important; padding: 0 4px !important; line-height: 15px !important; border-radius: 8px; border: 1px solid rgba(255,255,255,.2); white-space: nowrap; }}',
+        f'{F} .sheet-fc-head .sheet-fc-stat > span:empty {{ display: none; }}',
+        f'{F} .sheet-fc-head .sheet-fc-stat:has(> span:empty) {{ display: none !important; }}',
+        f'{F} textarea.sheet-fc-notes {{ display: block !important; width: 100% !important; box-sizing: border-box; min-height: 44px; margin: 0 !important; resize: vertical; }}',
+        f'{S}{P} .sheet-fcards button.sheet-fc-imgbtn {{ position: absolute !important; right: 4px; bottom: 4px; z-index: 3; width: 22px !important; height: 22px !important; min-width: 0 !important; padding: 0 !important; border-radius: 50% !important; font-size: 12px !important; line-height: 20px !important; background: rgba(0,0,0,.6) !important; border: 1px solid rgba(255,255,255,.4) !important; color: #fff !important; cursor: pointer; }}',
+        f'{F} label.sheet-fc-url {{ display: flex !important; align-items: center; gap: 4px; font-size: 10px; margin: 0 !important; opacity: .8; }}',
+        f'{F} label.sheet-fc-url > input {{ flex: 1 1 auto; min-width: 0 !important; width: auto !important; height: 18px !important; font-size: 10px !important; padding: 0 3px !important; }}',
+        f'{F} .sheet-fc-detail {{ margin: 0 !important; }}',
+        # Main turn track
+        f'{S} .sheet-ut-row {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px; margin: 3px 0 0; }}',
+        f'{S} input.sheet-urkhar-flag:not([value="1"]) ~ .sheet-ut-row {{ display: none !important; }}',
+        f'{S} .sheet-ut-l {{ font-size: 11px; font-weight: 700; margin-right: 4px; }}',
+        f'{S}{P} button.sheet-ut-b {{ width: 12px !important; height: 12px !important; min-width: 0 !important; padding: 0 !important; margin: 0 !important; border: 1px solid var(--temp-dot, #aa5a1e) !important; border-radius: 2px !important; background: none !important; box-shadow: none !important; cursor: pointer; }}',
+    ] + [f'{S}{P} input.sheet-ut-v[value="{n}"] ~ button.sheet-ut-b:nth-of-type(-n+{n}) {{ background: var(--temp-dot, #aa5a1e) !important; }}' for n in range(1, 16)]
+    c += '\n'.join(rules) + '\n'
+    return h, c
+
+
+def r37(h, c):
+    old = '<label class="sheet-det-m"><span data-i18n="d-det_eyes">Eyes</span><textarea class="sheet-det-ta" rows="1" name="attr_det_eyes"></textarea></label>'
+    assert h.count(old) == 1
+    h = h.replace(old, '<label class="sheet-det-s"><span data-i18n="d-det_eyes">Eyes</span><input type="text" name="attr_det_eyes" /></label>')
+    return h, c
+
+
+CB_SLOTS = ['hishu', 'dalu', 'gauru', 'urshul', 'urhan']
+CB_K = [('strength', 'Str'), ('dexterity', 'Dex'), ('stamina', 'Sta'), ('manipulation', 'Man'), ('size', 'Size'),
+        ('initiative', 'Init'), ('speed', 'Speed'), ('health', 'Health'), ('perception', 'Perc')]
+CB_NF = 4
+
+
+def r33(h, c):
+    import re
+    S = f'{P}{P}'
+    CB = S + P + ':has(input.sheet-type[value="breeds2"])'
+    for f in CB_SLOTS:
+        a = h.index(f'<div class="sheet-fcard sheet-fc-{f}')
+        hd = h.index('<div class="sheet-fc-head">', a)
+        # caret + custom name in the head
+        hd += len('<div class="sheet-fc-head">')
+        h = h[:hd] + f'<input type="checkbox" class="sheet-cbf-edit" name="attr_cbf_{f}_edit" value="1" title="Edit this form" />' + h[hd:]
+        hn = h.index('<span class="sheet-fc-name">', a); hn = h.index('</span>', hn) + 7
+        h = h[:hn] + f'<span class="sheet-fc-name sheet-cbn" name="attr_cbf_{f}_name"></span>' + h[hn:]
+        # custom features display + edit panel, inserted before the description
+        pills = ''.join(f'<span class="sheet-fc-tw"><input type="radio" class="sheet-fc-tg" name="attr_cbfsel_{f}" value="{n}" /><span class="sheet-fc-trait" name="attr_cbf_{f}_ft{n}_name"></span></span>' for n in range(CB_NF))
+        det = ''.join(f'<span class="sheet-fc-d sheet-fc-d{n}"><span class="sheet-cbf-fn" name="attr_cbf_{f}_ft{n}_name"></span>: <span name="attr_cbf_{f}_ft{n}_text"></span></span>' for n in range(CB_NF))
+        disp = (f'<div class="sheet-cbf-view"><div class="sheet-fc-traits">{pills}</div>'
+                f'<div class="sheet-fc-detail"><input type="hidden" class="sheet-fc-selv" name="attr_cbfsel_{f}" value="" />{det}'
+                f'<span class="sheet-fc-d sheet-fc-dnone">Select a feature above to read what it does.</span></div></div>')
+        steps = ''.join(f'<label class="sheet-cbf-st"><b>{lab}</b><input type="number" name="attr_cbf_{f}_{k}" value="0" step="1" /></label>' for k, lab in CB_K)
+        feats = ''.join(f'<div class="sheet-cbf-ft"><input type="text" name="attr_cbf_{f}_ft{n}_name" placeholder="Feature {n + 1} name" /><textarea name="attr_cbf_{f}_ft{n}_text" rows="2" placeholder="What it does"></textarea></div>' for n in range(CB_NF))
+        edit = (f'<div class="sheet-cbf-panel"><label class="sheet-cbf-nm">Form name <input type="text" name="attr_cbf_{f}_name" placeholder="Form name" /></label>'
+                f'<div class="sheet-cbf-stats">{steps}</div>{feats}<input type="hidden" name="attr_cbf_{f}_set" value="" /></div>')
+        t = h.index(f'<textarea class="sheet-fc-notes" name="attr_form_notes_{f}"', a)
+        h = h[:t] + disp + edit + h[t:]
+    # Main (Breeds): picker buttons showing the custom names + turn boxes
+    sel = re.search(r'<label class="sheet-form-select">[^<]*<span data-i18n="form">Form</span>\s*<select name="attr_form">.*?</select>\s*</label>', h, re.S)
+    assert sel
+    btns = ''.join(f'<button type="action" class="sheet-form-btn sheet-cbp-{f}" name="act_setform_{f}"><input type="hidden" class="sheet-form-cur" name="attr_form" value="hishu" /><span name="attr_cbf_{f}_name"></span></button>' for f in CB_SLOTS)
+    boxes = ''.join(f'<button type="action" class="sheet-ut-b" name="act_urk_tb_{i}" title="{i} turn(s) left"></button>' for i in range(1, 16))
+    h = h[:sel.start()] + f'<span class="sheet-cb-picker">{btns}</span><div class="sheet-ut-row sheet-ut-cb"><span class="sheet-ut-l">Turns left</span><input type="hidden" class="sheet-ut-v" name="attr_urkhar_turns" value="0" />{boxes}</div>' + h[sel.end():]
+    # worker: custom mods for Breeds, names, migration
+    attrs = [f'cbf_{f}_{k}' for f in CB_SLOTS for k, _ in CB_K] + [f'cbf_{f}_name' for f in CB_SLOTS] + [f'cbf_{f}_set' for f in CB_SLOTS]
+    js_pre = ('const CBF_SLOTS = ' + str(CB_SLOTS).replace("'", '"') + ', CBF_K = ' + str([k for k, _ in CB_K]).replace("'", '"') + ', CBF_ATTRS = ' + str(attrs).replace("'", '"') + ';\n'
+              '        const cbM = (v, f) => { if (v.sheettype !== "breeds2" || CBF_SLOTS.indexOf(f) < 0 || v["cbf_" + f + "_set"] !== "1") return null; const m = {}; CBF_K.forEach(k => m[k] = parseInt(v["cbf_" + f + "_" + k]) || 0); return m; };\n'
+              '        ')
+    old1 = 'const updateForms = () => {\n            getAttrs(["strength","dexterity","stamina","manipulation","wits","composure","athletics","base_size","form","urkhar_enabled","sheettype"], (v) => {'
+    assert old1 in h, 'uf'
+    h = h.replace(old1, js_pre + 'const updateForms = () => {\n            getAttrs(["strength","dexterity","stamina","manipulation","wits","composure","athletics","base_size","form","urkhar_enabled","sheettype"].concat(CBF_ATTRS), (v) => {')
+    o2 = 'const m = (f === "gauru" && ur) ? GAURU_URKHAR_VARIANT : FORM_MODS[f];'
+    assert h.count(o2) == 1
+    h = h.replace(o2, 'const m = cbM(v, f) || ((f === "gauru" && ur) ? GAURU_URKHAR_VARIANT : FORM_MODS[f]);')
+    o3 = 'const m = (form === "gauru" && ur) ? GAURU_URKHAR_VARIANT : FORM_MODS[form];'
+    assert h.count(o3) == 1
+    h = h.replace(o3, 'const m = cbM(v, form) || ((form === "gauru" && ur) ? GAURU_URKHAR_VARIANT : FORM_MODS[form]);')
+    o4 = 'u.form_label = FORM_LABEL[form];'
+    assert o4 in h
+    h = h.replace(o4, 'u.form_label = (v.sheettype === "breeds2" && v["cbf_" + form + "_name"]) || FORM_LABEL[form];')
+    o5 = 'change:base_size change:sheettype sheet:opened", updateForms);'
+    assert o5 in h
+    mig = ('\n        on("change:base_size change:sheettype sheet:opened " + CBF_ATTRS.map(a => "change:" + a).join(" "), updateForms);\n'
+           '        // r33: Changing Breeds form slots, seeded once from the stock forms; existing values are never overwritten\n'
+           '        on("sheet:opened change:sheettype", () => getAttrs(["sheettype"].concat(CBF_ATTRS), v => { if (v.sheettype !== "breeds2") return; const u = {};\n'
+           '            CBF_SLOTS.forEach(f => { if (v["cbf_" + f + "_set"] === "1") return; if (!v["cbf_" + f + "_name"]) u["cbf_" + f + "_name"] = FORM_LABEL[f];\n'
+           '                CBF_K.forEach(k => { const cur = v["cbf_" + f + "_" + k]; if (cur === undefined || cur === "" || cur === "0") u["cbf_" + f + "_" + k] = FORM_MODS[f][k]; }); u["cbf_" + f + "_set"] = "1"; });\n'
+           '            if (Object.keys(u).length) setAttrs(u); }));\n')
+    h = h.replace(o5, 'change:base_size change:sheettype sheet:opened", updateForms);' + mig, 1)
+    o6 = 'const label = SHIFT_FORMS[f] || f;'
+    if o6 in h:
+        h = h.replace('const shiftTo = (f, already) => getAttrs(["character_name", "morality", "form", "sheettype", "urkhar_enabled"]', 'const shiftTo = (f, already) => getAttrs(["character_name", "morality", "form", "sheettype", "urkhar_enabled", "cbf_" + f + "_name"]')
+        h = h.replace(o6, 'const label = (v.sheettype === "breeds2" && v["cbf_" + f + "_name"]) || SHIFT_FORMS[f] || f;')
+    F = f'{S} .sheet-fcards'
+    rules = [
+        # werewolf: fixed; breeds: custom view
+        f'{F} .sheet-cbn, {F} .sheet-cbf-view, {F} .sheet-cbf-panel, {F} input.sheet-cbf-edit {{ display: none !important; }}',
+        f'{CB} .sheet-fcards .sheet-cbn {{ display: inline !important; }}',
+        f'{CB} .sheet-fcards .sheet-fc-head > .sheet-fc-name:not(.sheet-cbn), {CB} .sheet-fcards .sheet-fcard > .sheet-fc-traits, {CB} .sheet-fcards .sheet-fcard > .sheet-fc-detail, {CB} .sheet-fcards .sheet-fc-urnote, {CB} .sheet-fcards .sheet-fc-urtrack {{ display: none !important; }}',
+        f'{CB} .sheet-fcards .sheet-cbf-view {{ display: flex !important; flex-direction: column; gap: 4px; }}',
+        f'{CB} .sheet-fcards input.sheet-cbf-edit {{ display: block !important; -webkit-appearance: none; appearance: none !important; width: 14px !important; height: 14px !important; min-width: 14px !important; opacity: 1 !important; visibility: visible !important; margin: 0 !important; cursor: pointer; position: relative; align-self: center; flex: 0 0 14px; }}',
+        f'{CB} .sheet-fcards input.sheet-cbf-edit::before {{ content: ""; position: absolute; left: 3px; top: 3px; width: 5px; height: 5px; border-right: 1.5px solid var(--temp-dot, #aa5a1e); border-bottom: 1.5px solid var(--temp-dot, #aa5a1e); transform: rotate(-45deg); transition: transform .15s; }}',
+        f'{CB} .sheet-fcards input.sheet-cbf-edit:checked::before {{ transform: rotate(45deg); }}',
+        f'{CB} .sheet-fcards .sheet-fcard:has(input.sheet-cbf-edit:checked) .sheet-cbf-panel {{ display: flex !important; flex-direction: column; gap: 4px; padding: 4px; border: 1px solid rgba(255,255,255,.15); border-radius: 4px; }}',
+        f'{F} .sheet-fc-tw:has(> .sheet-fc-trait:empty) {{ display: none !important; }}',
+        f'{F} label.sheet-cbf-nm {{ display: flex; align-items: center; gap: 4px; font-size: 11px; margin: 0; }}',
+        f'{F} label.sheet-cbf-nm > input {{ flex: 1 1 auto; min-width: 0; height: 20px; }}',
+        f'{F} .sheet-cbf-stats {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 4px; }}',
+        f'{F} label.sheet-cbf-st {{ display: flex; align-items: center; justify-content: space-between; gap: 2px; font-size: 10px; margin: 0; }}',
+        f'{F} label.sheet-cbf-st > input {{ width: 36px !important; height: 18px !important; padding: 0 2px !important; font-size: 11px !important; text-align: center; }}',
+        f'{F} .sheet-cbf-ft {{ display: flex; flex-direction: column; gap: 1px; }}',
+        f'{F} .sheet-cbf-ft > input {{ height: 18px; font-size: 11px; width: 100%; box-sizing: border-box; }}',
+        f'{F} .sheet-cbf-fn {{ font-weight: 700; }}',
+        f'{F} label.sheet-cbf-nm {{ white-space: nowrap; }}',
+        f'{F} .sheet-cbf-ft > textarea {{ height: 34px !important; min-height: 26px; font-size: 11px; width: 100%; box-sizing: border-box; resize: vertical; }}',
+        f'{CB} .sheet-fcards .sheet-fcard.sheet-fc-urkhar {{ display: none !important; }}',
+        f'{CB} .sheet-quick-actions.sheet-breeds2 {{ display: flex !important; flex-wrap: wrap; justify-content: center !important; align-items: center; gap: 4px; }}',
+        f'{CB} .sheet-quick-actions.sheet-breeds2 > .sheet-ut-row {{ flex: 1 1 100%; }}',
+        f'{S} .sheet-cb-picker {{ display: inline-flex; flex-wrap: wrap; gap: 3px; }}',
+        f'{S}{P} .sheet-cb-picker > button.sheet-form-btn {{ display: inline-flex !important; align-items: center; padding: 2px 8px !important; width: auto !important; height: auto !important; font-size: 13px !important; }}',
+        f'{S} .sheet-cb-picker > button.sheet-form-btn > span:empty::before {{ content: "?"; }}',
+    ] + [f'{S} .sheet-cb-picker > button.sheet-cbp-{f} > input.sheet-form-cur[value="{f}"] + span {{ text-decoration: underline; color: var(--temp-dot, #aa5a1e); }}' for f in CB_SLOTS]
+    c += '\n'.join(rules) + '\n'
+    return h, c
+
+
+D10 = 'https://raw.githubusercontent.com/leonembers/cofd-sheet-art/ff25d89770db9e4c52b37855910dd23574d91a3d/icons/d10/'
+
+
+def r38(h, c):
+    S = f'{P}{P}'
+    RB = f'{S} .sheet-rollcontainer > button.sheet-rollstyle, {S} .sheet-rollcontainer > button[type="roll"], {S} .sheet-rollcontainer > button.sheet-was-roll'
+    ER = f'{S} button.sheet-entry-roll'
+    DK = ['input.sheet-dm[value="1"] ~ .sheet-background', '.sheet-darkmode']
+    def dark(sel_tail):
+        return ', '.join(f'{S} {d} {sel_tail}' if d.startswith('input') else f'{d} {S} {sel_tail}' for d in DK)
+    rules = [
+        f'{RB} {{ background-image: url("{D10}d10-black-128.png") !important; background-size: contain !important; background-repeat: no-repeat !important; background-position: center !important; transition: transform .1s, filter .15s; }}',
+        f'{RB.replace(", ", ":hover, ")}:hover {{ background-image: url("{D10}d10-black-128.png") !important; filter: drop-shadow(0 0 3px var(--pa, #aa5a1e)); }}',
+        f'{RB.replace(", ", ":active, ")}:active {{ background-image: url("{D10}d10-black-128.png") !important; transform: scale(.92); }}',
+        f'{ER} {{ font-size: 0 !important; color: rgba(0,0,0,0) !important; background-image: url("{D10}d10-black-64.png") !important; background-size: 16px 16px !important; background-repeat: no-repeat !important; background-position: center !important; min-width: 20px !important; min-height: 18px !important; }}',
+        f'{ER}:hover {{ filter: drop-shadow(0 0 2px var(--pa, #aa5a1e)); }}',
+    ]
+    for tail, img in (('.sheet-rollcontainer > button.sheet-rollstyle', '128'), ('.sheet-rollcontainer > button[type="roll"]', '128'), ('.sheet-rollcontainer > button.sheet-was-roll', '128'), ('button.sheet-entry-roll', '64')):
+        for st in ('', ':hover', ':active'):
+            rules.append(f'{dark(tail + st)} {{ background-image: url("{D10}d10-white-{img}.png") !important; }}')
+    c += '\n'.join(rules) + '\n'
+    return h, c
+
+
+def r39(h, c):
+    import re
+    order = ['normal', '9-again', '8-again', 'dont-reroll', 'chance', 'rote', 'chance-rote']
+    btn = {}
+    for k in order:
+        m = re.search(r'<button type="action" class="sheet-toggle sheet-rolltype-' + re.escape(k) + r'" name="act_rolltype_select_' + re.escape(k) + r'"[^>]*>.*?</button>\s*', h, re.S)
+        assert m, k
+        btn[k] = m
+    first = min(m.start() for m in btn.values()); last = max(m.end() for m in btn.values())
+    seg = h[first:last]
+    rest = seg
+    for m in btn.values():
+        rest = rest.replace(m.group(0), '')
+    assert rest.strip() == '', rest[:200]
+    h = h[:first] + '\n                '.join(btn[k].group(0).strip() for k in order) + '\n                ' + h[last:]
+    return h, c
+
+
+def r40(h, c):
+    import re
+    S = f'{P}{P}'
+    d = re.search(r'<div class="(?:sheet-)?derived">\s*<span data-i18n="defense">Defense</span>.*?</div>', h, re.S)
+    a = re.search(r'\s*<div class="(?:sheet-)?derived">\s*<span data-i18n="armor">Armor</span>:<input type="number" name="attr_balistic_armor_display"[^>]*>/<input type="number" name="attr_general_armor_display"[^>]*>\s*</div>', h, re.S)
+    assert a
+    ds = [m for m in re.finditer(r'<div class="(?:sheet-)?derived">\s*<span data-i18n="defense">Defense</span>.*?</div>', h[:a.start()], re.S)]
+    d = ds[-1]
+    h = h[:a.start()] + h[a.end():]
+    arm = ('<div class="sheet-derived sheet-derived-armor" title="Armor from worn pieces (Stacking pieces add on top): General / Ballistic">'
+           '<span data-i18n="armor">Armor</span>:<span class="sheet-ar-si sheet-ar-si-g"></span>'
+           '<input type="number" name="attr_general_armor_display" value="@{general_armor}" disabled="disabled" title="@{armor_calc}"/>'
+           '<span class="sheet-dslash">/</span><span class="sheet-ar-si sheet-ar-si-b"></span>'
+           '<input type="number" name="attr_balistic_armor_display" value="@{balistic_armor}" disabled="disabled" /></div>')
+    h = h[:d.start()] + '<div class="sheet-derived-pair">' + d.group(0) + arm + '</div>' + h[d.end():]
+    c += '\n'.join([
+        f'{S} .sheet-derived-pair {{ display: flex !important; align-items: center; justify-content: space-between; gap: 2px; flex-wrap: nowrap; max-width: 100%; }}',
+        f'{S} .sheet-derived-pair > .sheet-derived {{ display: inline-flex !important; align-items: center; gap: 1px; margin: 0 !important; padding: 0 !important; width: auto !important; flex: 0 1 auto; min-width: 0; white-space: nowrap; }}',
+        f'{S} .sheet-derived-pair input[type=number] {{ display: inline-block !important; flex: 0 0 20px !important; height: 18px !important; width: 20px !important; font-size: 12px !important; min-width: 0 !important; padding: 0 1px !important; text-align: center; }}',
+        f'{S} .sheet-derived-armor > .sheet-ar-si {{ flex: 0 0 12px; margin: 0 0 0 2px; background-size: 12px 12px !important; }}',
+        f'{S} .sheet-derived-armor > .sheet-dslash {{ margin: 0 1px; opacity: .7; }}',
+    ]) + '\n'
+    return h, c
+
+
+REN5 = ['purity', 'glory', 'honor', 'wisdom', 'cunning']
+
+
+def r41(h, c):
+    import re
+    S = f'{P}{P}'
+    n = 0
+    for r in REN5:
+        pat = re.compile(r'(<span class="(?:sheet-)?ren-ic (?:sheet-)?ren-' + r + r'"[^>]*></span>)(<span data-i18n="renown-' + r + r'">[^<]*</span>)')
+        h, k = pat.subn(lambda m: f'<input type="hidden" class="sheet-flag sheet-ren-flag" name="attr_renown_{r}_flag" value="0" />' + m.group(1)
+                        + f'<button type="action" class="sheet-toggle sheet-ren-tg" name="act_renown_{r}" title="Add {r.capitalize()} Renown to the dice pool">' + m.group(2) + '</button>', h)
+        n += k
+    assert n >= 5, n
+    h = h.replace('var allStats = [ ...attributes, ...skills, "potency" ];',
+                  'var allStats = [ ...attributes, ...skills, "potency", "renown_purity", "renown_glory", "renown_honor", "renown_wisdom", "renown_cunning" ];', 1)
+    assert '"renown_cunning" ];' in h
+    old = '                default:\n                    return getTranslationByKey(attribute);'
+    assert old in h
+    h = h.replace(old, '                default:\n                    if (/^renown_/.test(attribute)) { const _k = attribute.replace("_", "-"), _t = getTranslationByKey(_k); return (_t && _t !== _k) ? _t : (attribute.charAt(7).toUpperCase() + attribute.slice(8)); }\n                    return getTranslationByKey(attribute);', 1)
+    js = ('\n        ["renown_purity","renown_glory","renown_honor","renown_wisdom","renown_cunning"].forEach((r) => on(`clicked:${r}`, () => updateDicePoolAttributes(r)));\n'
+          '        on("change:renown_purity change:renown_glory change:renown_honor change:renown_wisdom change:renown_cunning", () => updateDicePool());\n')
+    i = h.rfind('</script>')
+    h = h[:i] + js + h[i:]
+    sel = 'input.sheet-ren-flag[value="1"] ~ button.sheet-ren-tg'
+    c += '\n'.join([
+        f'{S}{P} .sheet-renown-row button.sheet-ren-tg {{ all: unset; cursor: pointer; font: inherit; color: inherit; padding: 0 3px !important; border-radius: 3px; outline: none !important; box-shadow: none !important; background: rgba(0,0,0,0) !important; border: 0 !important; }}',
+        f'{S}{P} .sheet-renown-row button.sheet-ren-tg:focus, {S}{P} .sheet-renown-row button.sheet-ren-tg:focus-visible, {S}{P} .sheet-renown-row button.sheet-ren-tg:active {{ outline: none !important; box-shadow: none !important; }}',
+        f'{S}{P} .sheet-renown-row {sel}, {S}{P} .sheet-renown-row {sel} span {{ color: var(--pa, #c9a227) !important; text-shadow: 0 0 6px color-mix(in srgb, var(--pa, #c9a227) 60%, rgba(0,0,0,0)) !important; font-weight: bold; }}',
+        f'{S}{P} .sheet-renown-row {sel} {{ background: color-mix(in srgb, var(--pa, #c9a227) 18%, rgba(0,0,0,0)) !important; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r42(h, c):
+    import re
+    # power-stat / integrity / resource tooltips read sheet-worker attrs derived from the existing translation keys
+    h, n1 = re.subn(r'(name="act_potency"[^>]*?)title="Potency"', r'\1title="@{potency_tip}"', h)
+    h = re.sub(r'title="Clear Potency"', 'title="Clear @{potency_name}"', h)
+    h = re.sub(r'title="Set Potency to (\d+)"', r'title="Set @{potency_name} to \1"', h)
+    # (43) no tooltips at all on the morality track dots
+    h = re.sub(r'(<button[^>]*name="act_morality-\d+"[^>]*?) title="[^"]*"', r'\1', h)
+    h = re.sub(r'(<button[^>]*name="act_moralhealthbox_\d+"[^>]*?) title="[^"]*"', r'\1', h)
+    h = re.sub(r'title="Mark / clear Vitae box"', 'title="Mark / clear @{resource_name} box"', h)
+    for k in ['integrity', 'humanity', 'pilgrimage', 'harmony', 'wisdom', 'clarity', 'memory', 'cover', 'satiety', 'stability']:
+        h = re.sub(r'(<span class="[^"]*" data-i18n="' + k + r'")>', r'\1 title="@{morality_tip}">', h)
+    for k in ['resource', 'pillars', 'vitae', 'essence', 'mana', 'pyros', 'glamour', 'plasm']:
+        h = re.sub(r'(<span (?:class="[^"]*" )?data-i18n="' + k + r'")>', r'\1 title="@{resource_name}">', h)
+    assert n1 >= 10, n1
+    h = h.replace('name="attr_sheettype"', 'name="attr_sheettype"', 1)
+    hid = ''.join(f'<input type="hidden" name="attr_{a}" value="" />' for a in ['potency_name', 'potency_tip', 'morality_name', 'morality_tip', 'resource_name'])
+    i = h.find('<div class="sheet-background')
+    if i < 0:
+        i = h.find('<div class="background')
+    assert i > 0
+    h = h[:i] + hid + h[i:]
+    js = r'''
+        const TIP_MOR = {mortal2:"integrity","mortal2-ghost":"integrity",hunter2:"integrity",hunter:"integrity",vampire1:"humanity",vampire2:"humanity",werewolf1:"harmony",werewolf2:"harmony",breeds2:"harmony",mage1:"wisdom",mage2:"wisdom",promethean1:"pilgrimage",promethean2:"pilgrimage",changeling1:"clarity",changeling2:"clarity",mummy1:"memory",mummy2:"memory",demon:"cover",beast:"satiety","deviant-the-renegades":"stability"};
+        const TIP_RES = {vampire1:"vitae",vampire2:"vitae",werewolf1:"essence",werewolf2:"essence",breeds2:"essence","mortal2-ghost":"essence",mage1:"mana",mage2:"mana",promethean1:"pyros",promethean2:"pyros",changeling1:"glamour",changeling2:"glamour",geist1:"plasm",geist2:"plasm",mummy1:"pillars",mummy2:"pillars"};
+        const tipTr = (k) => { const x = getTranslationByKey(k); return (x && x !== k) ? x : ""; };
+        const tipCap = (s) => String(s || "").replace(/(^|[\s-])([a-z])/g, (m, a, b) => a + b.toUpperCase());
+        const updateTips = () => getAttrs(["sheettype", "homebrew_rank"], (v) => {
+            const t = v.sheettype || "";
+            const pk = potencyTranslationKeys[t];
+            const pn = (pk && (tipTr(pk) || tipCap(pk.replace(/-/g, " ")))) || v.homebrew_rank || "Power stat";
+            const mk = TIP_MOR[t] || "integrity";
+            const mn = tipTr(mk) || tipCap(mk);
+            const rk = TIP_RES[t] || "resource";
+            const rn = tipTr(rk) || tipCap(rk);
+            setAttrs({potency_name: pn, potency_tip: pn + ": click to add to the dice pool", morality_name: mn, morality_tip: mn + " (this sheet's Integrity trait)", resource_name: rn}, {silent: true});
+        });
+        on("sheet:opened change:sheettype change:homebrew_rank", updateTips);
+'''
+    i = h.rfind('</script>')
+    h = h[:i] + js + h[i:]
+    return h, c
