@@ -1,0 +1,2828 @@
+{
+ "werewolf2/dark/1": {
+  "tested": 402,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_midtab_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/dark/forms": {
+  "tested": 12,
+  "bad": [
+   {
+    "name": "act_setform_hishu",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/dark/3": {
+  "tested": 402,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_midtab_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/dark/conditions": {
+  "tested": 9,
+  "bad": [
+   {
+    "name": "act_expand_conditions",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_conditions",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/dark/powers": {
+  "tested": 436,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_purity-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_glory-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_honor-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_wisdom-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_cunning-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_gifts",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_gifts",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_writes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_writes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_totem",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_totem",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/dark/details": {
+  "tested": 404,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_notes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_notes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_customrolls",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_customrolls",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/dark/settings": {
+  "tested": 14,
+  "bad": [],
+  "err": []
+ },
+ "werewolf2/light/1": {
+  "tested": 402,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_midtab_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/light/forms": {
+  "tested": 12,
+  "bad": [
+   {
+    "name": "act_setform_hishu",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/light/3": {
+  "tested": 402,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_midtab_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_merits",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/light/conditions": {
+  "tested": 9,
+  "bad": [
+   {
+    "name": "act_expand_conditions",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_conditions",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/light/powers": {
+  "tested": 436,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_purity-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_glory-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_honor-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_wisdom-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_renown_cunning-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_gifts",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_gifts",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_writes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_writes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_totem",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_totem",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/light/details": {
+  "tested": 404,
+  "bad": [
+   {
+    "name": "act_academics_spec_toggle",
+    "attr": [
+     "academics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_academics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_computer_spec_toggle",
+    "attr": [
+     "computer_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_computer-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_crafts_spec_toggle",
+    "attr": [
+     "crafts_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_crafts-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_enigmas-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_investigation_spec_toggle",
+    "attr": [
+     "investigation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_investigation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_medicine_spec_toggle",
+    "attr": [
+     "medicine_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_medicine-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_occult_spec_toggle",
+    "attr": [
+     "occult_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_occult-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_politics_spec_toggle",
+    "attr": [
+     "politics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_politics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_science_spec_toggle",
+    "attr": [
+     "science_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_science-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_archery-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_athletics_spec_toggle",
+    "attr": [
+     "athletics_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_athletics-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_brawl_spec_toggle",
+    "attr": [
+     "brawl_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_brawl-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_drive_spec_toggle",
+    "attr": [
+     "drive_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_drive-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_firearms_spec_toggle",
+    "attr": [
+     "firearms_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_firearms-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_larceny_spec_toggle",
+    "attr": [
+     "larceny_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_larceny-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_stealth_spec_toggle",
+    "attr": [
+     "stealth_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_stealth-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_survival_spec_toggle",
+    "attr": [
+     "survival_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_survival-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry_spec_toggle",
+    "attr": [
+     "weaponry_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_weaponry-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_animalken_spec_toggle",
+    "attr": [
+     "animalken_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_animalken-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_empathy_spec_toggle",
+    "attr": [
+     "empathy_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_empathy-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expression_spec_toggle",
+    "attr": [
+     "expression_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_expression-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation_spec_toggle",
+    "attr": [
+     "intimidation_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_intimidation-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion_spec_toggle",
+    "attr": [
+     "persuasion_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_persuasion-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_socialize_spec_toggle",
+    "attr": [
+     "socialize_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_socialize-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise_spec_toggle",
+    "attr": [
+     "streetwise_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_streetwise-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge_spec_toggle",
+    "attr": [
+     "subterfuge_spec_open"
+    ],
+    "vis": false
+   },
+   {
+    "name": "act_subterfuge-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_notes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_notes",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_customrolls",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_customrolls",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_morality-0",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_expand_weapons",
+    "attr": [],
+    "vis": false
+   },
+   {
+    "name": "act_collapse_weapons",
+    "attr": [],
+    "vis": false
+   }
+  ],
+  "err": []
+ },
+ "werewolf2/light/settings": {
+  "tested": 14,
+  "bad": [],
+  "err": []
+ }
+}

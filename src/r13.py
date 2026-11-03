@@ -88,7 +88,8 @@ def more(h, c):
     h = h[:m.start()] + b + h[m.end():]
     for sec in ('equipment', 'armor', 'weapons'):
         G = f'{P} .repcontainer[data-groupname="repeating_{sec}"] .sheet-entry-body'
-        L += [f'{G} {{ display: flex !important; flex-wrap: wrap; gap: 3px 10px !important; align-items: center; }}',
+        GO = f'{P} .repcontainer[data-groupname="repeating_{sec}"] .sheet-entry > input.sheet-entry-toggle:checked ~ .sheet-entry-body'
+        L += [f'{GO} {{ display: flex !important; flex-wrap: wrap; gap: 3px 10px !important; align-items: center; }}',
               f'{G} > label:not(.sheet-wide) {{ display: inline-flex !important; align-items: center; gap: 4px; width: auto !important; flex: 0 0 auto; }}',
               f'{G} > label:not(.sheet-wide) > input[type=text], {G} > label:not(.sheet-wide) > select {{ width: 10em !important; flex: 0 0 auto; }}',
               f'{G} input[type=number] {{ width: 3.6em !important; min-width: 0 !important; text-align: center; flex: 0 0 auto; }}',
@@ -112,7 +113,7 @@ def more(h, c):
     # (11) resource counters: current value styled exactly like the max, no box
     R = f'{P} input.sheet-res-cur.sheet-res-cur'
     L += [f'{R}, {P} .sheet-res-max, {P} .sheet-res-sep {{ font-family: inherit !important; font-size: 15px !important; font-weight: 700 !important; color: inherit !important; line-height: 20px !important; vertical-align: baseline !important; }}',
-          f'{R} {{ -webkit-appearance: textfield !important; -moz-appearance: textfield !important; appearance: textfield !important; border: 0 !important; background: transparent !important; box-shadow: none !important; outline: 0; padding: 0 !important; margin: 0 !important; height: 20px !important; width: 2ch !important; min-width: 2ch !important; text-align: right !important; }}',
+          f'{R} {{ -webkit-appearance: textfield !important; -moz-appearance: textfield !important; appearance: textfield !important; border: 0 !important; background: rgba(0,0,0,0) !important; box-shadow: none !important; outline: 0; padding: 0 !important; margin: 0 !important; height: 20px !important; width: 2ch !important; min-width: 2ch !important; text-align: right !important; }}',
           f'{R}::-webkit-inner-spin-button, {R}::-webkit-outer-spin-button {{ -webkit-appearance: none !important; margin: 0; }}',
           f'{P} .sheet-res-max {{ min-width: 2ch; text-align: left; display: inline-block; }}']
     L += [f'{P} .sheet-res-max, {P} .sheet-res-sep, {R} {{ display: inline-block !important; height: 20px !important; box-sizing: border-box !important; align-self: center !important; vertical-align: middle !important; position: static !important; top: auto !important; transform: none !important; }}']
@@ -121,15 +122,16 @@ def more(h, c):
 
 
 def fullheal(h, c):
-    """(12) Full Heal is a latching toggle: while armed, each heal button clears all damage of its type."""
-    b = '<button type="action" class="sheet-hb-full" name="act_fullheal"'
-    assert h.count(b) == 1
-    h = h.replace(b, '<input type="hidden" class="sheet-fh-arm" name="attr_fullheal_arm" value="0" />' + b, 1)
-    h = h.replace('title="Full Heal: clear every Health box (all bashing, lethal and aggravated damage)"',
-                  'title="Full Heal toggle: while lit, a heal button clears ALL damage of that type. Click again to turn off."', 1)
+    """(12)/(h) Full Heal is a latching toggle driven by a real checkbox attribute (fullheal_arm), so it stays lit
+    after focus moves; while it is on, each heal button clears ALL damage of its type."""
+    import re
+    m = re.search(r'<button type="action" class="sheet-hb-full" name="act_fullheal"[^>]*>.*?</button>', h, re.S)
+    assert m and h.count('name="act_fullheal"') == 1
+    h = h[:m.start()] + ('<label class="sheet-hb-full" title="Full Heal toggle: while lit, a heal button clears ALL damage of that type. Click again to turn off.">'
+                         '<input type="checkbox" class="sheet-fh-cb" name="attr_fullheal_arm" value="1" /><span>&#10010; Full</span></label>') + h[m.end():]
     old = 'on("clicked:fullheal", () => { const u = {}; for (let i = 1; i <= 16; i++) u["healthbox_" + i] = "0"; setAttrs(u); });'
     assert h.count(old) == 1
-    h = h.replace(old, 'on("clicked:fullheal", () => getAttrs(["fullheal_arm"], v => setAttrs({fullheal_arm: v.fullheal_arm === "1" ? "0" : "1"})));', 1)
+    h = h.replace(old, '', 1)
     old = 'on("clicked:heal_b", () => healOne(1)); on("clicked:heal_l", () => healOne(2)); on("clicked:heal_a", () => healOne(3));'
     assert h.count(old) == 1
     new = r'''const healAll = (lvl) => { const ks = [...Array(16).keys()].map(i => `healthbox_${i + 1}`);
@@ -141,12 +143,15 @@ def fullheal(h, c):
     h = h.replace(old, new, 1)
     P = '.charsheet.charsheet.charsheet.charsheet'
     G = 'var(--color-game-line, #b4743a)'
+    F = f'{P} label.sheet-hb-full'
     c += '\n'.join([
-        f'{P} input.sheet-fh-arm[value="1"] + button.sheet-hb-full {{ background: {G} !important; border-color: {G} !important; color: #fff !important; box-shadow: 0 0 6px {G}, inset 0 0 3px rgba(255,255,255,.5) !important; }}',
-        f'{P} input.sheet-fh-arm[value="1"] ~ .sheet-hb-heal button {{ box-shadow: 0 0 4px {G} !important; }}',
+        f'{F} {{ position: relative; display: inline-flex !important; align-items: center; height: 18px !important; padding: 0 7px !important; border-radius: 9px !important; border: 1px solid #3f8f4f !important; background: #12301a !important; color: #9fe0a8 !important; font: bold 11px/16px Arial, sans-serif !important; cursor: pointer; box-sizing: border-box; user-select: none; }}',
+        f'{F} > input.sheet-fh-cb {{ position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; margin: 0 !important; opacity: 0 !important; cursor: pointer; z-index: 1; }}',
+        f'{F}:hover {{ background: #1f5a2e !important; color: #fff !important; }}',
+        f'{F}:has(> input.sheet-fh-cb:checked) {{ background: {G} !important; border-color: {G} !important; color: #fff !important; box-shadow: 0 0 6px {G}, inset 0 0 3px rgba(255,255,255,.5) !important; }}',
+        f'{P} .sheet-heal-row:has(input.sheet-fh-cb:checked) .sheet-hb-heal button {{ box-shadow: 0 0 4px {G} !important; }}',
     ]) + '\n'
     return h, c
-
 
 def ragetint(h, c):
     """(14) Death Rage / Frenzy: one uniform red treatment over the whole sheet. A 'color' blend layer takes hue and

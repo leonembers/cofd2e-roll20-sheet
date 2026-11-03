@@ -62,6 +62,9 @@ CARDS = [('roll_wasuim', (3, False), dict(f_mod='0', f_wounds='0')), ('roll_wasu
          ('roll_initiative', (0, False), dict(f_pool='1d10 + Dexterity 3 + Composure 3 + Fast Reflexes 0 + Penalty 0', f_init='13')),
          ('roll_simple', (1, False), dict(f_pool='4 dice')),
          ('roll_frenzy', (0, True), dict(chance=1, f_mod='0', f_wounds='0', gl_werewolf=0, gl_vampire=1, charname='Marcus Vale'))]
+if os.environ.get('CHATSPLATS'):
+    CARDS = [('roll_sheet', (4, False), {'name': 'Wits (3) + Occult (2)', 'f_pool': '5 dice', 'f_mod': '0', 'f_wounds': '0', 'gl_werewolf': 0, 'gl_' + g: 1, 'charname': g.title() + ' Example'})
+             for g in os.environ['CHATSPLATS'].split(',')]
 def page(dark):
     msgs = ''
     for n, r, o in CARDS:
@@ -80,13 +83,13 @@ os.makedirs(f'{R}/shots', exist_ok=True)
 for dark in (False, True):
     open(f'{R}/shots/chatmock-{"dark" if dark else "light"}.html', 'w').write(page(dark))
 _dk = page(True)
-assert _dk.count('Resisted: you keep control') == 1 and _dk.count('Basu-Im! Hard Rage') == 1, 'Death Rage card outcomes'
-assert 'roll_basuim' not in open(f'{R}/dist/sheet.html').read(), 'standalone Basu-Im button'
+if not os.environ.get('CHATSPLATS'): assert _dk.count('Resisted: you keep control') == 1 and _dk.count('Basu-Im! Hard Rage') == 1, 'Death Rage card outcomes'
+if not os.environ.get('CHATSPLATS'): assert 'roll_basuim' not in open(f'{R}/dist/sheet.html').read(), 'standalone Basu-Im button'
 from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path='/usr/bin/google-chrome')
     pg = b.new_page(viewport={'width': 310, 'height': 400}, device_scale_factor=2)
     for m in ('light', 'dark'):
-        pg.goto(f'file://{R}/shots/chatmock-{m}.html'); pg.screenshot(path=f'{R}/shots/card-chat-{m}.png', full_page=True)
+        pg.goto(f'file://{R}/shots/chatmock-{m}.html'); pg.screenshot(path=f'{R}/shots/card-chat-{"splats-" if os.environ.get("CHATSPLATS") else ""}{m}.png', full_page=True)
     b.close()
 print('ok')
