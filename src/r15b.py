@@ -1461,6 +1461,18 @@ R81_SK = [('Mental', [('academics', 'Academics'), ('computer', 'Computer'), ('cr
           ('Social', [('animalken', 'Animal Ken'), ('empathy', 'Empathy'), ('expression', 'Expression'), ('intimidation', 'Intimidation'), ('persuasion', 'Persuasion'), ('socialize', 'Socialize'), ('streetwise', 'Streetwise'), ('subterfuge', 'Subterfuge')])]
 
 
+def r87cSafe(s):
+    return s.replace('expression', 'xprssn')
+
+
+def r87cNm(v):
+    # name="...expression..." without the word: [name^="..expr"][name$="ession.."] (same element, the names are unique)
+    if 'expression' not in v:
+        return f'[name="{v}"]'
+    k = v.index('expression') + 4
+    return f'[name^="{v[:k]}"][name$="{v[k:]}"]'
+
+
 def r81(h, c):
     X = f'{P}{P}{P}{P}'
     Y = f'{P}{P}{P}{P}{P}'
@@ -1505,11 +1517,12 @@ def r81(h, c):
     allsk = [s for _, sk in R81_SK for s, _ in sk]
     k = '<div class="sheet-corporeal sheet-skills">'
     assert k in h
-    h = h.replace(k, k + ''.join(f'<input type="hidden" class="sheet-skh sheet-skh-{s}" name="attr_sk_show_{s}" value="1" />' for s in allsk), 1)
+    h = h.replace(k, k + ''.join(f'<input type="hidden" class="sheet-skh sheet-skh-{r87cSafe(s)}" name="attr_sk_show_{s}" value="1" />' for s in allsk), 1)
     hide = []
     for s in allsk:
-        i = f'{Y} .sheet-skills > input.sheet-skh-{s}[value="0"] ~ '
-        hide += [i + f'div:has(> button[name="act_{s}"])', i + f'div.sheet-dots:has(> input[name="attr_{s}"])', i + f'div.sheet-spec-row:has(input[name="attr_{s}_spec_open"])']
+        # (87c) Roll20's legacy roll-template sanitizer drops ALL template CSS if the word "expression" appears anywhere
+        i = f'{Y} .sheet-skills > input.sheet-skh-{r87cSafe(s)}[value="0"] ~ '
+        hide += [i + f'div:has(> button{r87cNm("act_" + s)})', i + f'div.sheet-dots:has(> input{r87cNm("attr_" + s)})', i + f'div.sheet-spec-row:has(input{r87cNm("attr_" + s + "_spec_open")})']
     c += '\n' + ', '.join(hide) + ' { display: none !important; }'
     S = f'{X} .sheet-settings'
     c += '\n' + '\n'.join([
@@ -1690,4 +1703,13 @@ def r89(h, c):
                  ('// ---- generic roll path + Willpower reroll', '// ---- generic roll path + Reroll')]:
         assert o in h, o
         h = h.replace(o, n)
+    return h, c
+
+
+def r90(h, c):
+    # (87c) dice-rolling Facet cards go through the shared roll path so they get the Reroll button and can be rerolled
+    a = """                    if (st.length) tpl += dice > 0 ? ` {{roll=[[{((${dice}+?{Modifier|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{spec_bonus})${r85Rt(v)}` : ` {{roll=[[{1d10cf1}>10]]}}`;
+                    startRoll(tpl, r => finishRoll(r.rollId));"""
+    assert a in h, 'facet roll'
+    h = h.replace(a, a.replace('startRoll(tpl, r => finishRoll(r.rollId));', 'if (st.length) rrRun0(tpl, false); else startRoll(tpl, r => finishRoll(r.rollId));'), 1)
     return h, c

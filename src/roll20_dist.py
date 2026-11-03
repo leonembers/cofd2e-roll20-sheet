@@ -420,6 +420,8 @@ c = c.replace('"WolfsRain", "Fondamento", cursive', '"WolfsRain", "Metal Mania",
 # rules first and verbatim. Hard fail if it ever creeps back near the limit.
 import sys as _s; _s.path.insert(0, f'{R}/tools'); from csscompact import compact
 c = compact(c)
+_bad = [w for w in ('expression', 'eval', 'javascript', 'behavior', 'binding', '@charset', '**', 'webp', 'data:') if w in c.lower()]
+assert not _bad, f'sheet.css contains roll-template sanitizer trigger(s) {_bad}'
 assert len(c) < 600000, f'sheet.css {len(c)} chars: too close to the Roll20 editor limit (655360)'
 open(f'{R}/dist/sheet.css', 'w', encoding='utf-8').write(c)
 t = json.load(open(f'{R}/translation.json', encoding='utf-8'))
