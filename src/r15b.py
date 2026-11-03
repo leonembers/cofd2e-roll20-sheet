@@ -1672,3 +1672,22 @@ def r88(h, c):
         assert o in h, o
         h = h.replace(o, n)
     return h, c
+
+
+def r89(h, c):
+    # (88b) Reroll carries no modifier: same pool exactly, no +3, no Willpower spend
+    i = h.index('        on("clicked:wp_reroll", () => getAttrs(')
+    j = h.index('        }));\n', i) + len('        }));\n')
+    h = h[:i] + """        on("clicked:wp_reroll", () => getAttrs(["rr_last_mac", "rr_last_base", "rr_last_expr"], (v) => {
+            const head = "&{template:cofd-entry} {{charname=@{character_name}}} {{kind=Reroll}} ";
+            if (!v.rr_last_mac || !v.rr_last_expr) return startRoll(head + "{{name=Nothing to reroll}} {{f_short=Roll something first.}}", r => finishRoll(r.rollId));
+            let mac = rrStrip(v.rr_last_mac.replace(/\\{\\{roll=\\[\\[[\\s\\S]*$/, "").replace(/\\{\\{reroll=[^}]*\\}\\}/g, ""));
+            mac += v.rr_last_base ? " " + v.rr_last_base : ` {{roll=[[${v.rr_last_expr}]]}}`;
+            rrRun(mac.replace(/\\{\\{kind=[^}]*\\}\\}/, "{{kind=Reroll}}"), true);
+        }));
+""" + h[j:]
+    for o, n in [('[Willpower reroll +3]', '[Reroll]'), ('title="Willpower reroll of your last roll"', 'title="Reroll your last roll"'),
+                 ('// ---- generic roll path + Willpower reroll', '// ---- generic roll path + Reroll')]:
+        assert o in h, o
+        h = h.replace(o, n)
+    return h, c
