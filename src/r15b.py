@@ -292,7 +292,8 @@ def cardfix(h, c):
     return h, c
 
 
-REN = [('cun', 'Cunning', '#9a6ad6'), ('glo', 'Glory', '#d9a521'), ('hon', 'Honor', '#3f86d6'), ('pur', 'Purity', '#e4e4e4'), ('wis', 'Wisdom', '#3fb39a')]
+# (97) same order as the left Renown panel
+REN = [('pur', 'Purity', '#e4e4e4'), ('glo', 'Glory', '#d9a521'), ('hon', 'Honor', '#3f86d6'), ('wis', 'Wisdom', '#3fb39a'), ('cun', 'Cunning', '#9a6ad6')]
 REN_URL = 'https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@91c021fee3f302f9f895454d1d06c355c48164e3/icons/renown/{}.png'
 LOCK_URL = 'https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@014361730d569cc5ea0bab7170aaf905b2e79735/icons/lock/lock.svg'
 ATTRS = ['intelligence', 'wits', 'resolve', 'strength', 'dexterity', 'stamina', 'presence', 'manipulation', 'composure']
@@ -1671,8 +1672,14 @@ def r88(h, c):
                 rrRun(mac, false);"""
     assert a in h, 'rr sub'
     h = h.replace(a, """                    const used = [...new Set([...mac.matchAll(/@\\{([\\w-]+)\\}/g)].map(x => x[1]).filter(n => F.includes(n)))];
-                    return getAttrs(used.map(n => `repeating_${sec}_${id}_${n}`), rv => {
-                        const m2 = mac.replace(/@\\{([\\w-]+)\\}/g, (a, n) => F.includes(n) ? String(rv[`repeating_${sec}_${id}_${n}`] ?? "").replace(/[{}|]/g, " ").replace(/\\]\\]/g, "] ]").trim() : a);
+                    return getAttrs(used.map(n => `repeating_${sec}_${id}_${n}`).concat([`repeating_${sec}_${id}_byout`, `repeating_${sec}_${id}_needroll`]), rv => {
+                        if (sec === "merits" && rv[`repeating_${sec}_${id}_byout`] === "0") ["o_dramatic", "o_failure", "o_success", "o_exceptional"].forEach(n => { rv[`repeating_${sec}_${id}_${n}`] = ""; });
+                        const m2 = mac.replace(/@\\{([\\w-]+)\\}/g, (a, n) => { if (!F.includes(n)) return a; const x = rv[`repeating_${sec}_${id}_${n}`];
+                            // (99) keep real refs (roll parts like atk_rt hold nested @{...} and ]]}}); only blank-out missing attrs and pass multi-line text literally
+                            if (x === undefined || x === null || x === "") return "";
+                            if (/\\n/.test(x) && !/[@\\[\\]{}|]/.test(x)) return String(x).replace(/\\r/g, "").replace(/[ \\t]+/g, " ").trim().replace(/ *\\n */g, "%NEWLINE%");
+                            return `@{repeating_${sec}_${id}_${n}}`; });
+                        if (sec === "merits" && rv[`repeating_${sec}_${id}_needroll`] === "0") { const m3 = m2.replace(/\\s*\\{\\{roll=[\\s\\S]*?(?=\\{\\{reroll=|$)/, "").replace(/\\s*\\{\\{reroll=[^}]*\\}\\}/, ""); return k === "sheet" ? rrSheet(m3) : startRoll(m3, r => finishRoll(r.rollId)); }
                         if (k === "sheet") return rrSheet(m2);
                         rrRun(m2, false);
                     });
@@ -1712,4 +1719,196 @@ def r90(h, c):
                     startRoll(tpl, r => finishRoll(r.rollId));"""
     assert a in h, 'facet roll'
     h = h.replace(a, a.replace('startRoll(tpl, r => finishRoll(r.rollId));', 'if (st.length) rrRun0(tpl, false); else startRoll(tpl, r => finishRoll(r.rollId));'), 1)
+    return h, c
+
+
+def _r91opts():
+    sk = sorted(SKILLS, key=lambda x: x)
+    o = '<option value="" selected>-</option><option value="" disabled>--- Attributes ---</option>'
+    o += ''.join(f'<option value="{x}">{x.title()}</option>' for x in ATTRS)
+    o += '<option value="" disabled>--- Skills ---</option>'
+    o += ''.join(f'<option value="{x}">{"Animal Ken" if x == "animalken" else x.title()}</option>' for x in sk)
+    o += '<option value="" disabled>--- Other ---</option><option value="morality">Morality (Harmony etc.)</option><option value="potency">Power Stat (Primal Urge etc.)</option>'
+    return o
+
+
+def r91(h, c):
+    import re as _re
+    G = f'{P}{P}{P}{P}{P} .sheet-gifts'
+    # (91) line breaks survive into chat cards
+    a = 'const r15Fx = (v) => String(v === undefined || v === null ? "" : v).replace(/[{}\\[\\]|]/g, " ").replace(/\\s+/g, " ").trim();'
+    assert a in h, 'r15Fx'
+    h = h.replace(a, 'const r15Fx = (v) => String(v === undefined || v === null ? "" : v).replace(/\\r/g, "").replace(/[{}\\[\\]|]/g, " ").replace(/[ \\t]+/g, " ").trim().replace(/ *\\n */g, "%NEWLINE%");')
+    a = 'const r15Lbl = (x) => x === "animalken" ? "Animal Ken" :'
+    assert a in h, 'r15Lbl'
+    h = h.replace(a, 'const r15Lbl = (x) => x === "potency" ? "Power Stat" : x === "morality" ? "Morality" : x === "animalken" ? "Animal Ken" :')
+    c += '\n.sheet-rolltemplate-cofd-entry td, .sheet-rolltemplate-cofd-entry .sheet-ce-out { white-space: pre-line; }'
+    # (92) Facet pool selects: every Attribute, Skill, Morality and the power stat, grouped
+    h, n = _re.subn(r'(<select name="attr_f_[a-z]{3}_(?:attr|skill)"[^>]*>).*?(</select>)', lambda m: m.group(1) + _r91opts() + m.group(2), h)
+    assert n == 20, n
+    for k, nm, _ in REN:
+        # (93) outcome boxes: Dramatic Failure, Failure, Success, Exceptional Success
+        o = [f'<textarea class="sheet-gfx-o" name="attr_f_{k}_o{x}" placeholder="{t}"></textarea>' for x, t in (('exc', 'Exceptional success effect'), ('succ', 'Success effect'), ('fail', 'Failure effect'), ('dram', 'Dramatic failure effect'))]
+        a = ''.join(o)
+        assert h.count(a) == 2, ('out', k)
+        h = h.replace(a, o[3].replace('Dramatic failure effect', 'Dramatic Failure effect') + o[2] + o[1] + o[0].replace('Exceptional success effect', 'Exceptional Success effect'))
+        # (94) +Renown toggle under the pool selects
+        lbs = _re.findall(r'<label class="sheet-gfn" title="Add ' + nm + r' to the pool">.*?</label>', h)
+        assert len(lbs) == 2 and lbs[0] == lbs[1], ('ren', k, len(lbs))
+        lb = lbs[0]; h = h.replace(lb, '')
+        h, n = _re.subn(r'(<div class="sheet-gfx-r"><select name="attr_f_' + k + r'_attr".*?</select><select name="attr_f_' + k + r'_skill".*?</select></div>)', lambda m: m.group(1) + '<div class="sheet-gfx-r sheet-gfx-rn">' + lb + '</div>', h)
+        assert n == 2, ('rn', k)
+    c += f'\n{G} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) > .sheet-gfx-rn {{ display: none !important; }}'
+    c += f'\n{G} .sheet-gfx-r.sheet-gfx-rn {{ display: flex !important; margin: 0 !important; }}'
+    # (95) armor tooltips
+    TG = 'General armor: subtract its rating from the damage of every attack (Armor Piercing lowers it).'
+    TB = 'Ballistic armor: against firearms and other ballistic attacks, downgrades that many points of lethal damage to bashing.'
+    for o, t in (('title="General armor"', TG), ('title="Ballistic armor"', TB), ('<span class="sheet-stp" title="General">', None), ('<span class="sheet-stp" title="Ballistic">', None)):
+        assert o in h, o
+        h = h.replace(o, f'title="{t}"' if t else o.replace('"General"', f'"{TG}"').replace('"Ballistic"', f'"{TB}"'))
+    h = h.replace('title="Armor from worn pieces (Stacking pieces add on top): General / Ballistic"', f'title="Armor from worn pieces (Stacking pieces add on top). {TG} {TB}"')
+    # (96) Gift name toggles the card instead of posting
+    a = '<button type="action" class="sheet-gift-nmb" name="act_gpost" title="Post Gift to chat"><span name="attr_name"></span></button>'
+    assert h.count(a) == 2, 'gpost'
+    h = h.replace(a, '<label class="sheet-gift-nmb" title="Expand / collapse"><input type="checkbox" class="sheet-gift-nmc" name="attr_show" value="1" /><span name="attr_name"></span></label>')
+    c += '\n'.join(['',
+        f'{G} .sheet-gift label.sheet-gift-nmb {{ display: block; width: 100%; box-sizing: border-box; margin: 0 !important; padding: 0 16px !important; color: inherit; font-family: inherit; font-size: 14px; font-weight: bold; line-height: 22px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }}',
+        f'{G} .sheet-gift label.sheet-gift-nmb:hover {{ color: var(--color-game-line, #c8732a); }}',
+        f'{G} .sheet-gift label.sheet-gift-nmb > input.sheet-gift-nmc {{ display: none !important; }}'])
+    # (98) Kuruth trigger boxes about twice as tall; header ranges in words
+    h, n = _re.subn(r'<textarea class="sheet-trig-ta" rows="3"', '<textarea class="sheet-trig-ta" rows="6"', h)
+    assert n == 3, n
+    for o, t in (('Harmony 0-4 or 6-10', 'Harmony 4 or lower, 6 or higher'), ('Harmony 0-2 or 8-10', 'Harmony 2 or lower, 8 or higher')):
+        assert f'<span class="sheet-kt-rng">{o}</span>' in h, o
+        h = h.replace(f'<span class="sheet-kt-rng">{o}</span>', f'<span class="sheet-kt-rng">{t}</span>')
+    c += f'\n{P}{P}{P}{P}{P} textarea.sheet-trig-ta {{ min-height: 96px !important; height: auto !important; }}'
+    # (100) Merits: Cost field hidden (dots say it), Requires-roll toggle hides the pool fields, no-roll clicks post without dice
+    i = h.index('<fieldset class="repeating_merits">'); j = h.index('</fieldset>', i); s = h[i:j]
+    s = s.replace(' {{f_cost=@{cost}}}', '')
+    a = '<div class="sheet-pw-box">'
+    assert s.count(a) == 1
+    s = s.replace(a, '<label class="sheet-wide sheet-m-nrl" title="Off: the Merit posts without dice and its pool fields are hidden"><input type="checkbox" class="sheet-gfx-sw sheet-m-nr" name="attr_needroll" value="1" /><span>Requires roll</span></label>' + a, 1)
+    # (101) Effects by outcome toggle (off: single description; on: the four outcome boxes)
+    a = '<div class="sheet-outcomes">'
+    assert s.count(a) == 1, 'outcomes'
+    s = s.replace(a, '<label class="sheet-wide sheet-m-nrl" title="On: separate Dramatic Failure / Failure / Success / Exceptional Success effects; the card shows the one rolled"><input type="checkbox" class="sheet-gfx-sw sheet-m-bo" name="attr_byout" value="1" /><span>Effects by outcome</span></label>' + a, 1)
+    h = h[:i] + s + h[j:]
+    M = f'{P}{P}{P}{P}{P} .repeating_merits ~ .repcontainer .repitem, {P}{P}{P}{P}{P} .repcontainer[data-groupname="repeating_merits"] .repitem'
+    def ms(x):
+        return ', '.join(f'{m} {x}' for m in M.split(', '))
+    def mh(x):
+        return ', '.join(f'{m}:has(input.sheet-m-nr:not(:checked)) {x}' for m in M.split(', '))
+    c += '\n'.join(['',
+        f'{ms("label:has(> input[name=\'attr_cost\'])")}, {ms("span.sheet-entry-cost")} {{ display: none !important; }}',
+        f'{mh(".sheet-pw-3")}, {mh(".sheet-pw-hd")}, {mh(".sheet-pw-row:has(input[name=\'attr_pp_mod\']) > .sheet-stp:has(input[name=\'attr_pp_mod\'])")}, {mh("label:has(> input[name=\'attr_pool\'])")}, {mh("label:has(> input[name=\'attr_pool_dice\'])")}, {mh(".sheet-entry-pool")}, {mh("button.sheet-was-roll")} {{ display: none !important; }}',
+        ', '.join(f'{m}:has(input.sheet-m-bo:not(:checked)) .sheet-outcomes' for m in M.split(', ')) + ' { display: none !important; }',
+        f'{ms("label.sheet-m-nrl")} {{ display: flex !important; align-items: center; gap: 6px; margin: 4px 0 !important; }}'])
+    c = c.replace("\\'", '"')
+    # worker: needroll gate + migration (pool already set -> on)
+    a = '                if (a) {\n                    const parts = [PW_AB[a]]; let t = val(a);'
+    assert a in h, 'pwRow'
+    h = h.replace(a, a.replace('if (a) {', 'if (a && !(sec === "merits" && v[p + "needroll"] === "0")) {'), 1)
+    a = 'getAttrs([p + "pp_attr", p + "pp_skill", p + "pp_mod", p + "cost_wp", p + "cost_pw", p + r, "sheettype",'
+    assert a in h
+    h = h.replace(a, 'getAttrs([p + "pp_attr", p + "pp_skill", p + "pp_mod", p + "cost_wp", p + "cost_pw", p + r, p + "needroll", "sheettype",', 1)
+    a = '                const a = v[p + "pp_attr"], s = v[p + "pp_skill"], m = parseInt(v[p + "pp_mod"]) || 0;\n'
+    assert a in h
+    h = h.replace(a, a + '                if (sec === "merits" && v[p + "needroll"] === "0") { u[p + "roll_part"] = ""; u[p + "pool"] = ""; }\n', 1)
+    a = 'change:repeating_${sec}:cost_pw change:repeating_${sec}:${r}`'
+    assert a in h
+    h = h.replace(a, 'change:repeating_${sec}:cost_pw change:repeating_${sec}:needroll change:repeating_${sec}:${r}`', 1)
+    a = 'getAttrs([p + "cost_wp", p + "cost_pw", p + "pool_dice", "sheettype", "vitae", "willpower", "willpower_cur"], (v) => {\n                    const nm = sec === "merits" ? "merit_name" : "name"; const n = parseInt(v[p + "pool_dice"]) || 0;'
+    assert a in h, 'proll'
+    h = h.replace(a, 'getAttrs([p + "cost_wp", p + "cost_pw", p + "pool_dice", p + "needroll", "sheettype", "vitae", "willpower", "willpower_cur"], (v) => {\n                    const nm = sec === "merits" ? "merit_name" : "name"; const n = (sec === "merits" && v[p + "needroll"] === "0") ? 0 : (parseInt(v[p + "pool_dice"]) || 0);', 1)
+    a = '        on("sheet:opened", r15CostMig);'
+    assert a in h
+    h = h.replace(a, a + '''
+        // (100) Merit "Requires roll": once per row, on if a pool is already set, otherwise off; never touches the pool data
+        const r101Mig = () => getSectionIDs("repeating_merits", ids => getAttrs(ids.flatMap(i => ["o_dramatic", "o_failure", "o_success", "o_exceptional", "bomig"].map(x => `repeating_merits_${i}_${x}`)), v => {
+            const u = {}; ids.forEach(i => { const p = `repeating_merits_${i}_`; if (v[p + "bomig"] === "1") return;
+                u[p + "byout"] = ["o_dramatic", "o_failure", "o_success", "o_exceptional"].some(x => String(v[p + x] || "").trim()) ? "1" : "0"; u[p + "bomig"] = "1"; });
+            if (Object.keys(u).length) setAttrs(u, {silent: true});
+        }));
+        on("sheet:opened", r101Mig);
+        const r100Mig = () => getSectionIDs("repeating_merits", ids => getAttrs(ids.flatMap(i => ["pp_attr", "pool_dice", "nrmig"].map(x => `repeating_merits_${i}_${x}`)), v => {
+            const u = {}; ids.forEach(i => { const p = `repeating_merits_${i}_`; if (v[p + "nrmig"] === "1") return;
+                u[p + "needroll"] = (v[p + "pp_attr"] || (parseInt(v[p + "pool_dice"]) || 0) > 0) ? "1" : "0"; u[p + "nrmig"] = "1"; });
+            if (Object.keys(u).length) setAttrs(u, {silent: true}, () => PW_SECS.includes("merits") && ids.forEach(i => pwRow("merits", i)));
+        }));
+        on("sheet:opened", r100Mig);''', 1)
+    return h, c
+
+
+def r92(h, c):
+    """(102) 3-slot dice pool for power rows (Merits etc.) and a 3rd optional slot for Gift Facets; steppers on one row"""
+    import re as _re
+    sel = lambda nm, t: f'<select name="attr_{nm}" title="{t}">' + _r91opts().replace('<option value="morality">', '<option value="_dots">This entry\'s dots</option><option value="morality">') + '</select>'
+    rx = r'<div class="sheet-pw-row"><b>Dice pool</b><label>Attribute <select name="attr_pp_attr">.*?</select></label><label>Skill / trait <select name="attr_pp_skill">.*?</select></label></div>'
+    new = ('<div class="sheet-pw-hd">Dice Pool</div><div class="sheet-pw-3">' + sel('pp_attr', 'Dice pool 1') + sel('pp_skill', 'Dice pool 2') + sel('pp_3', 'Dice pool 3') + '</div>')
+    h, n = _re.subn(rx, lambda m: new, h)
+    assert n == 26, ('pw3', n)
+    for a, b in (('<span class="sheet-stp-l">Modifier</span><button type="action" class="sheet-stp-b" name="act_pp-mod-dec"', '<span class="sheet-stp-l">Mod</span><button type="action" class="sheet-stp-b" name="act_pp-mod-dec"'),
+                 ('<span class="sheet-stp-l">Willpower</span><button type="action" class="sheet-stp-b" name="act_cost-wp-dec"', '<span class="sheet-stp-l">WP</span><button type="action" class="sheet-stp-b" name="act_cost-wp-dec"')):
+        assert h.count(a) == 26, a
+        h = h.replace(a, b)
+    # worker: pool = sum of the three slots (blank = none); old pp_attr/pp_skill stay as slots 1 and 2
+    a = 'getAttrs([p + "pp_attr", p + "pp_skill", p + "pp_mod",'
+    assert h.count(a) >= 1, 'ga'
+    h = h.replace(a, 'getAttrs([p + "pp_attr", p + "pp_skill", p + "pp_3", p + "pp_mod",', 1)
+    a = 'const a = v[p + "pp_attr"], s = v[p + "pp_skill"], m = parseInt(v[p + "pp_mod"]) || 0;'
+    assert a in h
+    h = h.replace(a, 'const a = v[p + "pp_attr"], s = v[p + "pp_skill"], s3 = v[p + "pp_3"], m = parseInt(v[p + "pp_mod"]) || 0;', 1)
+    a = 'if (a && !(sec === "merits" && v[p + "needroll"] === "0")) {\n                    const parts = [PW_AB[a]]; let t = val(a);\n                    if (s) { parts.push(PW_AB[s]); t += val(s); }'
+    assert a in h, 'pwsum'
+    h = h.replace(a, 'if ((a || s || s3) && !(sec === "merits" && v[p + "needroll"] === "0")) {\n                    const parts = []; let t = 0;\n                    [a, s, s3].forEach(k => { if (k && PW_AB[k]) { parts.push(PW_AB[k]); t += val(k); } });', 1)
+    a = 'on(`change:repeating_${sec}:pp_attr change:repeating_${sec}:pp_skill '
+    assert a in h
+    h = h.replace(a, 'on(`change:repeating_${sec}:pp_attr change:repeating_${sec}:pp_skill change:repeating_${sec}:pp_3 ', 1)
+    # Facets: optional 3rd slot
+    h, n = _re.subn(r'(<select name="attr_f_([a-z]{3})_skill"[^>]*>.*?</select>)', lambda m: m.group(1) + f'<select name="attr_f_{m.group(2)}_x3" title="Optional third trait">' + _r91opts() + '</select>', h)
+    assert n == 10, ('fx3', n)
+    a = 'const fl = ["name", "on", "attr", "skill", '
+    assert a in h
+    h = h.replace(a, 'const fl = ["name", "on", "attr", "skill", "x3", ', 1)
+    a = '[v[f + "attr"], v[f + "skill"]].filter(Boolean)'
+    assert a in h, 'fst'
+    h = h.replace(a, '[v[f + "attr"], v[f + "skill"], v[f + "x3"]].filter(Boolean)', 1)
+    c += ('\n.charsheet .sheet-pw-hd{text-align:center;font-weight:bold;margin:2px 0}'
+          '\n.charsheet .sheet-pw-3{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}'
+          '\n.charsheet .sheet-pw-3 select{width:100% !important;min-width:0 !important;margin:0 !important}'
+          '\n.charsheet .sheet-pw-row2{display:flex !important;flex-wrap:nowrap !important;gap:4px;justify-content:space-between}'
+          '\n.charsheet .sheet-pw-row2 .sheet-stp{white-space:nowrap;margin:0 !important}'
+          f'\n{P}{P}{P}{P}{P} .sheet-gifts .sheet-gfx-r:has(> select[name$="_x3"]){{grid-template-columns:repeat(auto-fit,minmax(64px,1fr)) !important}}'
+          f'\n{P}{P}{P}{P}{P} .sheet-gifts .sheet-gfx-r > select[name$="_x3"]{{width:100% !important;min-width:0 !important;box-sizing:border-box}}\n')
+    return h, c
+
+
+def r93(h, c):
+    """(103) Config: Instinctive Defense (WtF 2e p.109 Merit: in Urshul and Urhan, Defense uses the higher, not lower, of Wits and Dexterity)"""
+    a = '<span>Attribute dots 6+</span></label>'
+    assert h.count(a) == 1, 'cfg'
+    h = h.replace(a, a + '<label class="sheet-cfg-sw" title="Instinctive Defense (Werewolf: the Forsaken 2e p.109): in Urshul and Urhan, Defense uses the higher of Wits and Dexterity, not the lower"><input type="checkbox" name="attr_inst_def" value="1" /><span class="sheet-cfg-knob"></span><span>Instinctive Defense</span></label>', 1)
+    # the forms the rule applies to; change here if the table rules differ
+    ID = 'const INST_DEF_FORMS = ["urshul", "urhan"]; const instDef = (v, f) => v.inst_def === "1" && INST_DEF_FORMS.includes(String(f || "").toLowerCase());\n'
+    a = '        var updateDefense = function() {\n            getAttrs(["defense_select",'
+    assert h.count(a) == 1, 'upd'
+    h = h.replace(a, '        ' + ID + '        var updateDefense = function() {\n            getAttrs(["inst_def", "form", "defense_select",', 1)
+    a = 'v.wits = (parseInt(v.wits, 10) || 0) + (parseInt(v.wits_boost, 10) || 0);\n'
+    assert h.count(a) == 1, 'wits'
+    h = h.replace(a, a + '                if (instDef(v, v.form)) { v.dexterity = v.wits = Math.max(v.dexterity, v.wits); }\n'
+                  '                if (!updateDefense._on) { updateDefense._on = 1; on("change:inst_def change:form", () => { updateDefense(); if (typeof updateForms === "function") updateForms(); }); }\n', 1)
+    a = 'u[`fv_${f}_defense`] = Math.min(n("wits"), dex) + n("athletics");'
+    assert h.count(a) == 1, 'fv'
+    h = h.replace(a, 'u[`fv_${f}_defense`] = (instDef(v, f) ? Math.max : Math.min)(n("wits"), dex) + n("athletics");', 1)
+    a = 'getAttrs(["strength","dexterity","stamina","manipulation","wits","composure","athletics","base_size","form","urkhar_enabled","sheettype"]'
+    assert h.count(a) == 1, 'fga'
+    h = h.replace(a, a[:-1] + ',"inst_def"]', 1)
+    a = 'u.defense_calc = `Defense = min(Wits'
+    n = h.count(a); assert n >= 1, 'calc'
+    h = h.replace(a, 'u.defense_calc = `Defense = ${instDef(v, v.form) ? "max" : "min"}(Wits')
+    # (97b) Renown panel: drop the partial (top/bottom/left only) border
+    c += f'\n{P}{P}{P}{P}{P} .sheet-game-line.sheet-skills-renown{{border:0 none !important;box-shadow:none !important}}\n'
+    a = '"defense_base","defense_penalty",'
+    assert h.count(a) == 1, 'cga'
+    h = h.replace(a, '"defense_base","defense_penalty","inst_def",', 1)
     return h, c
