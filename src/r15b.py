@@ -1938,3 +1938,27 @@ def r94(h, c):
         out.append(', '.join(p.replace(G, m) for p in ps for m in M) + ' {' + body)
     c += '\n' + '\n'.join(out) + '\n'
     return h, c
+
+
+def r95(h, c):
+    """(104) Weapons / Armor rows: speech-bubble post button sits right beside the expand caret, caret-sized, name after it"""
+    import re as _re
+    def mv(m):
+        head, body = m.group(1), m.group(2)
+        b = _re.search(r'<button type="roll" class="sheet-entry-post sheet-post-ic"[^>]*>&#128172;</button>', body)
+        return head + b.group(0) + body.replace(b.group(0), '', 1)
+    h, n = _re.subn(r'(<div class="sheet-entry-head">\n?)((?:(?!</div>).)*?<button type="roll" class="sheet-entry-post sheet-post-ic")', lambda m: m.group(0), h, flags=_re.S)
+    n = 0
+    out = []; i = 0
+    for m in _re.finditer(r'<div class="sheet-entry-head">\n?', h):
+        j = h.find('sheet-entry-post sheet-post-ic', m.end()); k = h.find('</div>', m.end())
+        if j < 0 or j > k: continue
+        bs = h.rfind('<button', m.end(), j); be = h.find('</button>', j) + 9
+        out.append(h[i:m.end()] + h[bs:be] + h[m.end():bs]); i = be; n += 1
+    h = ''.join(out) + h[i:]
+    assert n == 2, ('post', n)
+    E = f'{P}{P}{P}{P}{P} .sheet-entry-head'
+    c += (f'\n{E}:has(> button.sheet-post-ic:first-child) {{ padding-left: 0 !important; }}'
+          f'\n{E} > button.sheet-entry-post.sheet-post-ic:first-child {{ order: -1 !important; flex: 0 0 13px !important; width: 13px !important; height: 13px !important; min-height: 13px !important; max-height: 13px !important; min-width: 13px !important; padding: 0 !important; margin: 0 2px 0 0 !important; '
+          f'border: 1px solid rgba(217,138,74,0.7) !important; border-radius: 3px !important; background: #1a1a1a !important; font-size: 7px !important; line-height: 11px !important; text-align: center !important; box-sizing: border-box !important; align-self: center !important; position: relative !important; top: 2px !important; float: none !important; overflow: hidden; }}\n')
+    return h, c
