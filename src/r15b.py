@@ -1081,3 +1081,166 @@ def r45(h, c):
     h, n2 = re.subn(r'(<span data-i18n="(?:perception|health|willpower|size|speed|defense|initiative|armor)"[^>]*>[^<]*)\s*:\s*(</span>)', r'\1\2', h)
     assert n >= 4, n
     return h, c
+
+
+def r46(h, c):
+    # (46) gift cards: no overflow at Roll20 live widths; dark collapse carets everywhere. (47) centred gift name.
+    Q = f'{P}{P}{P}'
+    G = f'{Q} .sheet-gifts'
+    CAR = 'background: #1a1a1a !important; border: 1px solid color-mix(in srgb, var(--pad, var(--pa, #888)) 70%, rgba(0,0,0,0)) !important; border-radius: 3px !important; box-shadow: none !important; outline: none !important;'
+    c += '\n'.join([
+        f'{G} .repcontainer {{ display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 4px !important; flex-wrap: nowrap !important; }}',
+        f'{G} .repcontainer > .repitem {{ min-width: 0 !important; max-width: 100% !important; width: auto !important; box-sizing: border-box !important; }}',
+        f'{G} .sheet-gift {{ box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; overflow: hidden; padding: 3px !important; }}',
+        f'{G} .sheet-gift-lines, {G} .sheet-gift-body {{ box-sizing: border-box !important; min-width: 0 !important; max-width: 100% !important; }}',
+        f'{G} .sheet-gf-line, {G} button.sheet-gf-line {{ box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; padding: 1px 16px 1px 3px !important; overflow: hidden; }}',
+        f'{G} .sheet-gf-line .sheet-gf-lock {{ right: 3px !important; left: auto !important; }}',
+        f'{G} .sheet-gf-nm {{ min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}',
+        f'{G} .sheet-gift-nm {{ text-align: center !important; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; min-width: 0 !important; padding: 0 16px !important; }}',
+        f'{G} .sheet-gift-tg, {G} .sheet-gfx-tg {{ -webkit-appearance: none !important; appearance: none !important; width: 13px !important; height: 13px !important; {CAR} }}',
+        f'{G} .sheet-gift-tg::before {{ color: var(--pad, var(--pa, #ddd)) !important; line-height: 11px !important; font-size: 11px !important; }}',
+        f'{Q} .sheet-entry > input.sheet-entry-toggle {{ width: 13px !important; height: 13px !important; {CAR} }}',
+        f'{Q} .sheet-entry > input.sheet-entry-toggle::before {{ border-color: var(--pad, var(--pa, #ddd)) !important; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r48(h, c):
+    import re
+    # (48) per-entry inline roll buttons -> one compact action menu (named attr checkbox toggle, never written by workers)
+    pat = re.compile(r'(<input type="hidden" class="(?:sheet-)?haspool"[^>]*/>)(<button[^>]*name="act_rr-roll"[^>]*>)[^<]*(</button>)'
+                     r'(\s*<span class="(?:sheet-)?entry-cost"[^>]*></span>)?'
+                     r'(?:\s*(<input type="hidden" class="(?:sheet-)?pw-auto-flag"[^>]*/>)\s*(<button[^>]*name="act_proll"[^>]*>)[^<]*(</button>))?')
+
+    def rep(m):
+        cost = m.group(4) or ''
+        items = m.group(1) + m.group(2) + '<span class="sheet-am-l">Roll pool</span>' + m.group(3)
+        if m.group(6):
+            items += m.group(5) + m.group(6) + '<span class="sheet-am-l">Roll &amp; pay cost</span>' + m.group(7)
+        return (cost + '<span class="sheet-amenu"><input type="checkbox" class="sheet-amenu-tg" name="attr_amenu" value="1" title="Actions" />'
+                '<span class="sheet-amenu-list">' + items + '</span></span>')
+    h, n = pat.subn(rep, h)
+    assert n >= 20, n
+    Q = f'{P}{P}{P}'
+    A = f'{Q} .sheet-amenu'
+    c += '\n'.join([
+        f'{A} {{ position: relative !important; display: inline-flex !important; align-items: center; flex: 0 0 auto !important; width: 18px; height: 18px; margin: 0 0 0 2px !important; order: 99; }}',
+        f'{A} > input.sheet-amenu-tg {{ -webkit-appearance: none !important; appearance: none !important; position: static !important; display: block !important; width: 18px !important; height: 16px !important; margin: 0 !important; padding: 0 !important; cursor: pointer; background: #1a1a1a !important; border: 1px solid color-mix(in srgb, var(--pad, var(--pa, #888)) 70%, rgba(0,0,0,0)) !important; border-radius: 3px !important; box-shadow: none !important; outline: none !important; opacity: 1 !important; }}',
+        f'{A} > input.sheet-amenu-tg::before {{ content: "..."; display: block; text-align: center; font: bold 11px/9px Arial, sans-serif; color: var(--pad, var(--pa, #ddd)); letter-spacing: 0; }}',
+        f'{A} > .sheet-amenu-list {{ display: none !important; position: absolute; right: 0; top: 19px; z-index: 60; min-width: 120px; max-width: 200px; flex-direction: column; gap: 2px; padding: 3px; background: #1a1a1a; border: 1px solid var(--pad, var(--pa, #888)); border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,.6); }}',
+        f'{A} > input.sheet-amenu-tg:checked + .sheet-amenu-list {{ display: flex !important; }}',
+        f'{A} .sheet-amenu-list button {{ display: flex !important; visibility: visible !important; align-items: center; width: 100% !important; height: auto !important; min-height: 20px; box-sizing: border-box !important; margin: 0 !important; padding: 2px 6px 2px 22px !important; text-align: left; white-space: nowrap; color: #e8e8e8 !important; font-family: "Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif !important; font-size: 13px !important; font-weight: 700 !important; background-color: rgba(0,0,0,0) !important; background-position: 3px center !important; background-size: 14px 14px !important; background-repeat: no-repeat !important; border: 1px solid rgba(0,0,0,0) !important; border-radius: 3px !important; text-shadow: none !important; box-shadow: none !important; }}',
+        f'{A} .sheet-amenu-list button:hover {{ border-color: var(--pad, var(--pa, #888)) !important; background-color: color-mix(in srgb, var(--pad, var(--pa, #888)) 18%, rgba(0,0,0,0)) !important; }}',
+        f'{A} .sheet-amenu-list input.sheet-haspool[value="0"] + button, {A} .sheet-amenu-list input.sheet-haspool[value=""] + button {{ display: none !important; }}',
+        f'{A} .sheet-am-l {{ font-size: 13px !important; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r49(h, c):
+    # (49) worker setAttrs guard: drop no-op writes and never touch collapse/menu open flags
+    js = r'''
+        (function () { try {
+            const _sa = setAttrs;
+            const OPEN = /(^|_)(show|amenu)$|_f_(cun|glo|hon|pur|wis)_show$/;
+            setAttrs = function (u, o, cb) {
+                if (typeof o === "function") { cb = o; o = {}; }
+                o = o || {};
+                const allowOpen = !!o.allowOpen;
+                const k = Object.keys(u || {}).filter(x => allowOpen || !OPEN.test(x));
+                if (!k.length) { if (cb) cb(); return; }
+                getAttrs(k, (v) => {
+                    const d = {}; let n = 0;
+                    k.forEach(x => { const a = v[x], b = u[x]; if (a === undefined || String(a) !== String(b)) { d[x] = b; n++; } });
+                    const o2 = Object.assign({}, o); delete o2.allowOpen;
+                    if (n) _sa(d, o2, cb); else if (cb) cb();
+                });
+            };
+        } catch (e) {} })();
+'''
+    i = h.find('<script type="text/worker">')
+    assert i > 0
+    j = i + len('<script type="text/worker">')
+    h = h[:j] + js + h[j:]
+    # the explicit expand/collapse-all buttons and new-row creation are the only intended writers of show
+    h = h.replace('u[`repeating_${sec}_${id}_show`] = val); setAttrs(u, {silent: true});', 'u[`repeating_${sec}_${id}_show`] = val); setAttrs(u, {silent: true, allowOpen: true});')
+    h = h.replace('[p + "show"]: "0"});', '[p + "show"]: "0"}, {allowOpen: true});') if False else h
+    return h, c
+
+
+def r50(h, c):
+    # (50) label + slide toggle (and label + checkbox) inline on one line inside collapsible bodies; (48) menu not clipped
+    Q = f'{P}{P}{P}'
+    B = f'{Q} .sheet-entry-body'
+    c += '\n'.join([
+        f'{B} label.sheet-switch, {Q} .sheet-gift-body label.sheet-switch {{ display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; width: auto !important; }}',
+        f'{B} label.sheet-switch > .sheet-sw-lbl, {Q} .sheet-gift-body label.sheet-switch > .sheet-sw-lbl {{ order: -1; display: inline-block !important; margin: 0 !important; line-height: normal !important; }}',
+        f'{B} label.sheet-switch > .sheet-sw-track {{ order: 1; flex: 0 0 auto; margin: 0 !important; }}',
+        f'{B} label:has(> input[type=checkbox]):not(.sheet-switch) {{ display: inline-flex !important; flex-direction: row !important; align-items: center !important; gap: 6px !important; }}',
+        f'{B} label:has(> input[type=checkbox]):not(.sheet-switch) > input[type=checkbox] {{ margin: 0 !important; position: static !important; }}',
+        f'{Q} .sheet-entry-head:has(.sheet-amenu) {{ overflow: visible !important; position: relative; z-index: 6; }}',
+        f'{Q} .sheet-entry:has(.sheet-amenu-tg:checked) {{ overflow: visible !important; z-index: 7; position: relative; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r51(h, c):
+    # (52)(53) gift name = roll button in display mode; name edited in the caret panel; worker-built roll (no @{} refs)
+    Q = f'{P}{P}{P}'
+    nm = '<input type="text" class="sheet-gift-nm" name="attr_name" placeholder="Gift name" />'
+    n = h.count(nm)
+    assert n == 2, n
+    h = h.replace(nm, '<button type="action" class="sheet-gift-nmb" name="act_gpost" title="Post Gift to chat"><span name="attr_name"></span></button>')
+    h = re.sub(r'(<div class="(?:sheet-)?gift-body">)', r'\1<input type="text" class="sheet-gift-nmed" name="attr_name" placeholder="Gift name" />', h)
+    # (54) Notes page: one big free-text notes area above the old list (old rows kept, list only shown when it has rows)
+    k = '<div class="sheet-entry-section sheet-notes">'
+    assert k in h
+    h = h.replace(k, '<div class="sheet-bignotes"><div class="sheet-subheader"><span>Notes</span></div><textarea class="sheet-bignotes-ta" name="attr_sheet_notes" placeholder="Notes"></textarea></div>' + k, 1)
+    # (55) Main: visible form drop-down, Turns left boxes under it
+    k = '<div class="sheet-form-picker">'
+    i = h.find(k); assert i > 0
+    sel = '<select class="sheet-main-formsel" name="attr_form" title="Current form"><option value="hishu">Hishu</option><option value="dalu">Dalu</option><option value="gauru">Gauru</option><option value="urkhar">Ur&#39;Khar</option><option value="urshul">Urshul</option><option value="urhan">Urhan</option></select>'
+    h = h[:i] + sel + h[i:]
+    # (58) gift migration idempotent: never touch rows that already have facet data; stamp checked rows gv=2 once
+    o = 'const isOld = (s, id) => g(s, id, "gv") === "" && !!('
+    assert o in h
+    h = h.replace(o, 'const isOld = (s, id) => g(s, id, "gv") === "" && !Object.keys(R15_RN).some(k => g(s, id, `f_${k}_name`)) && !!(')
+    o = 'rows.forEach(([s, id]) => { if (g(s, id, "gv") !== "old" && !isOld(s, id))'
+    assert o in h
+    h = h.replace(o, 'rows.forEach(([s, id]) => { if (g(s, id, "gv") === "" && !isOld(s, id)) out[`repeating_${s}_${id}_gv`] = "2"; });\n                    ' + o)
+    js = r'''
+        // r15b (53): Gift name posts via the worker with real row values
+        ["gifts", "wgifts"].forEach(sec => on(`clicked:repeating_${sec}:gpost`, ev => {
+            const id = (ev.sourceAttribute || ev.triggerName).split("_")[2]; const p = `repeating_${sec}_${id}_`;
+            const ks = [p + "name", p + "notes", "game_line"]; Object.keys(R15_RN).forEach(k => ["on", "name", "desc"].forEach(x => ks.push(p + `f_${k}_${x}`)));
+            getAttrs(ks, v => {
+                const gl = r15Fx(v.game_line) || "werewolf";
+                const fs = Object.keys(R15_RN).filter(k => v[p + `f_${k}_on`] === "1").map(k => `${R15_RN[k]}: ${r15Fx(v[p + `f_${k}_name`]) || "-"}`).join("; ");
+                const kv = {charname: "@{character_name}", ["gl_" + gl]: "1", splat: gl, kind: `${sec === "wgifts" ? "Wolf" : "Shadow"} Gift`, name: r15Fx(v[p + "name"]) || "Gift", f_fdesc: fs || "No Facets learned", f_notes: r15Fx(v[p + "notes"])};
+                startRoll("&{template:cofd-entry} " + Object.keys(kv).filter(x => kv[x]).map(x => `{{${x}=${kv[x]}}}`).join(" "), r => finishRoll(r.rollId));
+            });
+        }));
+'''
+    o = '        on("sheet:opened", r15CostMig);'
+    assert o in h
+    h = h.replace(o, js + o)
+    c += '\n'.join([
+        f'{Q} .sheet-gift button.sheet-gift-nmb {{ display: block; width: 100%; box-sizing: border-box; margin: 0 !important; padding: 0 16px !important; background: rgba(0,0,0,0) !important; border: none !important; box-shadow: none !important; color: inherit; font-family: inherit; font-size: 14px; font-weight: bold; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }}',
+        f'{Q} .sheet-gift button.sheet-gift-nmb:hover {{ color: var(--color-game-line, #c8732a); }}',
+        f'{Q} .sheet-gift input.sheet-gift-nmed {{ display: block; width: 100%; box-sizing: border-box; margin: 0 0 4px; text-align: center; }}',
+        f'{Q} .sheet-bignotes {{ margin: 4px 0 10px; }}',
+        f'{Q} textarea.sheet-bignotes-ta {{ display: block; width: 100%; box-sizing: border-box; min-height: 420px; resize: vertical; }}',
+        f'{Q} .sheet-entry-section.sheet-notes:not(:has(.repitem)) {{ display: none; }}',
+        f'{Q} .sheet-page1 .sheet-main-forms select.sheet-main-formsel {{ display: block !important; margin: 4px auto; width: auto; min-width: 140px; }}',
+        f'{Q} .sheet-page1 .sheet-main-forms .sheet-ut-row {{ justify-content: center; }}',
+        f'{Q} .sheet-gifts, {Q} .sheet-gifts .repcontainer, {Q} .sheet-gifts fieldset + .repcontainer {{ overflow-x: hidden !important; max-width: 100%; }}',
+        f'{Q} .sheet-det-splat input[name="attr_det_first_change"] {{ background: rgba(0,0,0,0) !important; border: none !important; border-bottom: 1px solid var(--color-game-line, #888) !important; box-shadow: none !important; color: inherit !important; border-radius: 0 !important; height: auto; padding: 2px 4px; }}',
+        f'{Q} .sheet-entry-body .sheet-pw-box ~ label:has(> input[name="attr_pool"]), {Q} .sheet-entry-body .sheet-pw-box ~ label:has(> input[name="attr_pool_dice"]) {{ display: none !important; }}',
+        f'{Q} .sheet-entry-body .sheet-pw-box .sheet-pw-row {{ display: flex !important; flex-wrap: wrap; align-items: center; gap: 4px 10px; }}',
+        f'{Q} .sheet-entry-body .sheet-pw-box .sheet-pw-row > b {{ flex: 0 0 100%; }}',
+        f'{Q} .sheet-entry-body .sheet-pw-box .sheet-pw-row > label {{ display: inline-flex !important; align-items: center; gap: 4px; flex: 1 1 40%; min-width: 0; width: auto !important; }}',
+        f'{Q} .sheet-entry-body .sheet-pw-box .sheet-pw-row > label select {{ min-width: 0; flex: 1 1 auto; width: auto !important; }}',
+        f'{Q} .repcontainer input.sheet-gfx-sw:checked {{ background: var(--color-game-line, #b4743a) !important; }}',
+        f'{Q} .repcontainer label.sheet-switch > input:checked + .sheet-sw-track {{ background: var(--color-game-line, #b4743a) !important; }}',
+    ]) + '\n'
+    return h, c
