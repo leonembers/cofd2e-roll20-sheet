@@ -61,7 +61,7 @@ def apply(h, c):
           f'{G("weapons")} label:has(> input[name="attr_tags_extra"]), {G("armor")} label:has(> input[name="attr_ar_tags"]) {{ flex: 1 1 100% !important; }}',
           f'{G("weapons")} input[name="attr_tags_extra"], {G("armor")} input[name="attr_ar_tags"] {{ flex: 1 1 auto !important; width: auto !important; }}',
           f'{G("armor")} input[name="attr_ar_coverage"] {{ width: 9em !important; }}']
-    return armor(*devnotes(*firstname(*cards(*tabrow(*slides(*weapons(h, c + '\n' + '\n'.join(L) + '\n')))))))
+    return beats(*armor(*devnotes(*firstname(*cards(*tabrow(*slides(*weapons(h, c + '\n' + '\n'.join(L) + '\n'))))))))
 
 
 # (f) weapon cards: inline labels and per-type stat visibility (CofD 2E core weapon tables + Hurt Locker)
@@ -137,7 +137,13 @@ def cards(h, c):
               f'{B} ~ .sheet-ce-head .sheet-ce-name {{ font-size: 17px; letter-spacing: .5px; }}',
               f'{B} ~ table th, {B} ~ * th, {B} ~ .sheet-ce-roll .sheet-ce-sl {{ font-family: {f} !important; color: {col} !important; letter-spacing: .5px; }}']
     # template CSS goes first in sheet.css (before everything else)
-    return h, '\n'.join(L) + '\n' + c
+    # live chat only receives the roll-template block, so the card fonts' @font-face rules go first, inline with it
+    import re
+    fams = {'WolfsRain', 'Chomsky', '1980sWriter', 'IM Fell English SC', 'Cinzel Decorative', 'Metamorphous', 'Almendra', 'Pirata One', 'Cinzel', 'Black Ops One', 'Creepster', 'Metal Mania', 'Fondamento', 'Special Elite'}
+    ff = [m.group(0) for m in re.finditer(r'@font-face\s*\{[^}]*\}', c) if re.search(r'font-family:\s*["\']?([^;"\']+)', m.group(0)).group(1) in fams]
+    for x in ff: c = c.replace(x, '', 1)
+    L.append(f'.sheet-rolltemplate-cofd-entry .sheet-ce-head, .sheet-rolltemplate-cofd-entry .sheet-ce-head * {{ font-weight: normal !important; }}')
+    return h, '\n'.join(ff) + '\n' + '\n'.join(L) + '\n' + c
 
 
 # (d) stock checkboxes -> slide toggles in the splat colour (drawn on the input itself: appearance none + ::after knob)
@@ -257,6 +263,10 @@ def armor(h, c):
     c += '\n'.join([
         f'{A} > .sheet-entry-head .sheet-ar-sum {{ display: inline-flex !important; }}',
         f'{A} > .sheet-entry-head > label.sheet-ar-stk {{ margin-left: 4px !important; }}',
+        f'{A} > .sheet-entry-head {{ column-gap: 6px !important; }}',
+        f'{A} > .sheet-entry-head .sheet-ar-sum {{ flex: 0 0 auto !important; margin: 0 8px 0 4px !important; position: static !important; }}',
+        f'{A} > .sheet-entry-head .sheet-ar-sv {{ display: inline-block !important; min-width: 1.2em !important; text-align: left; }}',
+        f'{A} > .sheet-entry-head > label.sheet-ar-eq {{ position: relative !important; margin-left: 0 !important; }}',
         f'{A} .sheet-ar-panel {{ flex: 0 0 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }}',
         f'{A} .sheet-ar-panel > .sheet-ar-steps {{ display: flex !important; flex-wrap: wrap; gap: 4px 10px; }}',
         f'{A} .sheet-ar-panel > label.sheet-ar-dtog {{ display: inline-flex !important; align-items: center; gap: 4px; cursor: pointer; flex: 0 0 100%; }}',
@@ -267,5 +277,25 @@ def armor(h, c):
         f'{A} > .sheet-entry-head > input.sheet-ar-name {{ flex: 1 1 60px !important; width: 60px !important; min-width: 0 !important; }}',
         f'{A} > .sheet-entry-head > label.sheet-switch {{ flex: 0 0 auto !important; white-space: nowrap; }}',
         f'{A} .sheet-ar-panel > textarea.sheet-ar-desc {{ flex: 0 0 100%; }}',
+    ]) + '\n'
+    return h, c
+
+
+def beats(h, c):
+    """r14: drop the 'Beats' row; the 5 Beat boxes sit on the Experience header line, to its right."""
+    import re
+    m = re.search(r'<div class="sheet-2nd sheet-input-group">\s*<span class="sheet-preserve-whitespace"><span data-i18n="beats">Beats</span>: </span>\s*(<div class="sheet-checkboxes">.*?attr_beat_box5.*?</div>\s*</div>)\s*</div>', h, re.S)
+    assert m and h.count('name="attr_beat_box1"') == 1
+    box = m.group(1).replace('<div class="sheet-checkboxes">', '<div class="sheet-checkboxes sheet-xp-beats" title="Beats: 5 Beats = 1 Experience">', 1)
+    h = h[:m.start()] + h[m.end():]
+    a = '<span data-i18n="experience">Experience</span> <span>:</span> <span class="sheet-xp-trio">'
+    a2 = re.search(r'<span data-i18n="experience">Experience</span>\s*<span>:</span>\s*(?=<span class="sheet-xp-trio">)', h)
+    assert a2
+    h = h[:a2.end()] + box + h[a2.end():]
+    G = f'{P} .sheet-input-group:has(> .sheet-xp-beats)'
+    c += '\n'.join([
+        f'{G} {{ display: flex !important; flex-wrap: wrap !important; align-items: center !important; }}',
+        f'{G} > .sheet-xp-beats {{ display: inline-flex !important; margin: 0 0 0 8px !important; width: auto !important; flex: 0 0 auto !important; }}',
+        f'{G} > .sheet-xp-trio {{ flex: 0 0 100% !important; }}',
     ]) + '\n'
     return h, c

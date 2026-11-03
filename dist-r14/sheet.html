@@ -2827,9 +2827,11 @@
                         </div>
                         <!-- !geist2-geist -->
                         <div class="sheet-game-line sheet-mortal sheet-vampire sheet-werewolf sheet-mage sheet-promethean sheet-changeling sheet-hunter sheet-geist2 sheet-geist2-organization sheet-mummy sheet-demon sheet-beast sheet-homebrew sheet-deviant-the-renegades">
-                            <div class="sheet-2nd sheet-input-group">
-                                <span class="sheet-preserve-whitespace"><span data-i18n="beats">Beats</span>: </span>
-                                <div class="sheet-checkboxes">
+                            
+                            <div class="sheet-input-group">
+                                <span data-i18n="experience">Experience</span>
+                                <span>:</span>
+                                <div class="sheet-checkboxes sheet-xp-beats" title="Beats: 5 Beats = 1 Experience">
                                     <div class="sheet-checkbox">
                                         <input type="hidden" name="attr_beat_box1" />
                                         <button type="action" name="act_beat_box1" title="Mark / clear Beat box"></button>
@@ -2850,12 +2852,7 @@
                                         <input type="hidden" name="attr_beat_box5" />
                                         <button type="action" name="act_beat_box5" title="Mark / clear Beat box"></button>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="sheet-input-group">
-                                <span data-i18n="experience">Experience</span>
-                                <span>:</span>
-                                <span class="sheet-xp-trio"><label title="Total Experience earned">Earned <input type="number" min="0" name="attr_xp_earned" value="0" /></label><label title="Total Experience spent">Spent <input type="number" min="0" name="attr_xp_spent" value="0" /></label><label title="Available = Earned - Spent (calculated)">Avail <span class="sheet-xp-avail" name="attr_experience" title="@{experience_calc}"></span></label><input type="hidden" name="attr_experience" value="0" /><input type="hidden" name="attr_experience_legacy" value="" /></span>
+                                </div><span class="sheet-xp-trio"><label title="Total Experience earned">Earned <input type="number" min="0" name="attr_xp_earned" value="0" /></label><label title="Total Experience spent">Spent <input type="number" min="0" name="attr_xp_spent" value="0" /></label><label title="Available = Earned - Spent (calculated)">Avail <span class="sheet-xp-avail" name="attr_experience" title="@{experience_calc}"></span></label><input type="hidden" name="attr_experience" value="0" /><input type="hidden" name="attr_experience_legacy" value="" /></span>
                             </div>
                         </div>
                         <div class="sheet-game-line sheet-mage2 sheet-promethean2 sheet-hunter2 sheet-geist2 sheet-demon sheet-vampire sheet-mummy2">

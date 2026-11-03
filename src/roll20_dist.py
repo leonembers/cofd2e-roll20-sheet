@@ -399,6 +399,11 @@ if _ab:
     _imp = _ps.split('\n', 1)[0]; c = _imp + '\n' + c + '\n' + _ps.split('\n', 1)[1]
 c = _iso.expand_is(c)
 c = _r10.final(c)
+# r14: chat cards get only the roll-template block live; put the card fonts' @font-face rules at the very top, inline with it
+_ffs = [m.group(0) for m in re.finditer(r'@font-face\s*\{[^}]*\}', c)]
+for _x in _ffs: c = c.replace(_x, '', 1)
+_hd = re.match(r'(?:@import[^;]*;\s*)*', c).group(0)
+c = _hd + '\n'.join(_ffs) + '\n' + c[len(_hd):]
 open(f'{R}/dist/sheet.css', 'w', encoding='utf-8').write(c)
 t = json.load(open(f'{R}/translation.json', encoding='utf-8'))
 for _k in _ndgone: t.pop(_k, None)
