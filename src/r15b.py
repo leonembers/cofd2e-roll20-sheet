@@ -1196,11 +1196,6 @@ def r51(h, c):
     k = '<div class="sheet-entry-section sheet-notes">'
     assert k in h
     h = h.replace(k, '<div class="sheet-bignotes"><div class="sheet-subheader"><span>Notes</span></div><textarea class="sheet-bignotes-ta" name="attr_sheet_notes" placeholder="Notes"></textarea></div>' + k, 1)
-    # (55) Main: visible form drop-down, Turns left boxes under it
-    k = '<div class="sheet-form-picker">'
-    i = h.find(k); assert i > 0
-    sel = '<select class="sheet-main-formsel" name="attr_form" title="Current form"><option value="hishu">Hishu</option><option value="dalu">Dalu</option><option value="gauru">Gauru</option><option value="urkhar">Ur&#39;Khar</option><option value="urshul">Urshul</option><option value="urhan">Urhan</option></select>'
-    h = h[:i] + sel + h[i:]
     # (58) gift migration idempotent: never touch rows that already have facet data; stamp checked rows gv=2 once
     o = 'const isOld = (s, id) => g(s, id, "gv") === "" && !!('
     assert o in h
@@ -1231,8 +1226,7 @@ def r51(h, c):
         f'{Q} .sheet-bignotes {{ margin: 4px 0 10px; }}',
         f'{Q} textarea.sheet-bignotes-ta {{ display: block; width: 100%; box-sizing: border-box; min-height: 420px; resize: vertical; }}',
         f'{Q} .sheet-entry-section.sheet-notes:not(:has(.repitem)) {{ display: none; }}',
-        f'{Q} .sheet-page1 .sheet-main-forms select.sheet-main-formsel {{ display: block !important; margin: 4px auto; width: auto; min-width: 140px; }}',
-        f'{Q} .sheet-page1 .sheet-main-forms .sheet-ut-row {{ justify-content: center; }}',
+        f'{Q} .sheet-page1 .sheet-main-forms, {Q} .sheet-ut-row {{ display: none !important; }}',
         f'{Q} .sheet-gifts, {Q} .sheet-gifts .repcontainer, {Q} .sheet-gifts fieldset + .repcontainer {{ overflow-x: hidden !important; max-width: 100%; }}',
         f'{Q} .sheet-det-splat input[name="attr_det_first_change"] {{ background: rgba(0,0,0,0) !important; border: none !important; border-bottom: 1px solid var(--color-game-line, #888) !important; box-shadow: none !important; color: inherit !important; border-radius: 0 !important; height: auto; padding: 2px 4px; }}',
         f'{Q} .sheet-entry-body .sheet-pw-box ~ label:has(> input[name="attr_pool"]), {Q} .sheet-entry-body .sheet-pw-box ~ label:has(> input[name="attr_pool_dice"]) {{ display: none !important; }}',
@@ -1264,6 +1258,7 @@ def r60(h, c):
         f'{G} .sheet-gift-tg {{ -webkit-appearance: none !important; -moz-appearance: none !important; border: 0 !important; background: none !important; box-shadow: none !important; }}',
         f'{G} .sheet-gift-tg::after, {G} .sheet-gfx-tg::after {{ content: none !important; }}',
         f'{G} .sheet-gfx-tg {{ -webkit-appearance: none !important; -moz-appearance: none !important; border: 0 !important; background: none !important; box-shadow: none !important; }}',
+        f'{Q}{P} .sheet-background > button.sheet-toggle.sheet-page-settings {{ vertical-align: baseline !important; position: static !important; top: auto !important; right: auto !important; align-self: auto !important; font-size: 14px !important; line-height: 20px !important; padding: 2px 6px !important; margin-top: 6px !important; margin-bottom: 0 !important; transform: none !important; }}',
         # (61) gift-level note field hidden, data kept
         f'{G} textarea.sheet-gift-notes {{ display: none !important; }}',
     ]) + '\n'

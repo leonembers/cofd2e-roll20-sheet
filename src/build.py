@@ -221,7 +221,7 @@ h = must_sub(r'<div class="eq-1 vitae">\s*<input type="number" min="0" name="att
 h = h.replace('<input type="hidden" class="if" name="attr_vitae_counter">', '<input type="hidden" class="if" name="attr_vitae_counter" value="1">', 1)
 h = h.replace('name="attr_vitae_counter" value="0"', 'name="attr_vitae_counter" value="1"', 1)
 RES_JS = r"""
-        const RES_TBL = {vampire2:[5,10,11,12,13,15,20,25,30,50,75], werewolf2:[10,11,12,13,14,15,20,25,50,75,75], mage2:[10,11,12,13,15,20,25,30,50,75,75]};
+        const RES_TBL = {vampire2:[5,10,11,12,13,15,20,25,30,50,75], werewolf2:[10,10,11,12,13,15,20,25,30,50,75], mage2:[10,11,12,13,15,20,25,30,50,75,75]};
         const resMax = (v) => { const t = RES_TBL[v.sheettype]; const p = Math.max(0, Math.min(10, parseInt(v.potency) || 0)); return t ? t[p] : Math.max(10, 10 + p); };
         const resSync = (extra) => getAttrs(["sheettype", "potency", "vitae", "vitae_max", "res_ctr_v1", ...Array.from({length: 30}, (_, i) => `vitae_box${i + 1}`)], (v) => {
             const mx = resMax(v); const u = {vitae_max: mx};

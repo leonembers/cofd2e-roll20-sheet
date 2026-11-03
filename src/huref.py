@@ -1,17 +1,19 @@
 """Werewolf-only read-only reference: Primal Urge and Harmony tables, at the bottom of the Forms page (collapsible)."""
 import re
 F = ' <sup class="sheet-ref-q" title="Not checked against the W:tF 2E book; verify">?</sup>'
-PU_ESS = {1: (10, 1), 2: (11, 2), 3: (12, 3), 4: (13, 4), 5: (14, 5), 6: (15, 6), 7: (20, 7), 8: (25, 8), 9: (50, 10), 10: (75, 15)}
+PU_T = [l.split('|') for l in """1|5|10/1|1B|10 minutes|None|3 months|0|0
+2|5|11/2|1B|10 minutes|Meat|3 months|0|0
+3|5|12/3|1B|15 minutes|Meat|1 month|0|0
+4|5|13/4|2B|20 minutes|Raw meat|1 month|-2|+1
+5|5|15/5|2B|30 minutes|Raw meat|3 weeks|-2|+1
+6|6|20/6|3B|1 hour|Carnivore|3 weeks|-2|+2
+7|7|25/7|3B|2 hour|Carnivore|1 week|-2|+2
+8|8|30/8|4B|3 hours|Essence|1 week|-3|+3
+9|9|50/10|5B|6 hours|Essence|3 days|-4|+3
+10|10|75/15|6B|12 hours|Essence|3 days|-5|+4""".split('\n')]
+PU_ESS = {int(r[0]): tuple(int(x) for x in r[2].split('/')) for r in PU_T}
 def pu_rows():
-    out = []
-    for p in range(1, 11):
-        m, t = PU_ESS[p]
-        hunger = ('Can live on ordinary rest and food.' if p <= 4 else
-                  'Hungers for raw meat; ordinary human food no longer satisfies.' + F if p <= 6 else
-                  'Needs fresh raw flesh to regain Essence normally; long spells away from the hunt are hard to endure.' + F if p <= 8 else
-                  'Feeding restriction: only fresh-killed prey (or similar) restores Essence.' + F)
-        out.append(f'<tr class="sheet-pu-{p}"><td>{p}</td><td>{m}</td><td>{t}</td><td>Stamina + {p} turns</td><td>{hunger}</td></tr>')
-    return ''.join(out)
+    return ''.join(f'<tr class="sheet-pu-{r[0]}">' + ''.join(f'<td>{x}</td>' for x in r) + '</tr>' for r in PU_T)
 def shift(hm):
     if hm >= 9: return 'Instant action, always costs 1 Essence'
     if hm >= 7: return 'Instant action free, or reflexive for 1 Essence'
@@ -38,8 +40,7 @@ def apply(h, c):
            '<div class="sheet-huref-body">'
            '<input type="hidden" class="sheet-pu-cur" name="attr_potency" value="1" /><input type="hidden" class="sheet-hm-cur" name="attr_morality" value="7" />'
            '<div class="sheet-huref-t">Primal Urge</div><table class="sheet-huref-tbl sheet-pu-tbl"><tr>'
-           + th('PU', 'Primal Urge dots') + th('Max Ess.', 'Most Essence the werewolf can hold') + th('Ess./turn', 'Most Essence spendable in one turn')
-           + th('Gauru limit', 'How long Gauru can be held') + th('Hunger and feeding', 'Feeding needs and restrictions at this level') + '</tr>' + pu_rows() + '</table>'
+           + th('PU', 'Primal Urge dots') + th('Attr/Skill Max', 'Attribute / Skill maximum') + th('Max Ess./Per Turn', 'Maximum Essence / Essence per turn') + th('Regen.', 'Regeneration') + th('Basu-Im Time', 'Basu-Im duration') + th('Feeding', 'Feeding restriction') + th('Hunt Time', 'Hunt time') + th('Lunacy', 'Lunacy penalty') + th('Tracking', 'Tracking bonus') + '</tr>' + pu_rows() + '</table>'
            '<div class="sheet-huref-t">Harmony</div><table class="sheet-huref-tbl sheet-hm-tbl"><tr>'
            + th('H', 'Harmony dots') + th('Shapeshifting', 'Action and Essence cost to change form') + th('Flesh / Spirit', 'Which side the werewolf leans toward and what that does') + '</tr>' + hm_rows + '</table>'
            '<div class="sheet-huref-note">Breaking points: Harmony is lost by acts that betray either the Flesh (denying the wolf, living as a mere human) or the Spirit '
