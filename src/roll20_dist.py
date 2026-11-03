@@ -390,6 +390,8 @@ import r13 as _r13
 h, c = _r13.apply(h, c)
 import r13b as _r13b
 h, c = _r13b.apply(h, c)
+import r15 as _r15
+h, c = _r15.apply(h, c)
 import isolate as _iso
 h, c, _nis = _iso.apply(h, c); print('isolation selectors', _nis)
 open(f'{R}/dist/sheet.html', 'w', encoding='utf-8').write(h)
@@ -404,6 +406,14 @@ _ffs = [m.group(0) for m in re.finditer(r'@font-face\s*\{[^}]*\}', c)]
 for _x in _ffs: c = c.replace(_x, '', 1)
 _hd = re.match(r'(?:@import[^;]*;\s*)*', c).group(0)
 c = _hd + '\n'.join(_ffs) + '\n' + c[len(_hd):]
+# r15: Roll20 chat only honours ONE legacy Google Fonts @import (css?family=, not css2, no @font-face); custom TTF/OTF never reach chat
+_GF = ['Almendra', 'Black Ops One', 'Cinzel', 'Cinzel Decorative', 'Creepster', 'Fondamento', 'IM Fell English SC', 'Metal Mania',
+       'Metamorphous', 'Pirata One', 'Sorts Mill Goudy', 'Special Elite', 'UnifrakturMaguntia']
+c = re.sub(r'@import[^;]*;\s*', '', c)
+c = "@import url('https://fonts.googleapis.com/css?family=" + '|'.join(x.replace(' ', '+') for x in _GF) + "&display=swap');\n" + c
+c = c.replace('"Chomsky", "IM Fell English SC", serif', '"Chomsky", "UnifrakturMaguntia", "IM Fell English SC", serif')
+c = c.replace('"WolfsRain", "IM Fell English SC", serif', '"WolfsRain", "Metal Mania", "IM Fell English SC", serif')
+c = c.replace('"WolfsRain", "Fondamento", cursive', '"WolfsRain", "Metal Mania", "Fondamento", cursive')
 open(f'{R}/dist/sheet.css', 'w', encoding='utf-8').write(c)
 t = json.load(open(f'{R}/translation.json', encoding='utf-8'))
 for _k in _ndgone: t.pop(_k, None)
