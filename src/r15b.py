@@ -1398,3 +1398,59 @@ def r68(h, c):
         f'{X} .sheet-amenu-tg:not(:checked) ~ .sheet-amenu-list {{ display: none !important; }}',
     ]) + '\n'
     return h, c
+
+
+def r74(h, c):
+    X = f'{P}{P}{P}{P}'
+    # (74) Config tab: same element and classes as the other tabs; drop its special-case CSS
+    h = h.replace('class="sheet-toggle sheet-page-settings" name="act_page_settings"', 'class="sheet-toggle sheet-page-cfg" name="act_page_settings"')
+    c = re.sub(r'[^{}]*sheet-page-settings[^{}]*\{[^{}]*\}', lambda m: '' if '[value=' not in m.group(0) or 'button' in m.group(0) else m.group(0), c)
+    c = c.replace('input.sheet-page[value="details"] ~ button.sheet-page-details {', 'input.sheet-page[value="details"] ~ button.sheet-page-details, input.sheet-page[value="settings"] ~ button.sheet-page-cfg {', 1)
+    # (76) power stat header tooltip names the splat's actual trait
+    def tip(m):
+        name = m.group(2).strip() or 'Power stat'
+        return m.group(1) + f'title="{name}: click to add it to the dice pool">' + m.group(2)
+    h = re.sub(r'(<button type="action" class="[^"]*" name="act_potency"[^>]*?)title="Power stat: click to add it to the dice pool">([^<]*)', tip, h)
+    # (75) outside click closes menus: toggle wrapped in a label with a full-sheet backdrop
+    h = h.replace('<input type="checkbox" class="sheet-amenu-tg" name="attr_amenu" value="1" title="Actions" />',
+                  '<label class="sheet-amenu-lb"><input type="checkbox" class="sheet-amenu-tg" name="attr_amenu" value="1" title="Actions" /><span class="sheet-amenu-bd"></span></label>')
+    c = c.replace('.sheet-amenu > input.sheet-amenu-tg', '.sheet-amenu input.sheet-amenu-tg')
+    c += '\n' + '\n'.join([
+        f'{X} .sheet-amenu > label.sheet-amenu-lb {{ display: block; margin: 0; padding: 0; position: static; cursor: pointer; }}',
+        f'{X} .sheet-amenu span.sheet-amenu-bd {{ display: none; }}',
+        f'{X} .sheet-amenu input.sheet-amenu-tg:checked + span.sheet-amenu-bd {{ display: block !important; position: fixed !important; left: -100vw; top: -100vh; width: 300vw; height: 300vh; background: rgba(0,0,0,0) !important; z-index: 998 !important; cursor: default; }}',
+        f'{X} .sheet-amenu:has(input.sheet-amenu-tg:checked) > .sheet-amenu-list {{ display: flex !important; }}',
+    ])
+    return h, c
+
+
+def r78(h, c):
+    # (78/79) r65's skill-row rule (display:flex !important at high specificity) beat the era and splat hide rules
+    # and flattened the Renown block: scope it to plain rows and re-assert the hides above it
+    R = f'{P}{P}{P}{P} .sheet-skills > div:not(.sheet-section-header):not(.sheet-subheader):not(.sheet-subsubheader):not(.sheet-spec-row)'
+    c = c.replace(R, R + ':not(.sheet-skills-renown):not(.sheet-game-line)')
+    # era skills built like the other rows (caret, skill marks, specialties)
+    m = re.search(r'<div>\s*<input type="hidden" class="sheet-if" name="attr_enable_profession">\s*<input type="hidden" class="sheet-flag" name="attr_larceny_flag".*?</div>(?=\s*<div class="sheet-dots">)', h, re.S)
+    sp = re.search(r'<div class="sheet-spec-row"><input type="hidden" class="sheet-spec-openflag" name="attr_larceny_spec_open".*?</div></div></div>', h, re.S)
+    for e, t in (('ride', 'Ride'), ('enigmas', 'Enigmas'), ('archery', 'Archery')):
+        o = re.search(r'<div class="sheet-is-' + e + r'-era">.*?</div>', h, re.S)
+        if not (m and sp and o) or ('act_' + e + '_spec_toggle') in h:
+            continue
+        row = m.group(0).replace('larceny', e).replace('Larceny', t).replace('<div>', f'<div class="sheet-is-{e}-era">', 1)
+        dm = re.search(r'(<div class="sheet-is-' + e + r'-era sheet-dots">.*?</div>)', h[o.end():], re.S)
+        spec = sp.group(0).replace('larceny', e).replace('<div class="sheet-spec-row">', f'<div class="sheet-spec-row sheet-is-{e}-era">', 1)
+        h = h[:o.start()] + row + h[o.end():o.end() + dm.end()] + spec + h[o.end() + dm.end():]
+    def addsk(m):
+        arr = m.group(1)
+        for e in ('ride', 'enigmas', 'archery'):
+            if f'"{e}"' not in arr and f"'{e}'" not in arr:
+                arr = arr[:-1] + f', "{e}"]'
+        return 'const SKILLS = ' + arr
+    h = re.sub(r'const SKILLS = (\[[^\]]*\])', addsk, h, 1)
+    Y = f'{P}{P}{P}{P}{P}'
+    rules = []
+    for e in ('ride', 'enigmas', 'archery'):
+        for sep in (' ~ ', ' ~ * '):
+            rules.append(f'{Y} input.sheet-{e}-era[value="1"]{sep}.sheet-not-{e}-era, {Y} input.sheet-{e}-era:not([value="1"]){sep}.sheet-is-{e}-era')
+    c += '\n' + ', '.join(rules) + ' { display: none !important; }'
+    return h, c
