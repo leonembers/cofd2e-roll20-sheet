@@ -1605,3 +1605,22 @@ def r83(h, c):
         f'{Y} .sheet-gfx-r.sheet-gfx-tgl > label.sheet-gfn {{ display: inline-flex !important; align-items: center; gap: 4px; white-space: nowrap; font-size: 12px; margin: 0 !important; }}',
     ])
     return h, c
+
+
+def r86(h, c):
+    # (86) Facet panel fits its column at any width
+    Y = f'{P}{P}{P}{P}{P}{P} .sheet-gifts'
+    c += '\n' + '\n'.join([
+        f'{Y} .sheet-gfx, {Y} .sheet-gfx-body {{ min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; overflow: hidden !important; }}',
+        f'{Y} .sheet-gfx-body > *, {Y} .sheet-gfx-body textarea, {Y} .sheet-gfx-r > * {{ min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; }}',
+        f'{Y} .sheet-gfx-r {{ display: flex !important; flex-wrap: wrap !important; gap: 3px 6px !important; min-width: 0 !important; width: 100% !important; box-sizing: border-box !important; }}',
+        f'{Y} .sheet-gfx-r > input[type="text"], {Y} .sheet-gfx-r > select {{ flex: 1 1 60px !important; width: auto !important; }}',
+        f'{Y} .sheet-gfx-r > select.sheet-gfx-act {{ flex: 1 1 80px !important; width: auto !important; }}',
+        f'{Y} .sheet-gfx-r > label.sheet-gfn {{ display: inline-flex !important; align-items: center; gap: 3px; flex: 0 1 auto !important; white-space: nowrap; }}',
+        f'{Y} .sheet-gfx-r label.sheet-gfn input[type="number"] {{ width: 34px !important; min-width: 0 !important; flex: 0 0 34px !important; padding: 0 2px !important; box-sizing: border-box !important; }}',
+        f'{Y} .sheet-gfx-r > select.sheet-gfx-ct {{ flex: 0 1 52px !important; width: 52px !important; }}',
+        f'{Y} .sheet-gfx-r.sheet-gfx-tgl > label.sheet-gfn {{ flex: 1 1 auto !important; overflow: hidden; text-overflow: ellipsis; }}',
+        f'{Y} .sheet-gfx-r > label.sheet-gfn:has(input[name$="_mod"]) {{ display: none !important; }}',
+        f'{Y} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) label.sheet-gfn:has(input[name$="_addren"]) {{ display: none !important; }}',
+    ])
+    return h, c
