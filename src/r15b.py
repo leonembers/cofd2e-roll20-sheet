@@ -1263,3 +1263,42 @@ def r60(h, c):
         f'{G} textarea.sheet-gift-notes {{ display: none !important; }}',
     ]) + '\n'
     return h, c
+
+
+def r64(h, c):
+    # (64) Facet edit panel: no Mod field (roll prompts ?{Modifier}), no source/page field, clean rows
+    o = 'const mod = parseInt(v[f + "mod"]) || 0;'
+    assert h.count(o) == 1, h.count(o)
+    h = h.replace(o, 'const mod = 0; // r15b (64): stored Facet mod ignored; the roll prompts for a modifier')
+    G = f'{P}{P}{P}{P} .sheet-gifts .sheet-gfx-body'
+    F = "font-family: 'Sorts Mill Goudy', serif !important; font-size: 13px !important; text-transform: none !important;"
+    c += '\n'.join([
+        f'{G} label.sheet-gfn:has(input[name$="_mod"]), {G} input[name$="_src"] {{ display: none !important; }}',
+        f'{G} .sheet-gfx-r {{ display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 4px 6px !important; width: 100% !important; box-sizing: border-box; }}',
+        f'{G} .sheet-gfx-r > input[type=text] {{ flex: 1 1 120px !important; min-width: 110px !important; width: auto !important; box-sizing: border-box; }}',
+        f'{G} .sheet-gfx-r > label.sheet-gfn {{ display: inline-flex !important; align-items: center !important; gap: 6px !important; margin: 0 !important; white-space: nowrap; {F} }}',
+        f'{G} .sheet-gfx-r > label.sheet-gfn:has(input[name$="_cost"]) {{ flex: 0 0 auto !important; }}',
+        f'{G} .sheet-gfx-r > label.sheet-gfn input[name$="_cost"] {{ width: 48px !important; min-width: 48px !important; height: 22px; text-align: center; box-sizing: border-box; }}',
+        f'{G} .sheet-gfx-r > select.sheet-gfx-ct {{ flex: 1 1 60px !important; min-width: 60px !important; width: auto !important; }}',
+        f'{G} .sheet-gfx-r > label.sheet-gfn:has(input[name$="_addren"]) {{ flex: 0 0 100% !important; justify-content: flex-start; }}',
+        f'{G} .sheet-gfx-r:has(> select.sheet-gfx-ct) {{ display: grid !important; grid-template-columns: auto minmax(0,1fr) !important; }}',
+        f'{G} .sheet-gfx-r:has(> select.sheet-gfx-ct) > label.sheet-gfn {{ width: auto !important; max-width: none !important; }}',
+        f'{G} .sheet-gfx-r > label.sheet-gfn:has(input[name$="_addren"]) {{ grid-column: 1 / -1 !important; }}',
+        f'{G} .sheet-gfx-r:has(> select[name$="_attr"]) {{ display: grid !important; grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important; }}',
+        f'{G} .sheet-gfx-r > select[name$="_attr"], {G} .sheet-gfx-r > select[name$="_skill"] {{ width: 100% !important; min-width: 0 !important; box-sizing: border-box; {F} }}',
+    ]) + '\n'
+    return h, c
+
+
+def r65(h, c):
+    # (65) skill rows: compact, one straight border-bottom per row; no partial borders on toggle / caret / name
+    R = f'{P}{P}{P}{P} .sheet-skills > div:not(.sheet-section-header):not(.sheet-subheader):not(.sheet-subsubheader):not(.sheet-spec-row)'
+    c += '\n'.join([
+        f'{P}{P}{P}{P} .sheet-skills {{ row-gap: 0 !important; }}',
+        f'{R} {{ display: flex !important; align-items: center !important; box-sizing: border-box !important; min-height: 20px !important; height: auto !important; margin: 0 !important; padding: 1px 0 !important; border: 0 !important; border-bottom: 1px solid rgba(127,127,127,.55) !important; }}',
+        f'{R} > button.sheet-toggle, {R} > button.sheet-spec-caret, {R} > .sheet-dots {{ border-top: 0 !important; border-left: 0 !important; border-right: 0 !important; border-bottom: 0 !important; box-shadow: none !important; margin-top: 0 !important; margin-bottom: 0 !important; }}',
+        f'{R} > button.sheet-toggle {{ padding-top: 0 !important; padding-bottom: 0 !important; line-height: 18px !important; }}',
+        f'{P}{P}{P}{P} .sheet-skills > div.sheet-spec-row {{ min-height: 0 !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }}',
+        f'{R} > input[type=checkbox] {{ margin: 0 4px 0 0 !important; vertical-align: middle; align-self: center; }}',
+    ]) + '\n'
+    return h, c

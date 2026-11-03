@@ -3525,7 +3525,7 @@
                 const ren = "renown_" + R15_RN[k].toLowerCase();
                 const st = [v[f + "attr"], v[f + "skill"]].filter(Boolean); if (v[f + "addren"] !== "0") st.push(ren);
                 getAttrs(st, sv => {
-                    const mod = parseInt(v[f + "mod"]) || 0;
+                    const mod = 0; // r15b (64): stored Facet mod ignored; the roll prompts for a modifier
                     const dice = st.reduce((t, a) => t + (parseInt(sv[a]) || 0), 0) + mod;
                     const cn = parseInt(v[f + "cost"]) || 0, ct = v[f + "ctype"] || "Essence";
                     const ess = ct === "Essence" ? cn : 0, wp = ct === "Willpower" ? cn : 0;
