@@ -384,6 +384,8 @@ import r10f as _r10f
 h, c = _r10f.apply(h, c)
 import r11 as _r11
 h, c = _r11.apply(h, c)
+import r12 as _r12
+h, c = _r12.apply(h, c)
 import isolate as _iso
 h, c, _nis = _iso.apply(h, c); print('isolation selectors', _nis)
 open(f'{R}/dist/sheet.html', 'w', encoding='utf-8').write(h)

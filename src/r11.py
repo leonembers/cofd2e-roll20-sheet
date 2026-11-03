@@ -3,7 +3,7 @@ import json, os
 R = os.path.dirname(os.path.abspath(__file__))
 F80 = 'https://cdn.jsdelivr.net/gh/leonembers/cofd-sheet-art@d0f3424fc60b76ad44de65ae21be08ce1458b370/fonts/1980swriter/1980sWriter.ttf'
 FONTS = {
-    'mortal2': '"Sorts Mill Goudy", serif', 'vampire2': '"IM Fell English SC", serif',
+    'mortal2': '"Sorts Mill Goudy", serif', 'vampire2': '"Chomsky", "IM Fell English SC", serif',
     'werewolf2': '"WolfsRain", "IM Fell English SC", serif', 'breeds2': '"Fondamento", cursive',
     'mage2': '"Cinzel Decorative", serif', 'promethean2': '"Metamorphous", serif', 'changeling2': '"Almendra", serif',
     'hunter2': '"1980sWriter", "Special Elite", monospace', 'geist2': '"Pirata One", serif', 'demon': '"Black Ops One", sans-serif',
