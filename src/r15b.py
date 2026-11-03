@@ -1244,3 +1244,27 @@ def r51(h, c):
         f'{Q} .repcontainer label.sheet-switch > input:checked + .sheet-sw-track {{ background: var(--color-game-line, #b4743a) !important; }}',
     ]) + '\n'
     return h, c
+
+
+def r60(h, c):
+    # (60) facet slide toggles: the checkbox itself is invisible; a real span draws the track/knob (no native ring can show)
+    Q = f'{P}{P}{P}'
+    h, n = re.subn(r'(<input type="checkbox" class="(?:sheet-)?gfx-sw"[^>]*/>)', r'<span class="sheet-gfx-swr">\1<span class="sheet-gfx-trk"></span></span>', h)
+    assert n > 10, n
+    G = f'{Q}{P} .sheet-gifts'
+    c += '\n'.join([
+        f'{G} .sheet-gfx-swr {{ position: relative; display: inline-block !important; flex: 0 0 24px !important; width: 24px !important; height: 12px !important; min-width: 24px !important; padding: 0 !important; margin: 0 !important; overflow: visible !important; vertical-align: middle; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw {{ -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; position: absolute !important; inset: 0; width: 24px !important; height: 12px !important; margin: 0 !important; padding: 0 !important; opacity: 0 !important; z-index: 2; cursor: pointer; border: 0 !important; background: none !important; box-shadow: none !important; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw::before, {G} .sheet-gfx-swr input.sheet-gfx-sw::after {{ content: none !important; display: none !important; }}',
+        f'{G} .sheet-gfx-trk {{ position: absolute; display: block !important; left: 0 !important; top: 0 !important; width: 24px !important; height: 12px !important; border-radius: 6px !important; background: #555 !important; pointer-events: none; }}',
+        f'{G} .sheet-gfx-trk::after {{ content: ""; position: absolute; left: 1px; top: 1px; width: 10px; height: 10px; border-radius: 50%; background: #ddd; transition: left .15s; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw:checked + .sheet-gfx-trk {{ background: var(--color-game-line, #b4743a) !important; }}',
+        f'{G} .sheet-gfx-swr input.sheet-gfx-sw:checked + .sheet-gfx-trk::after {{ left: 13px; background: #fff; }}',
+        f'{G} .sheet-gfx-top:has(input.sheet-gfx-sw:not(:checked)) .sheet-gf-ic {{ filter: grayscale(1); opacity: .45; }}',
+        f'{G} .sheet-gift-tg {{ -webkit-appearance: none !important; -moz-appearance: none !important; border: 0 !important; background: none !important; box-shadow: none !important; }}',
+        f'{G} .sheet-gift-tg::after, {G} .sheet-gfx-tg::after {{ content: none !important; }}',
+        f'{G} .sheet-gfx-tg {{ -webkit-appearance: none !important; -moz-appearance: none !important; border: 0 !important; background: none !important; box-shadow: none !important; }}',
+        # (61) gift-level note field hidden, data kept
+        f'{G} textarea.sheet-gift-notes {{ display: none !important; }}',
+    ]) + '\n'
+    return h, c
