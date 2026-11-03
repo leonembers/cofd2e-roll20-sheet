@@ -1454,3 +1454,68 @@ def r78(h, c):
             rules.append(f'{Y} input.sheet-{e}-era[value="1"]{sep}.sheet-not-{e}-era, {Y} input.sheet-{e}-era:not([value="1"]){sep}.sheet-is-{e}-era')
     c += '\n' + ', '.join(rules) + ' { display: none !important; }'
     return h, c
+
+
+R81_SK = [('Mental', [('academics', 'Academics'), ('computer', 'Computer'), ('crafts', 'Crafts'), ('investigation', 'Investigation'), ('medicine', 'Medicine'), ('occult', 'Occult'), ('politics', 'Politics'), ('science', 'Science')]),
+          ('Physical', [('athletics', 'Athletics'), ('brawl', 'Brawl'), ('drive', 'Drive'), ('firearms', 'Firearms'), ('larceny', 'Larceny'), ('stealth', 'Stealth'), ('survival', 'Survival'), ('weaponry', 'Weaponry')]),
+          ('Social', [('animalken', 'Animal Ken'), ('empathy', 'Empathy'), ('expression', 'Expression'), ('intimidation', 'Intimidation'), ('persuasion', 'Persuasion'), ('socialize', 'Socialize'), ('streetwise', 'Streetwise'), ('subterfuge', 'Subterfuge')])]
+
+
+def r81(h, c):
+    X = f'{P}{P}{P}{P}'
+    Y = f'{P}{P}{P}{P}{P}'
+    G = f'{P}{P}{P}{P} .sheet-gifts'
+    # (81) Facet Action: select (Instant / Extended / Reflexive); Duration stays text; old attr kept
+    def sel(m):
+        k = m.group(1)
+        return (f'<select class="sheet-gfx-act" name="attr_f_{k}_actsel" title="Action"><option value="">-</option><option value="Instant">Instant</option>'
+                f'<option value="Extended">Extended</option><option value="Reflexive">Reflexive</option></select>')
+    h = re.sub(r'<input type="text" name="attr_f_(cun|glo|hon|pur|wis)_action" placeholder="Action / duration" />', sel, h)
+    h = h.replace('const fl = ["name", "on", "attr", "skill", "mod", "cost", "ctype", "addren", "desc", "action",', 'const fl = ["name", "on", "attr", "skill", "mod", "cost", "ctype", "addren", "desc", "action", "actsel",', 1)
+    h = h.replace('f_action: r15Fx(v[f + "action"])', 'f_action: r15Fx(v[f + "actsel"])', 1)
+    a = 'on("sheet:opened", r15CostMig);'
+    assert a in h
+    h = h.replace(a, a + '''
+        const r81ActMig = () => ["gifts", "wgifts"].forEach(sec => getSectionIDs(`repeating_${sec}`, ids => {
+            const ks = ["cun", "glo", "hon", "pur", "wis"], names = [];
+            ids.forEach(id => ks.forEach(k => ["action", "actsel", "actmig"].forEach(x => names.push(`repeating_${sec}_${id}_f_${k}_${x}`))));
+            if (!names.length) return;
+            getAttrs(names, v => { const u = {};
+                ids.forEach(id => ks.forEach(k => { const f = `repeating_${sec}_${id}_f_${k}_`;
+                    if (v[f + "actmig"] === "1") return; u[f + "actmig"] = "1";
+                    const m = /instant|extended|reflexive/i.exec(v[f + "action"] || "");
+                    if (m && !v[f + "actsel"]) u[f + "actsel"] = m[0][0].toUpperCase() + m[0].slice(1).toLowerCase(); }));
+                if (Object.keys(u).length) setAttrs(u, {silent: true}); });
+        }));
+        on("sheet:opened", r81ActMig);''', 1)
+    c += '\n' + '\n'.join([
+        f'{G} .sheet-gfx-r > select.sheet-gfx-act {{ flex: 0 0 96px !important; width: 96px !important; height: 20px !important; margin: 0 !important; padding: 0 2px !important; font: 700 13px/18px "Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif !important; background: #1a1a1a !important; color: #e8e8e8 !important; border: 1px solid rgba(127,127,127,.6) !important; border-radius: 3px !important; }}',
+    ])
+    # (82) Config: per-skill show toggles; Dark Eras skills kept in their own group
+    cols = ''.join(
+        f'<div class="sheet-cfg-skcol"><div class="sheet-cfg-skh">{grp}</div>' + ''.join(
+            f'<label class="sheet-cfg-sw" title="Show {t} on the Main tab"><input type="checkbox" name="attr_sk_show_{s}" value="1" checked="checked" /><span class="sheet-cfg-knob"></span><span>{t}</span></label>'
+            for s, t in sk) + '</div>' for grp, sk in R81_SK)
+    card = ('<div class="sheet-cfg-card sheet-cfg-skills" title="Hide individual skills on the Main tab"><div class="sheet-subheader sheet-cfg-head">Skills</div>'
+            f'<div class="sheet-cfg-body sheet-cfg-skgrid">{cols}</div></div>')
+    e = '<div class="sheet-cfg-card sheet-cfg-eras '
+    assert e in h
+    h = h.replace(e, card + e, 1)
+    h = h.replace('<div class="sheet-subheader sheet-cfg-head">Dark Eras</div>', '<div class="sheet-subheader sheet-cfg-head">Dark Eras skills</div>', 1)
+    allsk = [s for _, sk in R81_SK for s, _ in sk]
+    k = '<div class="sheet-corporeal sheet-skills">'
+    assert k in h
+    h = h.replace(k, k + ''.join(f'<input type="hidden" class="sheet-skh sheet-skh-{s}" name="attr_sk_show_{s}" value="1" />' for s in allsk), 1)
+    hide = []
+    for s in allsk:
+        i = f'{Y} .sheet-skills > input.sheet-skh-{s}[value="0"] ~ '
+        hide += [i + f'div:has(> button[name="act_{s}"])', i + f'div.sheet-dots:has(> input[name="attr_{s}"])', i + f'div.sheet-spec-row:has(input[name="attr_{s}_spec_open"])']
+    c += '\n' + ', '.join(hide) + ' { display: none !important; }'
+    S = f'{X} .sheet-settings'
+    c += '\n' + '\n'.join([
+        f'{S} .sheet-cfg-skgrid {{ display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px 12px; }}',
+        f'{S} .sheet-cfg-skcol {{ display: flex; flex-direction: column; gap: 3px; min-width: 0; }}',
+        f'{S} .sheet-cfg-skh {{ font: 700 12px/16px "Sorts Mill Goudy", "Goudy Old Style", Garamond, Georgia, serif; color: var(--color-game-line, #b4743a); border-bottom: 1px solid rgba(127,127,127,.4); margin-bottom: 2px; }}',
+        f'{S} .sheet-cfg-skgrid .sheet-cfg-sw > span:last-child {{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px !important; }}',
+    ])
+    return h, c
