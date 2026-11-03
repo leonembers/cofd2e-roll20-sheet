@@ -1519,3 +1519,89 @@ def r81(h, c):
         f'{S} .sheet-cfg-skgrid .sheet-cfg-sw > span:last-child {{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px !important; }}',
     ])
     return h, c
+
+
+def r83(h, c):
+    G = f'{P}{P}{P}{P} .sheet-gifts'
+    Y = f'{P}{P}{P}{P}{P} .sheet-gifts'
+    # (85) row ids from click events: Roll20 row ids can contain "_", so split("_")[2] cut them short and the
+    # handler read empty attrs; take everything between the section prefix and the action name
+    h = h.replace('const id = (ev.sourceAttribute || ev.triggerName).split("_")[2];', 'const id = r85Id(ev, sec);')
+    h = h.replace('const id = ev.sourceAttribute.split("_")[2];', 'const id = r85Id(ev, sec);')
+    k = '<script type="text/worker">'
+    assert k in h
+    h = h.replace(k, k + '''
+        const r85Id = (ev, sec) => { const s = String(ev.sourceAttribute || ev.triggerName || "").replace(/^clicked:/, ""); const pre = `repeating_${sec}_`;
+            const i = s.toLowerCase().indexOf(pre); const rest = i < 0 ? s : s.slice(i + pre.length);
+            const m = /^(-[A-Za-z0-9_-]{19})(?=_|$)/.exec(rest); return m ? m[1] : rest.split("_")[0]; };''', 1)
+    assert 'split("_")[2]' not in h
+    # (85) Roll20 does not reliably fire clicked: events for repeating action buttons whose names contain "_":
+    # froll_<k> -> froll<k>
+    for k in ('cun', 'glo', 'hon', 'pur', 'wis'):
+        h = h.replace(f'name="act_froll_{k}"', f'name="act_froll{k}"')
+    a = 'on(`clicked:repeating_${sec}:froll_${k}`'
+    assert a in h
+    h = h.replace(a, 'on(`clicked:repeating_${sec}:froll${k}`', 1)
+    # (85) resolve the roll suffix in the worker: an empty success_target or modifier prompt broke the inline roll
+    a = 'getAttrs([p + "name", "deduct_auto",'
+    assert a in h
+    h = h.replace(a, 'getAttrs([p + "name", "rolltype_eff", "success_target", "deduct_auto",', 1)
+    a = 'tpl += dice > 0 ? ` {{roll=[[{((${dice}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{spec_bonus})@{rolltype_eff}`'
+    assert a in h
+    h = h.replace(a, 'tpl += dice > 0 ? ` {{roll=[[{((${dice}+?{Modifier|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{spec_bonus})${r85Rt(v)}`', 1)
+    k2 = 'const r85Id = '
+    h = h.replace(k2, 'const r85Rt = (v) => { const t = parseInt(v.success_target) || 8; let r = String(v.rolltype_eff || "").replace(/@\\{success_target\\}/g, t);'
+                  ' if (!/\\]\\]\\}\\}$/.test(r) || /@\\{/.test(r)) r = `)d10!cs>10}>${t}]]}}`; return r; };\n        ' + k2, 1)
+    # (83/84) Facet panel: Effects by outcome / Requires roll toggles
+    def tg(m):
+        f = m.group(1)
+        return (m.group(0) + f'<div class="sheet-gfx-r sheet-gfx-tgl">'
+                f'<label class="sheet-gfn" title="Off: one static effect. On: separate effects for Dramatic Failure, Failure, Success and Exceptional Success"><span class="sheet-gfx-swr"><input type="checkbox" class="sheet-gfx-sw sheet-gfx-byo" name="attr_f_{f}_byout" value="1" /><span class="sheet-gfx-trk"></span></span>Effects by outcome</label>'
+                f'<label class="sheet-gfn" title="Off: the Facet posts its card without rolling dice"><span class="sheet-gfx-swr"><input type="checkbox" class="sheet-gfx-sw sheet-gfx-nr" name="attr_f_{f}_needroll" value="1" checked /><span class="sheet-gfx-trk"></span></span>Requires roll</label></div>')
+    n0 = h.count('placeholder="Description"></textarea>')
+    h = re.sub(r'<textarea name="attr_f_(cun|glo|hon|pur|wis)_desc" placeholder="Description"></textarea>', tg, h)
+    assert h.count('sheet-gfx-byo') == 10, h.count('sheet-gfx-byo')
+    # worker: needroll / byout
+    a = '"desc", "action", "actsel",'
+    assert a in h
+    h = h.replace(a, '"desc", "byout", "needroll", "action", "actsel",', 1)
+    a = '                if (v[f + "on"] !== "1") return;\n'
+    assert a in h
+    h = h.replace(a, '', 1)
+    a = 'const st = [v[f + "attr"], v[f + "skill"]].filter(Boolean); if (v[f + "addren"] !== "0") st.push(ren);'
+    assert a in h
+    h = h.replace(a, 'const st = v[f + "needroll"] === "0" ? [] : [v[f + "attr"], v[f + "skill"]].filter(Boolean); if (v[f + "needroll"] !== "0" && v[f + "addren"] !== "0") st.push(ren);', 1)
+    a = 'o_exc: r15Fx(v[f + "oexc"]), o_succ: r15Fx(v[f + "osucc"]), o_fail: r15Fx(v[f + "ofail"]), o_dram: r15Fx(v[f + "odram"])};'
+    assert a in h
+    h = h.replace(a, a + '\n                    if (v[f + "byout"] !== "1") ["o_exc", "o_succ", "o_fail", "o_dram"].forEach(x => delete kv[x]);'
+                  '\n                    if (v[f + "on"] !== "1") kv.f_short = "Facet not learned yet";', 1)
+    # migration: outcome texts already filled -> Effects by outcome on (once per Facet, nothing removed)
+    a = 'on("sheet:opened", r15CostMig);'
+    h = h.replace(a, a + '''
+        const r83Mig = () => ["gifts", "wgifts"].forEach(sec => getSectionIDs(`repeating_${sec}`, ids => {
+            const ks = ["cun", "glo", "hon", "pur", "wis"], xs = ["oexc", "osucc", "ofail", "odram", "byout", "omig"], names = [];
+            ids.forEach(id => ks.forEach(k => xs.forEach(x => names.push(`repeating_${sec}_${id}_f_${k}_${x}`))));
+            if (!names.length) return;
+            getAttrs(names, v => { const u = {};
+                ids.forEach(id => ks.forEach(k => { const f = `repeating_${sec}_${id}_f_${k}_`;
+                    if (v[f + "omig"] === "1") return; u[f + "omig"] = "1";
+                    if (v[f + "byout"] !== "1" && ["oexc", "osucc", "ofail", "odram"].some(x => (v[f + x] || "").trim())) u[f + "byout"] = "1"; }));
+                if (Object.keys(u).length) setAttrs(u, {silent: true}); });
+        }));
+        on("sheet:opened", r83Mig);''', 1)
+    # roll template: without a roll, list every outcome effect that was sent
+    i = h.index('<rolltemplate class="sheet-rolltemplate-cofd-entry">'); j = h.index('</rolltemplate>', i); t = h[i:j]
+    rows = ''.join(f'{{{{#{k}}}}}<tr><th>{lab}</th><td>{{{{{k}}}}}</td></tr>{{{{/{k}}}}}' for k, lab in
+                   [('o_dram', 'Dramatic Failure'), ('o_fail', 'Failure'), ('o_succ', 'Success'), ('o_exc', 'Exceptional Success')])
+    a = '{{#f_duration}}<tr><th>Duration</th><td>{{f_duration}}</td></tr>{{/f_duration}}'
+    assert a in t
+    t = t.replace(a, a + '{{#^roll}}' + rows + '{{/^roll}}', 1)
+    h = h[:i] + t + h[j:]
+    c += '\n' + '\n'.join([
+        f'{Y} .sheet-gfx-body:not(:has(input.sheet-gfx-byo:checked)) > textarea.sheet-gfx-o {{ display: none !important; }}',
+        f'{Y} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) > .sheet-gfx-r:has(select[name$="_attr"]) {{ display: none !important; }}',
+        f'{Y} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) label.sheet-gfn:has(input[name$="_addren"]), {Y} .sheet-gfx-body:has(input.sheet-gfx-nr:not(:checked)) label.sheet-gfn:has(input[name$="_mod"]) {{ display: none !important; }}',
+        f'{Y} .sheet-gfx-r.sheet-gfx-tgl {{ display: flex !important; flex-wrap: wrap !important; gap: 2px 10px !important; margin: 0 !important; }}',
+        f'{Y} .sheet-gfx-r.sheet-gfx-tgl > label.sheet-gfn {{ display: inline-flex !important; align-items: center; gap: 4px; white-space: nowrap; font-size: 12px; margin: 0 !important; }}',
+    ])
+    return h, c
