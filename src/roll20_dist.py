@@ -414,6 +414,13 @@ c = "@import url('https://fonts.googleapis.com/css?family=" + '|'.join(x.replace
 c = c.replace('"Chomsky", "IM Fell English SC", serif', '"Chomsky", "UnifrakturMaguntia", "IM Fell English SC", serif')
 c = c.replace('"WolfsRain", "IM Fell English SC", serif', '"WolfsRain", "Metal Mania", "IM Fell English SC", serif')
 c = c.replace('"WolfsRain", "Fondamento", cursive', '"WolfsRain", "Metal Mania", "Fondamento", cursive')
+# (87b) Roll20's CSS editor keeps only the first ~640 KiB (655,360 chars); the live paste of the 690 KB file was cut
+# mid-rule, the legacy roll-template sanitizer then rejected the whole stylesheet and every chat card went unstyled.
+# Compact it (csso + equal-specificity [class] chains, one rule per line, long selector lists split), roll-template
+# rules first and verbatim. Hard fail if it ever creeps back near the limit.
+import sys as _s; _s.path.insert(0, f'{R}/tools'); from csscompact import compact
+c = compact(c)
+assert len(c) < 600000, f'sheet.css {len(c)} chars: too close to the Roll20 editor limit (655360)'
 open(f'{R}/dist/sheet.css', 'w', encoding='utf-8').write(c)
 t = json.load(open(f'{R}/translation.json', encoding='utf-8'))
 for _k in _ndgone: t.pop(_k, None)
