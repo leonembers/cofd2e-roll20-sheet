@@ -110,7 +110,7 @@ def merits(h, c):
         f'{E} label.sheet-switch > .sheet-sw-track::after {{ content: ""; position: absolute; left: 2px; top: 2px; width: 10px; height: 10px; border-radius: 50%; background: #fff; transition: left .15s; }}',
         f'{E} label.sheet-switch > input:checked + .sheet-sw-track {{ background: {G} !important; }}',
         f'{E} label.sheet-switch > input:checked + .sheet-sw-track::after {{ left: 16px; }}',
-        f'{P} .sheet-entry > input.sheet-mcat-flag[value="Supernatural"] ~ .sheet-entry-head .sheet-mcat-badge {{ font-size: 0 !important; letter-spacing: 0 !important; color: {G} !important; }}',
+        f'{P} .sheet-entry > input.sheet-mcat-flag[value="Supernatural"] ~ .sheet-entry-head .sheet-mcat-badge {{ font-size: 0 !important; letter-spacing: 0 !important; }}',
     ]
     for k, v in SPLAT.items():
         rules.append(f'.charsheet:has(input.sheet-type[value="{k}"]) .sheet-entry > input.sheet-mcat-flag[value="Supernatural"] ~ .sheet-entry-head .sheet-mcat-badge::after {{ content: "{v}"; font-size: 9px; line-height: 13px; letter-spacing: .4px; display: inline-block; }}')
@@ -1313,5 +1313,88 @@ def r66(h, c):
         f'{X} .sheet-fcards {{ align-items: stretch !important; grid-auto-rows: 1fr !important; }}',
         f'{X} .sheet-fcards > .sheet-fcard {{ height: 100% !important; box-sizing: border-box !important; display: flex; flex-direction: column !important; }}',
         f'{X} .sheet-fcards > .sheet-fcard > .sheet-fc-detail {{ flex: 1 1 auto !important; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r67(h, c):
+    # (67) action menus: flat black; Roll (pay cost) / Roll without paying / Post to chat (no roll); roll items hidden with no pool
+    out, pos, n = [], 0, 0
+    for m in re.finditer(r'<span class="(?:sheet-)?amenu-list">(.*?)</span></span>', h, re.S):
+        body = m.group(1)
+        hp = re.search(r'<input type="hidden" class="(?:sheet-)?haspool"[^>]*/>', body)
+        rr = re.search(r'<button type="action"[^>]*name="act_rr-roll">.*?</button>', body, re.S)
+        pr = re.search(r'<button type="action"[^>]*name="act_proll"[^>]*>.*?</button>', body, re.S)
+        af = re.search(r'<input type="hidden" class="(?:sheet-)?pw-auto-flag"[^>]*/>', body)
+        posts = list(re.finditer(r'<button type="roll" class="(?:sheet-)?entry-post" name="roll_post" title="Post to chat" value="([^"]*)"', h[:m.start()]))
+        assert hp and rr and posts, m.start()
+        val = posts[-1].group(1).replace(' @{roll_part}', '').replace('@{roll_part}', '')
+        pr_s = re.sub(r'<span class="(?:sheet-)?am-l">.*?</span>', '<span class="sheet-am-l">Roll (pay cost)</span>', pr.group(0)) if pr else ''
+        rr_s = re.sub(r'<span class="(?:sheet-)?am-l">.*?</span>', '<span class="sheet-am-l">Roll without paying</span>', rr.group(0)).replace('title="Roll dice pool"', 'title="Roll the pool without paying any cost"')
+        post = f'<button type="roll" class="sheet-am-post" name="roll_ampost" title="Post the description to chat (no roll)" value="{val}"><span class="sheet-am-l">Post to chat</span></button>'
+        new = '<span class="sheet-amenu-list">' + hp.group(0) + pr_s + rr_s + (af.group(0) if af else '') + post + '</span></span>'
+        out.append(h[pos:m.start()]); out.append(new); pos = m.end(); n += 1
+    out.append(h[pos:]); h = ''.join(out)
+    assert n >= 20, n
+    X = f'{P}{P}{P}{P}'
+    c += '\n'.join([
+        f'{X} .sheet-amenu .sheet-amenu-list {{ background: #000 !important; background-image: none !important; opacity: 1 !important; border: 1px solid var(--color-game-line, #b4743a) !important; box-shadow: none !important; }}',
+        f'{X} .sheet-amenu .sheet-amenu-list > button {{ background: #000 !important; background-image: none !important; }}',
+        f'{X} .sheet-amenu .sheet-amenu-list > button:hover {{ background: #1a1a1a !important; }}',
+        f'{X} .sheet-amenu .sheet-amenu-list > input.sheet-haspool[value="0"] ~ button.sheet-entry-roll, {X} .sheet-amenu .sheet-amenu-list > input.sheet-haspool[value=""] ~ button.sheet-entry-roll {{ display: none !important; }}',
+        f'{X} .sheet-amenu .sheet-amenu-list > button.sheet-am-post {{ display: flex !important; align-items: center; gap: 6px; width: 100%; text-align: left; border: 0 !important; color: inherit; font-family: inherit; font-size: inherit; padding: inherit; }}',
+    ]) + '\n'
+    return h, c
+
+
+def r68(h, c):
+    X = f'{P}{P}{P}{P}'
+    # (68) Roll20 does not resolve @{} in titles: static titles instead
+    for a, b in [('title="@{potency_tip}"', 'title="Power stat: click to add it to the dice pool"'),
+                 ('title="@{morality_tip}"', 'title="Morality trait (Integrity, Humanity, Harmony, Wisdom, Clarity...)"'),
+                 ('title="@{resource_name}"', 'title="Power resource (Vitae, Essence, Mana, Glamour...)"'),
+                 ('title="Clear @{potency_name}"', 'title="Clear power stat"'),
+                 ('title="Mark / clear @{resource_name} box"', 'title="Mark / clear resource box"')]:
+        h = h.replace(a, b)
+    h = re.sub(r'title="Set @\{potency_name\} to (\d+)"', r'title="Set power stat to \1"', h)
+    # (71 replaced) First Change: one textarea, placed above the Height and Weight by Form table
+    m = re.search(r'<div class="(?:sheet-)?game-line (?:sheet-)?werewolf2 (?:sheet-)?breeds2 (?:sheet-)?det-splat"><div class="(?:sheet-)?subheader"><span data-i18n="det-werewolf">First Change</span></div>.*?<textarea name="attr_det_first_change_notes"></textarea></label></div>', h, re.S)
+    assert m
+    h = h[:m.start()] + h[m.end():]
+    blk = ('<div class="sheet-game-line sheet-werewolf2 sheet-breeds2 sheet-fc-bio"><div class="sheet-subheader"><span data-i18n="det-werewolf">First Change</span></div>'
+           '<input type="hidden" name="attr_det_first_change" value="" /><input type="hidden" name="attr_det_first_change_notes" value="" /><input type="hidden" name="attr_det_fc_mig" value="" />'
+           '<label class="sheet-wide sheet-fc-bio-l"><textarea class="sheet-fc-bio-ta" name="attr_det_first_change_all" placeholder="Date, place and circumstances"></textarea></label></div>')
+    k = re.search(r'<div class="(?:sheet-)?game-line (?:sheet-)?werewolf2 (?:sheet-)?breeds2"><div class="(?:sheet-)?subheader"><span data-i18n="form-hw">', h)
+    assert k
+    h = h[:k.start()] + blk + h[k.start():]
+    js = r'''
+        // r15b (71): First Change date/place + circumstances merged once into one textarea (old attrs kept)
+        on("sheet:opened", () => getAttrs(["det_fc_mig", "det_first_change", "det_first_change_notes", "det_first_change_all"], v => {
+            if (v.det_fc_mig === "1") return; const u = {det_fc_mig: "1"};
+            if (!(v.det_first_change_all || "").trim()) { const a = (v.det_first_change || "").trim(), b = (v.det_first_change_notes || "").trim();
+                const t = [a, b].filter(Boolean).join("\n\n"); if (t) u.det_first_change_all = t; }
+            setAttrs(u, {silent: true}); }));
+        // r15b (70): action menus never come back open after a reload / paste
+        on("sheet:opened", () => ["merits","tactics","endowments","disciplines","devotions","vrites","writes","rotes","praxes","transmutations","bestowments","contracts","goblincontracts","keys","ceremonies","utterances","affinities","vessels","embeds","exploits","covers","atavisms","nightmares","favors","bspecials","fetishes","customrolls"].forEach(sec => getSectionIDs(sec, ids => {
+            if (!ids.length) return; getAttrs(ids.map(id => `repeating_${sec}_${id}_amenu`), v => { const u = {}; Object.keys(v).forEach(k => { if (v[k] === "1") u[k] = "0"; });
+                if (Object.keys(u).length) setAttrs(u, {silent: true, allowOpen: true}); }); })));
+'''
+    o = '        on("sheet:opened", r15CostMig);'
+    assert o in h
+    h = h.replace(o, js + o)
+    c += '\n'.join([
+        f'{X} .sheet-fc-bio {{ margin: 6px 0 4px !important; }}',
+        f'{X} .sheet-fc-bio label.sheet-fc-bio-l {{ display: block !important; width: 100% !important; margin: 0 !important; }}',
+        f'{X} .sheet-fc-bio textarea.sheet-fc-bio-ta {{ display: block; width: 100% !important; box-sizing: border-box; min-height: 70px; resize: vertical; }}',
+        # (72) splat merit pill = same pill as the other categories
+        f'{X} .sheet-entry > input.sheet-mcat-flag[value="Supernatural"] ~ .sheet-entry-head .sheet-mcat-badge {{ font-size: 0 !important; line-height: 0 !important; padding: 0 6px !important; margin: 0 4px !important; width: auto !important; min-width: 0 !important; height: auto !important; border-radius: 7px !important; border: 1px solid currentColor !important; }}',
+        f'{X} .sheet-entry > input.sheet-mcat-flag[value="Supernatural"] ~ .sheet-entry-head .sheet-mcat-badge::after {{ display: inline-block !important; font: bold 9px/13px Arial, sans-serif !important; letter-spacing: .4px !important; text-transform: uppercase !important; vertical-align: top !important; margin: 0 !important; padding: 0 !important; }}',
+        # (73) select options: splat colour + black text on checked / hover / focus
+        f'{X} select option:checked, {X} select option:hover, {X} select option:focus {{ background-color: var(--color-game-line, #b4743a) !important; color: #000 !important; box-shadow: 0 0 10px 100px var(--color-game-line, #b4743a) inset !important; }}',
+        # (69) menu above everything, opens to the left under the trigger
+        f'{X} .sheet-amenu {{ position: relative !important; }}',
+        f'{X} .sheet-amenu .sheet-amenu-list {{ position: absolute !important; right: 0 !important; top: 100% !important; z-index: 1000 !important; min-width: 170px; }}',
+        f'{X} .repitem:has(.sheet-amenu-tg:checked) {{ position: relative; z-index: 999 !important; }}',
+        f'{X} .sheet-amenu-tg:not(:checked) ~ .sheet-amenu-list {{ display: none !important; }}',
     ]) + '\n'
     return h, c
