@@ -2077,15 +2077,71 @@ def r98(h, c):
             const head = "&{template:cofd-entry} {{charname=@{character_name}}} {{kind=Reroll}} ";
             let o = null; try { o = JSON.parse(v["rr_s" + s] || ""); } catch (e) { o = null; }
             if (!o || !o.m) return startRoll(head + "{{name=Nothing to reroll}} {{f_short=This roll is too old to reroll; roll it again.}}", r => finishRoll(r.rollId));
-            let [m, ex] = rrCut(String(o.m)); if (o.x && !/\{\{|\]\]/.test(o.x)) ex = String(o.x);
+            let [m, ex] = rrCut(String(o.m)); if (o.x && !/\\{\\{|\\]\\]/.test(o.x)) ex = String(o.x);
             m = m.replace(/\\s*\\{\\{(reroll|wpst)=[^}]*\\}\\}/g, "");
             m = /\\{\\{kind=[^}]*\\}\\}/.test(m) ? m.replace(/\\{\\{kind=[^}]*\\}\\}/, "{{kind=Reroll}}") : m.replace(/(&\\{template:[^}]*\\})/, "$1 {{kind=Reroll}}");
             m = /\\{\\{name=/.test(m) ? m.replace(/\\{\\{name=/, "{{name=Reroll: ") : m + " {{name=Reroll}}";
             m = rrStrip(m); ex = rrStrip(ex);
-            startRoll(m + (ex ? ` {{roll=[[${ex}` + (/@\{[^{}]*\}\s*$/.test(ex) ? "" : "]]}}") : ""), r => finishRoll(r.rollId));
+            startRoll(m + (ex ? ` {{roll=[[${ex}` + (/@\\{[^{}]*\\}\\s*$/.test(ex) ? "" : "]]}}") : ""), r => finishRoll(r.rollId));
         }));
 ''' % N
     b = '        on("clicked:wp_reroll", () => getAttrs('
     assert h.count(b) == 1
     h = h.replace(b, js + b)
+    return h, c
+
+
+def r99(h, c):
+    """(109) Vampire Banes as Merit-style cards: caret + small post icon + name; clicking the name (or caret) opens / collapses.
+    Same attribute names (name / description / notes / show), so existing rows carry over untouched."""
+    import re as _re
+    i = h.index('<fieldset class="repeating_banes">'); j = h.index('</fieldset>', i)
+    s = h[i:j]
+    m = _re.search(r'<button type="roll" class="sheet-entry-post" name="roll_post" title="Post to chat" (value="[^"]*")><span class="sheet-entry-name" name="attr_name"></span><span class="sheet-entry-ph">\(<span data-i18n="new-entry">new entry</span>\)</span></button>', s)
+    assert m, 'bane head'
+    s = s.replace(m.group(0), f'<button type="roll" class="sheet-entry-post sheet-post-ic" name="roll_post" title="Post to chat" {m.group(1)}>&#128172;</button>'
+                  '<input type="checkbox" class="sheet-bane-hit" name="attr_show" value="1" title="Open / close this Bane" />'
+                  '<span class="sheet-entry-name" name="attr_name"></span><span class="sheet-entry-ph">(<span data-i18n="new-entry">new entry</span>)</span>')
+    s = s.replace('<label class="sheet-wide"><span data-i18n="lbl-description">Description</span>', '<label class="sheet-wide"><span>Description / effect</span>', 1)
+    h = h[:i] + s + h[j:]
+    E = f'{P}{P}{P}{P}{P}{P} .repcontainer[data-groupname=repeating_banes] .sheet-entry-head'
+    c += (f'\n{E} {{ position: relative !important; display: flex !important; align-items: center !important; padding-left: 0 !important; min-height: 18px; }}'
+          f'\n{E} > button.sheet-entry-post.sheet-post-ic {{ order: -1 !important; flex: 0 0 13px !important; width: 13px !important; height: 13px !important; min-height: 13px !important; max-height: 13px !important; min-width: 13px !important; padding: 0 !important; margin: 0 4px 0 0 !important; '
+          f'border: 1px solid rgba(217,138,74,0.7) !important; border-radius: 3px !important; background: #1a1a1a !important; font-size: 7px !important; line-height: 11px !important; text-align: center !important; box-sizing: border-box !important; position: relative !important; z-index: 3; }}'
+          f'\n{E} > input.sheet-bane-hit {{ position: absolute !important; left: 17px !important; right: 0 !important; top: 0 !important; bottom: 0 !important; width: auto !important; height: auto !important; margin: 0 !important; opacity: 0 !important; cursor: pointer !important; z-index: 2; -webkit-appearance: none; appearance: none; }}'
+          f'\n{E} > .sheet-entry-name {{ flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }}\n')
+    return h, c
+
+
+def r100(h, c):
+    """(110) Dice-pool Mod / WP / resource: plain digits-only number inputs with the native spinner, three side by side.
+    Same attribute names; the +/- buttons and their click workers are removed; typed values are clamped on change."""
+    import re as _re
+    h, n1 = _re.subn(r'<button type="action" class="sheet-stp-b" name="act_(?:pp-mod|cost-wp|cost-pw)-(?:dec|inc)"[^>]*>[^<]*</button>', '', h)
+    h, n2 = _re.subn(r'<button type="action" class="sheet-stp-b" name="act_fx-[a-z]+-(?:mod|wp|ess)-(?:dec|inc)"[^>]*>[^<]*</button>', '', h)
+    assert n1 == 78 * 2 and n2 == 30 * 2, (n1, n2)
+    h = h.replace('<span class="sheet-stp sheet-pw-stp"', '<span class="sheet-stp sheet-pw-stp sheet-num"').replace('<span class="sheet-stp sheet-fx-stp"', '<span class="sheet-stp sheet-fx-stp sheet-num"')
+    h = _re.sub(r'(<input type="number" class="sheet-stp-v" name="attr_(?:pp_mod|cost_wp|cost_pw|f_[a-z]+_(?:mod|wp|ess))")', r'\1 inputmode="numeric" pattern="-?[0-9]*"', h)
+    a = _re.search(r'        R15_SECS\.forEach\(sec => Object\.keys\(R15_ST\)\.forEach\(a => \[\["dec", -1\], \["inc", 1\]\]\.forEach\(.*?\}\)\)\)\);\n', h, _re.S)
+    assert a, 'r15st'
+    h = h.replace(a.group(0), '''        // (110) number fields: clamp / whole numbers on change (no-op when already valid)
+        const numClamp = (p, lo, hi) => getAttrs([p], v => { const raw = v[p]; const n = Math.max(lo, Math.min(hi, parseInt(raw, 10) || 0)); if (String(n) !== String(raw)) setAttrs({[p]: n}); });
+        R15_SECS.forEach(sec => Object.keys(R15_ST).forEach(a => on(`change:repeating_${sec}:${a}`, ev => { const [lo, hi] = R15_ST[a]; numClamp(ev.sourceAttribute, lo, hi); })));
+''')
+    a = _re.search(r'Object\.keys\(FX_ST\)\.forEach\(a => \[\["dec", -1\], \["inc", 1\]\]\.forEach\(\(\[d, s\]\) => on\(`clicked:repeating_\$\{sec\}:fx-\$\{k\}-\$\{a\}-\$\{d\}`.*?\}\); \}\)\)\);', h, _re.S)
+    assert a, 'fxst'
+    h = h.replace(a.group(0), 'Object.keys(FX_ST).forEach(a => on(`change:repeating_${sec}:f_${k}_${a}`, ev => { const [lo, hi] = FX_ST[a]; numClamp(ev.sourceAttribute, lo, hi); }));')
+    assert 'const numClamp' in h, 'nc'
+    Z = f'{P}{P}{P}{P}{P}{P}{P}{P}{P}'
+    S = f'{Z} .sheet-stp.sheet-num'
+    c += (f'\n{Z} .sheet-pw-box .sheet-pw-row.sheet-pw-row2, {Z} .sheet-gifts .sheet-gfx-r.sheet-fx-stps {{ display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 4px !important; align-items: center !important; flex-wrap: nowrap !important; }}'
+          f'\n{Z} .sheet-pw-box .sheet-pw-row.sheet-pw-row2 > :not(.sheet-num) {{ grid-column: 1 / -1 !important; }}'
+          f'\n{S} {{ display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: flex-start !important; gap: 3px !important; min-width: 0 !important; margin: 0 !important; white-space: nowrap !important; }}'
+          f'\n{S} .sheet-fx-stc {{ display: inline-flex !important; width: auto !important; flex: 0 0 auto !important; margin: 0 !important; }}'
+          f'\n{S} > .sheet-stp-l {{ flex: 0 1 auto !important; min-width: 0 !important; overflow: hidden !important; text-overflow: ellipsis !important; font-size: 11px !important; margin: 0 !important; display: inline !important; }}'
+          f'\n{S} input.sheet-stp-v {{ flex: 0 0 34px !important; width: 34px !important; min-width: 0 !important; height: 17px !important; padding: 0 0 0 3px !important; margin: 0 !important; font-size: 11px !important; text-align: left !important; box-sizing: border-box !important; -moz-appearance: number-input !important; appearance: auto !important; color-scheme: dark; }}'
+          f'\n{Z} .sheet-gifts .sheet-fx-stp.sheet-num {{ gap: 2px !important; }}'
+          f'\n{Z} .sheet-gifts .sheet-fx-stp.sheet-num > .sheet-stp-l {{ flex: 0 0 auto !important; overflow: visible !important; font-size: 10px !important; }}'
+          f'\n{Z} .sheet-gifts .sheet-fx-stp.sheet-num input.sheet-stp-v {{ flex: 0 0 28px !important; width: 28px !important; padding-left: 2px !important; }}'
+          f'\n{S} input.sheet-stp-v::-webkit-inner-spin-button, {S} input.sheet-stp-v::-webkit-outer-spin-button {{ -webkit-appearance: inner-spin-button !important; opacity: 1 !important; display: block !important; margin: 0 !important; height: 15px; }}\n')
     return h, c
