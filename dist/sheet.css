@@ -2159,3 +2159,83 @@ input.sheet-type[value=beast]~.sheet-background-image .sheet-bgart{display:block
 .charsheet .sheet-bb-entry>input[type=checkbox].sheet-entry-toggle:checked+.sheet-entry-head::before{transform:rotate(45deg)!important;top:5px!important}
 .charsheet .sheet-page1{padding-right:8px!important;box-sizing:border-box}
 .charsheet .sheet-page1 input[type=text],.charsheet .sheet-page1 select{max-width:100%;box-sizing:border-box}
+
+/* rev111 */
+.charsheet[class][class][class][class][class][class][class][class] .sheet-armor .sheet-entry-head{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:3px 6px!important;padding-right:2px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-name{flex:1 1 120px!important;min-width:90px!important;width:auto!important;margin:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-cols{display:flex!important;flex:1 1 auto;flex-wrap:wrap;gap:2px 6px;align-items:center;font-size:11px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-c{white-space:nowrap}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-c>b{font-weight:700;margin-right:3px;opacity:.8}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-armor .sheet-entry-head>.sheet-ar-eq{margin-left:auto!important;flex:0 0 auto}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-panel>.sheet-ar-stk{margin:2px 0 4px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-wfilters{display:inline-flex;gap:4px;margin-left:8px;flex:0 0 auto}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-wfb{font-size:11px!important;padding:1px 8px!important;border-radius:10px!important;border:1px solid color-mix(in srgb,var(--pa,#888) 55%,rgba(128,128,128,.4))!important;background:none!important}
+.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=all]~.sheet-entry-section-head .sheet-wfb-all,.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=melee]~.sheet-entry-section-head .sheet-wfb-melee,.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=ranged]~.sheet-entry-section-head .sheet-wfb-ranged,.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=explosive]~.sheet-entry-section-head .sheet-wfb-explosive{background:var(--pa,#8a4b1f)!important;color:#fff!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-wx{display:flex;flex:1 1 220px;flex-wrap:wrap;gap:1px 6px;align-items:center;font-size:11px;min-width:0}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-wx-c{white-space:nowrap}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-wx-c>b{margin-right:2px;opacity:.75}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-wx-tags{flex:1 1 80px;min-width:0;white-space:normal}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])) .sheet-wx-x{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(input.sheet-hl-wt[value=explosive]) .sheet-wx-m{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=melee]~fieldset.repeating_weapons .sheet-entry:not(:has(input.sheet-hl-wt[value=melee],input.sheet-hl-wt[value=unarmed],input.sheet-hl-wt[value=thrown])){display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=ranged]~fieldset.repeating_weapons .sheet-entry:not(:has(input.sheet-hl-wt[value=ranged],input.sheet-hl-wt[value=bow])){display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=explosive]~fieldset.repeating_weapons .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])){display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>input.sheet-entry-short{flex:1 1 100%!important;min-width:0!important;width:100%!important;white-space:normal!important;height:auto!important;overflow:visible!important;text-overflow:clip!important;margin:0 0 1px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section{position:relative}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section>.repcontrol{position:absolute!important;top:0!important;right:0!important;margin:0!important;z-index:4}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head{display:flex!important;align-items:center!important;min-height:22px;padding-right:54px!important;justify-content:flex-start!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader span{border:0!important;background:none!important;box-shadow:none!important;text-align:left!important;padding-left:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>button.sheet-entry-post:not(.sheet-post-ic){border:0!important;background:none!important;box-shadow:none!important;text-align:left!important;padding-left:2px!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 240px!important;min-width:228px!important;white-space:nowrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mstyle-s{display:none;font-size:9px;line-height:0;vertical-align:super;margin-left:1px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-entry-head .sheet-mstyle-s,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mstyle-s{display:inline!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{font-size:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge::after{content:"Fighting";font-size:9px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out{display:none}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-mv-out{display:block!important;border:0!important;padding:1px 2px 2px 16px!important;margin:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-style-title{display:none}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-post{flex:0 0 16px!important;width:16px!important;height:16px!important;min-width:0!important;padding:0!important;font-size:9px!important;line-height:14px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 140px;min-width:0;width:auto!important;margin:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage{display:grid!important;grid-template-columns:28px minmax(0,1fr) 28px;gap:6px;align-items:center}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-cap{grid-column:1/-1;text-align:center;font-weight:700}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=hishu]~.sheet-form-cap::before{content:"Hishu"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=dalu]~.sheet-form-cap::before{content:"Dalu"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=gauru]~.sheet-form-cap::before{content:"Gauru"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=urkhar]~.sheet-form-cap::before{content:"Ur'Khar"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=urshul]~.sheet-form-cap::before{content:"Urshul"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=urhan]~.sheet-form-cap::before{content:"Urhan"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-arrow{width:28px;height:36px;padding:0!important;border-radius:8px!important;font-size:14px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage .sheet-fcards{grid-column:2;display:block!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage .sheet-fcard{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=hishu]) .sheet-fc-hishu,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=dalu]) .sheet-fc-dalu,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=gauru]) .sheet-fc-gauru,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=urshul]) .sheet-fc-urshul,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=urhan]) .sheet-fc-urhan{display:flex!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=urkhar]):has(input.sheet-urkhar-flag[value="1"]) .sheet-fc-urkhar{display:flex!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-fc-hw{display:block;text-align:center;font-weight:700;font-size:14px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short{display:block;margin:0 4px 2px 16px;white-space:normal;overflow-wrap:anywhere;font-style:italic;font-size:12px;line-height:1.3}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:empty,.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:has(>span:empty){display:none}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-body{display:grid!important;grid-template-columns:150px minmax(0,1fr);gap:8px;align-items:start}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-img{width:150px!important;height:200px!important;max-width:150px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-fields{min-width:0;display:flex;flex-direction:column;gap:3px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:start}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-h{font-weight:700;text-align:center;margin:0 0 4px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-note{font-size:11px;font-style:italic;text-align:center;margin:0 0 4px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-gen textarea{width:100%!important;min-height:140px;box-sizing:border-box}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-top{display:grid!important;grid-template-columns:168px minmax(0,1fr)!important;gap:8px!important;align-items:start!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-portrait{grid-column:1;grid-row:1/span 3}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-grid{grid-column:2;grid-row:1}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-beside{grid-column:2;grid-row:2}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-fc-bio-line{width:100%!important;box-sizing:border-box}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-note-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-note-cols textarea{min-height:70px;width:100%!important;box-sizing:border-box}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-options>button.sheet-toggle,.charsheet[class][class][class][class][class][class][class][class] .sheet-wp-bar{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-grid{display:flex!important;flex-direction:column!important;align-items:center!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-corporeal.sheet-span,.charsheet[class][class][class][class][class][class][class][class] .sheet-ephemeral.sheet-span,.charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-options,.charsheet[class][class][class][class][class][class][class][class] .sheet-roll-extra{display:flex!important;justify-content:center!important;width:100%;flex-wrap:wrap;gap:6px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-roll-extra{flex-direction:column;align-items:center}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-panel{display:none;width:min(100%,440px)}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-roll-extra:has(input.sheet-buff-tg:checked) .sheet-buff-panel{display:block}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row{display:flex;align-items:center;gap:6px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row input[type=text]{flex:1 1 auto;min-width:0}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-n{width:54px!important;flex:0 0 54px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth label{text-align:center!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields input,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth input{max-width:220px!important;text-align:center}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pa)!important}
+.sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pad)!important}
