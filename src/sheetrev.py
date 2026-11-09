@@ -8,29 +8,28 @@ import os, re, json, shutil
 
 R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+def _pick(files, exact):
+    for f in files:
+        if os.path.basename(f) == exact:
+            return f
+    return files[-1]
+
 def _src():
+    import glob
     cands = [
         os.path.join(R, "uploads"),
-        "/home/ubuntu/.cursor/projects/workspace/uploads",
         "/home/ubuntu/.cursor/projects/agent-repos-cofd2e-roll20-sheet/uploads",
+        "/home/ubuntu/.cursor/projects/workspace/uploads",
     ]
     for d in cands:
-        names = {
-            "html": ["sheet.html", "sheet_2be9.html"],
-            "css": ["sheet.css", "sheet_e62a.css"],
-            "tr": ["translation.json", "translation_6ad2.json"],
-        }
-        found = {}
         if not os.path.isdir(d):
             continue
-        for key, opts in names.items():
-            for n in opts:
-                p = os.path.join(d, n)
-                if os.path.isfile(p):
-                    found[key] = p
-                    break
-        if len(found) == 3:
-            print("baseline", d)
+        htmls = sorted(glob.glob(os.path.join(d, "sheet*.html")))
+        csss = sorted(glob.glob(os.path.join(d, "sheet*.css")))
+        trs = sorted(glob.glob(os.path.join(d, "translation*.json")))
+        if htmls and csss and trs:
+            found = {"html": _pick(htmls, "sheet.html"), "css": _pick(csss, "sheet.css"), "tr": _pick(trs, "translation.json")}
+            print("baseline", found["html"])
             return found
     print("baseline dist (uploads not on disk)")
     return {
@@ -148,12 +147,18 @@ def merits(h):
 
 def forms(h):
     if "act_form_prev" not in h:
+        # Live sheet already stores form_view (hidden, plus a preview <select>). Drop only the dropdown.
+        h, nprev = re.subn(
+            r'<label>Preview form<select name="attr_form_view" title="Select a form to inspect without shapeshifting">.*?</select></label>',
+            '', h, count=1, flags=re.S)
         old = '<div class="sheet-fcards">'
         if h.count(old) != 1:
             raise SystemExit("fcards")
+        # Do not add a second form_view input when the card list already has one.
+        extra = '' if 'name="attr_form_view"' in h else '<input type="hidden" class="sheet-form-view" name="attr_form_view" value="hishu" />'
         h = h.replace(old,
             '<div class="sheet-form-stage">'
-            '<input type="hidden" class="sheet-form-view" name="attr_form_view" value="hishu" />'
+            + extra +
             '<span class="sheet-form-cap"></span>'
             '<button type="action" class="sheet-form-arrow sheet-form-prev" name="act_form_prev" title="Previous form">&#9664;</button>'
             + old, 1)
@@ -162,6 +167,8 @@ def forms(h):
             raise SystemExit("huref")
         a, b = take_div(h, i)
         h = h[:a] + '<button type="action" class="sheet-form-arrow sheet-form-next" name="act_form_next" title="Next form">&#9654;</button></div>' + h[b:]
+        if nprev not in (0, 1):
+            raise SystemExit("preview %s" % nprev)
     names = {
         "Hishu": "hishu", "Dalu": "dalu", "Gauru": "gauru",
         "Ur'Khar": "urkhar", "Urshul": "urshul", "Urhan": "urhan",
@@ -251,6 +258,8 @@ def notes(h):
         if "sheet-fc-bio-line" not in bio:
             raise SystemExit("first change field")
         hw = h[w1:w2]
+        if "form-hw" not in hw or len(hw) > 12000:
+            raise SystemExit("hw block %s" % len(hw))
         top = h[a:b]
         top = top[:-6] + '<div class="sheet-det-beside">' + bio + hw + '</div></div>'
         h = h[:a] + top + h[b:c1] + h[c2:w1] + h[w2:]
@@ -395,17 +404,14 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 140px;min-width:0;width:auto!important;margin:0!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage{display:grid!important;grid-template-columns:28px minmax(0,1fr) 28px;gap:6px;align-items:center}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-form-cap{grid-column:1/-1;text-align:center;font-weight:700}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=hishu]~.sheet-form-cap::before{content:"Hishu"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=dalu]~.sheet-form-cap::before{content:"Dalu"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=gauru]~.sheet-form-cap::before{content:"Gauru"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=urkhar]~.sheet-form-cap::before{content:"Ur'Khar"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=urshul]~.sheet-form-cap::before{content:"Urshul"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage>input.sheet-form-view[value=urhan]~.sheet-form-cap::before{content:"Urhan"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=hishu])>.sheet-form-cap::before{content:"Hishu"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=dalu])>.sheet-form-cap::before{content:"Dalu"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=gauru])>.sheet-form-cap::before{content:"Gauru"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=urkhar])>.sheet-form-cap::before{content:"Ur'Khar"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=urshul])>.sheet-form-cap::before{content:"Urshul"}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=urhan])>.sheet-form-cap::before{content:"Urhan"}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-form-arrow{width:28px;height:36px;padding:0!important;border-radius:8px!important;font-size:14px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage .sheet-fcards{grid-column:2;display:block!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage .sheet-fcard{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=hishu]) .sheet-fc-hishu,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=dalu]) .sheet-fc-dalu,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=gauru]) .sheet-fc-gauru,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=urshul]) .sheet-fc-urshul,.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=urhan]) .sheet-fc-urhan{display:flex!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(>input.sheet-form-view[value=urkhar]):has(input.sheet-urkhar-flag[value="1"]) .sheet-fc-urkhar{display:flex!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage .sheet-fcards{grid-column:2;min-width:0}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-fc-hw{display:block;text-align:center;font-weight:700;font-size:14px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short{display:block;margin:0 4px 2px 16px;white-space:normal;overflow-wrap:anywhere;font-style:italic;font-size:12px;line-height:1.3}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:empty,.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:has(>span:empty){display:none}
@@ -496,6 +502,18 @@ def main():
         pass
     if '<div class="sheet-huref' in h:
         raise SystemExit("huref html left")
+    if "Preview form" in h:
+        raise SystemExit("preview dropdown left")
+    if h.count('name="attr_form_view"') != 1:
+        raise SystemExit("form_view inputs %s" % h.count('name="attr_form_view"'))
+    # Live-only markers that must survive when the source was the pasted sheet.
+    if "sheet-mp-forms" in open(src["html"], encoding="utf-8").read():
+        live_keep = ["sheet-mp-forms", "sheet-entry-settings", "act_kuruth_end_rev", "sheet-merit-summary", "Auspice &amp; Tribe"]
+        gone = [k for k in live_keep if k not in h]
+        if gone:
+            raise SystemExit("live markers lost " + ",".join(gone))
+        if "Grenze" not in c:
+            raise SystemExit("Grenze font lost")
     out_h = os.path.join(R, "dist", "sheet.html")
     out_c = os.path.join(R, "dist", "sheet.css")
     out_t = os.path.join(R, "dist", "translation.json")
