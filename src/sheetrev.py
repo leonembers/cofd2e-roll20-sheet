@@ -136,7 +136,11 @@ def merits(h):
         if body < 0:
             raise SystemExit("merit body")
         sec = sec[:body] + block + sec[body:]
-    sec = sec.replace('<span class="sheet-mstyle-badge">Style</span>', '<sup class="sheet-mstyle-s">S</sup>', 1)
+    sec = sec.replace('<span class="sheet-mstyle-badge">Style</span>', '', 1)
+    name_end = '<span class="sheet-entry-ph">(<span data-i18n="new-entry">new entry</span>)</span></button>'
+    if sec.count(name_end) < 1:
+        raise SystemExit("merit name button")
+    sec = sec.replace(name_end, name_end.replace('</button>', '<sup class="sheet-mstyle-s">S</sup></button>'), 1)
     sec = sec.replace('>Post</button>', '>&#128172;</button>')
     sec = re.sub(
         r'<textarea class="sheet-mv-effect" name="(attr_mv\d_effect)" rows="2" placeholder="Effect"></textarea>',
@@ -159,7 +163,6 @@ def forms(h):
         h = h.replace(old,
             '<div class="sheet-form-stage">'
             + extra +
-            '<span class="sheet-form-cap"></span>'
             '<button type="action" class="sheet-form-arrow sheet-form-prev" name="act_form_prev" title="Previous form">&#9664;</button>'
             + old, 1)
         i = h.find('<div class="sheet-huref')
@@ -209,18 +212,14 @@ def totem(h):
     sec = h[i:j]
     if "sheet-totem-body" in sec:
         return h
-    img = ('<div class="sheet-fc-img sheet-totem-img"><span class="sheet-fc-imgph">No image<br/>200 x 300</span>'
+    img = ('<div class="sheet-totem-card"><div class="sheet-fc-img sheet-totem-img"><span class="sheet-fc-imgph">No image<br/>200 x 300</span>'
            '<img class="sheet-fc-imgel" name="attr_totem_img" alt="" />'
            '<input type="hidden" name="attr_totem_img" />'
-           '<button type="action" class="sheet-fc-imgbtn" name="act_timg" title="Set image URL">&#9998;</button></div>'
-           '<div class="sheet-totem-fields">')
-    sec = sec.replace('<div class="sheet-entry-body">', '<div class="sheet-entry-body sheet-totem-body">' + img, 1)
-    # close the fields wrapper before the entry-body closes (last </div> of the body is the body's own close,
-    # the hidden inputs sit inside the body). Close fields just before the body's final </div></div></fieldset>
-    end = sec.rfind("</div></div>")
-    if end < 0:
-        raise SystemExit("totem end")
-    sec = sec[:end] + "</div>" + sec[end:]
+           '<button type="action" class="sheet-fc-imgbtn" name="act_timg" title="Set image URL">&#9998;</button></div></div>')
+    needle = '</div><div class="sheet-entry-body">'
+    if needle not in sec:
+        raise SystemExit("totem head")
+    sec = sec.replace(needle, '</div>' + img + '<div class="sheet-entry-body sheet-totem-body">', 1)
     return h[:i] + sec + h[j:]
 
 def kuruth(h):
@@ -395,29 +394,35 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 240px!important;min-width:228px!important;white-space:nowrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mstyle-s{display:none;font-size:9px;line-height:0;vertical-align:super;margin-left:1px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-entry-head .sheet-mstyle-s,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mstyle-s{display:inline!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{font-size:0!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge::after{content:"Fighting";font-size:9px}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mstyle-flag[value="1"]) .sheet-mcat-badge,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head{flex-wrap:wrap!important;padding-left:14px!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 100%!important;width:auto!important;max-width:100%!important;min-width:0!important;overflow:visible!important;white-space:nowrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-name{overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] input.sheet-entry-settings,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] input.sheet-entry-settings:checked{border:0!important;outline:0!important;box-shadow:none!important;background:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body>label.sheet-wide,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body input[name=attr_short_desc]{flex:1 1 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-row{flex-wrap:wrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 100%!important;width:100%!important;max-width:100%!important;display:block!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out{display:none}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-mv-out{display:block!important;border:0!important;padding:1px 2px 2px 16px!important;margin:0!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-style-title{display:none}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-post{flex:0 0 16px!important;width:16px!important;height:16px!important;min-width:0!important;padding:0!important;font-size:9px!important;line-height:14px!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 140px;min-width:0;width:auto!important;margin:0!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage{display:grid!important;grid-template-columns:28px minmax(0,1fr) 28px;gap:6px;align-items:center}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-cap{grid-column:1/-1;text-align:center;font-weight:700}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=hishu])>.sheet-form-cap::before{content:"Hishu"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=dalu])>.sheet-form-cap::before{content:"Dalu"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=gauru])>.sheet-form-cap::before{content:"Gauru"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=urkhar])>.sheet-form-cap::before{content:"Ur'Khar"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=urshul])>.sheet-form-cap::before{content:"Urshul"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage:has(input.sheet-form-view[value=urhan])>.sheet-form-cap::before{content:"Urhan"}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-arrow{width:28px;height:36px;padding:0!important;border-radius:8px!important;font-size:14px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-form-stage .sheet-fcards{grid-column:2;min-width:0}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms,.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-leon-pane,.charsheet[class][class][class][class][class][class] .sheet-form-stage{overflow:visible!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-stage{display:grid!important;grid-template-columns:36px minmax(0,1fr) 36px!important;gap:4px!important;align-items:center!important;width:100%!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-prev{grid-column:1!important;grid-row:1!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-stage>.sheet-fcards{grid-column:2!important;grid-row:1!important;min-width:0!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-next{grid-column:3!important;grid-row:1!important}
+.charsheet[class][class][class][class][class][class][class][class] button.sheet-form-arrow{display:inline-flex!important;align-items:center;justify-content:center;position:relative!important;z-index:6;opacity:1!important;visibility:visible!important;width:32px!important;min-width:32px!important;height:48px!important;margin:0;padding:0!important;border:1px solid #fff!important;border-radius:8px;background:var(--pa,#8a4b1f)!important;color:#fff!important;font:700 22px/1 Arial,sans-serif!important}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hw{display:flex!important;flex-direction:column!important;align-items:center!important;max-width:100%!important;overflow:hidden!important;text-align:center!important;font-size:12px!important;line-height:1.2!important;white-space:normal!important}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hwsep{display:none!important}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-head{min-width:0!important;overflow:hidden!important;max-width:100%!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-fc-hw{display:block;text-align:center;font-weight:700;font-size:14px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short{display:block;margin:0 4px 2px 16px;white-space:normal;overflow-wrap:anywhere;font-style:italic;font-size:12px;line-height:1.3}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:empty,.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:has(>span:empty){display:none}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-body{display:grid!important;grid-template-columns:150px minmax(0,1fr);gap:8px;align-items:start}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-img{width:150px!important;height:200px!important;max-width:150px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-fields{min-width:0;display:flex;flex-direction:column;gap:3px}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-card{display:flex!important;justify-content:center!important;margin:4px 0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-entry-toggle:not(:checked)~.sheet-totem-card{display:flex!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-img{position:relative!important;display:flex!important;width:150px!important;height:200px!important;max-width:150px!important;align-items:center;justify-content:center;overflow:hidden}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-img .sheet-fc-imgph{display:block!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:start}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-h{font-weight:700;text-align:center;margin:0 0 4px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-note{font-size:11px;font-style:italic;text-align:center;margin:0 0 4px}
@@ -430,9 +435,16 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-note-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-note-cols textarea{min-height:70px;width:100%!important;box-sizing:border-box}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-options>button.sheet-toggle,.charsheet[class][class][class][class][class][class][class][class] .sheet-wp-bar{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-grid{display:flex!important;flex-direction:column!important;align-items:center!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-corporeal.sheet-span,.charsheet[class][class][class][class][class][class][class][class] .sheet-ephemeral.sheet-span,.charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-options,.charsheet[class][class][class][class][class][class][class][class] .sheet-roll-extra{display:flex!important;justify-content:center!important;width:100%;flex-wrap:wrap;gap:6px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-roll-extra{flex-direction:column;align-items:center}
+.charsheet[class][class][class][class] .sheet-rollbar{padding:4px 8px!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-grid{display:flex!important;flex-flow:row wrap!important;align-items:center!important;justify-content:center!important;gap:4px 8px!important;width:100%!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-corporeal.sheet-span{display:flex!important;flex:1 0 100%!important;justify-content:center!important;width:100%!important;order:1;gap:6px}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-roll-portrait{order:2;width:64px!important;height:72px!important;flex:0 0 64px!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-grid>.sheet-rollcontainer{order:3;width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-rolldisplay{order:4;flex:0 1 200px!important;width:200px!important;max-width:200px!important;height:24px!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-options{order:5;display:flex!important;flex:1 0 100%!important;justify-content:center!important;width:auto!important;border:0!important;background:none!important}
+.charsheet[class][class][class][class] .sheet-roll-extra{order:6;display:flex!important;flex-flow:row wrap!important;flex:1 0 100%!important;justify-content:center!important;align-items:center!important;width:auto!important;gap:6px}
+.charsheet[class][class][class][class] .sheet-fc-bio,.charsheet[class][class][class][class] .sheet-fc-bio-l,.charsheet[class][class][class][class] .sheet-det-beside{min-width:0!important;max-width:100%!important}
+.charsheet[class][class][class][class] input.sheet-fc-bio-line{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-panel{display:none;width:min(100%,440px)}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-roll-extra:has(input.sheet-buff-tg:checked) .sheet-buff-panel{display:block}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row{display:flex;align-items:center;gap:6px}
@@ -479,8 +491,8 @@ def main():
     bad = banned(c)
     if bad:
         raise SystemExit("banned CSS %s" % bad)
-    if len(c) > 630000:
-        raise SystemExit("css %s over cap" % len(c))
+    if len(c) > 620000:
+        raise SystemExit("css %s over 620k cap" % len(c))
     checks = [
         "sheet-ar-cols", "sheet-wx", "sheet-wfilter", "sheet-mv-out", "act_form_prev",
         "sheet-form-view", "sheet-rite-short", "sheet-totem-body", "sheet-kt-split",
