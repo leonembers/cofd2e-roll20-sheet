@@ -187,6 +187,7 @@ def forms(h):
         r'<input type="hidden" name="\1" />', h)
     if n not in (0, 6):
         raise SystemExit("form notes %s" % n)
+    h = h.replace(">No image<br/>200 x 300<", ">No image<br/>100 x 300<")
     return h
 
 def rites(h):
@@ -500,12 +501,17 @@ def notes_fit(h):
     return h[:b - 6] + block + h[b - 6:]
 
 def weapons_fix(h):
-    if "sheet-wtype-f" in h:
-        return h
     old = '<fieldset class="repeating_weapons">\n<div class="sheet-entry">'
-    if old not in h:
-        raise SystemExit("weapon row")
-    return h.replace(old, '<fieldset class="repeating_weapons">\n<input type="hidden" class="sheet-wtype-f" name="attr_wtype" value="melee" />\n<div class="sheet-entry">', 1)
+    if "sheet-wtype-f" not in h:
+        if old not in h:
+            raise SystemExit("weapon row")
+        h = h.replace(old, '<fieldset class="repeating_weapons">\n<input type="hidden" class="sheet-wtype-f" name="attr_wtype" value="melee" />\n<div class="sheet-entry">', 1)
+    if "sheet-whide" not in h:
+        needle = '<input type="hidden" class="sheet-wtype-f" name="attr_wtype" value="melee" />\n'
+        if h.count(needle) != 1:
+            raise SystemExit("wtype flag %s" % h.count(needle))
+        h = h.replace(needle, needle + '<input type="hidden" class="sheet-whide" name="attr_whide" value="0" />\n', 1)
+    return h
 
 TOTEM_CARD = (
     '<div class="sheet-totem-card"><div class="sheet-totem-top">'
@@ -621,9 +627,27 @@ REV112 = r'''
                 if (Object.keys(u).length) setAttrs(u, {silent: true});
             });
         });
+        const weaponHide = () => getAttrs(["wfilter"], fv => {
+            const f = fv.wfilter || "all";
+            getSectionIDs("weapons", ids => {
+                getAttrs(ids.map(id => "repeating_weapons_" + id + "_wtype"), v => {
+                    const u = {};
+                    ids.forEach(id => {
+                        const t = (v["repeating_weapons_" + id + "_wtype"] || "melee").toLowerCase();
+                        let hide = "0";
+                        if (f === "melee") hide = (t === "melee" || t === "unarmed" || t === "thrown") ? "0" : "1";
+                        else if (f === "ranged") hide = (t === "ranged" || t === "bow") ? "0" : "1";
+                        else if (f === "explosive") hide = t === "explosive" ? "0" : "1";
+                        u["repeating_weapons_" + id + "_whide"] = hide;
+                    });
+                    setAttrs(u, {silent: true});
+                });
+            });
+        });
         if (!globalThis.__rev112) {
             globalThis.__rev112 = 1;
             on("sheet:opened change:repeating_totem", totemMig);
+            on("sheet:opened change:wfilter change:repeating_weapons:wtype remove:repeating_weapons", weaponHide);
         }
 '''
 
@@ -691,20 +715,21 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-ar-panel>.sheet-ar-stk{margin:2px 0 4px!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wfilters{display:inline-flex;gap:4px;margin-left:8px;flex:0 0 auto}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wfb{font-size:11px!important;padding:1px 8px!important;border-radius:10px!important;border:1px solid color-mix(in srgb,var(--pa,#888) 55%,rgba(128,128,128,.4))!important;background:none!important}
-.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=all]~.sheet-entry-section-head .sheet-wfb-all,.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=melee]~.sheet-entry-section-head .sheet-wfb-melee,.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=ranged]~.sheet-entry-section-head .sheet-wfb-ranged,.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=explosive]~.sheet-entry-section-head .sheet-wfb-explosive{background:var(--pa,#8a4b1f)!important;color:#fff!important}
+.charsheet input.sheet-wfilter[value=all]~.sheet-entry-section-head .sheet-wfb-all,.charsheet input.sheet-wfilter[value=melee]~.sheet-entry-section-head .sheet-wfb-melee,.charsheet input.sheet-wfilter[value=ranged]~.sheet-entry-section-head .sheet-wfb-ranged,.charsheet input.sheet-wfilter[value=explosive]~.sheet-entry-section-head .sheet-wfb-explosive{background:var(--pa,#8a4b1f)!important;color:#fff!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wx{display:flex;flex:1 1 220px;flex-wrap:wrap;gap:1px 6px;align-items:center;font-size:11px;min-width:0}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wx-c{white-space:nowrap}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wx-c>b{margin-right:2px;opacity:.75}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wx-tags{flex:1 1 80px;min-width:0;white-space:normal}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])) .sheet-wx-x{display:none!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(input.sheet-hl-wt[value=explosive]) .sheet-wx-m{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=melee]~fieldset.repeating_weapons input.sheet-wtype-f:not([value=melee]):not([value=unarmed]):not([value=thrown])~.sheet-entry{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=ranged]~fieldset.repeating_weapons input.sheet-wtype-f:not([value=ranged]):not([value=bow])~.sheet-entry{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=explosive]~fieldset.repeating_weapons input.sheet-wtype-f:not([value=explosive])~.sheet-entry{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons>.sheet-entry-section-head{flex-wrap:nowrap!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-subheader span{white-space:nowrap!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-entry-head{flex-wrap:wrap!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-wx{flex:1 0 100%!important;justify-content:center!important}
+.charsheet .repcontainer[data-groupname=repeating_weapons] input.sheet-whide[value="1"]~.sheet-entry{display:none!important}
+.charsheet .sheet-weapons>.sheet-entry-section-head{flex-wrap:wrap!important;row-gap:2px;overflow:visible!important}
+.charsheet .sheet-weapons .sheet-subheader{flex:1 0 100%!important;min-width:0!important;overflow:visible!important;text-overflow:clip!important}
+.charsheet .sheet-weapons .sheet-subheader span{white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important}
+.charsheet .sheet-wfilters{flex:1 1 auto!important;margin-left:0!important}
+.charsheet .sheet-weapons .sheet-entry-head{flex-wrap:wrap!important}
+.charsheet .sheet-weapons .sheet-wx{flex:1 0 100%!important;width:100%!important;justify-content:center!important;text-align:center!important}
+.charsheet .sheet-weapons .sheet-wx-tags{flex:0 0 auto!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>input.sheet-entry-short{flex:1 1 100%!important;min-width:0!important;width:100%!important;white-space:normal!important;height:auto!important;overflow:visible!important;text-overflow:clip!important;margin:0 0 1px!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section{position:relative}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section>.repcontrol{position:absolute!important;top:0!important;right:0!important;margin:0!important;z-index:4}
@@ -750,13 +775,15 @@ CSS = r'''
 .charsheet .sheet-totem-stats b{margin-right:4px}
 .charsheet .sheet-totem-more{font-size:11px;line-height:1.3;min-width:0}
 .charsheet .sheet-totem-more div{white-space:normal;overflow-wrap:anywhere}
-.charsheet .sheet-totem-nums{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
-.charsheet .sheet-totem-nums input{width:100%!important;min-width:0!important;box-sizing:border-box}
+.charsheet .sheet-totem-nums{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(72px,1fr))!important;gap:6px 8px!important;width:100%!important}
+.charsheet .sheet-totem-nums>label{display:flex!important;flex-direction:column!important;min-width:0!important;width:auto!important;max-width:100%!important;margin:0!important;white-space:normal!important;overflow:hidden!important;font-size:9px!important;line-height:1.15!important;letter-spacing:0!important}
+.charsheet .sheet-totem-nums input{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
 .charsheet .sheet-kt-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:start}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-h{font-weight:700;text-align:center;margin:0 0 4px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-note{font-size:11px;font-style:italic;text-align:center;margin:0 0 4px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-gen textarea{width:100%!important;min-height:140px;box-sizing:border-box}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-det-top{display:grid!important;grid-template-columns:168px minmax(0,1fr)!important;gap:8px!important;align-items:start!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-top{display:grid!important;grid-template-columns:200px minmax(0,1fr)!important;gap:12px!important;align-items:start!important;width:100%!important}
+.charsheet[class][class] .sheet-det-portrait,.charsheet[class][class] .sheet-det-portrait img{width:200px!important;max-width:200px!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-det-portrait{grid-column:1;grid-row:1/span 3}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-det-grid{grid-column:2;grid-row:1}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-det-beside{grid-column:2;grid-row:2}
@@ -780,9 +807,9 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row{display:flex;align-items:center;gap:6px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row input[type=text]{flex:1 1 auto;min-width:0}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-n{width:54px!important;flex:0 0 54px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones label,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones span,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth label{text-align:center!important}
+.charsheet .sheet-right-touchstones,.charsheet .sheet-right-touchstones label,.charsheet .sheet-right-touchstones span,.charsheet .sheet-right-touchstones input,.charsheet .sheet-ts-kuruth,.charsheet .sheet-ts-kuruth label,.charsheet .sheet-ts-kuruth input{text-align:center!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields label{align-items:center}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields input,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth input{max-width:220px!important;text-align:center!important}
+.charsheet .sheet-right-touchstone-fields input,.charsheet .sheet-ts-kuruth input{max-width:220px!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pa)!important}
 .sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pad)!important}
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-img{width:100px!important;max-width:100px!important;height:300px!important}
@@ -793,7 +820,10 @@ CSS = r'''
 .charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
 .charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
 .charsheet .sheet-disc-card{border:1px solid rgba(139,16,16,.55);border-radius:6px;margin:3px 0;padding:2px 4px 2px 14px;background:rgba(0,0,0,.16)}
-.charsheet .sheet-disc-on{margin-left:auto;flex:0 0 auto}
+.charsheet .sheet-disc-card .sheet-entry-head{display:flex!important;flex-flow:row nowrap!important;align-items:center!important;width:100%!important;gap:4px!important}
+.charsheet .sheet-disc-card .sheet-entry-head>button.sheet-entry-post{flex:1 1 auto!important;min-width:7em!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.charsheet .sheet-disc-card .sheet-dots,.charsheet .sheet-disc-card .sheet-disc-on,.charsheet .sheet-disc-card .sheet-amenu{flex:0 0 auto!important}
+.charsheet .sheet-disc-on{margin-left:auto!important;flex:0 0 auto}
 .charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
 .charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
 .charsheet[class][class][class] .sheet-det-top>.sheet-det-grid.sheet-det-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important;min-width:0!important;max-width:100%!important}
@@ -862,7 +892,7 @@ def main():
         "sheet-roll-extra", "attr_roll_prompt", "repeating_buffs", "__rev111",
         "sheet-mstyle-s", "sheet-roll-break", "roll_bp_flesh", "roll_bp_spirit",
         "sheet-mv-full", "sheet-disc-card", "attr_disc_active", "attr_disc_vigor",
-        "sheet-wtype-f", "sheet-totem-stats", "attr_totem_power", "attr_totem_legacy",
+        "sheet-wtype-f", "sheet-whide", "sheet-totem-stats", "attr_totem_power", "attr_totem_legacy",
         "__rev112",
     ]
     missing = [k for k in checks if k not in h]
