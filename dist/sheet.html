@@ -5056,6 +5056,29 @@
             const m = (e.sourceAttribute || "").match(/^(repeating_weapons_[^_]+_)tagrm[-_](.+)$/i); if (!m) return;
             setAttrs({[m[1] + m[2].replace(/-/g, "_")]: "0"}, {silent: true}, () => updateWeaponAttacks(e));
         });
+        
+        const dtypeMig = () => getAttrs(["weapon_dtype_mig"], gate => {
+            if (gate.weapon_dtype_mig === "1") return;
+            getSectionIDs("weapons", ids => {
+                if (!ids.length) return;
+                const ks = ["name","wtype","preset","damage","dtype","dtype_user","atk_skill","t_brawl"];
+                getAttrs(ids.flatMap(id => ks.map(k => "repeating_weapons_" + id + "_" + k)), v => {
+                    const u = {weapon_dtype_mig: "1"};
+                    ids.forEach(id => {
+                        const p = "repeating_weapons_" + id + "_";
+                        if (v[p + "dtype_user"] === "1") return;
+                        const name = String(v[p + "name"] || ""), wtype = String(v[p + "wtype"] || ""), preset = String(v[p + "preset"] || "");
+                        const dmg = parseInt(v[p + "damage"], 10) || 0, cur = String(v[p + "dtype"] || "");
+                        const brawl = v[p + "t_brawl"] === "1" || v[p + "atk_skill"] === "brawl" || wtype === "unarmed";
+                        const named = /\b(unarmed|fists?|punches|punch|kicks|kick)\b/i.test(name) && !/\b(dagger|knife|knives|sword|axe|gun|pistol|rifle|shotgun|club|staff|spear|bow|blade|hammer|brass|knuckle)\b/i.test(name);
+                        const builtin = preset === "fists" || wtype === "unarmed";
+                        if ((named || builtin || (brawl && dmg === 0)) && cur !== "B" && cur !== "A") u[p + "dtype"] = "B";
+                    });
+                    setAttrs(u, {silent: true});
+                });
+            });
+        });
+        on("sheet:opened", dtypeMig);
         on("change:repeating_weapons:dtype", e => { if (e.sourceType !== "player") return; setAttrs({[e.sourceAttribute.replace(/dtype$/, "") + "dtype_user"]: "1"}, {silent: true}); });
         on("change:repeating_weapons:wtype", e => {
             if (e.sourceType !== "player") return;
@@ -5623,7 +5646,9 @@
             rrRun(mac.split("@{dice_pool_label}").join(lbl).split("@{dice_pool}").join(String(n)), false);
         });
         const rrRun0 = (mac, isRe) => isRe ? rrRun1(mac, true, -1) : getAttrs(["rr_next"], v => { const s = ((parseInt(v.rr_next, 10) || 0) % RR_N + RR_N) % RR_N; setAttrs({rr_next: (s + 1) % RR_N}, {silent: true}); rrRun1(mac, false, s); });
-        const rrAsk = (mac, isRe, go) => {
+        const rrAsk = (macIn, isRe, go) => {
+            const dref = String(macIn).match(/\{\{dmg_@\{(repeating_[\w-]+_dtype)\}=1\}\}/);
+            const begin = (mac) => {
             if (isRe || mac.indexOf("{{roll=") < 0) return go(mac, "");
             const needRt = /@\{(?:rolltype_eff|rolltype|atk_rt|repeating_[\w-]+_atk_rt)\}/.test(mac);
             const needWp = mac.indexOf("@{wp_dice}") >= 0;
@@ -5661,6 +5686,13 @@
                     if (cur <= 0) return startRoll("&{template:cofd-entry} {{charname=@{character_name}}} {{kind=Willpower}} {{name=No Willpower left}} {{f_short=WP 0/" + max + ". Regain Willpower first.}}", (r) => finishRoll(r.rollId));
                     setAttrs({willpower_cur: cur - 1}, {}, () => done(" {{wpst=Spent 1 Willpower (+3). Left: WP " + (cur - 1) + "/" + max + "}}"));
                 });
+            });
+            };
+            if (!dref) return begin(macIn);
+            getAttrs([dref[1]], v => {
+                const raw = String(v[dref[1]] || "L").toUpperCase();
+                const ch = raw.charAt(0) === "B" || raw.charAt(0) === "A" || raw.charAt(0) === "L" ? raw.charAt(0) : "L";
+                begin(macIn.split("{{dmg_@{" + dref[1] + "}=1}}").join("{{dmg_" + ch + "=1}}"));
             });
         };
         on("clicked:roll_bp_flesh", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Flesh Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));

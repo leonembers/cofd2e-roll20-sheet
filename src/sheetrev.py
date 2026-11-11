@@ -328,7 +328,9 @@ def dice(h):
 # parentheses). The real roll is built afterwards and contains no ?{roll type}
 # and no ?{Willpower}. Order: Roll type, Modifier, Willpower, Specialty, then
 # weapon Target Defense when that roll has one.
-RR_ASK = r'''const rrAsk = (mac, isRe, go) => {
+RR_ASK = r'''const rrAsk = (macIn, isRe, go) => {
+            const dref = String(macIn).match(/\{\{dmg_@\{(repeating_[\w-]+_dtype)\}=1\}\}/);
+            const begin = (mac) => {
             if (isRe || mac.indexOf("{{roll=") < 0) return go(mac, "");
             const needRt = /@\{(?:rolltype_eff|rolltype|atk_rt|repeating_[\w-]+_atk_rt)\}/.test(mac);
             const needWp = mac.indexOf("@{wp_dice}") >= 0;
@@ -367,6 +369,13 @@ RR_ASK = r'''const rrAsk = (mac, isRe, go) => {
                     setAttrs({willpower_cur: cur - 1}, {}, () => done(" {{wpst=Spent 1 Willpower (+3). Left: WP " + (cur - 1) + "/" + max + "}}"));
                 });
             });
+            };
+            if (!dref) return begin(macIn);
+            getAttrs([dref[1]], v => {
+                const raw = String(v[dref[1]] || "L").toUpperCase();
+                const ch = raw.charAt(0) === "B" || raw.charAt(0) === "A" || raw.charAt(0) === "L" ? raw.charAt(0) : "L";
+                begin(macIn.split("{{dmg_@{" + dref[1] + "}=1}}").join("{{dmg_" + ch + "=1}}"));
+            });
         };
         on("clicked:roll_bp_flesh", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Flesh Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
         on("clicked:roll_bp_spirit", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Spirit Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
@@ -380,6 +389,35 @@ def attack_card(h):
     hook = 'on("change:repeating_weapons:wtype", e => {'
     if 'change:repeating_weapons:dtype"' not in h and h.count(hook) == 1:
         h = h.replace(hook, 'on("change:repeating_weapons:dtype", e => { if (e.sourceType !== "player") return; setAttrs({[e.sourceAttribute.replace(/dtype$/, "") + "dtype_user"]: "1"}, {silent: true}); });\n        ' + hook, 1)
+    if "weapon_dtype_mig" not in h:
+        mig = r'''
+        const dtypeMig = () => getAttrs(["weapon_dtype_mig"], gate => {
+            if (gate.weapon_dtype_mig === "1") return;
+            getSectionIDs("weapons", ids => {
+                if (!ids.length) return;
+                const ks = ["name","wtype","preset","damage","dtype","dtype_user","atk_skill","t_brawl"];
+                getAttrs(ids.flatMap(id => ks.map(k => "repeating_weapons_" + id + "_" + k)), v => {
+                    const u = {weapon_dtype_mig: "1"};
+                    ids.forEach(id => {
+                        const p = "repeating_weapons_" + id + "_";
+                        if (v[p + "dtype_user"] === "1") return;
+                        const name = String(v[p + "name"] || ""), wtype = String(v[p + "wtype"] || ""), preset = String(v[p + "preset"] || "");
+                        const dmg = parseInt(v[p + "damage"], 10) || 0, cur = String(v[p + "dtype"] || "");
+                        const brawl = v[p + "t_brawl"] === "1" || v[p + "atk_skill"] === "brawl" || wtype === "unarmed";
+                        const named = /\b(unarmed|fists?|punches|punch|kicks|kick)\b/i.test(name) && !/\b(dagger|knife|knives|sword|axe|gun|pistol|rifle|shotgun|club|staff|spear|bow|blade|hammer|brass|knuckle)\b/i.test(name);
+                        const builtin = preset === "fists" || wtype === "unarmed";
+                        if ((named || builtin || (brawl && dmg === 0)) && cur !== "B" && cur !== "A") u[p + "dtype"] = "B";
+                    });
+                    setAttrs(u, {silent: true});
+                });
+            });
+        });
+        on("sheet:opened", dtypeMig);
+        '''
+        hook_at = h.find('on("change:repeating_weapons:dtype"')
+        if hook_at < 0:
+            raise SystemExit("dtype hook missing")
+        h = h[:hook_at] + mig + h[hook_at:]
     spec = '{{f_spec=Specialty +?{Specialty applies?|No,0|Yes,1}}} {{f_mod=Modifier ?{@{modifiermacro}|0}}}'
     plain = '{{f_spec=+?{Specialty applies?|No,0|Yes,1}}} {{f_mod=?{@{modifiermacro}|0}}}'
     if spec in h:
