@@ -354,7 +354,9 @@ RR_ASK = r'''const rrAsk = (mac, isRe, go) => {
                 if (needWp) m = m.split("@{wp_dice}").join(String(wp));
                 if (needSp) m = m.split("@{spec_bonus}").join(String(sp));
                 if (needWsp) m = m.split("?{Specialty applies?|No,0|Yes,1}").join(String(sp));
+                if (needWsp && !sp) m = m.replace(/\s*\{\{f_spec=\+0\}\}/g, "");
                 if (needMd) m = m.split("?{@{modifiermacro}|0}").join(String(md));
+                if (!md) m = m.replace(/\s*\{\{f_mod=0\}\}/g, "");
                 if (needDf) m = m.replace(/\?\{@\{(?:repeating_[\w-]+_)?atk_defq\}\|@\{(?:repeating_[\w-]+_)?atk_def_default\}\}/g, String(df));
                 if (rt && RTB[rt]) m = m.split("@{rolltype_eff}").join(RTB[rt]).split("@{rolltype}").join(RTB[rt]).replace(/@\{(?:repeating_[\w-]+_)?atk_rt\}/g, RTB[rt]);
                 const done = (note) => go(m, note || "");
@@ -369,6 +371,20 @@ RR_ASK = r'''const rrAsk = (mac, isRe, go) => {
         on("clicked:roll_bp_flesh", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Flesh Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
         on("clicked:roll_bp_spirit", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Spirit Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
         '''
+
+def attack_card(h):
+    old = 'if (!v[p + "dtype"]) u[p + "dtype"] = (t === "unarmed") ? "B" : "L";'
+    new = 'if (t === "unarmed" && v[p + "dtype_user"] !== "1") u[p + "dtype"] = "B"; else if (!v[p + "dtype"]) u[p + "dtype"] = (tag("t_brawl") ? "B" : "L");'
+    if old in h:
+        h = h.replace(old, new, 1)
+    hook = 'on("change:repeating_weapons:wtype", e => {'
+    if 'change:repeating_weapons:dtype"' not in h and h.count(hook) == 1:
+        h = h.replace(hook, 'on("change:repeating_weapons:dtype", e => { if (e.sourceType !== "player") return; setAttrs({[e.sourceAttribute.replace(/dtype$/, "") + "dtype_user"]: "1"}, {silent: true}); });\n        ' + hook, 1)
+    spec = '{{f_spec=Specialty +?{Specialty applies?|No,0|Yes,1}}} {{f_mod=Modifier ?{@{modifiermacro}|0}}}'
+    plain = '{{f_spec=+?{Specialty applies?|No,0|Yes,1}}} {{f_mod=?{@{modifiermacro}|0}}}'
+    if spec in h:
+        h = h.replace(spec, plain, 1)
+    return h
 
 def dice_layout(h):
     if "sheet-roll-break" in h:
@@ -970,6 +986,8 @@ CSS = r'''
 .charsheet .sheet-set-gear{position:absolute;left:2px;top:4px;width:13px;height:13px;margin:0;padding:0;line-height:13px;text-align:center;font:12px/13px Arial,sans-serif;color:var(--pad,var(--pa,#ccc));pointer-events:none;z-index:5}
 .charsheet .sheet-disc-row{position:relative}
 .charsheet .sheet-disc-row>.sheet-set-gear{left:0;top:0;width:14px;height:14px;line-height:14px}
+.sheet-rolltemplate-cofd-entry .sheet-ce-badge{position:static!important;flex:0 0 22px;order:2;margin-left:6px}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head>.sheet-ce-name{flex:1 1 8em!important;min-width:0;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere}
 '''
 
 def cards(h):
@@ -1055,6 +1073,7 @@ def main():
     h = weapons_fix(h)
     h, ncol = collapse(h)
     h = settings_gear(h)
+    h = attack_card(h)
     h = worker(h)
     h = worker_extra(h)
     c = css_add(c)

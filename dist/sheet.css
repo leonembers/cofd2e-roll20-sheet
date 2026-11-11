@@ -2353,3 +2353,5 @@ input.sheet-type[value=beast]~.sheet-background-image .sheet-bgart{display:block
 .charsheet .sheet-set-gear{position:absolute;left:2px;top:4px;width:13px;height:13px;margin:0;padding:0;line-height:13px;text-align:center;font:12px/13px Arial,sans-serif;color:var(--pad,var(--pa,#ccc));pointer-events:none;z-index:5}
 .charsheet .sheet-disc-row{position:relative}
 .charsheet .sheet-disc-row>.sheet-set-gear{left:0;top:0;width:14px;height:14px;line-height:14px}
+.sheet-rolltemplate-cofd-entry .sheet-ce-badge{position:static!important;flex:0 0 22px;order:2;margin-left:6px}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head>.sheet-ce-name{flex:1 1 8em!important;min-width:0;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere}
