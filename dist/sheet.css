@@ -2247,7 +2247,6 @@ input.sheet-type[value=beast]~.sheet-background-image .sheet-bgart{display:block
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mstyle-flag[value="1"]) .sheet-mcat-badge,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{display:none!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head{flex-wrap:wrap!important;padding-left:14px!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 100%!important;width:auto!important;max-width:100%!important;min-width:0!important;overflow:visible!important;white-space:nowrap!important}
-.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-name{overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body>label.sheet-wide,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body input[name=attr_short_desc]{flex:1 1 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-row{flex-wrap:wrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 100%!important;width:100%!important;max-width:100%!important;display:block!important;box-sizing:border-box!important}
@@ -2323,16 +2322,17 @@ input.sheet-type[value=beast]~.sheet-background-image .sheet-bgart{display:block
 .charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
 .charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
 .charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
-.charsheet[class][class] .sheet-disciplines.sheet-pw .sheet-disc-card{position:relative!important;display:flex!important;flex-flow:row wrap!important;align-items:center!important;width:100%!important;gap:4px;border:1px solid rgba(139,16,16,.55);border-radius:6px;margin:3px 0;padding:2px 4px;background:rgba(0,0,0,.16)}
-.charsheet[class][class] .sheet-disciplines.sheet-pw .sheet-disc-card>.sheet-entry-head{display:contents!important}
+.charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:flex!important;flex-flow:row wrap!important;align-items:center!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow:hidden!important;gap:3px;border:1px solid rgba(139,16,16,.55);margin:3px 0}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-disc-card>input.sheet-entry-toggle{position:relative!important;flex:0 0 14px!important;width:14px!important;height:14px!important;margin:0!important}
-.charsheet .sheet-disc-name{order:1;flex:1 1 auto!important;min-width:8em!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-.charsheet .sheet-disc-card .sheet-dots{order:2;flex:0 0 auto!important}
-.charsheet .sheet-disc-card .sheet-disc-on{order:3;margin:0!important;position:relative!important}
-.charsheet[class][class] .sheet-disciplines .sheet-disc-card button.sheet-disc-post{order:4;flex:0 0 22px!important;width:22px!important;min-width:0!important;white-space:nowrap!important}
-.charsheet .sheet-disc-card .sheet-amenu{order:5;position:relative!important;flex:0 0 auto!important}
-.charsheet .sheet-disc-card .sheet-entry-pool,.charsheet .sheet-disc-card .sheet-entry-cost{order:6;flex:1 0 100%!important}
-.charsheet .sheet-disc-card>.sheet-entry-body{order:7;flex:1 0 100%!important;width:100%!important}
+.charsheet .sheet-disc-name{order:1;flex:1 1 0!important;min-width:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.charsheet .sheet-disc-card>.sheet-entry-pool,.charsheet .sheet-disc-card>.sheet-entry-cost{order:2;flex:0 1 auto!important;max-width:28%!important;white-space:nowrap!important;overflow:hidden!important;font-size:10px!important}
+.charsheet .sheet-disc-card>.sheet-dots{order:3;flex:0 0 auto!important;margin:0!important}
+.charsheet .sheet-disc-card>.sheet-disc-on{order:4;flex:0 0 auto!important;margin:0!important}
+.charsheet .sheet-disc-card>button.sheet-disc-post{order:5;flex:0 0 16px!important;width:16px!important;min-width:0!important;margin:0!important}
+.charsheet .sheet-disc-card>.sheet-amenu{order:6;position:relative!important;flex:0 0 16px!important;margin:0!important}
+.charsheet .sheet-disc-card>input.sheet-disc-effect[value="0"]~.sheet-disc-on{display:none!important}
+.charsheet .sheet-disc-card>.sheet-entry-body{order:8;flex:1 0 100%!important;width:100%!important}
+.charsheet .repcontainer[data-groupname=repeating_disciplines] .repitem{max-width:100%!important;min-width:0!important}
 .charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
 .charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
 .charsheet[class][class][class] .sheet-det-top>.sheet-det-grid.sheet-det-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important;min-width:0!important;max-width:100%!important}

@@ -441,6 +441,7 @@ def disciplines(h):
                 const p = `repeating_disciplines_${i}_`;
                 const nm = (v[p + "name"] || "").toLowerCase(), r = parseInt(v[p + "rating"], 10) || 0;
                 const physical = nm.indexOf("vigo") >= 0 || nm.indexOf("celerity") >= 0 || nm.indexOf("resilien") >= 0;
+                mig[p + "disc_effect"] = physical ? "1" : "0";
                 let on = v[p + "disc_active"];
                 if (v[p + "disc_on_mig"] !== "1") {
                     mig[p + "disc_on_mig"] = "1";
@@ -502,6 +503,27 @@ def disc_row(h):
         raise SystemExit("disc menu")
     sec = sec.replace('<span class="sheet-amenu">', icon + '<span class="sheet-amenu">', 1)
     sec = sec.replace('<div class="sheet-entry-head">', '<div class="sheet-entry-head sheet-disc-row">', 1)
+    return disc_flat(h[:i] + sec + h[j:])
+
+def disc_flat(h):
+    i = h.find('<fieldset class="repeating_disciplines">')
+    j = h.find("</fieldset>", i)
+    sec = h[i:j]
+    if "sheet-disc-flat" in sec:
+        return h
+    marker = '<div class="sheet-entry-head sheet-disc-row">'
+    a = sec.find(marker)
+    if a < 0:
+        raise SystemExit("disc head")
+    a2, b = take_div(sec, a)
+    inner = sec[sec.find(">", a) + 1:b - 6]
+    if "sheet-disc-effect" not in inner:
+        inner = inner.replace(
+            '<label class="sheet-switch sheet-disc-on"',
+            '<input type="hidden" class="sheet-disc-effect" name="attr_disc_effect" value="0" /><label class="sheet-switch sheet-disc-on"',
+            1)
+    sec = sec[:a] + inner + sec[b:]
+    sec = sec.replace('class="sheet-entry sheet-disc-card"', 'class="sheet-entry sheet-disc-card sheet-disc-flat"', 1)
     return h[:i] + sec + h[j:]
 
 def notes_fit(h):
@@ -765,7 +787,6 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mstyle-flag[value="1"]) .sheet-mcat-badge,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{display:none!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head{flex-wrap:wrap!important;padding-left:14px!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 100%!important;width:auto!important;max-width:100%!important;min-width:0!important;overflow:visible!important;white-space:nowrap!important}
-.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-name{overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body>label.sheet-wide,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body input[name=attr_short_desc]{flex:1 1 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-row{flex-wrap:wrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 100%!important;width:100%!important;max-width:100%!important;display:block!important;box-sizing:border-box!important}
@@ -841,16 +862,17 @@ CSS = r'''
 .charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
 .charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
 .charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
-.charsheet[class][class] .sheet-disciplines.sheet-pw .sheet-disc-card{position:relative!important;display:flex!important;flex-flow:row wrap!important;align-items:center!important;width:100%!important;gap:4px;border:1px solid rgba(139,16,16,.55);border-radius:6px;margin:3px 0;padding:2px 4px;background:rgba(0,0,0,.16)}
-.charsheet[class][class] .sheet-disciplines.sheet-pw .sheet-disc-card>.sheet-entry-head{display:contents!important}
+.charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:flex!important;flex-flow:row wrap!important;align-items:center!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow:hidden!important;gap:3px;border:1px solid rgba(139,16,16,.55);margin:3px 0}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-disc-card>input.sheet-entry-toggle{position:relative!important;flex:0 0 14px!important;width:14px!important;height:14px!important;margin:0!important}
-.charsheet .sheet-disc-name{order:1;flex:1 1 auto!important;min-width:8em!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-.charsheet .sheet-disc-card .sheet-dots{order:2;flex:0 0 auto!important}
-.charsheet .sheet-disc-card .sheet-disc-on{order:3;margin:0!important;position:relative!important}
-.charsheet[class][class] .sheet-disciplines .sheet-disc-card button.sheet-disc-post{order:4;flex:0 0 22px!important;width:22px!important;min-width:0!important;white-space:nowrap!important}
-.charsheet .sheet-disc-card .sheet-amenu{order:5;position:relative!important;flex:0 0 auto!important}
-.charsheet .sheet-disc-card .sheet-entry-pool,.charsheet .sheet-disc-card .sheet-entry-cost{order:6;flex:1 0 100%!important}
-.charsheet .sheet-disc-card>.sheet-entry-body{order:7;flex:1 0 100%!important;width:100%!important}
+.charsheet .sheet-disc-name{order:1;flex:1 1 0!important;min-width:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.charsheet .sheet-disc-card>.sheet-entry-pool,.charsheet .sheet-disc-card>.sheet-entry-cost{order:2;flex:0 1 auto!important;max-width:28%!important;white-space:nowrap!important;overflow:hidden!important;font-size:10px!important}
+.charsheet .sheet-disc-card>.sheet-dots{order:3;flex:0 0 auto!important;margin:0!important}
+.charsheet .sheet-disc-card>.sheet-disc-on{order:4;flex:0 0 auto!important;margin:0!important}
+.charsheet .sheet-disc-card>button.sheet-disc-post{order:5;flex:0 0 16px!important;width:16px!important;min-width:0!important;margin:0!important}
+.charsheet .sheet-disc-card>.sheet-amenu{order:6;position:relative!important;flex:0 0 16px!important;margin:0!important}
+.charsheet .sheet-disc-card>input.sheet-disc-effect[value="0"]~.sheet-disc-on{display:none!important}
+.charsheet .sheet-disc-card>.sheet-entry-body{order:8;flex:1 0 100%!important;width:100%!important}
+.charsheet .repcontainer[data-groupname=repeating_disciplines] .repitem{max-width:100%!important;min-width:0!important}
 .charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
 .charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
 .charsheet[class][class][class] .sheet-det-top>.sheet-det-grid.sheet-det-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important;min-width:0!important;max-width:100%!important}
@@ -918,7 +940,7 @@ def main():
         "attr_kuruth_general", "sheet-det-beside", "sheet-fc-bio-line", "sheet-note-cols",
         "sheet-roll-extra", "attr_roll_prompt", "repeating_buffs", "__rev111",
         "sheet-mstyle-s", "sheet-roll-break", "roll_bp_flesh", "roll_bp_spirit",
-        "sheet-mv-full", "sheet-disc-card", "sheet-disc-name", "attr_disc_active", "attr_disc_vigor",
+        "sheet-mv-full", "sheet-disc-card", "sheet-disc-name", "sheet-disc-flat", "sheet-disc-effect", "attr_disc_active", "attr_disc_vigor",
         "sheet-wtype-f", "sheet-whide", "sheet-totem-stats", "attr_totem_power", "attr_totem_legacy",
         "__rev112",
     ]
