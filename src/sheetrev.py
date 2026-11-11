@@ -550,8 +550,12 @@ def disc_line(h):
             raise SystemExit("disc name end")
         at += len('</span></span>')
         mid = mid[:at] + pool.group(0) + cost.group(0) + mid[at:]
+        ce = mid.find(cost.group(0)) + len(cost.group(0))
+        ns = mid.find('<span class="sheet-disc-name">')
+        if ns >= 0 and ce > ns:
+            mid = mid[:ns] + '<span class="sheet-disc-id">' + mid[ns:ce] + '</span>' + mid[ce:]
     cog = '<input type="checkbox" class="sheet-entry-settings sheet-disc-cog" name="attr_show" value="1" title="Show / hide entry settings" aria-label="Show / hide entry settings" />'
-    hidden = '<input type="checkbox" class="sheet-entry-toggle sheet-disc-caret" name="attr_show" value="1" />'
+    hidden = '<input type="checkbox" class="sheet-disc-caret" name="attr_show" value="1" />'
     row = '<div class="sheet-disc-row">' + cog + mid.strip() + '</div>'
     sec = sec[:c] + hidden + row + sec[b:]
     return h[:i] + sec + h[j:]
@@ -892,16 +896,17 @@ CSS = r'''
 .charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
 .charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
 .charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
-.charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;border:1px solid rgba(139,16,16,.55);margin:3px 0}
-.charsheet .sheet-disc-caret{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
-.charsheet .sheet-disc-row{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;gap:3px}
-.charsheet[class][class][class][class] .sheet-disc-row>*{flex:0 0 auto!important;width:auto!important;min-width:0!important;display:inline-flex!important;float:none!important;clear:none!important}
-.charsheet[class][class][class][class] .sheet-disc-row>input[type=hidden]{display:none!important}
-.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-name{flex:1 1 auto!important;display:block!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
-.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-cog{width:14px!important;height:14px!important}
+.charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:block!important;width:100%!important;box-sizing:border-box!important;border:1px solid rgba(139,16,16,.55);margin:3px 0}
+.charsheet .sheet-disc-caret{position:absolute!important;width:0!important;height:0!important;opacity:0!important}
+.charsheet .sheet-disc-card>.sheet-disc-caret:not(:checked)~.sheet-entry-body{display:none!important}
+.charsheet .sheet-disc-row{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;width:100%!important;min-width:0!important;gap:3px}
+.charsheet[class][class][class][class] .sheet-disc-row>*{flex:0 0 auto!important;width:auto!important;min-width:0!important;display:inline-flex!important;float:none!important}
+.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-id{flex:1 1 auto!important;min-width:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+.charsheet .sheet-disc-id>.sheet-disc-name{overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
+.charsheet .sheet-disc-id .sheet-entry-pool,.charsheet .sheet-disc-id .sheet-entry-cost{font-size:10px!important;line-height:1.1}
+.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-cog{-webkit-appearance:none!important;appearance:none!important;position:relative!important;width:14px!important;height:14px!important;border:0!important;background:none!important;padding:0!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-disc-row>input.sheet-disc-has[value="0"]~label.sheet-disc-on{display:none!important}
 .charsheet .sheet-disc-card .sheet-amenu>.sheet-amenu-list{left:auto!important;right:0!important}
-.charsheet .repcontainer[data-groupname=repeating_disciplines] .repitem{max-width:100%!important;min-width:0!important}
 .charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
 .charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
 .charsheet[class][class][class] .sheet-det-top>.sheet-det-grid.sheet-det-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important;min-width:0!important;max-width:100%!important}
