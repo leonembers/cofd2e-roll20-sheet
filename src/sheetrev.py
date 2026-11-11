@@ -319,6 +319,322 @@ def dice(h):
         1)
     return h
 
+BP_ROLL = (
+    '&amp;{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=%s}} '
+    '{{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{f_mod=Modifier ?{@{modifiermacro}|0}}} '
+    '{{roll=[[{((@{resolve}+@{resolve_boost}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+'
+    + WPQ + '+@{cond_mod}+@{buff_mod}+' + SPQ + ')@{rolltype_eff}'
+)
+
+def dice_layout(h):
+    if "sheet-roll-break" in h:
+        return h
+    needle = '<div class="sheet-diceroller-options">'
+    if h.count(needle) != 1:
+        raise SystemExit("roller options %s" % h.count(needle))
+    return h.replace(needle, '<div class="sheet-roll-break"></div>' + needle, 1)
+
+def breaking(h):
+    if "roll_bp_flesh" in h:
+        return h
+    anchor = '<button type="action" class="sheet-dot sheet-zero" name="act_morality-0">&#215;</button>\n                            </div>'
+    if h.count(anchor) != 1:
+        raise SystemExit("morality clear %s" % h.count(anchor))
+    btns = (
+        '<div class="sheet-bp-rolls sheet-game-line sheet-werewolf sheet-werewolf2">'
+        '<button type="roll" class="sheet-quick sheet-bp" name="roll_bp_flesh" title="Flesh breaking point: Resolve + Composure. Put the Harmony modifier in the modifier prompt." value="%s">Flesh Breaking Point</button>'
+        '<button type="roll" class="sheet-quick sheet-bp" name="roll_bp_spirit" title="Spirit breaking point: Resolve + Composure. Put the Harmony modifier in the modifier prompt." value="%s">Spirit Breaking Point</button>'
+        '</div>'
+    ) % (BP_ROLL % "Flesh Breaking Point", BP_ROLL % "Spirit Breaking Point")
+    return h.replace(anchor, anchor + btns, 1)
+
+def maneuvers(h):
+    if "sheet-mv-full" in h:
+        return h
+    for n in range(1, 6):
+        old = '<input type="text" class="sheet-mv-effect" name="attr_mv%d_effect" placeholder="Short effect" />' % n
+        if h.count(old) != 1:
+            raise SystemExit("mv effect %s %s" % (n, h.count(old)))
+        h = h.replace(old, old + '<textarea class="sheet-mv-full" name="attr_mv%d_desc" rows="3" placeholder="Full description"></textarea>' % n, 1)
+        bit = '{{f_description=@{mv%d_effect}}}' % n
+        if h.count(bit) != 1:
+            raise SystemExit("mv post %s" % n)
+        h = h.replace(bit, bit + ' {{f_full=@{mv%d_desc}}}' % n, 1)
+    return h
+
+def roll_above(h):
+    i = h.find('<fieldset class="repeating_merits">')
+    j = h.find("</fieldset>", i)
+    sec = h[i:j]
+    req = '<label class="sheet-wide sheet-m-nrl" title="Off: the Merit posts without dice and its pool fields are hidden">'
+    a = sec.find(req)
+    if a < 0:
+        raise SystemExit("merit requires")
+    b = sec.find("</label>", a) + len("</label>")
+    lab = sec[a:b]
+    eff = '<label class="sheet-wide sheet-m-nrl" title="On: separate Dramatic Failure'
+    e = sec.find(eff)
+    if e < 0:
+        raise SystemExit("merit outcomes")
+    if not lab.strip().endswith("</label>") or "Requires roll" not in lab:
+        raise SystemExit("merit requires label")
+    if e != b and "Requires roll" not in sec[e-len(lab):e]:
+        sec = sec[:a] + sec[b:e] + lab + sec[e:]
+        h = h[:i] + sec + h[j:]
+    pat = re.compile(
+        r'(<label class="sheet-gfn" title="Off: one static effect[^"]*">.*?</label>)'
+        r'(<label class="sheet-gfn" title="Off: the Facet posts its card without rolling dice">.*?</label>)',
+        re.S)
+    h, n = pat.subn(r'\2<div class="sheet-gfx-br"></div>\1', h)
+    if n not in (0, 10):
+        raise SystemExit("gift swap %s" % n)
+    return h
+
+def vamp_quick(h):
+    pat = re.compile(
+        r'(<div class="sheet-quick-actions sheet-game-line sheet-vampire2">)\s*'
+        r'<button type="action" class="sheet-quick sheet-rage sheet-was-roll"[^>]*name="act_rr_frenzy">.*?</button>\s*'
+        r'<button type="action" class="sheet-quick" name="act_spend_vitae"[^>]*>.*?</button>\s*',
+        re.S)
+    h, n = pat.subn(r"\1", h, count=1)
+    if n not in (0, 1):
+        raise SystemExit("vamp quick %s" % n)
+    if 'name="act_spend_vitae"' in h:
+        raise SystemExit("vitae button left")
+    return h
+
+def disciplines(h):
+    i = h.find('<fieldset class="repeating_disciplines">')
+    j = h.find("</fieldset>", i)
+    if i < 0:
+        raise SystemExit("disciplines")
+    sec = h[i:j]
+    if "sheet-disc-on" not in sec:
+        needle = '</div>\n<span class="sheet-entry-pool" name="attr_pool"></span>'
+        if sec.count(needle) != 1:
+            raise SystemExit("disc pool %s" % sec.count(needle))
+        tog = ('<label class="sheet-switch sheet-disc-on" title="Active effect. Vigor adds to Strength (and Speed). Celerity adds to Defense and Speed. Resilience adds to Stamina and Health.">'
+               '<input type="checkbox" name="attr_disc_active" value="1" /><span class="sheet-sw-track"></span></label>'
+               '<input type="hidden" name="attr_disc_on_mig" value="" />')
+        sec = sec.replace(needle, "</div>" + tog + '\n<span class="sheet-entry-pool" name="attr_pool"></span>', 1)
+        sec = sec.replace('<div class="sheet-entry">', '<div class="sheet-entry sheet-disc-card">', 1)
+        h = h[:i] + sec + h[j:]
+    if 'name="attr_disc_vigor"' not in h:
+        old = '<input type="hidden" name="attr_disc_celerity" value="0" />'
+        if h.count(old) != 1:
+            raise SystemExit("disc_celerity input %s" % h.count(old))
+        h = h.replace(old, old + '<input type="hidden" name="attr_disc_vigor" value="0" />', 1)
+    speed = 'value="@{species_factor}+@{speed_base}+@{speed_penalty}+@{fleet_of_foot}+@{form_speed_extra}+@{form_size}"'
+    if "@{disc_vigor}" not in h and speed in h:
+        h = h.replace(speed, speed[:-1] + '+@{disc_vigor}+@{disc_celerity}"', 1)
+    old_dots = '''const discDots = (cb) => getSectionIDs("repeating_disciplines", ids => getAttrs(["sheettype", ...ids.flatMap(i => [`repeating_disciplines_${i}_name`, `repeating_disciplines_${i}_rating`])], v => {
+            const d = {vigor: 0, celerity: 0, resilience: 0, cruac: 0, theban: 0};
+            ids.forEach(i => { const nm = (v[`repeating_disciplines_${i}_name`] || "").toLowerCase(), r = parseInt(v[`repeating_disciplines_${i}_rating`], 10) || 0;
+                for (const k of Object.keys(d)) if (nm.indexOf(k === "vigor" ? "vigo" : k) >= 0) d[k] = Math.max(d[k], r); });
+            cb(v.sheettype, d);
+        }));'''
+    new_dots = '''const discDots = (cb) => getSectionIDs("repeating_disciplines", ids => getAttrs(["sheettype", ...ids.flatMap(i => [`repeating_disciplines_${i}_name`, `repeating_disciplines_${i}_rating`, `repeating_disciplines_${i}_disc_active`, `repeating_disciplines_${i}_disc_on_mig`])], v => {
+            const d = {vigor: 0, celerity: 0, resilience: 0, cruac: 0, theban: 0};
+            const mig = {};
+            ids.forEach(i => {
+                const p = `repeating_disciplines_${i}_`;
+                const nm = (v[p + "name"] || "").toLowerCase(), r = parseInt(v[p + "rating"], 10) || 0;
+                const physical = nm.indexOf("vigo") >= 0 || nm.indexOf("celerity") >= 0 || nm.indexOf("resilien") >= 0;
+                let on = v[p + "disc_active"];
+                if (v[p + "disc_on_mig"] !== "1") {
+                    mig[p + "disc_on_mig"] = "1";
+                    if (physical && on !== "0") { mig[p + "disc_active"] = "1"; on = "1"; }
+                }
+                for (const k of Object.keys(d)) {
+                    if (nm.indexOf(k === "vigor" ? "vigo" : k) < 0) continue;
+                    if ((k === "vigor" || k === "celerity" || k === "resilience") && on !== "1") continue;
+                    d[k] = Math.max(d[k], r);
+                }
+            });
+            const finish = () => cb(v.sheettype, d);
+            if (Object.keys(mig).length) setAttrs(mig, {silent: true}, finish); else finish();
+        }));'''
+    if old_dots in h:
+        h = h.replace(old_dots, new_dots, 1)
+    elif "disc_on_mig" not in h[h.find("const discDots"):h.find("const discDots") + 900]:
+        raise SystemExit("discDots missing")
+    clear = 'setAttrs({disc_vamp: "0", strength_boost: 0, stamina_boost: 0, disc_celerity: 0, strength_vb: "", stamina_vb: "", defense_vb: ""});'
+    clear2 = 'setAttrs({disc_vamp: "0", strength_boost: 0, stamina_boost: 0, disc_celerity: 0, disc_vigor: 0, strength_vb: "", stamina_vb: "", defense_vb: ""});'
+    if clear in h:
+        h = h.replace(clear, clear2, 1)
+    apply = 'setAttrs({disc_vamp: "1", strength_boost: d.vigor, stamina_boost: d.resilience, disc_celerity: d.celerity,'
+    apply2 = 'setAttrs({disc_vamp: "1", strength_boost: d.vigor, stamina_boost: d.resilience, disc_celerity: d.celerity, disc_vigor: d.vigor,'
+    if apply in h:
+        h = h.replace(apply, apply2, 1)
+    calc = 'const CALC_IN = ["strength","dexterity","stamina","stamina_boost","strength_boost","disc_celerity","wits","composure","resolve","athletics","base_size","giant","small_framed","form_size","species_factor","speed_'
+    if '"disc_vigor"' not in h and calc in h:
+        h = h.replace(calc, calc.replace('"disc_celerity"', '"disc_celerity","disc_vigor"'), 1)
+    spd = 'const spd = n("species_factor") + n("speed_base") + n("speed_penalty") + n("fleet_of_foot") + n("form_speed_extra") + n("form_size");'
+    spd2 = 'const spd = n("species_factor") + n("speed_base") + n("speed_penalty") + n("fleet_of_foot") + n("form_speed_extra") + n("form_size") + n("disc_vigor") + n("disc_celerity");'
+    if spd in h:
+        h = h.replace(spd, spd2, 1)
+    fmt = 'u.speed_calc = fmt("Speed", [["Str + Dex", n("speed_base"), 1], ["Species", n("species_factor"), 1], ["Armor", n("speed_penalty")], ["Fleet of Foot", n("fleet_of_foot")], [fl + " form", n("form_speed_extra") + n("form_size")]], spd);'
+    fmt2 = 'u.speed_calc = fmt("Speed", [["Str + Dex", n("speed_base"), 1], ["Species", n("species_factor"), 1], ["Armor", n("speed_penalty")], ["Fleet of Foot", n("fleet_of_foot")], [fl + " form", n("form_speed_extra") + n("form_size")], ["Vigor", n("disc_vigor")], ["Celerity", n("disc_celerity")]], spd);'
+    if fmt in h:
+        h = h.replace(fmt, fmt2, 1)
+    return h
+
+def notes_fit(h):
+    for name in ("attr_det_hair", "attr_det_dob", "attr_det_race", "attr_det_nationality"):
+        old = '<textarea class="sheet-det-ta" rows="1" name="%s"></textarea>' % name
+        if old in h:
+            h = h.replace(old, '<input type="text" name="%s" />' % name, 1)
+    marker = '<div class="sheet-game-line sheet-vampire2 sheet-det-splat">'
+    if marker not in h:
+        return h
+    top = h.find('<div class="sheet-det-top">')
+    a, b = take_div(h, top)
+    vi = h.find(marker)
+    if a < vi < b:
+        return h
+    v1, v2 = take_div(h, vi)
+    block = h[v1:v2]
+    h = h[:v1] + h[v2:]
+    top = h.find('<div class="sheet-det-top">')
+    a, b = take_div(h, top)
+    return h[:b - 6] + block + h[b - 6:]
+
+def weapons_fix(h):
+    if "sheet-wtype-f" in h:
+        return h
+    old = '<fieldset class="repeating_weapons">\n<div class="sheet-entry">'
+    if old not in h:
+        raise SystemExit("weapon row")
+    return h.replace(old, '<fieldset class="repeating_weapons">\n<input type="hidden" class="sheet-wtype-f" name="attr_wtype" value="melee" />\n<div class="sheet-entry">', 1)
+
+TOTEM_CARD = (
+    '<div class="sheet-totem-card"><div class="sheet-totem-top">'
+    '<div class="sheet-fc-img sheet-totem-img"><span class="sheet-fc-imgph">No image<br/>110 x 160</span>'
+    '<img class="sheet-fc-imgel" name="attr_totem_img" alt="" />'
+    '<input type="hidden" name="attr_totem_img" />'
+    '<button type="action" class="sheet-fc-imgbtn" name="act_timg" title="Set image URL">&#9998;</button></div>'
+    '<div class="sheet-totem-stats">'
+    '<span><b>Power</b><span name="attr_totem_power"></span></span>'
+    '<span><b>Finesse</b><span name="attr_totem_finesse"></span></span>'
+    '<span><b>Resistance</b><span name="attr_totem_resistance"></span></span>'
+    '<span><b>Willpower</b><span name="attr_totem_willpower"></span></span>'
+    '<span><b>Essence</b><span name="attr_totem_essence"></span></span>'
+    '<span><b>Initiative</b><span name="attr_totem_initiative"></span></span>'
+    '<span><b>Defense</b><span name="attr_totem_defense"></span></span>'
+    '<span><b>Speed</b><span name="attr_totem_speed"></span></span>'
+    '<span><b>Size</b><span name="attr_totem_size"></span></span>'
+    '<span><b>Corpus</b><span name="attr_totem_corpus"></span></span>'
+    '</div></div><div class="sheet-totem-more">'
+    '<div><b>Influences</b> <span name="attr_totem_influences"></span></div>'
+    '<div><b>Numina</b> <span name="attr_totem_numina"></span></div>'
+    '<div><b>Ban</b> <span name="attr_totem_ban"></span></div>'
+    '<div><b>Bane</b> <span name="attr_totem_bane"></span></div>'
+    '<div><b>Bonuses</b> <span name="attr_bonuses"></span></div>'
+    '<div><b>Notes</b> <span name="attr_totem_legacy"></span></div>'
+    '</div></div>'
+)
+
+TOTEM_BODY = (
+    '<label class="sheet-wide"><span data-i18n="name">Name</span><input type="text" name="attr_name" /></label>'
+    '<div class="sheet-totem-nums">'
+    '<label>Power<input type="number" name="attr_totem_power" value="0" /></label>'
+    '<label>Finesse<input type="number" name="attr_totem_finesse" value="0" /></label>'
+    '<label>Resistance<input type="number" name="attr_totem_resistance" value="0" /></label>'
+    '<label>Willpower<input type="number" name="attr_totem_willpower" value="0" /></label>'
+    '<label>Essence<input type="number" name="attr_totem_essence" value="0" /></label>'
+    '<label>Initiative<input type="number" name="attr_totem_initiative" value="0" /></label>'
+    '<label>Defense<input type="number" name="attr_totem_defense" value="0" /></label>'
+    '<label>Speed<input type="number" name="attr_totem_speed" value="0" /></label>'
+    '<label>Size<input type="number" name="attr_totem_size" value="0" /></label>'
+    '<label>Corpus<input type="number" name="attr_totem_corpus" value="0" /></label>'
+    '</div>'
+    '<label class="sheet-wide"><span>Ban</span><input type="text" name="attr_totem_ban" /></label>'
+    '<label class="sheet-wide"><span>Bane</span><input type="text" name="attr_totem_bane" /></label>'
+    '<label class="sheet-wide"><span>Influences</span><textarea name="attr_totem_influences" rows="2"></textarea></label>'
+    '<label class="sheet-wide"><span>Numina</span><textarea name="attr_totem_numina" rows="2"></textarea></label>'
+    '<label class="sheet-wide"><span data-i18n="lbl-bonuses">Bonuses</span><textarea name="attr_bonuses" rows="2"></textarea></label>'
+    '<label class="sheet-wide"><span>Notes</span><textarea name="attr_totem_legacy" rows="2" title="Kept text from the old combined fields"></textarea></label>'
+    '<label><span data-i18n="lbl-aspiration">Aspiration</span><textarea name="attr_aspiration" rows="2" class="sheet-asp-ta" title="Aspiration"></textarea></label>'
+    '<input type="hidden" name="attr_attributes" /><input type="hidden" name="attr_stats" />'
+    '<input type="hidden" name="attr_influences" /><input type="hidden" name="attr_ban" />'
+    '<input type="hidden" name="attr_totem_mig" value="0" />'
+)
+
+def totem_layout(h):
+    i = h.find('<fieldset class="repeating_totem">')
+    j = h.find("</fieldset>", i)
+    sec = h[i:j]
+    if "sheet-totem-stats" in sec:
+        return h
+    a = sec.find('<div class="sheet-totem-card">')
+    b = sec.find('<div class="sheet-entry-body', a if a >= 0 else 0)
+    if a < 0 or b < 0:
+        raise SystemExit("totem card")
+    sec = sec[:a] + TOTEM_CARD + sec[b:]
+    old = (
+        '<label class="sheet-wide"><span data-i18n="name">Name</span><input type="text" name="attr_name" /></label>\n'
+        '<label><span data-i18n="lbl-attributes">Power / Finesse / Resistance</span><input type="text" name="attr_attributes" /></label>\n'
+        '<label class="sheet-wide"><span data-i18n="lbl-stats">Willpower / Essence / Initiative / Defense / Speed / Size / Corpus</span><textarea name="attr_stats"></textarea></label>\n'
+        '<label class="sheet-wide"><span data-i18n="lbl-influences">Influences / Numina</span><textarea name="attr_influences"></textarea></label>\n'
+        '<label class="sheet-wide"><span data-i18n="lbl-bonuses">Bonuses</span><textarea name="attr_bonuses"></textarea></label>\n'
+        '<label><span data-i18n="lbl-ban">Ban / Bane</span><input type="text" name="attr_ban" /></label>\n'
+    )
+    if old not in sec:
+        raise SystemExit("totem fields")
+    sec = sec.replace(old, TOTEM_BODY, 1)
+    oldp = '{{f_attributes=@{attributes}}} {{f_stats=@{stats}}} {{f_influences=@{influences}}} {{f_bonuses=@{bonuses}}} {{f_ban=@{ban}}} {{f_aspiration=@{aspiration}}}'
+    newp = '{{f_power=@{totem_power}}} {{f_finesse=@{totem_finesse}}} {{f_resistance=@{totem_resistance}}} {{f_willpower=@{totem_willpower}}} {{f_essence=@{totem_essence}}} {{f_initiative=@{totem_initiative}}} {{f_defense=@{totem_defense}}} {{f_speed=@{totem_speed}}} {{f_size=@{totem_size}}} {{f_corpus=@{totem_corpus}}} {{f_influences=@{totem_influences}}} {{f_numina=@{totem_numina}}} {{f_ban=@{totem_ban}}} {{f_bane=@{totem_bane}}} {{f_bonuses=@{bonuses}}} {{f_notes=@{totem_legacy}}} {{f_aspiration=@{aspiration}}} {{f_attributes=@{attributes}}} {{f_stats=@{stats}}}'
+    if oldp not in sec:
+        raise SystemExit("totem post")
+    sec = sec.replace(oldp, newp, 1)
+    return h[:i] + sec + h[j:]
+
+REV112 = r'''
+        // rev112: totem field migration (keeps the old combined text)
+        const totemMig = () => getSectionIDs("totem", ids => {
+            const keys = ["attributes","stats","influences","ban","bonuses","totem_legacy","totem_mig","totem_power","totem_finesse","totem_resistance","totem_willpower","totem_essence","totem_initiative","totem_defense","totem_speed","totem_size","totem_corpus","totem_ban","totem_bane","totem_influences","totem_numina"];
+            getAttrs(ids.flatMap(id => keys.map(a => "repeating_totem_" + id + "_" + a)), v => {
+                const u = {}, num = {power:"totem_power",finesse:"totem_finesse",resistance:"totem_resistance",willpower:"totem_willpower",essence:"totem_essence",initiative:"totem_initiative",defense:"totem_defense",speed:"totem_speed",size:"totem_size",corpus:"totem_corpus"};
+                ids.forEach(id => {
+                    const p = "repeating_totem_" + id + "_";
+                    if (v[p + "totem_mig"] === "1") return;
+                    const olds = ["attributes","stats","influences","ban","bonuses"].map(a => (v[p + a] || "").trim() ? (a + ": " + (v[p + a] || "").trim()) : "").filter(Boolean);
+                    if (olds.length && !(v[p + "totem_legacy"] || "").trim()) u[p + "totem_legacy"] = olds.join("\n");
+                    const src = [v[p + "stats"], v[p + "attributes"], v[p + "influences"], v[p + "ban"]].join(" ; ");
+                    const re = /(power|finesse|resistance|willpower|essence|initiative|defense|speed|size|corpus)\s*[:=]?\s*(\d+)/ig;
+                    let m, found = {};
+                    while ((m = re.exec(src))) found[m[1].toLowerCase()] = m[2];
+                    const trip = (v[p + "attributes"] || "").match(/^\s*(\d+)\s*[/|,]\s*(\d+)\s*[/|,]\s*(\d+)\s*$/);
+                    if (trip) { found.power = found.power || trip[1]; found.finesse = found.finesse || trip[2]; found.resistance = found.resistance || trip[3]; }
+                    Object.keys(num).forEach(k => { const cur = (v[p + num[k]] || "").trim(); if (found[k] && (cur === "" || cur === "0")) u[p + num[k]] = found[k]; });
+                    const banSrc = (v[p + "ban"] || "") + "\n" + (v[p + "attributes"] || "");
+                    const banM = banSrc.match(/ban\s*:\s*([^\n;]+)/i), baneM = banSrc.match(/bane\s*:\s*([^\n;]+)/i);
+                    if (baneM && !(v[p + "totem_bane"] || "").trim()) u[p + "totem_bane"] = baneM[1].trim();
+                    if (banM && !(v[p + "totem_ban"] || "").trim()) u[p + "totem_ban"] = banM[1].trim();
+                    else if (!banM && !baneM && (v[p + "ban"] || "").trim() && !(v[p + "totem_ban"] || "").trim()) u[p + "totem_ban"] = (v[p + "ban"] || "").trim();
+                    const inf = v[p + "influences"] || "";
+                    const nm = inf.match(/numina\s*:\s*([\s\S]*)$/i), im = inf.match(/influences?\s*:\s*([\s\S]*?)(?=numina\s*:|$)/i);
+                    if (inf.trim() && !(v[p + "totem_influences"] || "").trim()) u[p + "totem_influences"] = (im ? im[1] : inf).trim();
+                    if (nm && !(v[p + "totem_numina"] || "").trim()) u[p + "totem_numina"] = nm[1].trim();
+                    u[p + "totem_mig"] = "1";
+                });
+                if (Object.keys(u).length) setAttrs(u, {silent: true});
+            });
+        });
+        if (!globalThis.__rev112) {
+            globalThis.__rev112 = 1;
+            on("sheet:opened change:repeating_totem", totemMig);
+        }
+'''
+
+def worker_extra(h):
+    if "__rev112" in h:
+        return h
+    anchor = 'on("change:repeating_buffs remove:repeating_buffs sheet:opened", buffSum);'
+    if h.count(anchor) != 1:
+        raise SystemExit("buff anchor %s" % h.count(anchor))
+    return h.replace(anchor, anchor + "\n" + REV112, 1)
+
 def collapse(h):
     h, n = re.subn(
         r'<button type="action" class="sheet-mini" name="act_(?:expand|collapse)_[a-z0-9]+" title="(?:Expand|Collapse) all"><span class="sheet-ic">&#96\d+;</span> <span data-i18n="(?:expand|collapse)-all">all</span></button>',
@@ -382,14 +698,18 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wx-tags{flex:1 1 80px;min-width:0;white-space:normal}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])) .sheet-wx-x{display:none!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(input.sheet-hl-wt[value=explosive]) .sheet-wx-m{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=melee]~fieldset.repeating_weapons .sheet-entry:not(:has(input.sheet-hl-wt[value=melee],input.sheet-hl-wt[value=unarmed],input.sheet-hl-wt[value=thrown])){display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=ranged]~fieldset.repeating_weapons .sheet-entry:not(:has(input.sheet-hl-wt[value=ranged],input.sheet-hl-wt[value=bow])){display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=explosive]~fieldset.repeating_weapons .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])){display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=melee]~fieldset.repeating_weapons input.sheet-wtype-f:not([value=melee]):not([value=unarmed]):not([value=thrown])~.sheet-entry{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=ranged]~fieldset.repeating_weapons input.sheet-wtype-f:not([value=ranged]):not([value=bow])~.sheet-entry{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] input.sheet-wfilter[value=explosive]~fieldset.repeating_weapons input.sheet-wtype-f:not([value=explosive])~.sheet-entry{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons>.sheet-entry-section-head{flex-wrap:nowrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-subheader span{white-space:nowrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-entry-head{flex-wrap:wrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-weapons .sheet-wx{flex:1 0 100%!important;justify-content:center!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>input.sheet-entry-short{flex:1 1 100%!important;min-width:0!important;width:100%!important;white-space:normal!important;height:auto!important;overflow:visible!important;text-overflow:clip!important;margin:0 0 1px!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section{position:relative}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section>.repcontrol{position:absolute!important;top:0!important;right:0!important;margin:0!important;z-index:4}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head{display:flex!important;align-items:center!important;min-height:22px;padding-right:54px!important;justify-content:flex-start!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader span{border:0!important;background:none!important;box-shadow:none!important;text-align:left!important;padding-left:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head{display:flex!important;align-items:center!important;min-height:22px;padding-right:54px!important;justify-content:flex-start}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader span{border:0!important;background:none!important;box-shadow:none!important;text-align:left;padding-left:0!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>button.sheet-entry-post:not(.sheet-post-ic){border:0!important;background:none!important;box-shadow:none!important;text-align:left!important;padding-left:2px!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 240px!important;min-width:228px!important;white-space:nowrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mstyle-s{display:none;font-size:9px;line-height:0;vertical-align:super;margin-left:1px}
@@ -406,7 +726,7 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-mv-out{display:block!important;border:0!important;padding:1px 2px 2px 16px!important;margin:0!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-style-title{display:none}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-post{flex:0 0 16px!important;width:16px!important;height:16px!important;min-width:0!important;padding:0!important;font-size:9px!important;line-height:14px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 140px;min-width:0;width:auto!important;margin:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-full{display:block!important;flex:1 0 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;min-height:44px;margin:0 0 3px!important}
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms,.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-leon-pane,.charsheet[class][class][class][class][class][class] .sheet-form-stage{overflow:visible!important}
 .charsheet[class][class][class][class][class][class] .sheet-form-stage{display:grid!important;grid-template-columns:36px minmax(0,1fr) 36px!important;gap:4px!important;align-items:center!important;width:100%!important}
 .charsheet[class][class][class][class][class][class] .sheet-form-prev{grid-column:1!important;grid-row:1!important}
@@ -419,11 +739,20 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-fc-hw{display:block;text-align:center;font-weight:700;font-size:14px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short{display:block;margin:0 4px 2px 16px;white-space:normal;overflow-wrap:anywhere;font-style:italic;font-size:12px;line-height:1.3}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:empty,.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:has(>span:empty){display:none}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-card{display:flex!important;justify-content:center!important;margin:4px 0!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-entry-toggle:not(:checked)~.sheet-totem-card{display:flex!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-img{position:relative!important;display:flex!important;width:150px!important;height:200px!important;max-width:150px!important;align-items:center;justify-content:center;overflow:hidden}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-totem-img .sheet-fc-imgph{display:block!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:start}
+.charsheet .sheet-totem>.sheet-entry-section-head{justify-content:center!important}
+.charsheet .sheet-totem .sheet-subheader,.charsheet .sheet-totem .sheet-subheader span{text-align:center!important;width:100%}
+.charsheet .sheet-totem-card{display:flex!important;flex-direction:column;align-items:stretch;gap:4px;margin:4px 0!important}
+.charsheet .sheet-entry>input.sheet-entry-toggle:not(:checked)~.sheet-totem-card{display:flex!important}
+.charsheet .sheet-totem-top{display:flex;gap:8px;align-items:center;min-width:0}
+.charsheet .sheet-totem-img{position:relative!important;display:flex!important;width:110px!important;height:160px!important;max-width:110px!important;flex:0 0 110px;align-items:center;justify-content:center;overflow:hidden}
+.charsheet .sheet-totem-img .sheet-fc-imgph{display:block!important}
+.charsheet .sheet-totem-stats{flex:1 1 auto;display:grid;grid-template-columns:1fr 1fr;gap:1px 8px;align-content:center;font-size:11px;min-width:0}
+.charsheet .sheet-totem-stats b{margin-right:4px}
+.charsheet .sheet-totem-more{font-size:11px;line-height:1.3;min-width:0}
+.charsheet .sheet-totem-more div{white-space:normal;overflow-wrap:anywhere}
+.charsheet .sheet-totem-nums{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+.charsheet .sheet-totem-nums input{width:100%!important;min-width:0!important;box-sizing:border-box}
+.charsheet .sheet-kt-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:start}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-h{font-weight:700;text-align:center;margin:0 0 4px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-note{font-size:11px;font-style:italic;text-align:center;margin:0 0 4px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-kt-gen textarea{width:100%!important;min-height:140px;box-sizing:border-box}
@@ -438,11 +767,12 @@ CSS = r'''
 .charsheet[class][class][class][class] .sheet-rollbar{padding:4px 8px!important}
 .charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-grid{display:flex!important;flex-flow:row wrap!important;align-items:center!important;justify-content:center!important;gap:4px 8px!important;width:100%!important}
 .charsheet[class][class][class][class] .sheet-rollbar .sheet-corporeal.sheet-span{display:flex!important;flex:1 0 100%!important;justify-content:center!important;width:100%!important;order:1;gap:6px}
-.charsheet[class][class][class][class] .sheet-rollbar .sheet-roll-portrait{order:2;width:64px!important;height:72px!important;flex:0 0 64px!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-roll-portrait{order:0!important;width:64px!important;height:72px!important;flex:0 0 64px!important;align-self:center!important}
 .charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-grid>.sheet-rollcontainer{order:3;width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important}
 .charsheet[class][class][class][class] .sheet-rollbar .sheet-rolldisplay{order:4;flex:0 1 200px!important;width:200px!important;max-width:200px!important;height:24px!important}
-.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-options{order:5;display:flex!important;flex:1 0 100%!important;justify-content:center!important;width:auto!important;border:0!important;background:none!important}
-.charsheet[class][class][class][class] .sheet-roll-extra{order:6;display:flex!important;flex-flow:row wrap!important;flex:1 0 100%!important;justify-content:center!important;align-items:center!important;width:auto!important;gap:6px}
+.charsheet[class][class][class][class] .sheet-roll-break{order:5;flex:1 0 100%;height:0;width:100%;margin:0;padding:0;overflow:hidden}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-options{order:6;display:flex!important;flex:0 1 auto!important;justify-content:center!important;width:auto!important;border:0!important;background:none!important;gap:4px}
+.charsheet[class][class][class][class] .sheet-roll-extra{order:6;display:flex!important;flex-flow:row wrap!important;flex:0 1 auto!important;justify-content:center!important;align-items:center!important;width:auto!important;gap:6px}
 .charsheet[class][class][class][class] .sheet-fc-bio,.charsheet[class][class][class][class] .sheet-fc-bio-l,.charsheet[class][class][class][class] .sheet-det-beside{min-width:0!important;max-width:100%!important}
 .charsheet[class][class][class][class] input.sheet-fc-bio-line{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-panel{display:none;width:min(100%,440px)}
@@ -450,10 +780,32 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row{display:flex;align-items:center;gap:6px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row input[type=text]{flex:1 1 auto;min-width:0}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-buff-n{width:54px!important;flex:0 0 54px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth label{text-align:center!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields input,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth input{max-width:220px!important;text-align:center}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones label,.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstones span,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth label{text-align:center!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields label{align-items:center}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields input,.charsheet[class][class][class][class][class][class][class][class] .sheet-ts-kuruth input{max-width:220px!important;text-align:center!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pa)!important}
 .sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pad)!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-img{width:100px!important;max-width:100px!important;height:300px!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-entry-settings{border:0!important;outline:0!important;box-shadow:none!important;background:none!important}
+.charsheet[class][class] .sheet-skills>div>button.sheet-spec-caret{order:2!important;flex:0 0 14px!important;width:14px!important;min-width:14px!important;height:14px!important;margin:0 2px!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+.charsheet[class][class] .sheet-skills>div>button.sheet-toggle{order:3!important}
+.charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
+.charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
+.charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
+.charsheet .sheet-disc-card{border:1px solid rgba(139,16,16,.55);border-radius:6px;margin:3px 0;padding:2px 4px 2px 14px;background:rgba(0,0,0,.16)}
+.charsheet .sheet-disc-on{margin-left:auto;flex:0 0 auto}
+.charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
+.charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
+.charsheet[class][class][class] .sheet-det-top>.sheet-det-grid.sheet-det-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important;min-width:0!important;max-width:100%!important}
+.charsheet[class][class] .sheet-det-top,.charsheet[class][class] .sheet-det-top>.sheet-det-grid,.charsheet[class][class] .sheet-det-grid>label{min-width:0!important;max-width:100%!important}
+.charsheet[class][class] .sheet-det-grid>label.sheet-det-s,.charsheet[class][class] .sheet-det-grid>label.sheet-det-m,.charsheet[class][class] .sheet-det-grid>label.sheet-det-l{flex:none!important;min-width:0!important;max-width:none!important;width:auto!important}
+.charsheet[class][class] .sheet-det-grid>label.sheet-det-m,.charsheet[class][class] .sheet-det-grid>label.sheet-det-l{grid-column:span 3}
+.charsheet[class][class] .sheet-det-grid>label>span,.charsheet .sheet-det-splat label>span{white-space:normal!important}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat{grid-column:2;grid-row:3;min-width:0;max-width:100%;display:flex;flex-wrap:wrap;gap:4px 8px}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat>.sheet-subheader{flex:1 0 100%;text-align:center}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat>label{flex:1 1 30%;min-width:0}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat input{width:100%!important;min-width:0!important;box-sizing:border-box}
+.charsheet[class][class] .sheet-det-portrait{grid-row:1 / span 4}
 '''
 
 def css_add(c):
@@ -482,23 +834,36 @@ def main():
     h = forms(h)
     h = rites(h)
     h = totem(h)
+    h = totem_layout(h)
     h = kuruth(h)
     h = notes(h)
+    h = notes_fit(h)
     h = dice(h)
+    h = dice_layout(h)
+    h = breaking(h)
+    h = maneuvers(h)
+    h = roll_above(h)
+    h = vamp_quick(h)
+    h = disciplines(h)
+    h = weapons_fix(h)
     h, ncol = collapse(h)
     h = worker(h)
+    h = worker_extra(h)
     c = css_add(c)
     bad = banned(c)
     if bad:
         raise SystemExit("banned CSS %s" % bad)
-    if len(c) > 620000:
-        raise SystemExit("css %s over 620k cap" % len(c))
+    if len(c) > 625000:
+        raise SystemExit("css %s over 625k cap" % len(c))
     checks = [
         "sheet-ar-cols", "sheet-wx", "sheet-wfilter", "sheet-mv-out", "act_form_prev",
         "sheet-form-view", "sheet-rite-short", "sheet-totem-body", "sheet-kt-split",
         "attr_kuruth_general", "sheet-det-beside", "sheet-fc-bio-line", "sheet-note-cols",
         "sheet-roll-extra", "attr_roll_prompt", "repeating_buffs", "__rev111",
-        "sheet-mstyle-s",
+        "sheet-mstyle-s", "sheet-roll-break", "roll_bp_flesh", "roll_bp_spirit",
+        "sheet-mv-full", "sheet-disc-card", "attr_disc_active", "attr_disc_vigor",
+        "sheet-wtype-f", "sheet-totem-stats", "attr_totem_power", "attr_totem_legacy",
+        "__rev112",
     ]
     missing = [k for k in checks if k not in h]
     if missing:
