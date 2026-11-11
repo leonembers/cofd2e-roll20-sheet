@@ -967,6 +967,9 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-diceroller-options,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-wfilters,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-bp-rolls{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:8px!important;column-gap:8px!important;row-gap:8px!important;border:0!important;background:none!important}
 .charsheet[class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-head>button.sheet-w-atk{flex:0 1 auto!important;width:auto!important}
 .charsheet .sheet-weapons .sheet-hl-pool{flex:0 0 auto!important;margin:0 6px 0 4px!important;padding:0!important;border:0!important;background:none!important;white-space:nowrap!important;font-weight:400!important;pointer-events:none}
+.charsheet .sheet-set-gear{position:absolute;left:2px;top:4px;width:13px;height:13px;margin:0;padding:0;line-height:13px;text-align:center;font:12px/13px Arial,sans-serif;color:var(--pad,var(--pa,#ccc));pointer-events:none;z-index:5}
+.charsheet .sheet-disc-row{position:relative}
+.charsheet .sheet-disc-row>.sheet-set-gear{left:0;top:0;width:14px;height:14px;line-height:14px}
 '''
 
 def cards(h):
@@ -980,11 +983,38 @@ def cards(h):
         h = h.replace(span, ' /><span>&#9881;</span></button><span class="sheet-skm">')
     return h
 
+def settings_gear(h):
+    if 'class="sheet-set-gear"' in h:
+        return h
+    g = '<span class="sheet-set-gear">&#9881;</span>'
+    pairs = [
+        ('aria-label="Show / hide entry settings" /><div class="sheet-entry-head">',
+         'aria-label="Show / hide entry settings" /><div class="sheet-entry-head">' + g),
+        ('aria-label="Show / hide entry settings" />\n<div class="sheet-entry-head">',
+         'aria-label="Show / hide entry settings" />\n<div class="sheet-entry-head">' + g),
+        ('aria-label="Show / hide entry settings" /><div class="sheet-gfx-top">',
+         'aria-label="Show / hide entry settings" /><div class="sheet-gfx-top">' + g),
+        ('aria-label="Show / hide entry settings" /><div class="sheet-rit-top">',
+         'aria-label="Show / hide entry settings" /><div class="sheet-rit-top">' + g),
+        ('aria-label="Show / hide entry settings" /><span class="sheet-disc-id">',
+         'aria-label="Show / hide entry settings" />' + g + '<span class="sheet-disc-id">'),
+        ('aria-label="Show / hide entry settings" /><input type="hidden" name="attr_gtype"',
+         'aria-label="Show / hide entry settings" />' + g + '<input type="hidden" name="attr_gtype"'),
+    ]
+    n = h.count('aria-label="Show / hide entry settings"')
+    for a, b in pairs:
+        if a not in h:
+            raise SystemExit("gear site missing")
+        h = h.replace(a, b)
+    if h.count('class="sheet-set-gear"') != n:
+        raise SystemExit("gears %s of %s" % (h.count('class="sheet-set-gear"'), n))
+    return h
+
 def css_add(c):
-    # A CSS hex escape of a non-ASCII character makes Roll20 discard every
-    # roll-template rule. The settings cog glyph that was already in the live
-    # sheet is left as a literal character; the new skill gear is HTML.
+    # Roll20 drops every roll-template rule if the CSS contains a non-ASCII
+    # character or a hex escape of one. The settings cog is an HTML entity.
     c = c.replace("\\2699", "*")
+    c = c.replace('content:"\u2699"', "content:none")
     if "/* rev111 */" in c:
         return c
     return c.rstrip() + "\n" + CSS
@@ -1024,14 +1054,20 @@ def main():
     h = disciplines(h)
     h = weapons_fix(h)
     h, ncol = collapse(h)
+    h = settings_gear(h)
     h = worker(h)
     h = worker_extra(h)
     c = css_add(c)
     bad = banned(c)
     if bad:
         raise SystemExit("banned CSS %s" % bad)
-    if "\\2699" in c:
-        raise SystemExit("gear escape still in css")
+    if "\\2699" in c or any(ord(ch) > 127 for ch in c):
+        raise SystemExit("non-ascii css")
+    for m in re.finditer(r"\\([0-9a-fA-F]{1,6})", c):
+        if int(m.group(1), 16) > 127:
+            raise SystemExit("css escape %s" % m.group(0))
+    if 'class="sheet-set-gear"' not in h:
+        raise SystemExit("settings gear missing")
     if len(c) > 625000:
         raise SystemExit("css %s over 625k cap" % len(c))
     checks = [
