@@ -109,6 +109,14 @@ def weapons(h):
     if h.count(old) != 1:
         raise SystemExit("tagsum %s" % h.count(old))
     h = h.replace(old, cols, 1)
+    pool = '<button type="action" class="sheet-hl-poolbtn sheet-was-roll"  title="Roll attack (pool shown; damage is added on successes)" name="act_rr-attack"><span class="sheet-entry-pool sheet-hl-pool" name="attr_atk_short"></span></button>'
+    if h.count(pool) != 1:
+        raise SystemExit("pool btn %s" % h.count(pool))
+    h = h.replace(pool, "", 1)
+    name_end = '</span></button>\n\n<span class="sheet-wx">'
+    if h.count(name_end) != 1:
+        raise SystemExit("weapon name %s" % h.count(name_end))
+    h = h.replace(name_end, '</span></button><span class="sheet-hl-pool" name="attr_atk_short"></span>\n\n<span class="sheet-wx">', 1)
     return h
 
 def gear(h):
@@ -276,22 +284,25 @@ def notes(h):
         h = h.replace(old, boxes, 1)
     return h
 
-WPQ = "?{Willpower|None,0|Spend 1 (+3),3|Spend 1 moon (+4),4}"
-SPQ = "?{Specialty|No,0|Yes (+1),1}"
-
 def dice(h):
-    if "@{wp_dice}" in h:
-        h = h.replace("@{wp_dice}", WPQ)
-        h = h.replace("@{spec_bonus}", "@{buff_mod}+" + SPQ)
+    # Keep @{wp_dice} and @{spec_bonus} as numbers inside [[ ]]. A ?{...} whose
+    # label contains parentheses, or whose value contains ">", is substituted only
+    # after Roll20 has already tokenised the group roll, so the resolved
+    # [[{((pool)d10!cs>10}>target]] is invalid and the message is dropped.
+    oldp = "@{cond_mod}+@{spec_bonus}"
+    newp = "@{cond_mod}+@{buff_mod}+@{spec_bonus}"
+    if oldp in h:
+        h = h.replace(oldp, newp)
     if "sheet-roll-extra" not in h:
         anchor = "</span></span></label>\n            </div>\n        </div>\n    </div>\n\n    <!-- PAGE 1 -->"
         if h.count(anchor) != 1:
             raise SystemExit("roller anchor %s" % h.count(anchor))
         extra = (
-            '</span></span></label>\n            </div>\n'
-            '<div class="sheet-roll-extra"><label class="sheet-ovbtn sheet-ovb-buff" title="Custom buffs you can turn on">'
-            '<input type="checkbox" class="sheet-ovf sheet-buff-tg" name="attr_ov_buff" value="1" />Buffs</label>'
-            '<div class="sheet-buff-panel"><fieldset class="repeating_buffs"><div class="sheet-buff-row">'
+            '</span></span></label>'
+            '<label class="sheet-ovbtn sheet-ovb-buff" title="Custom buffs you can turn on">'
+            '<input type="checkbox" class="sheet-ovf sheet-buff-tg" name="attr_ov_buff" value="1" />Buffs</label>\n'
+            '            </div>\n'
+            '<div class="sheet-roll-extra"><div class="sheet-buff-panel"><fieldset class="repeating_buffs"><div class="sheet-buff-row">'
             '<label class="sheet-switch" title="Activate this buff"><input type="checkbox" name="attr_buff_on" value="1" /><span class="sheet-sw-track"></span></label>'
             '<input type="text" name="attr_buff_name" placeholder="Buff" />'
             '<input type="number" class="sheet-buff-n" name="attr_buff_mod" value="0" title="Dice" />'
@@ -299,33 +310,65 @@ def dice(h):
             '<input type="hidden" name="attr_buff_mod" value="0" /><input type="hidden" name="attr_roll_prompt" value="1" />\n'
             '        </div>\n    </div>\n\n    <!-- PAGE 1 -->')
         h = h.replace(anchor, extra, 1)
-    old = 'const updateRollEff = () => getAttrs(["rolltype","wp_spend","wp_risk","risk_b1","risk_b2","sheettype","skill_again","skill_again_names","skill_mk","moon_visible"], v => {\n            let rt = v.rolltype || ")d10!cs>10}>@{success_target}]]}}";'
-    if old in h:
-        ins = '''const updateRollEff = () => getAttrs(["roll_prompt","rolltype","wp_spend","wp_risk","risk_b1","risk_b2","sheettype","skill_again","skill_again_names","skill_mk","moon_visible"], v => {
-            if (v.roll_prompt === "1") {
-                const sq = v.skill_again || "";
-                let base = "d10!cs>10", lbl = "Normal";
-                if (sq === "8") { base = "d10!>8cs>8"; lbl = "Normal (skill 8-again)"; }
-                else if (sq === "9") { base = "d10!>9cs>9"; lbl = "Normal (skill 9-again)"; }
-                else if (sq === "no10") { base = "d10cs>10"; lbl = "Normal (no 10s)"; }
-                const rtq = ")?{Roll type|" + lbl + "," + base + "|9-again,d10!>9cs>9|8-again,d10!>8cs>8|No 10s,d10cs>10|Rote,d10ro<8|Chance,*0+1)d10cf<1cs>10}>@{success_target}]]}}";
-                setAttrs({rolltype_eff: rtq, wp_dice: 0}, {silent: true}, () => { if (globalThis.__hlAtk) globalThis.__hlAtk(); });
-                return;
-            }
-            let rt = v.rolltype || ")d10!cs>10}>@{success_target}]]}}";'''
-        h = h.replace(old, ins, 1)
-    h = h.replace(
-        'on("sheet:opened change:rolltype change:wp_spend change:wp_risk change:risk_b1 change:risk_b2 change:sheettype", updateRollEff);',
-        'on("sheet:opened change:roll_prompt change:rolltype change:wp_spend change:wp_risk change:risk_b1 change:risk_b2 change:sheettype", updateRollEff);',
-        1)
+    if "const rrAsk" not in h:
+        needle = 'const rrRun1 = (mac, isRe, slot) => startRoll(mac + (isRe ? "" : ` {{reroll=[Reroll](~@{character_id}|rrs${slot})}}`), (r) => {'
+        if h.count(needle) != 1:
+            raise SystemExit("rrRun1 %s" % h.count(needle))
+        h = h.replace(needle, RR_ASK + needle.replace(
+            "startRoll(mac + (isRe ? \"\" :",
+            "rrAsk(mac, isRe, (m, note) => startRoll(m + (note || \"\") + (isRe ? \"\" :",
+            1), 1)
+        end = "finishRoll(r.rollId); if (!isRe && R.roll) riskWp(R.roll.result || 0);\n        });\n        Object.keys(RR_MAC)"
+        if h.count(end) != 1:
+            raise SystemExit("rrRun1 end %s" % h.count(end))
+        h = h.replace(end, end.replace("});\n        Object.keys(RR_MAC)", "}));\n        Object.keys(RR_MAC)"), 1)
     return h
 
-BP_ROLL = (
-    '&amp;{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=%s}} '
-    '{{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{f_mod=Modifier ?{@{modifiermacro}|0}}} '
-    '{{roll=[[{((@{resolve}+@{resolve_boost}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+'
-    + WPQ + '+@{cond_mod}+@{buff_mod}+' + SPQ + ')@{rolltype_eff}'
-)
+# Prompts are a silent startRoll of integer queries only (no ">" and no
+# parentheses). The real roll is built afterwards and contains no ?{roll type}
+# and no ?{Willpower}. Order: Roll type, Modifier, Willpower, Specialty, then
+# weapon Target Defense when that roll has one.
+RR_ASK = r'''const rrAsk = (mac, isRe, go) => {
+            if (isRe || mac.indexOf("{{roll=") < 0) return go(mac, "");
+            const needRt = /@\{(?:rolltype_eff|rolltype|atk_rt|repeating_[\w-]+_atk_rt)\}/.test(mac);
+            const needWp = mac.indexOf("@{wp_dice}") >= 0;
+            const needSp = mac.indexOf("@{spec_bonus}") >= 0;
+            const needWsp = mac.indexOf("?{Specialty applies?|No,0|Yes,1}") >= 0;
+            const needMd = mac.indexOf("?{@{modifiermacro}|0}") >= 0;
+            const needDf = /\?\{@\{(?:repeating_[\w-]+_)?atk_defq\}\|@\{(?:repeating_[\w-]+_)?atk_def_default\}\}/.test(mac);
+            if (!needRt && !needWp && !needSp && !needWsp && !needMd && !needDf) return go(mac, "");
+            let q = "!{{template:default}}";
+            if (needRt) q += "{{rt=![[?{Roll type|Normal,0|9-again,1|8-again,2|No 10s,3|Rote,4|Chance,5}]]}}";
+            if (needMd) q += "{{md=![[?{@{modifiermacro}|0}]]}}";
+            if (needWp) q += "{{wp=![[?{Willpower|None,0|Spend 1,3}]]}}";
+            if (needSp) q += "{{sp=![[?{Specialty|No,0|Yes,1}]]}}";
+            else if (needWsp) q += "{{sp=![[?{Specialty applies?|No,0|Yes,1}]]}}";
+            if (needDf) q += "{{df=![[?{@{atk_defq}|@{atk_def_default}}]]}}";
+            startRoll(q, (res) => {
+                if (res && res.rollId && typeof finishRoll === "function") finishRoll(res.rollId);
+                const R = (res && res.results) || {};
+                const num = (k) => { const o = R[k]; if (!o) return 0; const n = parseInt(o.result, 10); return isNaN(n) ? 0 : n; };
+                const rt = needRt ? num("rt") : 0, wp = needWp ? num("wp") : 0, sp = (needSp || needWsp) ? num("sp") : 0, md = needMd ? num("md") : 0, df = needDf ? num("df") : 0;
+                const RTB = {1: ")d10!>9cs>9}>@{success_target}]]}} {{9again=1}}", 2: ")d10!>8cs>8}>@{success_target}]]}} {{8again=1}}", 3: ")d10cs>10}>@{success_target}]]}}", 4: ")d10ro<@{rote_reroll}}>@{success_target}]]}}", 5: "*0+1)d10cf<1}>10]]}} {{chance=1}}"};
+                let m = mac;
+                if (needWp) m = m.split("@{wp_dice}").join(String(wp));
+                if (needSp) m = m.split("@{spec_bonus}").join(String(sp));
+                if (needWsp) m = m.split("?{Specialty applies?|No,0|Yes,1}").join(String(sp));
+                if (needMd) m = m.split("?{@{modifiermacro}|0}").join(String(md));
+                if (needDf) m = m.replace(/\?\{@\{(?:repeating_[\w-]+_)?atk_defq\}\|@\{(?:repeating_[\w-]+_)?atk_def_default\}\}/g, String(df));
+                if (rt && RTB[rt]) m = m.split("@{rolltype_eff}").join(RTB[rt]).split("@{rolltype}").join(RTB[rt]).replace(/@\{(?:repeating_[\w-]+_)?atk_rt\}/g, RTB[rt]);
+                const done = (note) => go(m, note || "");
+                if (wp < 1) return done("");
+                getAttrs(["willpower", "willpower_cur"], (v) => {
+                    const cur = Math.max(0, parseInt(v.willpower_cur, 10) || 0), max = parseInt(v.willpower, 10) || 0;
+                    if (cur <= 0) return startRoll("&{template:cofd-entry} {{charname=@{character_name}}} {{kind=Willpower}} {{name=No Willpower left}} {{f_short=WP 0/" + max + ". Regain Willpower first.}}", (r) => finishRoll(r.rollId));
+                    setAttrs({willpower_cur: cur - 1}, {}, () => done(" {{wpst=Spent 1 Willpower (+3). Left: WP " + (cur - 1) + "/" + max + "}}"));
+                });
+            });
+        };
+        on("clicked:roll_bp_flesh", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Flesh Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{resolve_boost}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
+        on("clicked:roll_bp_spirit", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Spirit Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{resolve_boost}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
+        '''
 
 def dice_layout(h):
     if "sheet-roll-break" in h:
@@ -343,10 +386,10 @@ def breaking(h):
         raise SystemExit("morality clear %s" % h.count(anchor))
     btns = (
         '<div class="sheet-bp-rolls sheet-game-line sheet-werewolf sheet-werewolf2">'
-        '<button type="roll" class="sheet-quick sheet-bp" name="roll_bp_flesh" title="Flesh breaking point: Resolve + Composure. Put the Harmony modifier in the modifier prompt." value="%s">Flesh Breaking Point</button>'
-        '<button type="roll" class="sheet-quick sheet-bp" name="roll_bp_spirit" title="Spirit breaking point: Resolve + Composure. Put the Harmony modifier in the modifier prompt." value="%s">Spirit Breaking Point</button>'
+        '<button type="action" class="sheet-quick sheet-bp" name="act_roll_bp_flesh" title="Flesh breaking point: Resolve + Composure. The modifier prompt is the Harmony modifier.">Flesh Breaking Point</button>'
+        '<button type="action" class="sheet-quick sheet-bp" name="act_roll_bp_spirit" title="Spirit breaking point: Resolve + Composure. The modifier prompt is the Harmony modifier.">Spirit Breaking Point</button>'
         '</div>'
-    ) % (BP_ROLL % "Flesh Breaking Point", BP_ROLL % "Spirit Breaking Point")
+    )
     return h.replace(anchor, anchor + btns, 1)
 
 def maneuvers(h):
@@ -786,22 +829,22 @@ def worker(h):
 
 CSS = r'''
 /* rev111 */
-.charsheet[class][class][class][class][class][class][class][class] .sheet-armor .sheet-entry-head{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:3px 6px!important;padding-right:2px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-name{flex:1 1 120px!important;min-width:90px!important;width:auto!important;margin:0!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-cols{display:flex!important;flex:1 1 auto;flex-wrap:wrap;gap:2px 6px;align-items:center;font-size:11px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-c{white-space:nowrap}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-c>b{font-weight:700;margin-right:3px;opacity:.8}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-armor .sheet-entry-head>.sheet-ar-eq{margin-left:auto!important;flex:0 0 auto}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-ar-panel>.sheet-ar-stk{margin:2px 0 4px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-wfilters{display:inline-flex;gap:4px;margin-left:8px;flex:0 0 auto}
+.charsheet .sheet-armor .sheet-entry-head{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:3px 6px!important;padding-right:2px!important}
+.charsheet .sheet-ar-name{flex:1 1 120px!important;min-width:90px!important;width:auto!important;margin:0!important}
+.charsheet .sheet-ar-cols{display:flex!important;flex:1 1 auto;flex-wrap:wrap;gap:2px 6px;align-items:center;font-size:11px}
+.charsheet .sheet-ar-c{white-space:nowrap}
+.charsheet .sheet-ar-c>b{font-weight:700;margin-right:3px;opacity:.8}
+.charsheet .sheet-armor .sheet-entry-head>.sheet-ar-eq{margin-left:auto!important;flex:0 0 auto}
+.charsheet .sheet-ar-panel>.sheet-ar-stk{margin:2px 0 4px!important}
+.charsheet .sheet-wfilters{display:inline-flex;gap:4px;margin-left:8px;flex:0 0 auto}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-wfb{font-size:11px!important;padding:1px 8px!important;border-radius:10px!important;border:1px solid color-mix(in srgb,var(--pa,#888) 55%,rgba(128,128,128,.4))!important;background:none!important}
 .charsheet input.sheet-wfilter[value=all]~.sheet-entry-section-head .sheet-wfb-all,.charsheet input.sheet-wfilter[value=melee]~.sheet-entry-section-head .sheet-wfb-melee,.charsheet input.sheet-wfilter[value=ranged]~.sheet-entry-section-head .sheet-wfb-ranged,.charsheet input.sheet-wfilter[value=explosive]~.sheet-entry-section-head .sheet-wfb-explosive{background:var(--pa,#8a4b1f)!important;color:#fff!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-wx{display:flex;flex:1 1 220px;flex-wrap:wrap;gap:1px 6px;align-items:center;font-size:11px;min-width:0}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-wx-c{white-space:nowrap}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-wx-c>b{margin-right:2px;opacity:.75}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-wx-tags{flex:1 1 80px;min-width:0;white-space:normal}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])) .sheet-wx-x{display:none!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(input.sheet-hl-wt[value=explosive]) .sheet-wx-m{display:none!important}
+.charsheet .sheet-wx{display:flex;flex:1 1 220px;flex-wrap:wrap;gap:1px 6px;align-items:center;font-size:11px;min-width:0}
+.charsheet .sheet-wx-c{white-space:nowrap}
+.charsheet .sheet-wx-c>b{margin-right:2px;opacity:.75}
+.charsheet .sheet-wx-tags{flex:1 1 80px;min-width:0;white-space:normal}
+.charsheet .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])) .sheet-wx-x{display:none!important}
+.charsheet .sheet-entry:has(input.sheet-hl-wt[value=explosive]) .sheet-wx-m{display:none!important}
 .charsheet .repcontainer[data-groupname=repeating_weapons] input.sheet-whide[value="1"]~.sheet-entry{display:none!important}
 .charsheet .sheet-weapons>.sheet-entry-section-head{flex-wrap:wrap!important;row-gap:2px;overflow:visible!important}
 .charsheet .sheet-weapons .sheet-subheader{flex:1 0 100%!important;min-width:0!important;overflow:visible!important;text-overflow:clip!important}
@@ -810,25 +853,25 @@ CSS = r'''
 .charsheet .sheet-weapons .sheet-entry-head{flex-wrap:wrap!important}
 .charsheet .sheet-weapons .sheet-wx{flex:1 0 100%!important;width:100%!important;justify-content:center!important;text-align:center!important}
 .charsheet .sheet-weapons .sheet-wx-tags{flex:0 0 auto!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>input.sheet-entry-short{flex:1 1 100%!important;min-width:0!important;width:100%!important;white-space:normal!important;height:auto!important;overflow:visible!important;text-overflow:clip!important;margin:0 0 1px!important}
+.charsheet .sheet-entry-head>input.sheet-entry-short{flex:1 1 100%!important;min-width:0!important;width:100%!important;white-space:normal!important;height:auto!important;overflow:visible!important;text-overflow:clip!important;margin:0 0 1px!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section{position:relative}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section>.repcontrol{position:absolute!important;top:0!important;right:0!important;margin:0!important;z-index:4}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head{display:flex!important;align-items:center!important;min-height:22px;padding-right:54px!important;justify-content:flex-start}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader span{border:0!important;background:none!important;box-shadow:none!important;text-align:left;padding-left:0!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>button.sheet-entry-post:not(.sheet-post-ic){border:0!important;background:none!important;box-shadow:none!important;text-align:left!important;padding-left:2px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mstyle-s{display:none;font-size:9px;line-height:0;vertical-align:super;margin-left:1px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-entry-head .sheet-mstyle-s,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mstyle-s{display:inline!important}
-.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mstyle-flag[value="1"]) .sheet-mcat-badge,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{display:none!important}
+.charsheet .sheet-mstyle-s{display:none;font-size:9px;line-height:0;vertical-align:super;margin-left:1px}
+.charsheet .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-entry-head .sheet-mstyle-s,.charsheet .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mstyle-s{display:inline!important}
+.charsheet .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mstyle-flag[value="1"]) .sheet-mcat-badge,.charsheet .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{display:none!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head{flex-wrap:wrap!important;padding-left:14px!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 100%!important;width:auto!important;max-width:100%!important;min-width:0!important;overflow:visible!important;white-space:nowrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body>label.sheet-wide,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body input[name=attr_short_desc]{flex:1 1 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-row{flex-wrap:wrap!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 100%!important;width:100%!important;max-width:100%!important;display:block!important;box-sizing:border-box!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out{display:none}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-mv-out{display:block!important;border:0!important;padding:1px 2px 2px 16px!important;margin:0!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-style-title{display:none}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-post{flex:0 0 16px!important;width:16px!important;height:16px!important;min-width:0!important;padding:0!important;font-size:9px!important;line-height:14px!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-mv-full{display:block!important;flex:1 0 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;min-height:44px;margin:0 0 3px!important}
+.charsheet .sheet-mv-out .sheet-mv-row{flex-wrap:wrap!important}
+.charsheet .sheet-mv-out .sheet-mv-effect{flex:1 1 100%!important;width:100%!important;max-width:100%!important;display:block!important;box-sizing:border-box!important}
+.charsheet .sheet-mv-out{display:none}
+.charsheet .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-mv-out{display:block!important;border:0!important;padding:1px 2px 2px 16px!important;margin:0!important}
+.charsheet .sheet-mv-out .sheet-style-title{display:none}
+.charsheet .sheet-mv-out .sheet-mv-post{flex:0 0 16px!important;width:16px!important;height:16px!important;min-width:0!important;padding:0!important;font-size:9px!important;line-height:14px!important}
+.charsheet .sheet-mv-full{display:block!important;flex:1 0 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;min-height:44px;margin:0 0 3px!important}
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms,.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-leon-pane,.charsheet[class][class][class][class][class][class] .sheet-form-stage{overflow:visible!important}
 .charsheet[class][class][class][class][class][class] .sheet-form-stage{display:grid!important;grid-template-columns:36px minmax(0,1fr) 36px!important;gap:4px!important;align-items:center!important;width:100%!important}
 .charsheet[class][class][class][class][class][class] .sheet-form-prev{grid-column:1!important;grid-row:1!important}
@@ -838,9 +881,9 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hw{display:flex!important;flex-direction:column!important;align-items:center!important;max-width:100%!important;overflow:hidden!important;text-align:center!important;font-size:12px!important;line-height:1.2!important;white-space:normal!important}
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hwsep{display:none!important}
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-head{min-width:0!important;overflow:hidden!important;max-width:100%!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-fc-hw{display:block;text-align:center;font-weight:700;font-size:14px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short{display:block;margin:0 4px 2px 16px;white-space:normal;overflow-wrap:anywhere;font-style:italic;font-size:12px;line-height:1.3}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:empty,.charsheet[class][class][class][class][class][class][class][class] .sheet-rite-short:has(>span:empty){display:none}
+.charsheet .sheet-fc-hw{display:block;text-align:center;font-weight:700;font-size:14px}
+.charsheet .sheet-rite-short{display:block;margin:0 4px 2px 16px;white-space:normal;overflow-wrap:anywhere;font-style:italic;font-size:12px;line-height:1.3}
+.charsheet .sheet-rite-short:empty,.charsheet .sheet-rite-short:has(>span:empty){display:none}
 .charsheet .sheet-totem>.sheet-entry-section-head{justify-content:center!important}
 .charsheet .sheet-totem .sheet-subheader,.charsheet .sheet-totem .sheet-subheader span{text-align:center!important;width:100%}
 .charsheet .sheet-totem-card{display:flex!important;flex-direction:column;align-items:stretch;gap:4px;margin:4px 0!important}
@@ -856,17 +899,17 @@ CSS = r'''
 .charsheet .sheet-totem-nums>label{display:flex!important;flex-direction:column!important;min-width:0!important;width:auto!important;max-width:100%!important;margin:0!important;white-space:normal!important;overflow:hidden!important;font-size:9px!important;line-height:1.15!important;letter-spacing:0!important}
 .charsheet .sheet-totem-nums input{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
 .charsheet .sheet-kt-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:start}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-h{font-weight:700;text-align:center;margin:0 0 4px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-note{font-size:11px;font-style:italic;text-align:center;margin:0 0 4px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-kt-gen textarea{width:100%!important;min-height:140px;box-sizing:border-box}
+.charsheet .sheet-kt-h{font-weight:700;text-align:center;margin:0 0 4px}
+.charsheet .sheet-kt-note{font-size:11px;font-style:italic;text-align:center;margin:0 0 4px}
+.charsheet .sheet-kt-gen textarea{width:100%!important;min-height:140px;box-sizing:border-box}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-det-top{display:grid!important;grid-template-columns:200px minmax(0,1fr)!important;gap:12px!important;align-items:start!important;width:100%!important}
 .charsheet[class][class] .sheet-det-portrait,.charsheet[class][class] .sheet-det-portrait img{width:200px!important;max-width:200px!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-det-portrait{grid-column:1;grid-row:1/span 3}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-det-grid{grid-column:2;grid-row:1}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-det-beside{grid-column:2;grid-row:2}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-fc-bio-line{width:100%!important;box-sizing:border-box}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-note-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-note-cols textarea{min-height:70px;width:100%!important;box-sizing:border-box}
+.charsheet .sheet-fc-bio-line{width:100%!important;box-sizing:border-box}
+.charsheet .sheet-note-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.charsheet .sheet-note-cols textarea{min-height:70px;width:100%!important;box-sizing:border-box}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-options>button.sheet-toggle,.charsheet[class][class][class][class][class][class][class][class] .sheet-wp-bar{display:none!important}
 .charsheet[class][class][class][class] .sheet-rollbar{padding:4px 8px!important}
 .charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-grid{display:flex!important;flex-flow:row wrap!important;align-items:center!important;justify-content:center!important;gap:4px 8px!important;width:100%!important}
@@ -876,25 +919,26 @@ CSS = r'''
 .charsheet[class][class][class][class] .sheet-rollbar .sheet-rolldisplay{order:4;flex:0 1 200px!important;width:200px!important;max-width:200px!important;height:24px!important}
 .charsheet[class][class][class][class] .sheet-roll-break{order:5;flex:1 0 100%;height:0;width:100%;margin:0;padding:0;overflow:hidden}
 .charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-options{order:6;display:flex!important;flex:0 1 auto!important;justify-content:center!important;width:auto!important;border:0!important;background:none!important;gap:4px}
-.charsheet[class][class][class][class] .sheet-roll-extra{order:6;display:flex!important;flex-flow:row wrap!important;flex:0 1 auto!important;justify-content:center!important;align-items:center!important;width:auto!important;gap:6px}
+.charsheet[class][class][class][class] .sheet-roll-extra{order:7;display:flex!important;flex:1 0 100%!important;justify-content:center!important;width:100%!important}
 .charsheet[class][class][class][class] .sheet-fc-bio,.charsheet[class][class][class][class] .sheet-fc-bio-l,.charsheet[class][class][class][class] .sheet-det-beside{min-width:0!important;max-width:100%!important}
 .charsheet[class][class][class][class] input.sheet-fc-bio-line{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-panel{display:none;width:min(100%,440px)}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-roll-extra:has(input.sheet-buff-tg:checked) .sheet-buff-panel{display:block}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row{display:flex;align-items:center;gap:6px}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-row input[type=text]{flex:1 1 auto;min-width:0}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-buff-n{width:54px!important;flex:0 0 54px}
+.charsheet .sheet-buff-panel{display:none;width:min(100%,440px)}
+.charsheet .sheet-diceroller-grid:has(input.sheet-buff-tg:checked) .sheet-buff-panel{display:block}
+.charsheet .sheet-buff-row{display:flex;align-items:center;gap:6px}
+.charsheet .sheet-buff-row input[type=text]{flex:1 1 auto;min-width:0}
+.charsheet .sheet-buff-n{width:54px!important;flex:0 0 54px}
 .charsheet .sheet-right-touchstones,.charsheet .sheet-right-touchstones label,.charsheet .sheet-right-touchstones span,.charsheet .sheet-right-touchstones input,.charsheet .sheet-ts-kuruth,.charsheet .sheet-ts-kuruth label,.charsheet .sheet-ts-kuruth input{text-align:center!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields label{align-items:center}
 .charsheet .sheet-right-touchstone-fields input,.charsheet .sheet-ts-kuruth input{max-width:220px!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pa)!important}
 .sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pad)!important}
-.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-img{width:100px!important;max-width:100px!important;height:300px!important}
-.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-entry-settings{border:0!important;outline:0!important;box-shadow:none!important;background:none!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-img{width:100px!important;max-width:100px!important;height:300px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-entry-settings{border:0!important;outline:0!important;box-shadow:none!important;background:none!important}
 .charsheet[class][class] .sheet-skills>div>button.sheet-spec-caret{order:2!important;flex:0 0 14px!important;width:14px!important;min-width:14px!important;height:14px!important;margin:0 2px!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
 .charsheet[class][class] .sheet-skills>div>button.sheet-toggle{order:3!important}
 .charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
-.charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
+.charsheet[class][class] .sheet-skills button.sheet-spec-caret>span{font:12px/14px Arial,sans-serif!important}
+.charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:none!important;border:0!important;width:0!important;height:0!important;transform:none!important}
 .charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
 .charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:block!important;width:100%!important;box-sizing:border-box!important;border:1px solid rgba(139,16,16,.55);margin:3px 0}
 .charsheet .sheet-disc-caret{position:absolute!important;width:0!important;height:0!important;opacity:0!important}
@@ -919,9 +963,28 @@ CSS = r'''
 .charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat>label{flex:1 1 30%;min-width:0}
 .charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat input{width:100%!important;min-width:0!important;box-sizing:border-box}
 .charsheet[class][class] .sheet-det-portrait{grid-row:1 / span 4}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] label.sheet-ovbtn,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] button.sheet-quick,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] button.sheet-wfb,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] button.sheet-bp{display:inline-flex!important;align-items:center!important;justify-content:center!important;margin:0!important;padding:3px 11px!important;min-height:23px!important;line-height:16px!important;box-sizing:border-box!important;border:1px solid color-mix(in srgb,var(--pad,var(--pa,#888)) 78%,rgba(0,0,0,0))!important;border-radius:10px!important;background:none!important;box-shadow:none!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-diceroller-options,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-wfilters,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-bp-rolls{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:8px!important;column-gap:8px!important;row-gap:8px!important;border:0!important;background:none!important}
+.charsheet[class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-head>button.sheet-w-atk{flex:0 1 auto!important;width:auto!important}
+.charsheet .sheet-weapons .sheet-hl-pool{flex:0 0 auto!important;margin:0 6px 0 4px!important;padding:0!important;border:0!important;background:none!important;white-space:nowrap!important;font-weight:400!important;pointer-events:none}
 '''
 
+def cards(h):
+    old = '{{#f_description}}<div class="sheet-long"><b></b>{{f_description}}</div>{{/f_description}}'
+    if "{{#f_full}}" not in h and old in h:
+        if h.count(old) != 1:
+            raise SystemExit("f_description %s" % h.count(old))
+        h = h.replace(old, old + '{{#f_full}}<div class="sheet-long">{{f_full}}</div>{{/f_full}}', 1)
+    span = ' /><span></span></button><span class="sheet-skm">'
+    if span in h:
+        h = h.replace(span, ' /><span>&#9881;</span></button><span class="sheet-skm">')
+    return h
+
 def css_add(c):
+    # A CSS hex escape of a non-ASCII character makes Roll20 discard every
+    # roll-template rule. The settings cog glyph that was already in the live
+    # sheet is left as a literal character; the new skill gear is HTML.
+    c = c.replace("\\2699", "*")
     if "/* rev111 */" in c:
         return c
     return c.rstrip() + "\n" + CSS
@@ -952,6 +1015,7 @@ def main():
     h = notes(h)
     h = notes_fit(h)
     h = dice(h)
+    h = cards(h)
     h = dice_layout(h)
     h = breaking(h)
     h = maneuvers(h)
@@ -966,6 +1030,8 @@ def main():
     bad = banned(c)
     if bad:
         raise SystemExit("banned CSS %s" % bad)
+    if "\\2699" in c:
+        raise SystemExit("gear escape still in css")
     if len(c) > 625000:
         raise SystemExit("css %s over 625k cap" % len(c))
     checks = [
