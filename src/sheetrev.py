@@ -478,7 +478,31 @@ def disciplines(h):
     fmt2 = 'u.speed_calc = fmt("Speed", [["Str + Dex", n("speed_base"), 1], ["Species", n("species_factor"), 1], ["Armor", n("speed_penalty")], ["Fleet of Foot", n("fleet_of_foot")], [fl + " form", n("form_speed_extra") + n("form_size")], ["Vigor", n("disc_vigor")], ["Celerity", n("disc_celerity")]], spd);'
     if fmt in h:
         h = h.replace(fmt, fmt2, 1)
-    return h
+    return disc_row(h)
+
+def disc_row(h):
+    i = h.find('<fieldset class="repeating_disciplines">')
+    j = h.find("</fieldset>", i)
+    sec = h[i:j]
+    if "sheet-disc-name" in sec:
+        return h
+    m = re.search(
+        r'<button type="roll" class="sheet-entry-post" name="roll_post" title="Post to chat" value="([^"]*)">'
+        r'<span class="sheet-entry-name" name="attr_name"></span>'
+        r'<span class="sheet-entry-ph">\(<span data-i18n="new-entry">new entry</span>\)</span></button>',
+        sec)
+    if not m:
+        raise SystemExit("disc name button")
+    name = ('<span class="sheet-disc-name"><span class="sheet-entry-name" name="attr_name"></span>'
+            '<span class="sheet-entry-ph">(<span data-i18n="new-entry">new entry</span>)</span></span>')
+    sec = sec[:m.start()] + name + sec[m.end():]
+    icon = ('<button type="roll" class="sheet-entry-post sheet-post-ic sheet-disc-post" name="roll_post" title="Post to chat" value="%s">&#128172;</button>'
+            % m.group(1))
+    if sec.count('<span class="sheet-amenu">') != 1:
+        raise SystemExit("disc menu")
+    sec = sec.replace('<span class="sheet-amenu">', icon + '<span class="sheet-amenu">', 1)
+    sec = sec.replace('<div class="sheet-entry-head">', '<div class="sheet-entry-head sheet-disc-row">', 1)
+    return h[:i] + sec + h[j:]
 
 def notes_fit(h):
     for name in ("attr_det_hair", "attr_det_dob", "attr_det_race", "attr_det_nationality"):
@@ -736,14 +760,12 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head{display:flex!important;align-items:center!important;min-height:22px;padding-right:54px!important;justify-content:flex-start}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader span{border:0!important;background:none!important;box-shadow:none!important;text-align:left;padding-left:0!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>button.sheet-entry-post:not(.sheet-post-ic){border:0!important;background:none!important;box-shadow:none!important;text-align:left!important;padding-left:2px!important}
-.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 240px!important;min-width:228px!important;white-space:nowrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mstyle-s{display:none;font-size:9px;line-height:0;vertical-align:super;margin-left:1px}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-entry-head .sheet-mstyle-s,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mstyle-s{display:inline!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mstyle-flag[value="1"]) .sheet-mcat-badge,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{display:none!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head{flex-wrap:wrap!important;padding-left:14px!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 100%!important;width:auto!important;max-width:100%!important;min-width:0!important;overflow:visible!important;white-space:nowrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-name{overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important}
-.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] input.sheet-entry-settings,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] input.sheet-entry-settings:checked{border:0!important;outline:0!important;box-shadow:none!important;background:none!important}
 .charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body>label.sheet-wide,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body input[name=attr_short_desc]{flex:1 1 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-row{flex-wrap:wrap!important}
 .charsheet[class][class][class][class][class][class][class][class] .sheet-mv-out .sheet-mv-effect{flex:1 1 100%!important;width:100%!important;max-width:100%!important;display:block!important;box-sizing:border-box!important}
@@ -757,7 +779,7 @@ CSS = r'''
 .charsheet[class][class][class][class][class][class] .sheet-form-prev{grid-column:1!important;grid-row:1!important}
 .charsheet[class][class][class][class][class][class] .sheet-form-stage>.sheet-fcards{grid-column:2!important;grid-row:1!important;min-width:0!important}
 .charsheet[class][class][class][class][class][class] .sheet-form-next{grid-column:3!important;grid-row:1!important}
-.charsheet[class][class][class][class][class][class][class][class] button.sheet-form-arrow{display:inline-flex!important;align-items:center;justify-content:center;position:relative!important;z-index:6;opacity:1!important;visibility:visible!important;width:32px!important;min-width:32px!important;height:48px!important;margin:0;padding:0!important;border:1px solid #fff!important;border-radius:8px;background:var(--pa,#8a4b1f)!important;color:#fff!important;font:700 22px/1 Arial,sans-serif!important}
+.charsheet[class][class][class][class][class][class][class][class] button.sheet-form-arrow{display:inline-flex!important;opacity:1!important;visibility:visible!important;width:32px!important;height:48px!important;padding:0!important;border:1px solid #fff!important;background:var(--pa,#8a4b1f)!important;color:#fff!important;font-size:22px!important}
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hw{display:flex!important;flex-direction:column!important;align-items:center!important;max-width:100%!important;overflow:hidden!important;text-align:center!important;font-size:12px!important;line-height:1.2!important;white-space:normal!important}
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hwsep{display:none!important}
 .charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-head{min-width:0!important;overflow:hidden!important;max-width:100%!important}
@@ -819,11 +841,16 @@ CSS = r'''
 .charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
 .charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
 .charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
-.charsheet .sheet-disc-card{border:1px solid rgba(139,16,16,.55);border-radius:6px;margin:3px 0;padding:2px 4px 2px 14px;background:rgba(0,0,0,.16)}
-.charsheet .sheet-disc-card .sheet-entry-head{display:flex!important;flex-flow:row nowrap!important;align-items:center!important;width:100%!important;gap:4px!important}
-.charsheet .sheet-disc-card .sheet-entry-head>button.sheet-entry-post{flex:1 1 auto!important;min-width:7em!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-.charsheet .sheet-disc-card .sheet-dots,.charsheet .sheet-disc-card .sheet-disc-on,.charsheet .sheet-disc-card .sheet-amenu{flex:0 0 auto!important}
-.charsheet .sheet-disc-on{margin-left:auto!important;flex:0 0 auto}
+.charsheet[class][class] .sheet-disciplines.sheet-pw .sheet-disc-card{position:relative!important;display:flex!important;flex-flow:row wrap!important;align-items:center!important;width:100%!important;gap:4px;border:1px solid rgba(139,16,16,.55);border-radius:6px;margin:3px 0;padding:2px 4px;background:rgba(0,0,0,.16)}
+.charsheet[class][class] .sheet-disciplines.sheet-pw .sheet-disc-card>.sheet-entry-head{display:contents!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-disc-card>input.sheet-entry-toggle{position:relative!important;flex:0 0 14px!important;width:14px!important;height:14px!important;margin:0!important}
+.charsheet .sheet-disc-name{order:1;flex:1 1 auto!important;min-width:8em!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.charsheet .sheet-disc-card .sheet-dots{order:2;flex:0 0 auto!important}
+.charsheet .sheet-disc-card .sheet-disc-on{order:3;margin:0!important;position:relative!important}
+.charsheet[class][class] .sheet-disciplines .sheet-disc-card button.sheet-disc-post{order:4;flex:0 0 22px!important;width:22px!important;min-width:0!important;white-space:nowrap!important}
+.charsheet .sheet-disc-card .sheet-amenu{order:5;position:relative!important;flex:0 0 auto!important}
+.charsheet .sheet-disc-card .sheet-entry-pool,.charsheet .sheet-disc-card .sheet-entry-cost{order:6;flex:1 0 100%!important}
+.charsheet .sheet-disc-card>.sheet-entry-body{order:7;flex:1 0 100%!important;width:100%!important}
 .charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
 .charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
 .charsheet[class][class][class] .sheet-det-top>.sheet-det-grid.sheet-det-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important;min-width:0!important;max-width:100%!important}
@@ -891,7 +918,7 @@ def main():
         "attr_kuruth_general", "sheet-det-beside", "sheet-fc-bio-line", "sheet-note-cols",
         "sheet-roll-extra", "attr_roll_prompt", "repeating_buffs", "__rev111",
         "sheet-mstyle-s", "sheet-roll-break", "roll_bp_flesh", "roll_bp_spirit",
-        "sheet-mv-full", "sheet-disc-card", "attr_disc_active", "attr_disc_vigor",
+        "sheet-mv-full", "sheet-disc-card", "sheet-disc-name", "attr_disc_active", "attr_disc_vigor",
         "sheet-wtype-f", "sheet-whide", "sheet-totem-stats", "attr_totem_power", "attr_totem_legacy",
         "__rev112",
     ]
