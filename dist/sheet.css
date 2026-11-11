@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Almendra|Black+Ops+One|Cinzel|Cinzel+Decorative|Creepster|Fondamento|IM+Fell+English+SC|Metal+Mania|Metamorphous|Pirata+One|Sorts+Mill+Goudy|Special+Elite|UnifrakturMaguntia&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Almendra|Black+Ops+One|Cinzel|Cinzel+Decorative|Creepster|Fondamento|IM+Fell+English+SC|Metal+Mania|Metamorphous|Pirata+One|Sorts+Mill+Goudy|Special+Elite|UnifrakturMaguntia|Grenze+Gotisch:500&display=swap");
 @font-face { font-family: "IM Fell English SC"; font-style: normal; font-weight: 400; font-display: swap; src: url(https://fonts.gstatic.com/s/imfellenglishsc/v16/a8IENpD3CDX-4zrWfr1VY879qFF05pZ7PIIP.woff2) format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Sorts Mill Goudy"; font-style: italic; font-weight: 400; font-display: swap; src: url(https://fonts.gstatic.com/s/sortsmillgoudy/v16/Qw3AZR9MED_6PSuS_50nEaVrfzgEbH80jbs_.woff2) format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Sorts Mill Goudy"; font-style: normal; font-weight: 400; font-display: swap; src: url(https://fonts.gstatic.com/s/sortsmillgoudy/v16/Qw3GZR9MED_6PSuS_50nEaVrfzgEbHoEjw.woff2) format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -23,9 +23,14 @@
 .sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf ~ .sheet-ce-head .sheet-ce-name, .sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf ~ .sheet-ce-head .sheet-ce-kind { font-family: "WolfsRain", "Metal Mania", "Fondamento", cursive !important; color: #d9772b !important; }
 .sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf ~ .sheet-ce-head .sheet-ce-name { font-size: 17px; letter-spacing: .5px; }
 .sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf ~ table th, .sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf ~ * th, .sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf ~ .sheet-ce-roll .sheet-ce-sl { font-family: "WolfsRain", "Metal Mania", "Fondamento", cursive !important; color: #d9772b !important; letter-spacing: .5px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ .sheet-ce-head .sheet-ce-name, .sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ .sheet-ce-head .sheet-ce-kind { font-family: "Chomsky", "UnifrakturMaguntia", "IM Fell English SC", serif !important; color: #b02a2a !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ .sheet-ce-head .sheet-ce-name { font-size: 17px; letter-spacing: .5px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ table th, .sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ * th, .sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ .sheet-ce-roll .sheet-ce-sl { font-family: "Chomsky", "UnifrakturMaguntia", "IM Fell English SC", serif !important; color: #b02a2a !important; letter-spacing: .5px; }
+/* Vampire chat typography: Grenze Gotisch */
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ .sheet-ce-head .sheet-ce-name { font-family: "Grenze Gotisch", Georgia, serif !important; font-weight: 500 !important; font-size: 18px; line-height: 1.35; letter-spacing: .3px; color: #db6666 !important; overflow-wrap: anywhere; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ .sheet-ce-head .sheet-ce-kind { font-family: Arial, Helvetica, sans-serif !important; font-size: 11px; letter-spacing: 1.3px; color: #ddd !important; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ table th, .sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ * th { font-family: Arial, Helvetica, sans-serif !important; font-size: 11px; letter-spacing: .5px; color: #862323 !important; }
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ table th, .sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ * th { color: #db6666 !important; }
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire ~ .sheet-ce-roll .sheet-ce-sl { font-family: Arial, Helvetica, sans-serif !important; font-size: 11px; letter-spacing: .5px; color: inherit !important; }
+
+
 .sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter ~ .sheet-ce-head .sheet-ce-name, .sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter ~ .sheet-ce-head .sheet-ce-kind { font-family: "1980sWriter", "Special Elite", monospace !important; color: #2f8a8a !important; }
 .sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter ~ .sheet-ce-head .sheet-ce-name { font-size: 17px; letter-spacing: .5px; }
 .sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter ~ table th, .sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter ~ * th, .sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter ~ .sheet-ce-roll .sheet-ce-sl { font-family: "1980sWriter", "Special Elite", monospace !important; color: #2f8a8a !important; letter-spacing: .5px; }
@@ -67,90 +72,91 @@
 .sheet-rolltemplate-wod .inlinerollresult.fullfail, .sheet-rolltemplate-wod-attack .sheet-result .inlinerollresult.fullfail, .sheet-rolltemplate-wod-simple .inlinerollresult.fullfail, .sheet-rolltemplate-wod-3part .inlinerollresult.fullfail, .sheet-rolltemplate-wod-initiative .inlinerollresult.fullfail { color: #000000; border: medium none; }
 .sheet-rolltemplate-wod .inlinerollresult.importantroll, .sheet-rolltemplate-wod-attack .inlinerollresult.importantroll, .sheet-rolltemplate-wod-simple .inlinerollresult.importantroll, .sheet-rolltemplate-wod-3part .inlinerollresult.importantroll, .sheet-rolltemplate-wod-initiative .inlinerollresult.importantroll { color: #000000; border: medium none; }
 .sheet-rolltemplate-wod .sheet-specialrollflag, .sheet-rolltemplate-wod-attack .sheet-specialrollflag, .sheet-rolltemplate-wod-simple .sheet-specialrollflag, .sheet-rolltemplate-wod-3part .sheet-specialrollflag , .sheet-rolltemplate-wod-initiative .sheet-specialrollflag { color: #000000; height: 30px; text-align: right; vertical-align: top; }
-.sheet-rolltemplate-cofd-entry .sheet-ce { border: 2px solid #2b2b2b; background: #f1eee6; font-family: Georgia, serif; border-radius: 4px; overflow: hidden; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: #1d1d1d; color: #eee; padding: 4px 6px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #c9a227; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 15px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dots { float: right; letter-spacing: 1px; }
-.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; }
-.sheet-rolltemplate-cofd-entry th { text-align: left; width: 32%; padding: 1px 6px; color: #5a1010; }
-.sheet-rolltemplate-cofd-entry td { padding: 1px 6px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; font-size: 16px; padding: 4px; border-top: 1px solid #999; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-exc { color: #0b6b0b; font-size: 12px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-fail { color: #8a0000; font-size: 12px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-flag { font-size: 11px; opacity: .8; }
-.sheet-rolltemplate-cofd-entry .sheet-long { padding: 4px 6px; font-size: 12px; border-top: 1px dotted #aaa; white-space: pre-wrap; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-out { font-size: 12px; padding: 2px 4px; border-left: 3px solid #888; margin: 2px 0; white-space: pre-wrap; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-succ { color: #1a6b1a; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dram { color: #900; font-weight: bold; text-transform: uppercase; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-risk { font-size: 11px; background: rgba(30,70,70,.12); border-left: 3px solid #1e4646; padding: 2px 4px; margin: 2px 0; }
-.sheet-rolltemplate-cofd-entry .sheet-ce { border: 1px solid #2b2b2b; background: #f6f3ec; color: #1b1b1b; font-family: Georgia, "Times New Roman", serif; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,.3); margin-left: -7px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band { height: 6px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head { background: linear-gradient(#262626,#141414); color: #f2f2f2; padding: 5px 8px 6px; position: relative; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-char { display: block; font-size: 10px; color: #bdbdbd; font-family: Arial, sans-serif; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-kind { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #d4b25a; font-family: Arial, sans-serif; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-name { font-size: 16px; font-weight: bold; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-badge { position: absolute; right: 8px; top: 8px; width: 22px; height: 22px; border-radius: 50%; text-align: center; font: bold 13px/22px Arial, sans-serif; color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.6); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-b { background: #3d6fb5; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-l { background: #b8860b; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-a { background: #a01010; }
-.sheet-rolltemplate-cofd-entry table { width: 100%; font-size: 12px; border-collapse: collapse; margin: 3px 0; }
-.sheet-rolltemplate-cofd-entry th { text-align: left; width: 30%; padding: 2px 8px; color: #6b1a1a; font: bold 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; vertical-align: top; }
-.sheet-rolltemplate-cofd-entry td { padding: 2px 8px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-roll { text-align: center; padding: 6px 4px 4px; border-top: 1px solid rgba(0,0,0,.2); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-big, .sheet-rolltemplate-cofd-entry .sheet-ce-big .inlinerollresult { font-size: 34px; font-weight: bold; line-height: 38px; background: rgba(0,0,0,0) !important; border: medium none !important; padding: 0 !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-sl { font: 10px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: #777; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dram, .sheet-rolltemplate-cofd-entry .sheet-ce-fail, .sheet-rolltemplate-cofd-entry .sheet-ce-succ, .sheet-rolltemplate-cofd-entry .sheet-ce-exc { display: block; margin: 5px -4px 0; padding: 4px; color: #fff !important; font: bold 12px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-dram { background: #5c0000; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-fail { background: #6d6d6d; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-succ { background: #2e7d32; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-exc { background: linear-gradient(90deg,#b8860b,#e3b23c); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-out { text-align: left; font-size: 12px; margin: 4px 2px; padding: 3px 6px; border-left: 3px solid #999; background: rgba(0,0,0,.04); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-flag { display: inline-block; font: 10px Arial, sans-serif; padding: 1px 6px; margin: 3px 2px 0; border-radius: 8px; background: #ddd; color: #333; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-risk { text-align: left; font-size: 11px; margin: 5px 2px 0; padding: 4px 6px; border-left: 3px solid #1e4646; background: rgba(30,70,70,.1); }
-.sheet-rolltemplate-cofd-entry .sheet-long { font-size: 12px; padding: 3px 8px; border-top: 1px dotted rgba(0,0,0,.2); }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-mortal { background: #2a2d80; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter { background: #1e4646; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire { background: #6e1e1e; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf { background: #aa5a1e; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-mage { background: #beaa5a; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-promethean { background: #1e1e5a; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-changeling { background: #0a6e46; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-geist { background: #82aabe; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-mummy { background: #d2be82; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-demon { background: #323246; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-beast { background: #463246; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-band-deviant-the-renegades { background: #5a1e1e; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce { background: #232326; color: #e6e6e6; border-color: #000; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry th { color: #e09a9a; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-out { background: rgba(255,255,255,.06); }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-flag { background: #444; color: #ddd; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-risk { background: rgba(120,180,180,.12); }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-roll { border-top-color: rgba(255,255,255,.15); }
-.sheet-rolltemplate-wod table, .sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-wod-initiative table { width: 100%; background: #f1eee6 !important; border: 2px solid #2b2b2b; border-radius: 4px; font-family: Georgia, serif; color: #1d1d1d; }
-.sheet-rolltemplate-wod th, .sheet-rolltemplate-wod-attack th, .sheet-rolltemplate-wod-simple th, .sheet-rolltemplate-wod-3part th, .sheet-rolltemplate-wod-initiative th { background: #1d1d1d; color: #eee; padding: 4px 6px; font-size: 14px; }
-.sheet-rolltemplate-wod td, .sheet-rolltemplate-wod-attack td, .sheet-rolltemplate-wod-simple td, .sheet-rolltemplate-wod-3part td, .sheet-rolltemplate-wod-initiative td { padding: 2px 6px; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative table { background: #1f1f23 !important; color: #e4e4e4; border-color: #555; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .sheet-result { color: #e8a0a0; }
-.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-specialrollflag { color: #fff !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-reroll { text-align: center; margin: 4px 0 2px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-reroll a { display: inline-block; padding: 2px 10px; border-radius: 999px; border: 1px solid #b0542a; background: #3a1c10; color: #f3d9b8; font-size: 12px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-emote { font-style: italic; text-align: center; margin: 2px 0 4px; opacity: .9; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-wpst { text-align: center; font-size: 11px; font-weight: bold; color: #e0a060; }
-.sheet-rolltemplate-cofd-entry td.sheet-ce-mp { text-align: center !important; padding: 2px 4px !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-mpi { display: inline-block; margin: 0 8px; white-space: nowrap; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-mpl { font: 10px Arial, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: #b08a3a; margin-right: 3px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-rn { align-items: center !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-rn .sheet-ce-sl { line-height: 1 !important; align-self: center !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head { display: flex !important; flex-wrap: wrap !important; align-items: baseline !important; column-gap: 6px !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head > .sheet-ce-char { order: 0; flex: 0 1 auto; margin-right: auto !important; display: inline-block !important; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head > .sheet-ce-name { order: 1; flex: 0 1 auto; text-align: right; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head > * { order: 2; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-head > .sheet-ce-kind { order: 3; flex: 0 0 100%; text-align: right; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-ttl { text-align: center; font: 700 17px "Sorts Mill Goudy", serif; padding: 4px 6px 2px; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-sub { font: italic 13px "Sorts Mill Goudy", serif; opacity: .85; }
-.sheet-rolltemplate-cofd-entry .sheet-ce-out::before { content: "Effect: "; font-weight: 700; }
-.sheet-rolltemplate-cofd-entry td, .sheet-rolltemplate-cofd-entry .sheet-ce-out { white-space: pre-line; }
+.sheet-rolltemplate-cofd-entry .sheet-ce{ border:2px solid #2b2b2b;background:#f1eee6;font-family:Georgia, serif;border-radius:4px;overflow:hidden;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head{ background:#1d1d1d;color:#eee;padding:4px 6px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind{ display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#c9a227;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-name{ font-size:15px;font-weight:bold;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-dots{ float:right;letter-spacing:1px;}
+.sheet-rolltemplate-cofd-entry table{ width:100%;font-size:12px;}
+.sheet-rolltemplate-cofd-entry th{ text-align:left;width:32%;padding:1px 6px;color:#5a1010;}
+.sheet-rolltemplate-cofd-entry td{ padding:1px 6px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll{ text-align:center;font-size:16px;padding:4px;border-top:1px solid #999;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc{ color:#0b6b0b;font-size:12px;font-weight:bold;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail{ color:#8a0000;font-size:12px;font-weight:bold;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag{ font-size:11px;opacity:.8;}
+.sheet-rolltemplate-cofd-entry .sheet-long{ padding:4px 6px;font-size:12px;border-top:1px dotted #aaa;white-space:pre-wrap;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-out{ font-size:12px;padding:2px 4px;border-left:3px solid #888;margin:2px 0;white-space:pre-wrap;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ{ color:#1a6b1a;font-weight:bold;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram{ color:#900;font-weight:bold;text-transform:uppercase;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk{ font-size:11px;background:rgba(30,70,70,.12);border-left:3px solid #1e4646;padding:2px 4px;margin:2px 0;}
+.sheet-rolltemplate-cofd-entry .sheet-ce{ border:1px solid #2b2b2b;background:#f6f3ec;color:#1b1b1b;font-family:Georgia, "Times New Roman", serif;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.3);margin-left:-7px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band{ height:6px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head{ background:linear-gradient(#262626,#141414);color:#f2f2f2;padding:5px 8px 6px;position:relative;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-char{ display:block;font-size:10px;color:#bdbdbd;font-family:Arial, sans-serif;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-kind{ display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#d4b25a;font-family:Arial, sans-serif;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-name{ font-size:16px;font-weight:bold;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-badge{ position:absolute;right:8px;top:8px;width:22px;height:22px;border-radius:50%;text-align:center;font:bold 13px/22px Arial, sans-serif;color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.6);}
+.sheet-rolltemplate-cofd-entry .sheet-ce-b{ background:#3d6fb5;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-l{ background:#b8860b;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-a{ background:#a01010;}
+.sheet-rolltemplate-cofd-entry table{ width:100%;font-size:12px;border-collapse:collapse;margin:3px 0;}
+.sheet-rolltemplate-cofd-entry th{ text-align:left;width:30%;padding:2px 8px;color:#6b1a1a;font:bold 10px Arial, sans-serif;text-transform:uppercase;letter-spacing:1px;vertical-align:top;}
+.sheet-rolltemplate-cofd-entry td{ padding:2px 8px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-roll{ text-align:center;padding:6px 4px 4px;border-top:1px solid rgba(0,0,0,.2);}
+.sheet-rolltemplate-cofd-entry .sheet-ce-big, .sheet-rolltemplate-cofd-entry .sheet-ce-big .inlinerollresult{ font-size:34px;font-weight:bold;line-height:38px;background:rgba(0,0,0,0) !important;border:medium none !important;padding:0 !important;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-sl{ font:10px Arial, sans-serif;letter-spacing:2px;text-transform:uppercase;color:#777;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram, .sheet-rolltemplate-cofd-entry .sheet-ce-fail, .sheet-rolltemplate-cofd-entry .sheet-ce-succ, .sheet-rolltemplate-cofd-entry .sheet-ce-exc{ display:block;margin:5px -4px 0;padding:4px;color:#fff !important;font:bold 12px Arial, sans-serif;letter-spacing:2px;text-transform:uppercase;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-dram{ background:#5c0000;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-fail{ background:#6d6d6d;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-succ{ background:#2e7d32;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-exc{ background:linear-gradient(90deg,#b8860b,#e3b23c);}
+.sheet-rolltemplate-cofd-entry .sheet-ce-out{ text-align:left;font-size:12px;margin:4px 2px;padding:3px 6px;border-left:3px solid #999;background:rgba(0,0,0,.04);}
+.sheet-rolltemplate-cofd-entry .sheet-ce-flag{ display:inline-block;font:10px Arial, sans-serif;padding:1px 6px;margin:3px 2px 0;border-radius:8px;background:#ddd;color:#333;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-risk{ text-align:left;font-size:11px;margin:5px 2px 0;padding:4px 6px;border-left:3px solid #1e4646;background:rgba(30,70,70,.1);}
+.sheet-rolltemplate-cofd-entry .sheet-long{ font-size:12px;padding:3px 8px;border-top:1px dotted rgba(0,0,0,.2);}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mortal{ background:#2a2d80;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-hunter{ background:#1e4646;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-vampire{ background:#6e1e1e;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-werewolf{ background:#aa5a1e;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mage{ background:#beaa5a;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-promethean{ background:#1e1e5a;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-changeling{ background:#0a6e46;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-geist{ background:#82aabe;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-mummy{ background:#d2be82;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-demon{ background:#323246;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-beast{ background:#463246;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-band-deviant-the-renegades{ background:#5a1e1e;}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce{ background:#232326;color:#e6e6e6;border-color:#000;}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry th{ color:#e09a9a;}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-out{ background:rgba(255,255,255,.06);}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-flag{ background:#444;color:#ddd;}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-risk{ background:rgba(120,180,180,.12);}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-cofd-entry .sheet-ce-roll{ border-top-color:rgba(255,255,255,.15);}
+.sheet-rolltemplate-wod table, .sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-wod-initiative table{ width:100%;background:#f1eee6 !important;border:2px solid #2b2b2b;border-radius:4px;font-family:Georgia, serif;color:#1d1d1d;}
+.sheet-rolltemplate-wod th, .sheet-rolltemplate-wod-attack th, .sheet-rolltemplate-wod-simple th, .sheet-rolltemplate-wod-3part th, .sheet-rolltemplate-wod-initiative th{ background:#1d1d1d;color:#eee;padding:4px 6px;font-size:14px;}
+.sheet-rolltemplate-wod td, .sheet-rolltemplate-wod-attack td, .sheet-rolltemplate-wod-simple td, .sheet-rolltemplate-wod-3part td, .sheet-rolltemplate-wod-initiative td{ padding:2px 6px;}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part table, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative table{ background:#1f1f23 !important;color:#e4e4e4;border-color:#555;}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .sheet-result, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .sheet-result{ color:#e8a0a0;}
+.sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-attack .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-simple .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-3part .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod-initiative .inlinerollresult, .sheet-rolltemplate-darkmode.sheet-rolltemplate-wod .sheet-specialrollflag{ color:#fff !important;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-reroll{ text-align:center;margin:4px 0 2px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-reroll a{ display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid #b0542a;background:#3a1c10;color:#f3d9b8;font-size:12px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-emote{ font-style:italic;text-align:center;margin:2px 0 4px;opacity:.9;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-wpst{ text-align:center;font-size:11px;font-weight:bold;color:#e0a060;}
+.sheet-rolltemplate-cofd-entry td.sheet-ce-mp{ text-align:center !important;padding:2px 4px !important;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-mpi{ display:inline-block;margin:0 8px;white-space:nowrap;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-mpl{ font:10px Arial, sans-serif;letter-spacing:1px;text-transform:uppercase;color:#b08a3a;margin-right:3px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-rn{ align-items:center !important;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-rn .sheet-ce-sl{ line-height:1 !important;align-self:center !important;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head{ display:flex !important;flex-wrap:wrap !important;align-items:baseline !important;column-gap:6px !important;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head > .sheet-ce-char{ order:0;flex:0 1 auto;margin-right:auto !important;display:inline-block !important;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head > .sheet-ce-name{ order:1;flex:0 1 auto;text-align:right;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head > *{ order:2;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head > .sheet-ce-kind{ order:3;flex:0 0 100%;text-align:right;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-ttl{ text-align:center;font:700 17px "Sorts Mill Goudy", serif;padding:4px 6px 2px;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-sub{ font:italic 13px "Sorts Mill Goudy", serif;opacity:.85;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-out::before{ content:"Effect:";font-weight:700;}
+.sheet-rolltemplate-cofd-entry td, .sheet-rolltemplate-cofd-entry .sheet-ce-out{ white-space:pre-line;}
+.sheet-rolltemplate-cofd-entry .sheet-ce-sl .inlinerollresult{font-size:10px;font-weight:400;background:none;border:0;padding:0}
 /* sheet */
 .charsheet{font-family:"Courier";--color-mortal:#2A2D80;--color-vampire:#B21800;--color-werewolf:#E9813E;--color-mage:#0000FF;--color-promethean:#660099;--color-changeling:#006600;--color-geist:#316195;--color-mummy:#996600;--color-demon:#2A2D80;--color-beast:#2A2D80;--color-hunter:#203e2f;--color-homebrew:#2A2D80;--color-deviant-the-renegades:#a04b4b}
 .sheet-background{background:0 0;position:relative;padding:18px 80px 80px 90px;width:905px}
@@ -331,7 +337,7 @@ button.sheet-entry-roll::before{content:none}
 table.sheet-forms-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:8px}
 table.sheet-forms-table td,table.sheet-forms-table th{border:1px solid rgba(0,0,0,.35);padding:2px 4px;text-align:center;vertical-align:top}
 table.sheet-forms-table td{background:rgba(255,255,255,.55)}
-input.sheet-page[value=details]~button.sheet-page-details,input.sheet-page[value=forms]~button.sheet-page-forms,input.sheet-page[value=settings]~button.sheet-page-cfg{background:#000;color:#fff}
+input.sheet-page[value=details]~button.sheet-page-details,input.sheet-page[value=settings]~button.sheet-page-cfg{background:#000;color:#fff}
 input[type=checkbox].sheet-entry-toggle:checked+.sheet-entry-head::before{content:"y";font-family:"Pictos";transform:none;color:#8b1010;text-shadow:0 0 3px #e66}
 button.sheet-spec-caret{background:0 0;border:medium;padding:0 2px;cursor:pointer;font-size:10px;color:#555}
 button.sheet-spec-caret>span::before{display:inline-block;content:""!important;font-family:Arial,sans-serif!important;width:4px;height:4px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);margin:0 2px 1px 0;vertical-align:middle}
@@ -358,7 +364,7 @@ input.sheet-cg-toggle:checked+.sheet-cg-btn{background:#7a1010;color:#fff;border
 input.sheet-cg-toggle:checked+.sheet-cg-btn .sheet-cg-icon{filter:none;opacity:1}
 .sheet-cg-cell.sheet-persistent .sheet-cg-btn{border-style:double;border-width:3px}
 button.sheet-cg-chat{width:22px;padding:0;font-size:11px;background:0 0;border:medium}
-input.sheet-page[value=details]~.sheet-page:not(.sheet-details),input.sheet-page[value=forms]~.sheet-page:not(.sheet-forms),input.sheet-type:not([value=werewolf2]):not([value=breeds2])~button.sheet-page-forms,input.sheet-urkhar-flag:not([value="1"])~.sheet-form-picker .sheet-urkhar-col,input.sheet-urkhar-flag:not([value="1"])~table .sheet-urkhar-col{display:none}
+input.sheet-page[value=details]~.sheet-page:not(.sheet-details),input.sheet-page[value=forms]~.sheet-page:not(.sheet-forms),input.sheet-urkhar-flag:not([value="1"])~.sheet-form-picker .sheet-urkhar-col,input.sheet-urkhar-flag:not([value="1"])~table .sheet-urkhar-col{display:none}
 .sheet-form-picker{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
 button.sheet-form-btn{min-width:90px;padding:6px 10px;border:2px solid #333;border-radius:6px;background:#f4f0e8;font-weight:700}
 button.sheet-form-btn input.sheet-form-cur[value=dalu]~.sheet-fb-dalu,button.sheet-form-btn input.sheet-form-cur[value=gauru]~.sheet-fb-gauru,button.sheet-form-btn input.sheet-form-cur[value=hishu]~.sheet-fb-hishu,button.sheet-form-btn input.sheet-form-cur[value=urhan]~.sheet-fb-urhan,button.sheet-form-btn input.sheet-form-cur[value=urkhar]~.sheet-fb-urkhar,button.sheet-form-btn input.sheet-form-cur[value=urshul]~.sheet-fb-urshul,input.sheet-form-cur[value=dalu]+span.sheet-fb-dalu,input.sheet-form-cur[value=gauru]+span.sheet-fb-gauru,input.sheet-form-cur[value=hishu]+span.sheet-fb-hishu,input.sheet-form-cur[value=urhan]+span.sheet-fb-urhan,input.sheet-form-cur[value=urkhar]+span.sheet-fb-urkhar,input.sheet-form-cur[value=urshul]+span.sheet-fb-urshul{color:#fff}
@@ -1257,8 +1263,6 @@ input.sheet-spec-has[value="1"]~span::after{content:"*"!important;font-family:Ar
 .charsheet .sheet-rolldisplay{display:flex!important;align-items:center;gap:6px}
 .charsheet[class] .sheet-rolldisplay button.sheet-pool-clear{flex:0 0 auto;order:2;padding:1px 10px!important;height:22px!important;width:auto!important;border-radius:11px!important;font:700 11px/18px Arial,sans-serif!important}
 .charsheet[class] .sheet-rolldisplay input.sheet-pooltxt{flex:1 1 auto;min-width:0}
-.charsheet .sheet-ts-kuruth{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin:2px 0 8px}
-.charsheet .sheet-ts-kuruth label{display:flex;flex-direction:column;font-size:12px;font-weight:700}
 .charsheet label.sheet-switch{display:inline-flex!important;align-items:center;gap:5px;cursor:pointer;position:relative}
 .charsheet[class] label.sheet-switch>input[type=checkbox]{position:absolute!important;opacity:0!important;width:34px!important;height:18px!important;margin:0!important;z-index:2;cursor:pointer}
 .charsheet label.sheet-switch .sheet-sw-track{position:relative;width:32px;height:16px;border-radius:8px;background:#777;transition:background .15s;flex:0 0 auto}
@@ -1289,9 +1293,6 @@ input.sheet-spec-has[value="1"]~span::after{content:"*"!important;font-family:Ar
 .charsheet[class] .sheet-entry-section .repitem .sheet-entry-body>label:not(.sheet-wide){flex:0 1 auto!important;width:auto!important;min-width:0!important}
 .charsheet .sheet-mp-powers .sheet-wolf-moon,.charsheet input.sheet-type[value=vampire2]~* input.sheet-midtab[value=devotions]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-disciplines,.charsheet input.sheet-type[value=vampire2]~* input.sheet-midtab[value=devotions]~.sheet-midpane.sheet-mp-powers .sheet-leon-pane>.sheet-entry-section-head,.charsheet input.sheet-type[value=vampire2]~* input.sheet-midtab[value=devotions]~.sheet-midpane.sheet-mp-powers .sheet-wolf-block,.charsheet input.sheet-type[value=vampire2]~* input.sheet-midtab[value=powers]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-devotions,.charsheet input.sheet-type[value=vampire2]~* input.sheet-midtab[value=powers]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-vinculum,.charsheet input.sheet-type[value=vampire2]~* input.sheet-midtab[value=powers]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-vrites,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=powers]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-totem,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=powers]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-writes,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=rites]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-gifts,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=rites]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-totem,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=rites]~.sheet-midpane.sheet-mp-powers .sheet-leon-pane>.sheet-entry-section-head{display:none!important}
 .charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=rites]~.sheet-midpane.sheet-mp-powers .sheet-wolf-block,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=totem]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-gifts,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=totem]~.sheet-midpane.sheet-mp-powers .sheet-entry-section.sheet-writes,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=totem]~.sheet-midpane.sheet-mp-powers .sheet-leon-pane>.sheet-entry-section-head,.charsheet input.sheet-type[value=werewolf2]~* input.sheet-midtab[value=totem]~.sheet-midpane.sheet-mp-powers .sheet-wolf-block,.charsheet[class] .sheet-page1 .sheet-main-forms .sheet-form-picker,.charsheet[class] .sheet-page1 .sheet-main-forms .sheet-form-qrow{display:none!important}
-.charsheet .sheet-rp-forms{text-align:center;margin-bottom:6px}
-.charsheet[class] .sheet-rp-forms select.sheet-rp-formsel{width:170px!important;max-width:100%;height:24px;margin:2px auto 0!important;display:block;font-weight:700}
-.charsheet .sheet-rp-hw{font-size:12px;opacity:.9;margin-top:2px;min-height:14px}
 .charsheet[class][class] .sheet-page1 .sheet-grow>.sheet-flex>div:last-child .sheet-subheader{text-align:center!important;justify-content:center!important}
 .charsheet[class] .sheet-entry-head:has(>input.sheet-ar-name){display:grid!important;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:4px 6px!important;width:100%;box-sizing:border-box}
 .charsheet[class] .sheet-entry-head:has(>input.sheet-ar-name)>*{order:0!important;min-width:0}
@@ -1577,8 +1578,6 @@ input.sheet-spec-has[value="1"]~span::after{content:"*"!important;font-family:Ar
 .charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_armor] .sheet-entry-body>.sheet-wide,.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_armor] .sheet-entry-body>label.sheet-wide{flex:1 1 100%!important}
 .charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>label:not(.sheet-wide){display:inline-flex!important;align-items:center;gap:4px;width:auto!important;flex:0 0 auto}
 .charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>.sheet-wide,.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>label.sheet-hl-name,.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>label.sheet-hl-preset,.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>label.sheet-wide{flex:1 1 100%!important}
-.charsheet[class][class][class][class][class] select.sheet-rp-formsel{width:auto!important;min-width:7em;max-width:100%;display:block;margin:2px auto!important;text-align:center;text-align-last:center;font-family:"WolfsRain","Metal Mania","IM Fell English SC",serif!important;font-size:18px!important}
-.charsheet[class][class][class][class][class] select.sheet-rp-formsel option{font-family:"WolfsRain","Metal Mania","IM Fell English SC",serif;text-align:center}
 .charsheet[class][class][class][class][class] .sheet-res-max,.charsheet[class][class][class][class][class] .sheet-res-sep,.charsheet[class][class][class][class][class] input.sheet-res-cur.sheet-res-cur{font-family:inherit!important;font-size:15px!important;font-weight:700!important;color:inherit!important;line-height:20px!important}
 .charsheet[class][class][class][class][class] input.sheet-res-cur.sheet-res-cur{-webkit-appearance:textfield!important;-moz-appearance:textfield!important;appearance:textfield!important;border:0!important;background:0 0!important;box-shadow:none!important;outline:0;padding:0!important;margin:0!important;width:2ch!important;min-width:2ch!important;text-align:right!important}
 .charsheet[class][class][class][class][class] input.sheet-res-cur.sheet-res-cur::-webkit-inner-spin-button,.charsheet[class][class][class][class][class] input.sheet-res-cur.sheet-res-cur::-webkit-outer-spin-button{-webkit-appearance:none!important;margin:0}
@@ -1634,7 +1633,7 @@ input.sheet-spec-has[value="1"]~span::after{content:"*"!important;font-family:Ar
 .charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=bow]~label:has(>[name=attr_blast]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=bow]~label:has(>[name=attr_capacity]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=bow]~label:has(>[name=attr_expl_delivery]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=bow]~label:has(>[name=attr_force]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=bow]~label:has(>[name=attr_onehanded]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=explosive]~label:has(>[name=attr_capacity]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=explosive]~label:has(>[name=attr_onehanded]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=explosive]~label:has(>[name=attr_piercing]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=explosive]~label:has(>[name=attr_str_req]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=melee]~label:has(>[name=attr_blast]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=melee]~label:has(>[name=attr_capacity]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=melee]~label:has(>[name=attr_expl_delivery]){display:none!important}
 .charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=melee]~label:has(>[name=attr_force]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=melee]~label:has(>[name=attr_max_range]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=ranged]~label:has(>[name=attr_blast]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=ranged]~label:has(>[name=attr_expl_delivery]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=ranged]~label:has(>[name=attr_force]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=thrown]~label:has(>[name=attr_blast]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=thrown]~label:has(>[name=attr_capacity]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=thrown]~label:has(>[name=attr_expl_delivery]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=thrown]~label:has(>[name=attr_force]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=thrown]~label:has(>[name=attr_onehanded]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_avail]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_blast]){display:none!important}
 .charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_capacity]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_expl_delivery]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_force]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_initiative]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_max_range]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_onehanded]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_piercing]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_str_req]),.charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>input.sheet-hl-wt[value=unarmed]~label:has(>[name=attr_wsize]),.charsheet:has(input.sheet-type[value=homebrew]) .sheet-midtabs button.sheet-mt-auspice,.charsheet:has(input.sheet-type[value=homebrew]) .sheet-midtabs button.sheet-mt-devotions,.charsheet:has(input.sheet-type[value=homebrew]) .sheet-midtabs button.sheet-mt-rites{display:none!important}
-.charsheet:has(input.sheet-type[value=homebrew]) .sheet-midtabs button.sheet-mt-totem,.charsheet:has(input.sheet-type[value=homebrew]) .sheet-midtabs button.sheet-mt-tribe{display:none!important}
+.charsheet:has(input.sheet-type[value=homebrew]) .sheet-midtabs button.sheet-mt-totem{display:none!important}
 .charsheet[class][class][class][class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-body>label:has(>input[type=checkbox]){flex:0 0 auto}
 .charsheet[class][class][class][class][class] input[type=checkbox][name=attr_c_active]:not(#sw),.charsheet[class][class][class][class][class] input[type=checkbox][name=attr_onehanded]:not(#sw){-webkit-appearance:none!important;-moz-appearance:none!important;appearance:none!important;position:relative!important;display:inline-block!important;width:26px!important;height:14px!important;min-width:26px!important;max-width:26px!important;min-height:14px!important;max-height:14px!important;margin:0 2px!important;padding:0!important;border-radius:999px!important;border:1px solid #888!important;background:#555!important;box-sizing:border-box!important;cursor:pointer;vertical-align:middle;flex:0 0 26px;opacity:1!important;box-shadow:none!important}
 .charsheet[class][class][class][class][class] input[type=checkbox][name=attr_c_active]:not(#sw)::after,.charsheet[class][class][class][class][class] input[type=checkbox][name=attr_onehanded]:not(#sw)::after{content:""!important;position:absolute;top:1px;left:1px;width:10px;height:10px;border-radius:50%;background:#ddd;transition:left .15s;display:block!important}
@@ -1676,8 +1675,8 @@ input.sheet-spec-has[value="1"]~span::after{content:"*"!important;font-family:Ar
 .charsheet[class][class][class] .sheet-diceroller-options button.sheet-toggle,.charsheet[class][class][class] .sheet-midtabs button.sheet-midtab-btn,.charsheet[class][class][class] button.sheet-quick,.charsheet[class][class][class] button.sheet-quick span{font-family:"Sorts Mill Goudy","Goudy Old Style",Garamond,Georgia,serif!important;font-size:13px!important;font-weight:700!important;text-transform:none!important;font-variant:normal!important;letter-spacing:normal!important}
 .charsheet[class][class][class] .sheet-diceroller-options button.sheet-toggle,.charsheet[class][class][class] .sheet-midtabs button.sheet-midtab-btn,.charsheet[class][class][class] button.sheet-quick{padding:3px 11px!important;min-height:23px!important;line-height:16px!important;white-space:nowrap!important}
 .charsheet[class][class][class] .sheet-diceroller-options,.charsheet[class][class][class] .sheet-midtabs{flex-wrap:wrap!important;row-gap:4px!important;justify-content:center!important}
-.charsheet input.sheet-game-line[value=vampire]~* .sheet-topinfo .sheet-wolf-hdr-wrap input.sheet-wolf-generic[name=attr_Faction],.charsheet input.sheet-game-line[value=vampire]~.sheet-topinfo .sheet-wolf-hdr-wrap input.sheet-wolf-generic[name=attr_Faction],.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=blood-talons]~.sheet-wolf-ts.sheet-wolf-tr-blood-talons,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=bone-shadows]~.sheet-wolf-ts.sheet-wolf-tr-bone-shadows,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=fire-touched]~.sheet-wolf-ts.sheet-wolf-tr-fire-touched,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=ghost-wolves]~.sheet-wolf-ts.sheet-wolf-tr-ghost-wolves,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=hunters-in-darkness]~.sheet-wolf-ts.sheet-wolf-tr-hunters-in-darkness,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=iron-masters]~.sheet-wolf-ts.sheet-wolf-tr-iron-masters,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=ivory-claws]~.sheet-wolf-ts.sheet-wolf-tr-ivory-claws,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=predator-kings]~.sheet-wolf-ts.sheet-wolf-tr-predator-kings,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=storm-lords]~.sheet-wolf-ts.sheet-wolf-tr-storm-lords,.charsheet[class][class][class] input.sheet-midtab[value=auspice]~.sheet-midpane.sheet-mp-auspice,.charsheet[class][class][class] input.sheet-midtab[value=tribe]~.sheet-midpane.sheet-mp-tribe{display:block!important}
-.charsheet[class][class][class] input.sheet-midtab[value=auspice]+.sheet-midtabs button.sheet-mt-auspice,.charsheet[class][class][class] input.sheet-midtab[value=tribe]+.sheet-midtabs button.sheet-mt-tribe{opacity:1;background-color:rgba(160,40,40,.28)!important;border-color:#b06a3a!important}
+.charsheet input.sheet-game-line[value=vampire]~* .sheet-topinfo .sheet-wolf-hdr-wrap input.sheet-wolf-generic[name=attr_Faction],.charsheet input.sheet-game-line[value=vampire]~.sheet-topinfo .sheet-wolf-hdr-wrap input.sheet-wolf-generic[name=attr_Faction],.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=blood-talons]~.sheet-wolf-ts.sheet-wolf-tr-blood-talons,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=bone-shadows]~.sheet-wolf-ts.sheet-wolf-tr-bone-shadows,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=fire-touched]~.sheet-wolf-ts.sheet-wolf-tr-fire-touched,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=ghost-wolves]~.sheet-wolf-ts.sheet-wolf-tr-ghost-wolves,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=hunters-in-darkness]~.sheet-wolf-ts.sheet-wolf-tr-hunters-in-darkness,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=iron-masters]~.sheet-wolf-ts.sheet-wolf-tr-iron-masters,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=ivory-claws]~.sheet-wolf-ts.sheet-wolf-tr-ivory-claws,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=predator-kings]~.sheet-wolf-ts.sheet-wolf-tr-predator-kings,.charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk[value=storm-lords]~.sheet-wolf-ts.sheet-wolf-tr-storm-lords,.charsheet[class][class][class] input.sheet-midtab[value=auspice]~.sheet-midpane.sheet-mp-auspice{display:block!important}
+.charsheet[class][class][class] input.sheet-midtab[value=auspice]+.sheet-midtabs button.sheet-mt-auspice{opacity:1;background-color:rgba(160,40,40,.28)!important;border-color:#b06a3a!important}
 .charsheet[class][class][class] .sheet-tribe-block input.sheet-wolf-tk:not([value=""])~.sheet-tribe-none,.charsheet[class][class][class][class][class][class][class] .sheet-entry>input.sheet-entry-toggle:not(:checked)~.sheet-entry-body{display:none!important}
 .charsheet[class][class][class] .sheet-tribe-block .sheet-wolf-ts{font-style:italic;margin:4px 0 6px;display:none!important}
 .charsheet[class][class][class][class][class][class][class] .sheet-mgx .sheet-mgf>.sheet-entry-head{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:8px!important;grid-template-columns:none!important;min-height:0!important;padding-top:1px!important;padding-bottom:1px!important}
@@ -1785,7 +1784,6 @@ input.sheet-spec-has[value="1"]~span::after{content:"*"!important;font-family:Ar
 .charsheet[class][class][class][class][class][class][class] input.sheet-cfg-sw::before{content:"";position:absolute;left:1px;top:1px;width:12px;height:12px;border-radius:50%;background:#ddd}
 .charsheet[class][class][class][class][class][class][class] input.sheet-cfg-sw:checked{background:var(--splat, #c8732a)}
 .charsheet[class][class][class][class][class][class][class] input.sheet-cfg-sw:checked::before{left:15px}
-.charsheet[class][class][class][class][class][class][class] .charsheet[class][class][class][class][class][class][class] select.sheet-rp-formsel,.charsheet[class][class][class][class][class][class][class] .charsheet[class][class][class][class][class][class][class] select.sheet-rp-formsel option{font-family:"Sorts Mill Goudy","Goudy Old Style",Georgia,serif!important;font-size:13px!important;font-weight:700!important;text-transform:none!important;letter-spacing:normal!important;text-align:center!important;text-align-last:center!important}
 .charsheet[class][class][class][class][class][class][class] .sheet-skills input[type=checkbox],.charsheet[class][class][class][class][class][class][class] .sheet-skills input[type=checkbox]:checked,.charsheet[class][class][class][class][class][class][class] .sheet-skills input[type=checkbox]:focus{outline:0!important;-webkit-appearance:none!important;appearance:none!important;border-radius:2px!important}
 .charsheet[class][class][class][class][class][class][class] .sheet-skills input[type=checkbox]::after,.charsheet[class][class][class][class][class][class][class] .sheet-skills input[type=checkbox]::before,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-gifts .sheet-gfx-swr input.sheet-gfx-sw::after,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-gifts .sheet-gfx-swr input.sheet-gfx-sw::before,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .repitem .sheet-gfx-swr input.sheet-gfx-sw::after,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .repitem .sheet-gfx-swr input.sheet-gfx-sw::before,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits]~.repcontainer .repitem .sheet-gfx-swr input.sheet-gfx-sw::after,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits]~.repcontainer .repitem .sheet-gfx-swr input.sheet-gfx-sw::before{content:none!important;display:none!important}
 .charsheet[class][class][class][class][class][class][class] .sheet-skills input[type=checkbox]:checked{box-shadow:none!important}
@@ -1966,7 +1964,7 @@ input.sheet-spec-has[value="1"]~span::after{content:"*"!important;font-family:Ar
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-skills>div:not(.sheet-section-header):not(.sheet-subheader):not(.sheet-subsubheader):not(.sheet-spec-row):not(.sheet-skills-renown):not(.sheet-game-line)>button.sheet-toggle{padding-top:0!important;padding-bottom:0!important;line-height:18px!important}
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-skills>div.sheet-spec-row{min-height:0!important;margin:0!important;padding:0!important;border:0!important}
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-skills>div:not(.sheet-section-header):not(.sheet-subheader):not(.sheet-subsubheader):not(.sheet-spec-row):not(.sheet-skills-renown):not(.sheet-game-line)>input[type=checkbox]{margin:0 4px 0 0!important;vertical-align:middle;align-self:center}
-.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] select.sheet-rp-formsel,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] select.sheet-rp-formsel option,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] select[name=attr_form],.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] select[name=attr_form] option{font-family:"Sorts Mill Goudy","Goudy Old Style",Garamond,Georgia,serif!important;font-size:13px!important;font-weight:700!important;line-height:18px!important;font-style:normal!important;letter-spacing:normal!important;text-transform:none!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] select[name=attr_form],.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] select[name=attr_form] option{font-family:"Sorts Mill Goudy","Goudy Old Style",Garamond,Georgia,serif!important;font-size:13px!important;font-weight:700!important;line-height:18px!important;font-style:normal!important;letter-spacing:normal!important;text-transform:none!important}
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-fcards{align-items:stretch!important;grid-auto-rows:1fr!important}
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-fcards>.sheet-fcard{height:100%!important;box-sizing:border-box!important;display:flex;flex-direction:column!important}
 .charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-fcards>.sheet-fcard>.sheet-fc-detail{flex:1 1 auto!important}
@@ -2159,3 +2157,202 @@ input.sheet-type[value=beast]~.sheet-background-image .sheet-bgart{display:block
 .charsheet .sheet-bb-entry>input[type=checkbox].sheet-entry-toggle:checked+.sheet-entry-head::before{transform:rotate(45deg)!important;top:5px!important}
 .charsheet .sheet-page1{padding-right:8px!important;box-sizing:border-box}
 .charsheet .sheet-page1 input[type=text],.charsheet .sheet-page1 select{max-width:100%;box-sizing:border-box}
+
+/* Main-page layout refinements */
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-background > .sheet-tabfill{display:block!important;order:2;flex:1 1 1px!important;min-width:1px!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-background > button.sheet-toggle{font-size:18px!important;line-height:24px!important;padding:5px 14px!important;margin:6px 0 0!important}
+.charsheet .sheet-merit-summary{display:block!important;min-height:15px;margin:0 5px 4px 20px;font-size:12px;line-height:15px;white-space:normal;overflow-wrap:anywhere}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-entry-settings::before{content:none!important;display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;transform:none!important;font:13px/13px Arial,sans-serif!important;text-align:center!important;color:var(--pad,var(--pa,#ccc))!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-entry-settings{appearance:none!important;opacity:1!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-entry-settings + .sheet-entry-head::before{content:none!important;display:none!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-entry-settings:checked{box-shadow:0 0 3px var(--pa,#c8873a)!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-entry-settings:focus-visible{outline:2px solid var(--pa,#c8873a)!important;outline-offset:2px}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-kuruth-tiers.sheet-kt-rows > label.sheet-kuruth-tier{display:flex!important;flex-direction:column!important;min-width:0!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-kuruth-tiers.sheet-kt-rows .sheet-kt-lbl{height:44px!important;min-height:44px!important;flex:0 0 44px!important;justify-content:flex-start!important;line-height:14px!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-kuruth-tiers.sheet-kt-rows textarea.sheet-trig-ta{height:96px!important;min-height:96px!important;width:100%!important;margin-top:3px!important;box-sizing:border-box!important}
+.charsheet .sheet-right-touchstones{margin:7px 0!important;text-align:center}
+.charsheet .sheet-right-touchstone-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+.charsheet .sheet-right-touchstone-fields label{display:flex;flex-direction:column;min-width:0;font-size:12px;margin:0}
+.charsheet .sheet-right-touchstone-fields input{width:100%!important;min-width:0!important;box-sizing:border-box;margin:0!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-midtab[value="forms"] ~ .sheet-mp-forms{display:block!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-midtab[value="forms"] ~ .sheet-columns{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] input.sheet-midtab[value="forms"] + .sheet-midtabs .sheet-mt-forms{opacity:1!important;border-color:var(--pa,#c8873a)!important;box-shadow:0 0 5px var(--pa,#c8873a)}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards{grid-template-columns:minmax(0,1fr)!important;grid-auto-rows:auto!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > .sheet-fcard{height:auto!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-midpane .sheet-leon-pane{overflow-x:visible!important;min-width:0!important;max-width:100%!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-auspice .sheet-wolf-block{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mgx .sheet-mgf > .sheet-entry-head{flex-wrap:wrap!important;gap:3px 6px!important;min-width:0!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mgx .sheet-mgf .sheet-mgf-nm{flex:1 1 135px!important;min-width:0!important;max-width:100%!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mgx .sheet-mgf .sheet-mgf-nm button{white-space:normal!important;overflow-wrap:anywhere!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mgx .sheet-mgf > .sheet-entry-head > .sheet-entry-pool{white-space:normal!important;overflow-wrap:anywhere!important;min-width:0!important;max-width:100%!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-auspice .sheet-tribe-block{margin-top:12px!important}
+
+/* Single-form browser */
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > .sheet-fcard{display:none!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:8px!important;align-items:start!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-img{grid-column:1;grid-row:1;width:100%!important;max-width:170px!important;height:240px!important;margin:0!important;justify-self:start}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-head{grid-column:2;grid-row:1;display:flex!important;flex-direction:column!important;align-items:stretch!important;min-width:0!important;gap:6px!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-head > .sheet-fc-stats{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;gap:3px!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-head .sheet-fc-stat{display:flex!important;justify-content:space-between!important;font-size:12px!important;line-height:18px!important;padding:0 6px!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > .sheet-fcard > :not(input):not(.sheet-fc-img):not(.sheet-fc-head):not(.sheet-fc-glow){grid-column:1/-1;min-width:0}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > input.sheet-form-view[value="hishu"] ~ .sheet-fc-hishu{display:grid!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > input.sheet-form-view[value="dalu"] ~ .sheet-fc-dalu{display:grid!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > input.sheet-form-view[value="gauru"] ~ .sheet-fc-gauru{display:grid!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > input.sheet-form-view[value="urkhar"] ~ .sheet-fc-urkhar{display:grid!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > input.sheet-form-view[value="urshul"] ~ .sheet-fc-urshul{display:grid!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > input.sheet-form-view[value="urhan"] ~ .sheet-fc-urhan{display:grid!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards > input.sheet-urkhar-flag:not([value="1"]) ~ .sheet-fc-urkhar{display:none!important}
+
+.charsheet .sheet-form-browser{margin:0 0 8px;text-align:center}
+.charsheet .sheet-form-browser label{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px}
+.charsheet .sheet-form-browser select{width:145px!important;margin:0!important}
+.charsheet .sheet-form-actions{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.charsheet .sheet-form-actions button{font-size:12px!important;padding:3px 10px!important;border-radius:12px!important}
+.charsheet .sheet-form-actions .sheet-shift-current{display:none!important;opacity:.55;cursor:default;color:#ddd!important;background:#333!important;text-shadow:none!important}
+.charsheet input.sheet-view-current[value="1"] ~ .sheet-form-actions .sheet-shift-current{display:inline-block!important}
+.charsheet input.sheet-view-current[value="1"] ~ .sheet-form-actions .sheet-shift-selected{display:none!important}
+.charsheet .sheet-form-current-label{font-size:12px;margin:4px 0;opacity:.8}
+
+/* rev111 */
+.charsheet .sheet-armor .sheet-entry-head{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:3px 6px!important;padding-right:2px!important}
+.charsheet .sheet-ar-name{flex:1 1 120px!important;min-width:90px!important;width:auto!important;margin:0!important}
+.charsheet .sheet-ar-cols{display:flex!important;flex:1 1 auto;flex-wrap:wrap;gap:2px 6px;align-items:center;font-size:11px}
+.charsheet .sheet-ar-c{white-space:nowrap}
+.charsheet .sheet-ar-c>b{font-weight:700;margin-right:3px;opacity:.8}
+.charsheet .sheet-armor .sheet-entry-head>.sheet-ar-eq{margin-left:auto!important;flex:0 0 auto}
+.charsheet .sheet-ar-panel>.sheet-ar-stk{margin:2px 0 4px!important}
+.charsheet .sheet-wfilters{display:inline-flex;gap:4px;margin-left:8px;flex:0 0 auto}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-wfb{font-size:11px!important;padding:1px 8px!important;border-radius:10px!important;border:1px solid color-mix(in srgb,var(--pa,#888) 55%,rgba(128,128,128,.4))!important;background:none!important}
+.charsheet input.sheet-wfilter[value=all]~.sheet-entry-section-head .sheet-wfb-all,.charsheet input.sheet-wfilter[value=melee]~.sheet-entry-section-head .sheet-wfb-melee,.charsheet input.sheet-wfilter[value=ranged]~.sheet-entry-section-head .sheet-wfb-ranged,.charsheet input.sheet-wfilter[value=explosive]~.sheet-entry-section-head .sheet-wfb-explosive{background:var(--pa,#8a4b1f)!important;color:#fff!important}
+.charsheet .sheet-wx{display:flex;flex:1 1 220px;flex-wrap:wrap;gap:1px 6px;align-items:center;font-size:11px;min-width:0}
+.charsheet .sheet-wx-c{white-space:nowrap}
+.charsheet .sheet-wx-c>b{margin-right:2px;opacity:.75}
+.charsheet .sheet-wx-tags{flex:1 1 80px;min-width:0;white-space:normal}
+.charsheet .sheet-entry:not(:has(input.sheet-hl-wt[value=explosive])) .sheet-wx-x{display:none!important}
+.charsheet .sheet-entry:has(input.sheet-hl-wt[value=explosive]) .sheet-wx-m{display:none!important}
+.charsheet .repcontainer[data-groupname=repeating_weapons] input.sheet-whide[value="1"]~.sheet-entry{display:none!important}
+.charsheet .sheet-weapons>.sheet-entry-section-head{flex-wrap:wrap!important;row-gap:2px;overflow:visible!important}
+.charsheet .sheet-weapons .sheet-subheader{flex:1 0 100%!important;min-width:0!important;overflow:visible!important;text-overflow:clip!important}
+.charsheet .sheet-weapons .sheet-subheader span{white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important}
+.charsheet .sheet-wfilters{flex:1 1 auto!important;margin-left:0!important}
+.charsheet .sheet-weapons .sheet-entry-head{flex-wrap:wrap!important}
+.charsheet .sheet-weapons .sheet-wx{flex:1 0 100%!important;width:100%!important;justify-content:center!important;text-align:center!important}
+.charsheet .sheet-weapons .sheet-wx-tags{flex:0 0 auto!important}
+.charsheet .sheet-entry-head>input.sheet-entry-short{flex:1 1 100%!important;min-width:0!important;width:100%!important;white-space:normal!important;height:auto!important;overflow:visible!important;text-overflow:clip!important;margin:0 0 1px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section{position:relative}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section>.repcontrol{position:absolute!important;top:0!important;right:0!important;margin:0!important;z-index:4}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head{display:flex!important;align-items:center!important;min-height:22px;padding-right:54px!important;justify-content:flex-start}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader,.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-section-head .sheet-subheader span{border:0!important;background:none!important;box-shadow:none!important;text-align:left;padding-left:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry-head>button.sheet-entry-post:not(.sheet-post-ic){border:0!important;background:none!important;box-shadow:none!important;text-align:left!important;padding-left:2px!important}
+.charsheet .sheet-mstyle-s{display:none;font-size:9px;line-height:0;vertical-align:super;margin-left:1px}
+.charsheet .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-entry-head .sheet-mstyle-s,.charsheet .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mstyle-s{display:inline!important}
+.charsheet .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mstyle-flag[value="1"]) .sheet-mcat-badge,.charsheet .repcontainer[data-groupname=repeating_merits] .sheet-entry:has(>input.sheet-mcat-flag[value=Style]) .sheet-mcat-badge{display:none!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head{flex-wrap:wrap!important;padding-left:14px!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-head>button.sheet-entry-post{flex:1 1 100%!important;width:auto!important;max-width:100%!important;min-width:0!important;overflow:visible!important;white-space:nowrap!important}
+.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body>label.sheet-wide,.charsheet[class][class][class][class][class][class][class][class] .repcontainer[data-groupname=repeating_merits] .sheet-entry-body input[name=attr_short_desc]{flex:1 1 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+.charsheet .sheet-mv-out .sheet-mv-row{flex-wrap:wrap!important}
+.charsheet .sheet-mv-out .sheet-mv-effect{flex:1 1 100%!important;width:100%!important;max-width:100%!important;display:block!important;box-sizing:border-box!important}
+.charsheet .sheet-mv-out{display:none}
+.charsheet .sheet-entry>input.sheet-mstyle-flag[value="1"]~.sheet-mv-out{display:block!important;border:0!important;padding:1px 2px 2px 16px!important;margin:0!important}
+.charsheet .sheet-mv-out .sheet-style-title{display:none}
+.charsheet .sheet-mv-out .sheet-mv-post{flex:0 0 16px!important;width:16px!important;height:16px!important;min-width:0!important;padding:0!important;font-size:9px!important;line-height:14px!important}
+.charsheet .sheet-mv-full{display:block!important;flex:1 0 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;min-height:44px;margin:0 0 3px!important}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms,.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-leon-pane,.charsheet[class][class][class][class][class][class] .sheet-form-stage{overflow:visible!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-stage{display:grid!important;grid-template-columns:36px minmax(0,1fr) 36px!important;gap:4px!important;align-items:center!important;width:100%!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-prev{grid-column:1!important;grid-row:1!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-stage>.sheet-fcards{grid-column:2!important;grid-row:1!important;min-width:0!important}
+.charsheet[class][class][class][class][class][class] .sheet-form-next{grid-column:3!important;grid-row:1!important}
+.charsheet[class][class][class][class][class][class][class][class] button.sheet-form-arrow{display:inline-flex!important;opacity:1!important;visibility:visible!important;width:32px!important;height:48px!important;padding:0!important;border:1px solid #fff!important;background:var(--pa,#8a4b1f)!important;color:#fff!important;font-size:22px!important}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hw{display:flex!important;flex-direction:column!important;align-items:center!important;max-width:100%!important;overflow:hidden!important;text-align:center!important;font-size:12px!important;line-height:1.2!important;white-space:normal!important}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-hwsep{display:none!important}
+.charsheet[class][class][class][class][class][class] .sheet-mp-forms .sheet-fc-head{min-width:0!important;overflow:hidden!important;max-width:100%!important}
+.charsheet .sheet-fc-hw{display:block;text-align:center;font-weight:700;font-size:14px}
+.charsheet .sheet-rite-short{display:block;margin:0 4px 2px 16px;white-space:normal;overflow-wrap:anywhere;font-style:italic;font-size:12px;line-height:1.3}
+.charsheet .sheet-rite-short:empty,.charsheet .sheet-rite-short:has(>span:empty){display:none}
+.charsheet .sheet-totem>.sheet-entry-section-head{justify-content:center!important}
+.charsheet .sheet-totem .sheet-subheader,.charsheet .sheet-totem .sheet-subheader span{text-align:center!important;width:100%}
+.charsheet .sheet-totem-card{display:flex!important;flex-direction:column;align-items:stretch;gap:4px;margin:4px 0!important}
+.charsheet .sheet-entry>input.sheet-entry-toggle:not(:checked)~.sheet-totem-card{display:flex!important}
+.charsheet .sheet-totem-top{display:flex;gap:8px;align-items:center;min-width:0}
+.charsheet .sheet-totem-img{position:relative!important;display:flex!important;width:110px!important;height:160px!important;max-width:110px!important;flex:0 0 110px;align-items:center;justify-content:center;overflow:hidden}
+.charsheet .sheet-totem-img .sheet-fc-imgph{display:block!important}
+.charsheet .sheet-totem-stats{flex:1 1 auto;display:grid;grid-template-columns:1fr 1fr;gap:1px 8px;align-content:center;font-size:11px;min-width:0}
+.charsheet .sheet-totem-stats b{margin-right:4px}
+.charsheet .sheet-totem-more{font-size:11px;line-height:1.3;min-width:0}
+.charsheet .sheet-totem-more div{white-space:normal;overflow-wrap:anywhere}
+.charsheet .sheet-totem-nums{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(72px,1fr))!important;gap:6px 8px!important;width:100%!important}
+.charsheet .sheet-totem-nums>label{display:flex!important;flex-direction:column!important;min-width:0!important;width:auto!important;max-width:100%!important;margin:0!important;white-space:normal!important;overflow:hidden!important;font-size:9px!important;line-height:1.15!important;letter-spacing:0!important}
+.charsheet .sheet-totem-nums input{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+.charsheet .sheet-kt-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:start}
+.charsheet .sheet-kt-h{font-weight:700;text-align:center;margin:0 0 4px}
+.charsheet .sheet-kt-note{font-size:11px;font-style:italic;text-align:center;margin:0 0 4px}
+.charsheet .sheet-kt-gen textarea{width:100%!important;min-height:140px;box-sizing:border-box}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-top{display:grid!important;grid-template-columns:200px minmax(0,1fr)!important;gap:12px!important;align-items:start!important;width:100%!important}
+.charsheet[class][class] .sheet-det-portrait,.charsheet[class][class] .sheet-det-portrait img{width:200px!important;max-width:200px!important;box-sizing:border-box!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-portrait{grid-column:1;grid-row:1/span 3}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-grid{grid-column:2;grid-row:1}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-det-beside{grid-column:2;grid-row:2}
+.charsheet .sheet-fc-bio-line{width:100%!important;box-sizing:border-box}
+.charsheet .sheet-note-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.charsheet .sheet-note-cols textarea{min-height:70px;width:100%!important;box-sizing:border-box}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-diceroller-options>button.sheet-toggle,.charsheet[class][class][class][class][class][class][class][class] .sheet-wp-bar{display:none!important}
+.charsheet[class][class][class][class] .sheet-rollbar{padding:4px 8px!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-grid{display:flex!important;flex-flow:row wrap!important;align-items:center!important;justify-content:center!important;gap:4px 8px!important;width:100%!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-corporeal.sheet-span{display:flex!important;flex:1 0 100%!important;justify-content:center!important;width:100%!important;order:1;gap:6px}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-roll-portrait{order:0!important;width:64px!important;height:72px!important;flex:0 0 64px!important;align-self:center!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-grid>.sheet-rollcontainer{order:3;width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-rolldisplay{order:4;flex:0 1 200px!important;width:200px!important;max-width:200px!important;height:24px!important}
+.charsheet[class][class][class][class] .sheet-roll-break{order:5;flex:1 0 100%;height:0;width:100%;margin:0;padding:0;overflow:hidden}
+.charsheet[class][class][class][class] .sheet-rollbar .sheet-diceroller-options{order:6;display:flex!important;flex:0 1 auto!important;justify-content:center!important;width:auto!important;border:0!important;background:none!important;gap:4px}
+.charsheet[class][class][class][class] .sheet-roll-extra{order:7;display:flex!important;flex:1 0 100%!important;justify-content:center!important;width:100%!important}
+.charsheet[class][class][class][class] .sheet-fc-bio,.charsheet[class][class][class][class] .sheet-fc-bio-l,.charsheet[class][class][class][class] .sheet-det-beside{min-width:0!important;max-width:100%!important}
+.charsheet[class][class][class][class] input.sheet-fc-bio-line{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+.charsheet .sheet-buff-panel{display:none;width:min(100%,440px)}
+.charsheet .sheet-diceroller-grid:has(input.sheet-buff-tg:checked) .sheet-buff-panel{display:block}
+.charsheet .sheet-buff-row{display:flex;align-items:center;gap:6px}
+.charsheet .sheet-buff-row input[type=text]{flex:1 1 auto;min-width:0}
+.charsheet .sheet-buff-n{width:54px!important;flex:0 0 54px}
+.charsheet .sheet-right-touchstones,.charsheet .sheet-right-touchstones label,.charsheet .sheet-right-touchstones span,.charsheet .sheet-right-touchstones input,.charsheet .sheet-ts-kuruth,.charsheet .sheet-ts-kuruth label,.charsheet .sheet-ts-kuruth input{text-align:center!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-right-touchstone-fields label{align-items:center}
+.charsheet .sheet-right-touchstone-fields input,.charsheet .sheet-ts-kuruth input{max-width:220px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pa)!important}
+.sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label,.sheet-darkmode .charsheet[class][class][class][class][class][class][class][class] .sheet-ig2>.sheet-ifield>.sheet-input-label span,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label,input.sheet-dm[value="1"]~.sheet-background .sheet-ig2>.sheet-ifield>.sheet-input-label span{color:var(--pad)!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-mp-forms .sheet-fcards .sheet-fc-img{width:100px!important;max-width:100px!important;height:300px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-entry>input.sheet-entry-settings{border:0!important;outline:0!important;box-shadow:none!important;background:none!important}
+.charsheet[class][class] .sheet-skills>div>button.sheet-spec-caret{order:2!important;flex:0 0 14px!important;width:14px!important;min-width:14px!important;height:14px!important;margin:0 2px!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+.charsheet[class][class] .sheet-skills>div>button.sheet-toggle{order:3!important}
+.charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
+.charsheet[class][class] .sheet-skills button.sheet-spec-caret>span{font:12px/14px Arial,sans-serif!important}
+.charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:none!important;border:0!important;width:0!important;height:0!important;transform:none!important}
+.charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
+.charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:block!important;width:100%!important;box-sizing:border-box!important;border:1px solid rgba(139,16,16,.55);margin:3px 0}
+.charsheet .sheet-disc-caret{position:absolute!important;width:0!important;height:0!important;opacity:0!important}
+.charsheet .sheet-disc-card>.sheet-disc-caret:not(:checked)~.sheet-entry-body{display:none!important}
+.charsheet .sheet-disc-row{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;width:100%!important;min-width:0!important;gap:3px}
+.charsheet[class][class][class][class] .sheet-disc-row>*{flex:0 0 auto!important;width:auto!important;min-width:0!important;display:inline-flex!important;float:none!important}
+.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-id{flex:1 1 auto!important;min-width:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+.charsheet .sheet-disc-id>.sheet-disc-name{overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
+.charsheet .sheet-disc-id .sheet-entry-pool,.charsheet .sheet-disc-id .sheet-entry-cost{font-size:10px!important;line-height:1.1}
+.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-cog{-webkit-appearance:none!important;appearance:none!important;position:relative!important;width:14px!important;height:14px!important;border:0!important;background:none!important;padding:0!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-disc-row>input.sheet-disc-has[value="0"]~label.sheet-disc-on{display:none!important}
+.charsheet .sheet-disc-card .sheet-amenu>.sheet-amenu-list{left:auto!important;right:0!important}
+.charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
+.charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
+.charsheet[class][class][class] .sheet-det-top>.sheet-det-grid.sheet-det-grid{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important;min-width:0!important;max-width:100%!important}
+.charsheet[class][class] .sheet-det-top,.charsheet[class][class] .sheet-det-top>.sheet-det-grid,.charsheet[class][class] .sheet-det-grid>label{min-width:0!important;max-width:100%!important}
+.charsheet[class][class] .sheet-det-grid>label.sheet-det-s,.charsheet[class][class] .sheet-det-grid>label.sheet-det-m,.charsheet[class][class] .sheet-det-grid>label.sheet-det-l{flex:none!important;min-width:0!important;max-width:none!important;width:auto!important}
+.charsheet[class][class] .sheet-det-grid>label.sheet-det-m,.charsheet[class][class] .sheet-det-grid>label.sheet-det-l{grid-column:span 3}
+.charsheet[class][class] .sheet-det-grid>label>span,.charsheet .sheet-det-splat label>span{white-space:normal!important}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat{grid-column:2;grid-row:3;min-width:0;max-width:100%;display:flex;flex-wrap:wrap;gap:4px 8px}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat>.sheet-subheader{flex:1 0 100%;text-align:center}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat>label{flex:1 1 30%;min-width:0}
+.charsheet .sheet-det-top>.sheet-vampire2.sheet-det-splat input{width:100%!important;min-width:0!important;box-sizing:border-box}
+.charsheet[class][class] .sheet-det-portrait{grid-row:1 / span 4}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] label.sheet-ovbtn,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] button.sheet-quick,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] button.sheet-wfb,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] button.sheet-bp{display:inline-flex!important;align-items:center!important;justify-content:center!important;margin:0!important;padding:3px 11px!important;min-height:23px!important;line-height:16px!important;box-sizing:border-box!important;border:1px solid color-mix(in srgb,var(--pad,var(--pa,#888)) 78%,rgba(0,0,0,0))!important;border-radius:10px!important;background:none!important;box-shadow:none!important}
+.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-diceroller-options,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-wfilters,.charsheet[class][class][class][class][class][class][class][class][class][class][class][class] .sheet-bp-rolls{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:8px!important;column-gap:8px!important;row-gap:8px!important;border:0!important;background:none!important}
+.charsheet[class][class] .repcontainer[data-groupname=repeating_weapons] .sheet-entry-head>button.sheet-w-atk{flex:0 1 auto!important;width:auto!important}
+.charsheet .sheet-weapons .sheet-hl-pool{flex:0 0 auto!important;margin:0 6px 0 4px!important;padding:0!important;border:0!important;background:none!important;white-space:nowrap!important;font-weight:400!important;pointer-events:none}
+.charsheet .sheet-set-gear{position:absolute;left:2px;top:4px;width:13px;height:13px;margin:0;padding:0;line-height:13px;text-align:center;font:12px/13px Arial,sans-serif;color:var(--pad,var(--pa,#ccc));pointer-events:none;z-index:5}
+.charsheet .sheet-disc-row{position:relative}
+.charsheet .sheet-disc-row>.sheet-set-gear{left:0;top:0;width:14px;height:14px;line-height:14px}
+.sheet-rolltemplate-cofd-entry .sheet-ce-badge{position:static!important;flex:0 0 22px;order:2;margin-left:6px}
+.sheet-rolltemplate-cofd-entry .sheet-ce-head>.sheet-ce-name{flex:1 1 8em!important;min-width:0;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere}
