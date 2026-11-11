@@ -383,7 +383,7 @@ RR_ASK = r'''const rrAsk = (macIn, isRe, go) => {
 
 def attack_card(h):
     old = 'if (!v[p + "dtype"]) u[p + "dtype"] = (t === "unarmed") ? "B" : "L";'
-    new = 'if (t === "unarmed" && v[p + "dtype_user"] !== "1") u[p + "dtype"] = "B"; else if (!v[p + "dtype"]) u[p + "dtype"] = (tag("t_brawl") ? "B" : "L");'
+    new = 'if (t === "unarmed" && v[p + "dtype_user"] !== "1") u[p + "dtype"] = "B"; else if (!v[p + "dtype"]) u[p + "dtype"] = (tag("t_brawl") ? "B" : "L"); u[p + "atk_dbonus"] = dmg; u[p + "atk_flat"] = tag("t_nodmg") ? 1 : 0;'
     if old in h:
         h = h.replace(old, new, 1)
     hook = 'on("change:repeating_weapons:wtype", e => {'
@@ -422,6 +422,61 @@ def attack_card(h):
     plain = '{{f_spec=+?{Specialty applies?|No,0|Yes,1}}} {{f_mod=?{@{modifiermacro}|0}}}'
     if spec in h:
         h = h.replace(spec, plain, 1)
+    # Attack cards: successes + the weapon's +N, computed in finishRoll.
+    # A "no bonus damage" tag keeps the weapon rating alone. Other rolls
+    # have no wbonus/wdmg fields, so atkDone leaves them as successes.
+    fields = '"atk_defq", "atk_dmgtxt"'
+    if '"atk_dbonus", "atk_defq"' not in h:
+        if h.count(fields) != 1:
+            raise SystemExit("atk fields %s" % h.count(fields))
+        h = h.replace(fields, '"atk_dbonus", "atk_defq", "atk_dmgtxt", "atk_flat"', 1)
+    if 'name="attr_atk_dbonus"' not in h:
+        hid = 'name="attr_atk_dmgtxt" value="Successes + 0" />'
+        if h.count(hid) != 1:
+            raise SystemExit("atk_dmgtxt input %s" % h.count(hid))
+        h = h.replace(hid, hid + '<input type="hidden" name="attr_atk_dbonus" value="0" /><input type="hidden" name="attr_atk_flat" value="0" />', 1)
+    mac = '{{f_damage=@{atk_dmgtxt}}}'
+    mac2 = '{{f_damage=@{atk_dmgtxt}}} {{wbonus=[[@{atk_dbonus}]]}} {{wflat=[[@{atk_flat}]]}} {{wdmg=[[0]]}}'
+    if mac in h and '{{wdmg=[[0]]}}' not in h:
+        h = h.replace(mac, mac2, 1)
+    if 'const atkDone' not in h:
+        done = (
+            'const atkDone = (r) => { const res = (r && r.results) || {};'
+            ' const succ = res.roll ? (parseInt(res.roll.result, 10) || 0) : 0;'
+            ' if (!r || !r.rollId || !res.wbonus || !res.wdmg) return finishRoll(r && r.rollId);'
+            ' const bonus = parseInt(res.wbonus.result, 10) || 0;'
+            ' const flat = res.wflat && (parseInt(res.wflat.result, 10) || 0) === 1;'
+            ' finishRoll(r.rollId, {wdmg: succ < 1 ? 0 : (flat ? bonus : succ + bonus)}); };\n        '
+        )
+        if h.count('const rrRun1 = ') != 1:
+            raise SystemExit('rrRun1 for atkDone')
+        h = h.replace('const rrRun1 = ', done + 'const rrRun1 = ', 1)
+    fin = 'finishRoll(r.rollId); if (!isRe && R.roll) riskWp(R.roll.result || 0);'
+    if fin in h:
+        h = h.replace(fin, 'atkDone(r); if (!isRe && R.roll) riskWp(R.roll.result || 0);', 1)
+    re_old = 'r => finishRoll(r.rollId));\n        }));\n        on("clicked:wp_reroll"'
+    re_new = 'r => atkDone(r));\n        }));\n        on("clicked:wp_reroll"'
+    if re_old in h:
+        h = h.replace(re_old, re_new, 1)
+    if 'computed::wdmg' not in h:
+        mark = '{{#roll}}<div class="sheet-ce-roll">'
+        a = h.find(mark)
+        end = '{{/rollLess() roll 1}}'
+        b = h.find(end, a if a >= 0 else 0)
+        if a < 0 or b < 0:
+            raise SystemExit('attack roll template missing')
+        inner = h[a + len(mark):b + len(end)]
+        atk = (
+            '{{#wdmg}}{{#rollGreater() roll 0}}<div class="sheet-ce-rn"><span class="sheet-ce-big">{{computed::wdmg}}</span>'
+            '<span class="sheet-ce-sl">damage{{#dmg_B}} bashing{{/dmg_B}}{{#dmg_L}} lethal{{/dmg_L}}{{#dmg_A}} aggravated{{/dmg_A}}</span></div>'
+            '<div class="sheet-ce-rn"><span class="sheet-ce-sl">{{roll}} successes</span></div>'
+            '{{#rollGreater() roll 4}}<div class="sheet-ce-exc">Exceptional success</div>{{#o_exc}}<div class="sheet-ce-out">{{o_exc}}</div>{{/o_exc}}{{/rollGreater() roll 4}}'
+            '{{/rollGreater() roll 0}}{{#rollLess() roll 1}}'
+            '{{#chance}}{{#rollWasFumble() roll}}<div class="sheet-ce-dram">Dramatic failure</div>{{#o_dram}}<div class="sheet-ce-out">{{o_dram}}</div>{{/o_dram}}{{/rollWasFumble() roll}}'
+            '{{#^rollWasFumble() roll}}<div class="sheet-ce-fail">Miss</div>{{/^rollWasFumble() roll}}{{/chance}}'
+            '{{#^chance}}<div class="sheet-ce-fail">Miss</div>{{/^chance}}{{/rollLess() roll 1}}{{/wdmg}}{{#^wdmg}}'
+        )
+        h = h[:a + len(mark)] + atk + inner + '{{/^wdmg}}' + h[b + len(end):]
     return h
 
 def dice_layout(h):
@@ -1071,6 +1126,14 @@ def css_add(c):
     # character or a hex escape of one. The settings cog is an HTML entity.
     c = c.replace("\\2699", "*")
     c = c.replace('content:"\u2699"', "content:none")
+    i = c.find(".sheet-rolltemplate-cofd-entry .sheet-ce {")
+    j = c.find("/* sheet */", i if i >= 0 else 0)
+    if i >= 0 and j > i:
+        block = c[i:j].replace("; ", ";").replace(": ", ":").replace(" {", "{")
+        c = c[:i] + block + c[j:]
+    sl = ".sheet-rolltemplate-cofd-entry .sheet-ce-sl .inlinerollresult{font-size:10px;font-weight:400;background:none;border:0;padding:0}"
+    if sl not in c and "/* sheet */" in c:
+        c = c.replace("/* sheet */", sl + "\n/* sheet */", 1)
     if "/* rev111 */" in c:
         return c
     return c.rstrip() + "\n" + CSS
@@ -1135,7 +1198,7 @@ def main():
         "sheet-mstyle-s", "sheet-roll-break", "roll_bp_flesh", "roll_bp_spirit",
         "sheet-mv-full", "sheet-disc-card", "sheet-disc-name", "sheet-disc-flat", "sheet-disc-row", "sheet-disc-has", "attr_disc_has_effect", "attr_disc_active", "attr_disc_vigor",
         "sheet-wtype-f", "sheet-whide", "sheet-totem-stats", "attr_totem_power", "attr_totem_legacy",
-        "__rev112",
+        "__rev112", "computed::wdmg", "const atkDone", "{{wdmg=[[0]]}}", "attr_atk_dbonus",
     ]
     missing = [k for k in checks if k not in h]
     if missing:
