@@ -441,7 +441,7 @@ def disciplines(h):
                 const p = `repeating_disciplines_${i}_`;
                 const nm = (v[p + "name"] || "").toLowerCase(), r = parseInt(v[p + "rating"], 10) || 0;
                 const physical = nm.indexOf("vigo") >= 0 || nm.indexOf("celerity") >= 0 || nm.indexOf("resilien") >= 0;
-                mig[p + "disc_effect"] = physical ? "1" : "0";
+                mig[p + "disc_has_effect"] = physical ? "1" : "0";
                 let on = v[p + "disc_active"];
                 if (v[p + "disc_on_mig"] !== "1") {
                     mig[p + "disc_on_mig"] = "1";
@@ -517,13 +517,43 @@ def disc_flat(h):
         raise SystemExit("disc head")
     a2, b = take_div(sec, a)
     inner = sec[sec.find(">", a) + 1:b - 6]
-    if "sheet-disc-effect" not in inner:
+    if "sheet-disc-has" not in inner:
         inner = inner.replace(
             '<label class="sheet-switch sheet-disc-on"',
-            '<input type="hidden" class="sheet-disc-effect" name="attr_disc_effect" value="0" /><label class="sheet-switch sheet-disc-on"',
+            '<input type="hidden" class="sheet-disc-has" name="attr_disc_has_effect" value="0" /><label class="sheet-switch sheet-disc-on"',
             1)
     sec = sec[:a] + inner + sec[b:]
     sec = sec.replace('class="sheet-entry sheet-disc-card"', 'class="sheet-entry sheet-disc-card sheet-disc-flat"', 1)
+    return disc_line(h[:i] + sec + h[j:])
+
+def disc_line(h):
+    i = h.find('<fieldset class="repeating_disciplines">')
+    j = h.find("</fieldset>", i)
+    sec = h[i:j]
+    if '<div class="sheet-disc-row">' in sec:
+        return h
+    caret = '<input type="checkbox" class="sheet-entry-toggle sheet-entry-settings" name="attr_show" value="1" title="Show / hide entry settings" aria-label="Show / hide entry settings" />'
+    if caret not in sec:
+        raise SystemExit("disc caret")
+    body = '<div class="sheet-entry-body">'
+    b = sec.find(body)
+    c = sec.find(caret)
+    if b < 0 or c < 0 or c > b:
+        raise SystemExit("disc line bounds")
+    mid = sec[c + len(caret):b]
+    pool = re.search(r'<span class="sheet-entry-pool" name="attr_pool"></span>', mid)
+    cost = re.search(r'<span class="sheet-entry-cost" name="attr_cost_disp" title="Cost"></span>', mid)
+    if pool and cost:
+        mid = mid.replace(pool.group(0), '', 1).replace(cost.group(0), '', 1)
+        at = mid.find('</span></span>')
+        if at < 0:
+            raise SystemExit("disc name end")
+        at += len('</span></span>')
+        mid = mid[:at] + pool.group(0) + cost.group(0) + mid[at:]
+    cog = '<input type="checkbox" class="sheet-entry-settings sheet-disc-cog" name="attr_show" value="1" title="Show / hide entry settings" aria-label="Show / hide entry settings" />'
+    hidden = '<input type="checkbox" class="sheet-entry-toggle sheet-disc-caret" name="attr_show" value="1" />'
+    row = '<div class="sheet-disc-row">' + cog + mid.strip() + '</div>'
+    sec = sec[:c] + hidden + row + sec[b:]
     return h[:i] + sec + h[j:]
 
 def notes_fit(h):
@@ -862,16 +892,15 @@ CSS = r'''
 .charsheet[class][class] .sheet-skills span.sheet-skm{order:1!important}
 .charsheet[class][class] .sheet-skills button.sheet-spec-caret>span::before{content:"\2699"!important;border:0!important;width:auto!important;height:auto!important;transform:none!important;position:static!important;display:inline-block!important;font-size:12px!important;line-height:14px!important;margin:0!important}
 .charsheet .sheet-gfx-br{flex:1 0 100%;width:100%;height:0;margin:0;padding:0}
-.charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:flex!important;flex-flow:row wrap!important;align-items:center!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow:hidden!important;gap:3px;border:1px solid rgba(139,16,16,.55);margin:3px 0}
-.charsheet[class][class][class][class][class][class][class][class] .sheet-disc-card>input.sheet-entry-toggle{position:relative!important;flex:0 0 14px!important;width:14px!important;height:14px!important;margin:0!important}
-.charsheet .sheet-disc-name{order:1;flex:1 1 0!important;min-width:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-.charsheet .sheet-disc-card>.sheet-entry-pool,.charsheet .sheet-disc-card>.sheet-entry-cost{order:2;flex:0 1 auto!important;max-width:28%!important;white-space:nowrap!important;overflow:hidden!important;font-size:10px!important}
-.charsheet .sheet-disc-card>.sheet-dots{order:3;flex:0 0 auto!important;margin:0!important}
-.charsheet .sheet-disc-card>.sheet-disc-on{order:4;flex:0 0 auto!important;margin:0!important}
-.charsheet .sheet-disc-card>button.sheet-disc-post{order:5;flex:0 0 16px!important;width:16px!important;min-width:0!important;margin:0!important}
-.charsheet .sheet-disc-card>.sheet-amenu{order:6;position:relative!important;flex:0 0 16px!important;margin:0!important}
-.charsheet .sheet-disc-card>input.sheet-disc-effect[value="0"]~.sheet-disc-on{display:none!important}
-.charsheet .sheet-disc-card>.sheet-entry-body{order:8;flex:1 0 100%!important;width:100%!important}
+.charsheet[class][class] .sheet-disciplines .sheet-disc-card{position:relative!important;display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;border:1px solid rgba(139,16,16,.55);margin:3px 0}
+.charsheet .sheet-disc-caret{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+.charsheet .sheet-disc-row{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;gap:3px}
+.charsheet[class][class][class][class] .sheet-disc-row>*{flex:0 0 auto!important;width:auto!important;min-width:0!important;display:inline-flex!important;float:none!important;clear:none!important}
+.charsheet[class][class][class][class] .sheet-disc-row>input[type=hidden]{display:none!important}
+.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-name{flex:1 1 auto!important;display:block!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
+.charsheet[class][class][class][class] .sheet-disc-row>.sheet-disc-cog{width:14px!important;height:14px!important}
+.charsheet[class][class][class][class][class][class][class][class] .sheet-disc-row>input.sheet-disc-has[value="0"]~label.sheet-disc-on{display:none!important}
+.charsheet .sheet-disc-card .sheet-amenu>.sheet-amenu-list{left:auto!important;right:0!important}
 .charsheet .repcontainer[data-groupname=repeating_disciplines] .repitem{max-width:100%!important;min-width:0!important}
 .charsheet .sheet-bp-rolls{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:100%;margin:4px 0}
 .charsheet .sheet-bp{max-width:100%;white-space:normal;text-align:center;font-size:11px;line-height:1.2;padding:2px 8px}
@@ -940,7 +969,7 @@ def main():
         "attr_kuruth_general", "sheet-det-beside", "sheet-fc-bio-line", "sheet-note-cols",
         "sheet-roll-extra", "attr_roll_prompt", "repeating_buffs", "__rev111",
         "sheet-mstyle-s", "sheet-roll-break", "roll_bp_flesh", "roll_bp_spirit",
-        "sheet-mv-full", "sheet-disc-card", "sheet-disc-name", "sheet-disc-flat", "sheet-disc-effect", "attr_disc_active", "attr_disc_vigor",
+        "sheet-mv-full", "sheet-disc-card", "sheet-disc-name", "sheet-disc-flat", "sheet-disc-row", "sheet-disc-has", "attr_disc_has_effect", "attr_disc_active", "attr_disc_vigor",
         "sheet-wtype-f", "sheet-whide", "sheet-totem-stats", "attr_totem_power", "attr_totem_legacy",
         "__rev112",
     ]
