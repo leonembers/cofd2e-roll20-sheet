@@ -343,7 +343,7 @@ RR_ASK = r'''const rrAsk = (mac, isRe, go) => {
             if (needWp) q += "{{wp=![[?{Willpower|None,0|Spend 1,3}]]}}";
             if (needSp) q += "{{sp=![[?{Specialty|No,0|Yes,1}]]}}";
             else if (needWsp) q += "{{sp=![[?{Specialty applies?|No,0|Yes,1}]]}}";
-            if (needDf) q += "{{df=![[?{@{atk_defq}|@{atk_def_default}}]]}}";
+            if (needDf) q += "{{df=![[?{Target Defense|0}]]}}";
             startRoll(q, (res) => {
                 if (res && res.rollId && typeof finishRoll === "function") finishRoll(res.rollId);
                 const R = (res && res.results) || {};
@@ -366,8 +366,8 @@ RR_ASK = r'''const rrAsk = (mac, isRe, go) => {
                 });
             });
         };
-        on("clicked:roll_bp_flesh", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Flesh Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{resolve_boost}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
-        on("clicked:roll_bp_spirit", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Spirit Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{resolve_boost}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
+        on("clicked:roll_bp_flesh", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Flesh Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
+        on("clicked:roll_bp_spirit", () => rrRun("&{template:cofd-entry} {{charname=@{character_name}}} {{gl_@{game_line}=1}} {{splat=@{game_line}}} {{kind=Breaking Point}} {{name=Spirit Breaking Point}} {{f_pool=Resolve @{resolve_eff} + Composure @{composure_eff}}} {{roll=[[{((@{resolve}+@{composure}+@{composure_boost}+?{@{modifiermacro}|0}+@{wound_penalty}+@{wp_dice}+@{cond_mod}+@{buff_mod}+@{spec_bonus})@{rolltype_eff}", false));
         '''
 
 def dice_layout(h):
