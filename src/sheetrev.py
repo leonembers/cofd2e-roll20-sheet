@@ -468,7 +468,7 @@ def attack_card(h):
         inner = h[a + len(mark):b + len(end)]
         atk = (
             '{{#wdmg}}{{#rollGreater() roll 0}}<div class="sheet-ce-rn"><span class="sheet-ce-big">{{computed::wdmg}}</span>'
-            '<span class="sheet-ce-sl">damage{{#dmg_B}} bashing{{/dmg_B}}{{#dmg_L}} lethal{{/dmg_L}}{{#dmg_A}} aggravated{{/dmg_A}}</span></div>'
+            '<span class="sheet-ce-sl">{{#dmg_B}}bashing{{/dmg_B}}{{#dmg_L}}lethal{{/dmg_L}}{{#dmg_A}}aggravated{{/dmg_A}}</span></div>'
             '<div class="sheet-ce-rn"><span class="sheet-ce-sl">{{roll}} successes</span></div>'
             '{{#rollGreater() roll 4}}<div class="sheet-ce-exc">Exceptional success</div>{{#o_exc}}<div class="sheet-ce-out">{{o_exc}}</div>{{/o_exc}}{{/rollGreater() roll 4}}'
             '{{/rollGreater() roll 0}}{{#rollLess() roll 1}}'
