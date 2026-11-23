@@ -474,20 +474,24 @@ def attack_card(h):
             '{{/rollGreater() roll 0}}{{#rollLess() roll 1}}'
             '{{#chance}}{{#rollWasFumble() roll}}<div class="sheet-ce-dram">Dramatic failure</div>{{#o_dram}}<div class="sheet-ce-out">{{o_dram}}</div>{{/o_dram}}{{/rollWasFumble() roll}}'
             '{{#^rollWasFumble() roll}}<div class="sheet-ce-fail">Miss</div>{{/^rollWasFumble() roll}}{{/chance}}'
-            '{{#^chance}}<div class="sheet-ce-fail">Miss</div>{{/^chance}}{{/rollLess() roll 1}}{{/wdmg}}'
+            '{{^chance}}<div class="sheet-ce-fail">Miss</div>{{/chance}}{{/rollLess() roll 1}}{{/wdmg}}'
         )
         cut = inner.find('{{#^exc3}}')
+        if cut < 0:
+            cut = inner.find('{{^exc3}}')
         if cut < 0:
             raise SystemExit('outcome block')
         num = (
             '<div class="sheet-ce-rn"><span class="sheet-ce-big">{{roll}}</span><span class="sheet-ce-sl">'
             + SUCC_WORD + '</span></div>'
         )
-        h = h[:a + len(mark)] + atk + '{{#^wdmg}}' + num + '{{/^wdmg}}{{#stdroll}}' + inner[cut:] + '{{/stdroll}}' + h[b + len(end):]
+        h = h[:a + len(mark)] + atk + '{{#stdroll}}' + num + inner[cut:] + '{{/stdroll}}' + h[b + len(end):]
     sec = '<span class="sheet-ce-sl">{{roll}} successes</span>'
     if sec in h:
         h = h.replace(sec, '<span class="sheet-ce-sl">{{roll}} ' + SUCC_WORD + '</span>', 1)
     h = unnest_stdroll(h)
+    h = plain_invert(h)
+    h = fold_stdroll(h)
     if 'function stdMark' not in h:
         markfn = 'function stdMark(m) { return (String(m).indexOf("{{wdmg=") >= 0 || String(m).indexOf("{{stdroll=") >= 0) ? m : m + " {{stdroll=1}}"; }\n        '
         if h.count('const rrRun1 = ') != 1:
@@ -534,6 +538,34 @@ def unnest_stdroll(h):
     num = num.replace('>successes</span>', '>' + SUCC_WORD + '</span>', 1)
     fixed = open_tag + num + close_tag + '{{#stdroll}}' + rest + '{{/stdroll}}'
     return h[:a] + fixed + h[b + len(close_tag):]
+
+
+# Plain properties use Mustache {{^prop}}...{{/prop}}. Only Roll20 helper
+# functions (they contain parentheses) keep {{#^fn()}}...{{/^fn()}}.
+INVERT_PROPS = ("chance", "exc3", "f_mod", "mk4", "roll", "wdmg")
+
+
+def plain_invert(h):
+    for prop in INVERT_PROPS:
+        h = h.replace("{{#^%s}}" % prop, "{{^%s}}" % prop)
+        h = h.replace("{{/^%s}}" % prop, "{{/%s}}" % prop)
+    return h
+
+
+def fold_stdroll(h):
+    # The non-attack successes line belongs in the positive stdroll section.
+    open_tag = "{{^wdmg}}"
+    a = h.find(open_tag)
+    if a < 0:
+        return h
+    b = h.find("{{#stdroll}}", a)
+    if b < 0:
+        return h
+    mid = h[a + len(open_tag):b]
+    if not mid.endswith("{{/wdmg}}"):
+        return h
+    num = mid[:-len("{{/wdmg}}")]
+    return h[:a] + "{{#stdroll}}" + num + h[b + len("{{#stdroll}}"):]
 
 def dice_layout(h):
     if "sheet-roll-break" in h:
