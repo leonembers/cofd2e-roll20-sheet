@@ -469,15 +469,71 @@ def attack_card(h):
         atk = (
             '{{#wdmg}}{{#rollGreater() roll 0}}<div class="sheet-ce-rn"><span class="sheet-ce-big">{{computed::wdmg}}</span>'
             '<span class="sheet-ce-sl">{{#dmg_B}}bashing{{/dmg_B}}{{#dmg_L}}lethal{{/dmg_L}}{{#dmg_A}}aggravated{{/dmg_A}}</span></div>'
-            '<div class="sheet-ce-rn"><span class="sheet-ce-sl">{{roll}} successes</span></div>'
+            '<div class="sheet-ce-rn"><span class="sheet-ce-sl">{{roll}} ' + SUCC_WORD + '</span></div>'
             '{{#rollGreater() roll 4}}<div class="sheet-ce-exc">Exceptional success</div>{{#o_exc}}<div class="sheet-ce-out">{{o_exc}}</div>{{/o_exc}}{{/rollGreater() roll 4}}'
             '{{/rollGreater() roll 0}}{{#rollLess() roll 1}}'
             '{{#chance}}{{#rollWasFumble() roll}}<div class="sheet-ce-dram">Dramatic failure</div>{{#o_dram}}<div class="sheet-ce-out">{{o_dram}}</div>{{/o_dram}}{{/rollWasFumble() roll}}'
             '{{#^rollWasFumble() roll}}<div class="sheet-ce-fail">Miss</div>{{/^rollWasFumble() roll}}{{/chance}}'
-            '{{#^chance}}<div class="sheet-ce-fail">Miss</div>{{/^chance}}{{/rollLess() roll 1}}{{/wdmg}}{{#^wdmg}}'
+            '{{#^chance}}<div class="sheet-ce-fail">Miss</div>{{/^chance}}{{/rollLess() roll 1}}{{/wdmg}}'
         )
-        h = h[:a + len(mark)] + atk + inner + '{{/^wdmg}}' + h[b + len(end):]
+        cut = inner.find('{{#^exc3}}')
+        if cut < 0:
+            raise SystemExit('outcome block')
+        num = (
+            '<div class="sheet-ce-rn"><span class="sheet-ce-big">{{roll}}</span><span class="sheet-ce-sl">'
+            + SUCC_WORD + '</span></div>'
+        )
+        h = h[:a + len(mark)] + atk + '{{#^wdmg}}' + num + '{{/^wdmg}}{{#stdroll}}' + inner[cut:] + '{{/stdroll}}' + h[b + len(end):]
+    sec = '<span class="sheet-ce-sl">{{roll}} successes</span>'
+    if sec in h:
+        h = h.replace(sec, '<span class="sheet-ce-sl">{{roll}} ' + SUCC_WORD + '</span>', 1)
+    h = unnest_stdroll(h)
+    if 'function stdMark' not in h:
+        markfn = 'function stdMark(m) { return (String(m).indexOf("{{wdmg=") >= 0 || String(m).indexOf("{{stdroll=") >= 0) ? m : m + " {{stdroll=1}}"; }\n        '
+        if h.count('const rrRun1 = ') != 1:
+            raise SystemExit('rrRun1 for stdMark')
+        h = h.replace('const rrRun1 = ', markfn + 'const rrRun1 = ', 1)
+    ask = 'startRoll(m + (note || "") + (isRe ? "" : ` {{reroll=[Reroll](~@{character_id}|rrs${slot})}}`)'
+    if ask in h and 'stdMark(m + (note || "")' not in h:
+        h = h.replace(ask, 'startRoll(stdMark(m + (note || "") + (isRe ? "" : ` {{reroll=[Reroll](~@{character_id}|rrs${slot})}}`))', 1)
+    rer = 'startRoll(m + (ex ? ` {{roll=[[${ex}` + (/@\\{[^{}]*\\}\\s*$/.test(ex) ? "" : "]]}}") : ""), r => atkDone(r));'
+    if rer in h and 'stdMark(m + (ex ?' not in h:
+        h = h.replace(rer, 'startRoll(stdMark(m + (ex ? ` {{roll=[[${ex}` + (/@\\{[^{}]*\\}\\s*$/.test(ex) ? "" : "]]}}") : "")), r => atkDone(r));', 1)
+    plain = 'startRoll(tpl, (r) => { if (typeof finishRoll === "function") finishRoll(r.rollId); })'
+    if plain in h and 'startRoll(stdMark(tpl)' not in h:
+        h = h.replace(plain, 'startRoll(stdMark(tpl), (r) => { if (typeof finishRoll === "function") finishRoll(r.rollId); })')
     return h
+
+
+SUCC_WORD = (
+    '{{#rollTotal() roll 0}}successes{{/rollTotal() roll 0}}'
+    '{{#rollTotal() roll 1}}success{{/rollTotal() roll 1}}'
+    '{{#rollGreater() roll 1}}successes{{/rollGreater() roll 1}}'
+)
+
+
+def unnest_stdroll(h):
+    # Roll20 drops a result block when an inverted section wraps another
+    # inverted section. {{#^wdmg}} may wrap only the plain successes line.
+    open_tag = '{{#^wdmg}}'
+    close_tag = '{{/^wdmg}}'
+    a = h.find(open_tag)
+    if a < 0:
+        return h
+    b = h.find(close_tag, a)
+    if b < 0:
+        raise SystemExit('wdmg close')
+    block = h[a + len(open_tag):b]
+    if '{{#^' not in block:
+        return h
+    end_num = block.find('</div>')
+    if end_num < 0:
+        raise SystemExit('successes div')
+    num = block[:end_num + len('</div>')]
+    rest = block[end_num + len('</div>'):]
+    num = num.replace('>successes</span>', '>' + SUCC_WORD + '</span>', 1)
+    fixed = open_tag + num + close_tag + '{{#stdroll}}' + rest + '{{/stdroll}}'
+    return h[:a] + fixed + h[b + len(close_tag):]
 
 def dice_layout(h):
     if "sheet-roll-break" in h:
